@@ -70,6 +70,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_b     ), spawn "google-chrome")
     , ((modm .|. shiftMask, xK_equal ), spawn "killall xmobar")
     , ((modm,               xK_f     ), spawn "nemo")
+    , ((modm,               xK_s     ), spawn "cinnamon-settings")
     , ((modm .|. shiftMask, xK_n     ), spawn "nitrogen --restore")
     , ((modm .|. shiftMask, xK_m     ), spawn "lxappearance")
     , ((modm .|. shiftMask, xK_c     ), kill)
