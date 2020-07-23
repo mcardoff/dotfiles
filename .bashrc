@@ -2,6 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
+PATH="/snap/bin${PATH:+:${PATH}}"
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -116,5 +117,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-figlet "Hello There!"
-printf "Remember : \n - lxappearance to change theme \n - xrandr for multiple screens \n - nmcli for wifi \n Happy Hacking!! \n\n"
+# figlet "Hello There!"
+FILE=$(shuf -n1 -e ~/.bin/ascii/*)
+neofetch --source $FILE --disable cpu gpu --color_blocks off
+HELP="Remember :\n
+ - lxappearance to change theme\n
+ - xrandr for multiple screens \n
+ - nmcli for wifi\n
+ - ncspot for spotify\n
+Happy Hacking!!"
+
