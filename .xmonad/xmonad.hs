@@ -14,9 +14,11 @@ xmobarPath = "/home/mcard/.xmonad/xmobarrc.hs"
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((modm,               xK_p     ), spawn "dmenu_run -fn 'Hasklig-13'")
-    , ((modm,               xK_o     ), spawn "emacs")
+    , ((modm,               xK_o     ), spawn "emacs --with-profile default")
+    , ((modm,               xK_i     ), spawn "emacs --with-profile doom")
     , ((modm .|. shiftMask, xK_x     ), spawn "emacs /home/mcard/.xmonad/xmonad.hs") -- Open this file
-    , ((modm .|. shiftMask, xK_o     ), spawn "emacs /home/mcard/.emacs") -- Open emacs init file
+    , ((modm .|. shiftMask, xK_o     ), spawn "emacs /home/mcard/regmacs/.emacs.d/init.el") -- Open default init file
+    , ((modm .|. shiftMask, xK_i     ), spawn "emacs --with-profile doom /home/mcard/doomacs/.emacs.d/init.el") -- Open doom init file
     , ((modm,               xK_b     ), spawn "google-chrome")
     , ((modm .|. shiftMask, xK_equal ), spawn "killall xmobar")
     , ((modm,               xK_f     ), spawn "nemo")

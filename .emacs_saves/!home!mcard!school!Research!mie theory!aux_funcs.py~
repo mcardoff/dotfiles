@@ -1,5 +1,7 @@
 import numpy as np
 import cmath as cm
+import scipy as sp
+from scipy.interpolate import interp1d
 from scipy.special import spherical_jn, spherical_yn, h1vp, h2vp
 
 #Hankel Functions and respective derivatives
@@ -32,7 +34,18 @@ def xip(n,r):
 def D(n,r):
     return psi(n-1,r)/psi(n,r)-n/r
 
-# Dielectric constant
+
+redata = np.genfromtxt('/home/mcard/school/Research/mie theory/e1.csv', delimiter=',')
+imdata = np.genfromtxt('/home/mcard/school/Research/mie theory/e2.csv', delimiter=',')
+e1 = sp.interpolate.interp1d(redata[:,0],redata[:,1],kind='cubic',fill_value='extrapolate')
+e2 = sp.interpolate.interp1d(imdata[:,0],imdata[:,1],kind='cubic',fill_value='extrapolate')
+# Dielectric constant of Niobium
+def DielecNb(wl):
+    e = 1239.841984 / wl
+    return cm.sqrt(e1(e)+e2(e)*1j)
+    
+
+# Dielectric constant of Indium
 def Dielec(wl):
     e = 1239.841984 / wl
     einf = 1.2

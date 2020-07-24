@@ -1,7 +1,7 @@
 ## Interpolation of data
 
 cd("/home/mcard/school/Research/mie theory/")
-eps_r = csvread("/home/mcard/school/Research/mie theory/e_1.csv");
-eps_i = csvread("e_2.csv");
+eps_r = csvread("/home/mcard/school/Research/mie theory/e1.csv");
+eps_i = csvread("e2.csv");
 
 plot(eps_r);

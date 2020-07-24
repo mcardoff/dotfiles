@@ -8,7 +8,7 @@ import sys
 from scipy.special import spherical_jn
 
 # number of terms to calculate, should be >= x
-nmax = 15
+nmax = 5
 npts = 1000
 
 #radius of the sphere
@@ -190,7 +190,7 @@ Rs  = []
 Ts  = []
 for w in wlr:
     # get index of ref via dielectric const
-    m = DielecNb(w)
+    m = Dielec(w)
     cer.append(Cext(m,w,2*a)/(np.pi*(a**2)))
     csr.append(Csca(m,w,2*a)/(np.pi*(a**2)))
     car.append(Cabs(m,w,2*a)/(np.pi*(a**2)))
