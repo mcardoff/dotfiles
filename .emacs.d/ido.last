@@ -1,0 +1,49 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/mcard/.emacs.d/.local/etc/" . "transient/")
+ ("/home/mcard/.emacs.d/.local/" . "etc/")
+ ("/home/mcard/.emacs.d/" . ".local/")
+ ("/home/mcard/haskell/" . "HTMLParser/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/mcard/"
+ "/home/mcard/.emacs.d/elpa/gruber-darker-theme-20200227.2238/"
+ "/home/mcard/.emacs.d/.local/etc/transient/"
+ "/home/mcard/haskell/HTMLParser/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ ".emacs"
+ "gruber-darker-theme.el"
+ "history"
+ "Parser.hs"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/mcard/" (24346 19728 42309 666000) "../" ".pki/" ".profile" "haskell/" "Downloads/" ".gtkrc-2.0" ".cargo/" ".xsettingsd" "school/" ".ghc/" ".aptitude/" ".config/" ".gphoto/" ".xsession-errors.old" ".bash_history" "Public/" "Pictures/" ".bash_logout" ".cabal/" ".bashrc" "Templates/" ".linuxmint/" "./" ".octave_hist" ".dbus/" ".Xauthority" ".local/" ".viminfo" ".bin/" ".emacs_saves/" ".emacs" "Videos/" ".gitconfig" ".wget-hsts" ".dmrc" ".stack/" ".ICEauthority" "Documents/" "adobe.deb" ".sudo_as_admin_successful" ".mozilla/" "snap/" ".cinnamon/" "2020-07-17-205538_1920x1080_scrot.png" "#&#" ".themes/" ".git-credentials" ".gtkrc-xfce" ".emacs~" ".adobe/" ".xinputrc" ".xmonad/" ".python_history" ".git/" ".gnupg/" "Desktop/" ".xinitrc" ".xsession-errors" "Music/" ".cache/" ".icons/" ".bashrc.bak" ".emacs.d/")
+
+ ("/home/" (24313 28047 311049 971000) "../" "mcard/" "./")
+
+ ("/home/mcard/haskell/HTMLParser/" (24346 17707 234302 122000) "../" "Parser.hs" "htmlParser.org" "./")
+
+ ("/home/mcard/.emacs.d/elpa/gruber-darker-theme-20200227.2238/" (24346 16671 310314 499000) "../" "gruber-darker-theme.el" "gruber-darker-theme-autoloads.el" "./" "gruber-darker-theme-pkg.el")
+
+ ("/home/mcard/.emacs.d/.local/etc/transient/" (24346 15805 352258 21000) "../" "history" "./")
+
+ ("/home/mcard/.emacs.d/.local/etc/" (24346 15805 352258 21000) "../" "transient/" "./")
+
+ ("/home/mcard/.emacs.d/.local/" (24346 15805 352258 21000) "../" "etc/" "./")
+
+ ("/home/mcard/.emacs.d/" (24346 18444 847765 727000) "smex-items" "../" "ido.last" "./" ".local/" "elpa/" "auto-save-list/")
+
+ ("/home/mcard/haskell/" (24332 21536 465834 679000) "../" "README.md" "Parser/" "Test/" "./" "haskell-mode-probe/" "HackerRank/" "HTMLParser/" ".git/" "First_Principles/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

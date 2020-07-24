@@ -1,3 +1,5 @@
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;; Appearance
@@ -9,14 +11,12 @@
 (column-number-mode)
 (show-paren-mode)
 (window-divider-mode)
-(powerline-default-theme)
 (global-display-line-numbers-mode)
 (spotify-enable-song-notifications)
 
 (setq inhibit-startup-screen 1)
 (setq package-check-signature nil)
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 ;;; Created keybindings
@@ -35,7 +35,8 @@
 (defun ws-handling ()
   (interactive)
   (whitespace-mode 1)
-  (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+  )
 
 (add-hook 'haskell-mode-hook 'ws-handling)
 
@@ -85,6 +86,18 @@
 ;;; neotree
 (global-set-key (kbd "C-`") 'neotree)
 
+;;; powerline stuff
+(powerline-default-theme)
+
+;;; Diminish
+(require 'diminish)
+(diminish 'whitespace-mode)
+(diminish 'hasklig-mode)
+(diminish 'eldoc-mode)
+(diminish 'interactive-haskell-mode)
+(diminish 'hindent-mode)
+(diminish 'undo-tree-mode)
+
 ;;; Shit set by emacs
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -95,11 +108,11 @@
  '(custom-enabled-themes (quote (gruber-darker)))
  '(custom-safe-themes
    (quote
-    ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(fringe-mode 0 nil (fringe))
  '(package-selected-packages
    (quote
-    (magit spotify editorconfig wolfram-mode auto-complete move-text org-bullets multiple-cursors hindent flymake-haskell-multi flymake-hlint flymake-easy powerline hasklig-mode haskell-mode gruber-darker-theme smex)))
+    (micgoline diminish evil-visual-mark-mode smart-mode-line-powerline-theme smart-mode-line magit spotify editorconfig wolfram-mode auto-complete move-text org-bullets multiple-cursors hindent flymake-haskell-multi flymake-hlint flymake-easy powerline hasklig-mode haskell-mode gruber-darker-theme smex)))
  '(tool-bar-mode nil)
  '(whitespace-style
    (quote
@@ -110,5 +123,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(powerline-active1 ((t (:inherit mode-line :background "gray20" :foreground "white"))))
  '(window-divider ((t (:foreground "gray9" :weight thin :width condensed)))))
 (put 'scroll-left 'disabled nil)

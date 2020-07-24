@@ -1,0 +1,1 @@
+newtype Sum a = {getSum :: a}

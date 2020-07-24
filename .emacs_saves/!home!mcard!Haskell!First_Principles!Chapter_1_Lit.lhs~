@@ -1,0 +1,12 @@
+Hello there! This is literate Haskell!
+
+> num :: Int
+> num = 12
+
+> multbynum :: Int -> Int
+> multbynum = *num
+
+
+
+
+

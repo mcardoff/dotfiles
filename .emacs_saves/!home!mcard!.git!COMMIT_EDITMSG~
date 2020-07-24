@@ -1,0 +1,86 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	new file:   .bin/#grep#
+#	new file:   .bin/.xmonad-session-rc
+#	new file:   .bin/ascii/bridge.txt
+#	new file:   .bin/ascii/chungus.txt
+#	new file:   .bin/ascii/gotem.txt
+#	new file:   .bin/ascii/kms.txt
+#	new file:   .bin/ascii/monkaS.txt
+#	new file:   .bin/ascii/murray.txt
+#	new file:   .bin/ascii/pikachu.txt
+#	new file:   .bin/ascii/reverse.txt
+#	new file:   .bin/ascii/sw.txt
+#	new file:   .bin/ascii/winnin.txt
+#	new file:   .bin/essid.sh
+#	new file:   .bin/oldxmo/.xmonad/xmonad-session-rc
+#	new file:   .bin/oldxmo/.xmonad/xmonad-x86_64-linux
+#	new file:   .bin/oldxmo/.xmonad/xmonad.errors
+#	new file:   .bin/oldxmo/.xmonad/xmonad.hi
+#	new file:   .bin/oldxmo/.xmonad/xmonad.o
+#	new file:   .bin/oldxmo/.xmonad/xmonad.state
+#	new file:   .bin/oldxmo/.xmonad/xpm/#xmonadbak.hs#
+#	new file:   .bin/oldxmo/.xmonad/xpm/ascii.txt
+#	new file:   .bin/oldxmo/.xmonad/xpm/gotem.txt
+#	new file:   .bin/oldxmo/.xmonad/xpm/haskell.xpm
+#	new file:   .bin/oldxmo/.xmonad/xpm/xmonad.hs
+#	new file:   .bin/oldxmo/.xmonad/xpm/xmonadbak.hs
+#	new file:   .bin/sound.sh
+#	new file:   .bin/wireless.sh
+#
+# Untracked files:
+#	#&#
+#	.ICEauthority
+#	.Xauthority
+#	.adobe/
+#	.aptitude/
+#	.bash_history
+#	.bash_logout
+#	.bashrc.bak
+#	.cabal/
+#	.cache/
+#	.cargo/
+#	.cinnamon/
+#	.config/
+#	.dmrc
+#	.emacs.d/
+#	.emacs_saves/
+#	.emacs~
+#	.ghc/
+#	.git-credentials
+#	.gitconfig
+#	.gtkrc-2.0
+#	.gtkrc-xfce
+#	.icons/
+#	.linuxmint/
+#	.local/
+#	.mozilla/
+#	.octave_hist
+#	.pki/
+#	.profile
+#	.python_history
+#	.stack/
+#	.sudo_as_admin_successful
+#	.viminfo
+#	.wget-hsts
+#	.xinitrc
+#	.xinputrc
+#	.xmonad/xmobarrc.hs
+#	.xsession-errors
+#	.xsession-errors.old
+#	.xsettingsd
+#	2020-07-17-205538_1920x1080_scrot.png
+#	Downloads/
+#	Pictures/
+#	adobe.deb
+#	haskell/
+#	school/
+#	snap/
+#

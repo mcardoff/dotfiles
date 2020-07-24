@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "micgoline" "20160415.326" "powerline mode, color schemes from microsoft and google's logo." '((emacs "24.3") (powerline "2.3")) :commit "837504263bb1711203b0f7efecd6b7b5f272fae0" :keywords '("mode-line" "powerline" "theme") :authors '(("yzprofile" . "yzprofiles@gmail.com")) :maintainer '("yzprofile" . "yzprofiles@gmail.com") :url "https://github.com/yzprofile/micgoline")

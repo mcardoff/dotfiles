@@ -1,0 +1,26 @@
+
+;; ----- smex-history -----
+(
+ list-packages
+ list-faces-display
+ list-colors-display
+ load-file
+ diminish
+ hs-minor-mode
+ evil-mode
+)
+
+;; ----- smex-data -----
+(
+ (list-packages . 7)
+ (package-install . 2)
+ (sml/apply-theme . 1)
+ (powerline-center-evil-theme . 1)
+ (evil-mode . 2)
+ (hs-hide-all . 1)
+ (hs-minor-mode . 2)
+ (diminish . 1)
+ (load-file . 2)
+ (list-faces-display . 2)
+ (list-colors-display . 1)
+)

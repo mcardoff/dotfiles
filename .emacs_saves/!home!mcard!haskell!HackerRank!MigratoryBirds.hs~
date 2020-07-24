@@ -1,0 +1,4 @@
+module MigratoryBirds where
+
+
+solve xs = group $ sort xs

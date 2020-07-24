@@ -95,7 +95,7 @@ lgHook x1 x2 = dynamicLogWithPP xmobarPP
                   , ppOrder = id
                   }
 
-startHook = spawn "~/.bin/xmonad-session-rc"
+startHook = do spawn "home/mcard/.bin/.xmonad-session-rc"
 
 main = do
   xmproc0 <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath

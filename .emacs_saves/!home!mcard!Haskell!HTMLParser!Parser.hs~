@@ -1,0 +1,169 @@
+module Parser where
+import Data.List
+import Data.Char
+import Data.Functor
+import Control.Applicative
+
+data HTML = Element {elemName :: String, elemContent :: [HTML]}
+          | Attribute {attribName :: String, attribVal :: String}
+          | Text {textContent :: String} deriving Show
+
+
+
+newtype Parser a = Parser {parse :: String -> Maybe (String, a)}
+
+instance Functor Parser where
+    fmap f (Parser p) = Parser $ \s -> do
+                          (s', a) <- p s
+                          Just (s', f a)
+
+instance Applicative Parser where
+    pure x = Parser $ \s -> Just (s,x)
+    (Parser pf) <*> (Parser px) =
+        Parser $ \s -> do
+          (s', f) <- pf s
+          (s'',x) <- px s'
+          Just (s'',f x)
+
+instance Alternative Parser where
+    empty = Parser $ const Nothing
+    (Parser a) <|> (Parser b) = Parser $ \s -> a s <|> b s
+
+instance Monad Parser where
+    return = pure
+    (Parser p) >>= f = Parser $ \s -> case p s of
+                                        Just (s', x) -> parse (f x) s'
+                                        _ -> Nothing
+
+
+charP :: Char -> Parser Char
+charP c = Parser $ \s -> case s of
+                        (x:xs) | x == c -> Just (xs,x)
+                        _ -> Nothing
+
+stringP :: String -> Parser String
+stringP = traverse charP
+
+stringLiteral :: Parser String
+stringLiteral = charP '"' *> spanP (/= '"') <* charP '"'
+
+spanP :: (Char -> Bool) -> Parser String
+spanP p = Parser $ \s -> let (b,a) = span p s in Just (a,b)
+
+spanP' :: (Char -> Bool) -> Parser String
+spanP' p = Parser $ \s -> let (b,a) = span p s in
+                          case b of
+                            [] -> Nothing
+                            _ -> Just (a,b)
+
+ws :: Parser String
+ws = spanP isSpace
+
+sepBy :: Parser a -> Parser b -> Parser [b]
+sepBy sep elem = ((:) <$> elem <*> many (sep *> elem)) <|> pure []
+
+token :: Parser String
+token = ws *> spanP isLetter <* ws
+
+htmlOpen :: Parser String
+htmlOpen = stringP "<!DOCTYPE html>" $> ""
+
+
+htmlElem :: Parser HTML
+htmlElem = do
+  name <- openTag
+  attribs <- many htmlAttrib
+  ws
+  charP '>'
+  ws
+  content <- many $ htmlElem <|> htmlText
+  ws
+  closeTag name
+  return $ Element name (attribs++content)
+
+openTag :: Parser String
+openTag = ws *> charP '<' *> spanP isLetter
+
+closeTag :: String -> Parser String
+closeTag s = ws *> stringP "</" *> stringP s <* ws <* charP '>'
+
+htmlAttrib :: Parser HTML
+htmlAttrib = do
+  name <- token
+  charP '='
+  val <- stringLiteral
+  return $ Attribute name val
+
+htmlText :: Parser HTML
+htmlText = Text <$> (ws *> spanP' (\x -> (x /= '<') && (x /= '>')) <* ws)
+
+htmlP :: Parser HTML
+htmlP = htmlOpen *> htmlElem
+
+htmlDoc2 = "<!DOCTYPE html>\
+           \<html>\
+           \  <head></head>\
+           \  <body>\
+           \    <div>\
+           \    </div>\
+           \  </body>\
+           \</html>"
+
+-- htmlDoc3 = "<!DOCTYPE html>\
+--            \<html lang=\"en\">\
+--            \  <head>\
+--            \    <title>CS 340</title>\
+--            \  </head>\
+--            \  <body>\
+--            \    <div id=\"content\">\
+--            \      <p>Hello world!</p>\
+--            \    </div>\
+--            \  </body>\
+--            \</html>"
+
+------------- Calculator Parser -------------
+data Expr = Lit Int
+          | Add Expr Expr
+          | Sub Expr Expr
+          | Mul Expr Expr
+            deriving Show
+
+evaluate :: Expr -> Int
+evaluate c = case c of
+               Lit x -> x
+               Add e1 e2 -> evaluate e1 + evaluate e2
+               Sub e1 e2 -> evaluate e1 - evaluate e2
+               Mul e1 e2 -> evaluate e1 * evaluate e2
+
+numP :: Parser Int
+numP = read <$> spanP isDigit
+
+exprP :: Parser Expr
+exprP = addP <|> subP <|> termP
+
+termP :: Parser Expr
+termP = mulP <|> factorP
+
+factorP :: Parser Expr
+factorP = litP <|> (parens exprP)
+
+litP :: Parser Expr
+litP = Lit <$> numP
+
+addP :: Parser Expr
+addP = Add <$> termP <*> (spaceSep '+' *> exprP)
+
+subP :: Parser Expr
+subP = Sub <$> termP <*> (spaceSep '-' *> exprP)
+
+mulP :: Parser Expr
+mulP = Mul <$> factorP <*> (spaceSep '*' *> termP)
+
+betweenP :: Parser a -> Parser b -> Parser c -> Parser c
+betweenP l r p = l *> p <* r
+
+spaceSep :: Char -> Parser Char
+spaceSep c = betweenP ws ws $ charP c
+
+parens :: Parser a -> Parser a
+parens = betweenP (charP '(') (charP ')')

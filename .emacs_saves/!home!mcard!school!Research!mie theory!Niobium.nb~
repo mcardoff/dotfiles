@@ -1,0 +1,3 @@
+re_data = Import[e_1.csv];
+im_data = Import[e_2.csv];
+

@@ -1,0 +1,5 @@
+[Settings]
+gtk-application-prefer-dark-theme=1
+gtk-theme-name = "Adwaita"
+gtk-icon-theme-name = "Ubuntu-mono-dark"
+gtk-font-name = "Hasklig 12"
