@@ -1,12 +1,9 @@
 #!/bin/sh
 
-get_volume() {
-    stuff=$(amixer get Master | grep -oP '[^\[ ]*%')   
-    echo $stuff
-}
 
-vol=$(get_volume | grep -oP '100|[0-9][0-9]')
-num=$(( vol / 10 ))
+SINK=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1 )
+NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
+num=$(( NOW / 10 ))
 
 case $num in
   0)  bar='----------' ;;
