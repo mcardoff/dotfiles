@@ -13,40 +13,40 @@ xmobarPath = "/home/mcard/.xmonad/xmobarrc.hs"
 
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-    , ((modm,               xK_p     ), spawn "dmenu_run -fn 'Hasklig-13'")
-    , ((modm,               xK_o     ), spawn "emacs --with-profile default")
-    , ((modm,               xK_i     ), spawn "emacs --with-profile doom")
-    , ((modm .|. shiftMask, xK_x     ), spawn "emacs /home/mcard/.xmonad/xmonad.hs") -- Open this file
-    , ((modm .|. shiftMask, xK_o     ), spawn "emacs /home/mcard/regmacs/.emacs.d/init.el") -- Open default init file
-    , ((modm .|. shiftMask, xK_i     ), spawn "emacs --with-profile doom /home/mcard/doomacs/.emacs.d/init.el") -- Open doom init file
-    , ((modm,               xK_b     ), spawn "google-chrome")
-    , ((modm .|. shiftMask, xK_equal ), spawn "killall xmobar")
-    , ((modm,               xK_f     ), spawn "nemo")
-    , ((modm,               xK_s     ), spawn "cinnamon-settings")
-    , ((modm .|. shiftMask, xK_n     ), spawn "nitrogen --restore")
-    , ((modm .|. shiftMask, xK_m     ), spawn "lxappearance")
-    , ((modm .|. shiftMask, xK_c     ), kill)
-    , ((modm,               xK_space ), sendMessage NextLayout)
-    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-    , ((modm,               xK_n     ), refresh)
-    , ((modm,               xK_Tab   ), windows W.focusDown)
-    , ((modm,               xK_j     ), windows W.focusDown)
-    , ((modm,               xK_k     ), windows W.focusUp  )
-    , ((modm,               xK_m     ), windows W.focusMaster)
-    , ((modm,               xK_Return), windows W.swapMaster)
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
-    , ((modm,               xK_h     ), sendMessage Shrink)
-    , ((modm,               xK_l     ), sendMessage Expand)
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
-    , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
-    , ((0                 , 0x1008FF11), spawn "amixer -q sset Master 10%-") -- Vol down
-    , ((0                 , 0x1008FF13), spawn "amixer -q sset Master 10%+") -- Vol up
-    , ((0                 , 0x1008FF12), spawn "amixer set Master toggle")  -- Vol mute
+    , ((modm,               xK_p      ), spawn "dmenu_run -fn 'Hasklig-13'")
+    , ((modm,               xK_o      ), spawn "emacs --with-profile default")
+    , ((modm,               xK_i      ), spawn "emacs --with-profile doom")
+    , ((modm .|. shiftMask, xK_x      ), spawn "emacs /home/mcard/.xmonad/xmonad.hs") -- Open this file
+    , ((modm .|. shiftMask, xK_o      ), spawn "emacs /home/mcard/regmacs/.emacs.d/init.el") -- Open default init file
+    , ((modm .|. shiftMask, xK_i      ), spawn "emacs --with-profile doom /home/mcard/doomacs/.emacs.d/init.el") -- Open doom init file
+    , ((modm,               xK_b      ), spawn "google-chrome")
+    , ((modm .|. shiftMask, xK_equal  ), spawn "killall xmobar")
+    , ((modm,               xK_f      ), spawn "nemo")
+    , ((modm,               xK_s      ), spawn "cinnamon-settings")
+    , ((modm .|. shiftMask, xK_n      ), spawn "nitrogen --restore")
+    , ((modm .|. shiftMask, xK_m      ), spawn "lxappearance")
+    , ((0                 , 0x1008FF11), spawn "/home/mcard/.bin/changevol.sh -10%") -- Vol down
+    , ((0                 , 0x1008FF13), spawn "/home/mcard/.bin/changevol.sh +10%") -- Vol up
+    , ((0                 , 0x1008FF12), spawn "/home/mcard/.bin/mutevol.sh")        -- Vol mute
+    , ((modm .|. shiftMask, xK_c      ), kill)
+    , ((modm,               xK_space  ), sendMessage NextLayout)
+    , ((modm .|. shiftMask, xK_space  ), setLayout $ XMonad.layoutHook conf)
+    , ((modm,               xK_n      ), refresh)
+    , ((modm,               xK_Tab    ), windows W.focusDown)
+    , ((modm,               xK_j      ), windows W.focusDown)
+    , ((modm,               xK_k      ), windows W.focusUp  )
+    , ((modm,               xK_m      ), windows W.focusMaster)
+    , ((modm,               xK_Return ), windows W.swapMaster)
+    , ((modm .|. shiftMask, xK_j      ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_k      ), windows W.swapUp    )
+    , ((modm,               xK_h      ), sendMessage Shrink)
+    , ((modm,               xK_l      ), sendMessage Expand)
+    , ((modm,               xK_t      ), withFocused $ windows . W.sink)
+    , ((modm              , xK_comma  ), sendMessage (IncMasterN 1))
+    , ((modm              , xK_period ), sendMessage (IncMasterN (-1)))
+    , ((modm .|. shiftMask, xK_q      ), io exitSuccess)
+    , ((modm              , xK_q      ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm .|. shiftMask, xK_slash  ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
     [((m .|. modm, k), windows $ f i)
@@ -97,7 +97,7 @@ lgHook x1 x2 = dynamicLogWithPP xmobarPP
                   , ppOrder = id
                   }
 
-startHook = do spawn "home/mcard/.bin/.xmonad-session-rc"
+startHook = do spawn "/home/mcard/.bin/.xmonad-session-rc"
 
 main = do
   xmproc0 <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
