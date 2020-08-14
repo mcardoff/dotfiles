@@ -37,12 +37,15 @@ def D(n,r):
 
 redata = np.genfromtxt('/home/mcard/school/Research/mie theory/e1.csv', delimiter=',')
 imdata = np.genfromtxt('/home/mcard/school/Research/mie theory/e2.csv', delimiter=',')
-e1 = sp.interpolate.interp1d(redata[:,0],redata[:,1],kind='cubic',fill_value='extrapolate')
-e2 = sp.interpolate.interp1d(imdata[:,0],imdata[:,1],kind='cubic',fill_value='extrapolate')
+# e1 = sp.interpolate.interp1d(redata[:,0],redata[:,1],kind='cubic',fill_value='extrapolate')
+# e2 = sp.interpolate.interp1d(imdata[:,0],imdata[:,1],kind='cubic',fill_value='extrapolate')
 # Dielectric constant of Niobium
 def DielecNb(wl):
     e = 1239.841984 / wl
-    return cm.sqrt(e1(e)+e2(e)*1j)
+    e1 = -0.000469 + 0.0315*(e) - 0.89199 * (e**2) + 13.8147 * (e**3) - 126.3859 * (e**4) + 683.1397 * (e**5) - 2019.5053 * (e**6) + 2513.7193 * (e**7)
+    # e2 = -0.0024531 * (e) + 0.13912 * (e**1) + -3.328 * (e**2) + 43.4499 * (e**3) + -333.5553 * (e**4) + 1501.064 * (e**5) + -3653.4889 * (e**6) + 3700.3889 * (e**7)
+    e2 = 1
+    return cm.sqrt(e1+e2*1j)
     
 
 # Dielectric constant of Indium
@@ -50,7 +53,7 @@ def Dielec(wl):
     e = 1239.841984 / wl
     einf = 1.2
     wp = 11.6
-    im = 0.1
+    im = 0.2
     return cm.sqrt(einf*(1-((wp)**2)/(e**2)) + im*1j)
 
 #Index of refraction (exp fit to expt data)

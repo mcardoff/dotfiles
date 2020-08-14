@@ -117,9 +117,19 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# figlet "Hello There!"
+cmatrix -C red -s
+
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+
+# if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    # PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+# fi
+
 FILE=$(shuf -n1 -e ~/.bin/ascii/*)
 neofetch --source $FILE --disable cpu gpu --color_blocks off
+export EDITOR=emacs
 HELP="Remember :\n
  - lxappearance to change theme\n
  - xrandr for multiple screens \n
@@ -127,3 +137,4 @@ HELP="Remember :\n
  - ncspot for spotify\n
 Happy Hacking!!"
 
+export TERM=xterm-256color

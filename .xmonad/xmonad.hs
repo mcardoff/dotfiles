@@ -1,61 +1,150 @@
 -- IMPORTS
 import XMonad
+import Data.Char
 import Data.Monoid
+import Data.Tuple
 import System.Exit
+import Control.Arrow (first)
+import XMonad.Prompt
+import XMonad.Prompt.Input
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
+
+import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Tabbed
+import XMonad.Layout.Renamed (renamed, Rename(Replace))
+import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
+import XMonad.Layout.NoBorders
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
+import XMonad.Layout.LayoutModifier
+import XMonad.Layout.Spacing
+import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
+import XMonad.Layout.GridVariants (Grid(Grid))
+import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
+
 import XMonad.Util.Run
+import XMonad.Util.EZConfig
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
+-- Colors
+
+red :: String
+red = "#f43841"
+
+orange :: String
+orange = "#CC8C3C"
+
+green :: String
+green = "#73c936"
+
+bgGray :: String
+bgGray = "#1A1A1A"
+
+fgGray :: String
+fgGray = "#666666"
+
+lightGray :: String
+lightGray = "#95A99F"
+
+-- Strings for passing through
+
+xmobarPath :: String
 xmobarPath = "/home/mcard/.xmonad/xmobarrc.hs"
 
-myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-    , ((modm,               xK_p      ), spawn "dmenu_run -fn 'Hasklig-13'")
-    , ((modm,               xK_o      ), spawn "emacs --with-profile default")
-    , ((modm,               xK_i      ), spawn "emacs --with-profile doom")
-    , ((modm .|. shiftMask, xK_x      ), spawn "emacs /home/mcard/.xmonad/xmonad.hs") -- Open this file
-    , ((modm .|. shiftMask, xK_o      ), spawn "emacs /home/mcard/regmacs/.emacs.d/init.el") -- Open default init file
-    , ((modm .|. shiftMask, xK_i      ), spawn "emacs --with-profile doom /home/mcard/doomacs/.emacs.d/init.el") -- Open doom init file
-    , ((modm,               xK_b      ), spawn "google-chrome")
-    , ((modm .|. shiftMask, xK_equal  ), spawn "killall xmobar")
-    , ((modm,               xK_f      ), spawn "nemo")
-    , ((modm,               xK_s      ), spawn "cinnamon-settings")
-    , ((modm .|. shiftMask, xK_n      ), spawn "nitrogen --restore")
-    , ((modm .|. shiftMask, xK_m      ), spawn "lxappearance")
-    , ((0                 , 0x1008FF11), spawn "/home/mcard/.bin/changevol.sh -10%") -- Vol down
-    , ((0                 , 0x1008FF13), spawn "/home/mcard/.bin/changevol.sh +10%") -- Vol up
-    , ((0                 , 0x1008FF12), spawn "/home/mcard/.bin/mutevol.sh")        -- Vol mute
-    , ((modm .|. shiftMask, xK_c      ), kill)
-    , ((modm,               xK_space  ), sendMessage NextLayout)
-    , ((modm .|. shiftMask, xK_space  ), setLayout $ XMonad.layoutHook conf)
-    , ((modm,               xK_n      ), refresh)
-    , ((modm,               xK_Tab    ), windows W.focusDown)
-    , ((modm,               xK_j      ), windows W.focusDown)
-    , ((modm,               xK_k      ), windows W.focusUp  )
-    , ((modm,               xK_m      ), windows W.focusMaster)
-    , ((modm,               xK_Return ), windows W.swapMaster)
-    , ((modm .|. shiftMask, xK_j      ), windows W.swapDown  )
-    , ((modm .|. shiftMask, xK_k      ), windows W.swapUp    )
-    , ((modm,               xK_h      ), sendMessage Shrink)
-    , ((modm,               xK_l      ), sendMessage Expand)
-    , ((modm,               xK_t      ), withFocused $ windows . W.sink)
-    , ((modm              , xK_comma  ), sendMessage (IncMasterN 1))
-    , ((modm              , xK_period ), sendMessage (IncMasterN (-1)))
-    , ((modm .|. shiftMask, xK_q      ), io exitSuccess)
-    , ((modm              , xK_q      ), spawn "xmonad --recompile; xmonad --restart")
-    , ((modm .|. shiftMask, xK_slash  ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+editor :: String
+editor = "emacs"
+
+editorDoom :: String
+editorDoom = "emacs --with-profile doom "
+
+regularConfig :: String
+regularConfig = " /home/mcard/regmacs/.emacs.d/init.el"
+
+doomConfig :: String
+doomConfig = " /home/mcard/doomacs/.emacs.d/init.el"
+
+browser :: String
+browser = "chromium-browser"
+
+myFont :: String
+myFont = "Hasklig:size=13"
+
+myTerm :: String
+myTerm = "gnome-terminal"
+
+myFile :: String
+myFile = "nemo"
+
+dmenuOptions :: String
+dmenuOptions = "-fn '" ++ myFont ++ "' -p '>' -sb '#cc8c3c' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA' -c -l 20"
+
+xmonadConfig :: String
+xmonadConfig = editor ++ " /home/mcard/.xmonad/xmonad.hs"
+
+-- Keys
+
+alt :: KeyMask
+alt = mod1Mask
+
+myKeys conf@XConfig {XMonad.modMask = sup} = M.fromList $
+    [ -- SPAWNING
+      ((sup .|. shf, xK_Return), spawn $ myTerm)
+    , ((sup .|. shf, xK_x), spawn $ xmonadConfig)
+    , ((sup, xK_b), spawn $ browser)
+    , ((sup, xK_o), spawn $ editor)
+    , ((sup, xK_i), spawn $ editorDoom)
+    , ((sup .|. shf, xK_o), spawn $ editor ++ regularConfig)
+    , ((sup .|. shf, xK_i), spawn $ editorDoom ++ doomConfig)
+    , ((sup, xK_p), spawn $ "dmenu_run " ++ dmenuOptions)
+    , ((sup .|. shf, xK_equal), spawn $ "killall xmobar")
+    , ((sup, xK_f), spawn $ myTerm ++ " -- ranger")
+    , ((sup .|. shf, xK_f), spawn $ myFile)
+    , ((sup, xK_s), spawn $ "cinnamon-settings")
+    , ((sup .|. shf, xK_n), spawn $ "nitrogen --restore")
+    , ((sup .|. shf, xK_m), spawn $ "lxappearance")
+
+      -- PROMPTS
+    , ((sup,xK_c), calcPrompt myXPConfig "qalc")
+    , ((sup,xK_z), customBasicPrompt "hoogle --count=1" myXPConfig "hoogle")
+
+      -- XMONAD DEFAULTS
+    , ((sup .|. shf, xK_c), kill)
+    , ((sup, xK_space), sendMessage NextLayout)
+    , ((sup .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
+    , ((sup, xK_n), refresh)
+    , ((sup, xK_Tab), windows W.focusDown)
+    , ((sup, xK_j), windows W.focusDown)
+    , ((sup, xK_k), windows W.focusUp)
+    , ((sup, xK_m), windows W.focusMaster)
+    , ((sup, xK_Return), windows W.swapMaster)
+    , ((sup .|. shf, xK_j), windows W.swapDown)
+    , ((sup .|. shf, xK_k), windows W.swapUp)
+    , ((sup, xK_h), sendMessage Shrink)
+    , ((sup, xK_l), sendMessage Expand)
+    , ((sup, xK_t), withFocused $ windows . W.sink)
+    , ((sup, xK_comma), sendMessage (IncMasterN 1))
+    , ((sup, xK_period), sendMessage (IncMasterN (-1)))
+    , ((sup .|. shf, xK_q), io exitSuccess)
+    , ((sup, xK_q), spawn "xmonad --recompile; xmonad --restart")
+
+      -- MISC
+    , ((0, 0x1008FF11), spawn "/home/mcard/.bin/changevol.sh -10%") -- Vol down
+    , ((0, 0x1008FF13), spawn "/home/mcard/.bin/changevol.sh +10%") -- Vol up
+    , ((0, 0x1008FF12), spawn "/home/mcard/.bin/mutevol.sh")        -- Vol mute
+
     ]
     ++
-    [((m .|. modm, k), windows $ f i)
+    [((mo .|. sup, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+        , (f, mo) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
-    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    [((mo .|. sup, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+        , (f, mo) <- [(W.view, 0), (W.shift, shiftMask)]]
+        where shf = shiftMask
+
 
 myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
     [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)
@@ -63,25 +152,101 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
     , ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
     ]
 
+-- Layouts
+
+mySpacing :: Integer -> l a
+          -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
+mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
+
+tiled :: Tall a
+tiled = Tall 1 (3/100) (1/2)
+
+floats = renamed [Replace "Float"]
+           $ limitWindows 20 simplestFloat
+
+grid = renamed [Replace "Grid"]
+           $ limitWindows 12 $ mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
+
+monocleBare = noBorders $ monocle
+
+monocle  = renamed [Replace "Monocle"]
+           $ limitWindows 20 Full
+
+tabs = renamed [Replace "Tabs"]
+       $ tabbed shrinkText $
+         def { fontName            = myFont
+             , activeColor         = "#282828"
+             , inactiveColor       = "#282828"
+             , activeBorderColor   = "#cc8c3c"
+             , inactiveBorderColor = "#95A99F"
+             , activeTextColor     = "#ffffff"
+             , inactiveTextColor   = "#ffffff"
+             }
+
+
+-- Misc.
+
 myWorkspaces :: [String]
-myWorkspaces = ["trm","edt","www","sys","msc"] ++ map show [6..9]
+myWorkspaces = ["trm","edt","www","vid","sys","msc"] ++ map show [7..9]
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
--- Hooks
-layHook = avoidStruts (tiled ||| Full)
-    where tiled = Tall nmaster delta ratio
-          nmaster = 1 -- Num of windows in master
-          ratio = 1/2 -- How much of screen is master
-          delta = 3/100 -- Percent increment when adjusting size
+myXPConfig :: XPConfig
+myXPConfig = def {
+               -- font = "xft:Hasklig:pixelsize=14"
+               font =  "-*-bitstream charter-*-*-*-*-14-14-*-*-*-*-*-*"
+             , bgColor = "#282828"
+             , fgColor =  "#CC8C3C"
+             , bgHLight = "#CC8C3C"
+             , fgHLight = "FAFAFA"
+             , borderColor = "#CC8C3C"
+             , promptBorderWidth = 2
+             , height = 30
+             , position = CenteredAt (1/2) (1/2)
+             , maxComplRows = Just 20
+               }
 
+calcPrompt :: XPConfig -> String -> X ()
+calcPrompt c ans =
+    inputPrompt c (trim ans) ?+ \input ->
+        liftIO(runProcessWithInput "qalc" [input] "") >>= calcPrompt c
+    where
+        trim  = f . f
+        f = reverse . dropWhile isSpace
+
+customBasicPrompt :: String -> XPConfig -> String -> X ()
+customBasicPrompt pr c an =
+    inputPrompt c (trim an) ?+ \input ->
+        liftIO(runProcessWithInput pr [input] "") >>= customBasicPrompt pr c
+    where
+        trim  = f . f
+        f = reverse . dropWhile isSpace
+
+-- Hooks
+
+layHook = avoidStruts $
+          grid
+      ||| noBorders tabs
+      ||| monocleBare
+      ||| tiled
+      ||| floats
+      ||| Full
+
+manHook :: Query (Endo WindowSet)
 manHook = composeAll
           [ className =? "MPlayer" --> doFloat
           , className =? "Gimp"    --> doFloat
-          , resource  =? "desktop_window" --> doIgnore
-          , resource  =? "kdesktop" --> doIgnore ]
+          , appName =? "lxappearance" --> doShift (myWorkspaces !! 8) <+> doFloat
+          , resource =? "desktop_window" --> doIgnore
+          , resource =? "kdesktop" --> doIgnore
+          , appName =? myTerm  --> doShift (myWorkspaces !! 0)
+          , appName =? editor  --> doShift (myWorkspaces !! 1)
+          , appName =? browser --> doShift (myWorkspaces !! 2)
+          , appName =? myFile  --> doShift (myWorkspaces !! 3)
+          ]
 
+eveHook :: Event -> X All
 eveHook = mempty
 
 lgHook x1 x2 = dynamicLogWithPP xmobarPP
@@ -97,20 +262,22 @@ lgHook x1 x2 = dynamicLogWithPP xmobarPP
                   , ppOrder = id
                   }
 
-startHook = do spawn "/home/mcard/.bin/.xmonad-session-rc"
+startHook :: X ()
+startHook = spawn "/home/mcard/.bin/.xmonad-session-rc"
 
+main :: IO ()
 main = do
   xmproc0 <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
   xmproc1 <- spawnPipe $ "xmobar -x 1 " ++ xmobarPath
   xmonad $ docks def {
              -- Basics
                modMask = mod4Mask
-             , terminal = "gnome-terminal"
+             , terminal = myTerm
              , focusFollowsMouse = True
              , clickJustFocuses = False
              , workspaces = myWorkspaces
-             , normalBorderColor = "#dddddd"
-             , focusedBorderColor = "#FF0000"
+             , normalBorderColor = lightGray
+             , focusedBorderColor = orange
              , borderWidth = 2
 
              -- Bindings
@@ -126,5 +293,4 @@ main = do
              , startupHook = startHook
          }
 
-help :: String
-help = unlines ["The default modifier key is 'alt'. Default keybindings:", "", "-- launching and killing programs", "mod-Shift-Enter  Launch xterminal", "mod-p            Launch dmenu", "mod-Shift-p      Launch gmrun", "mod-Shift-c      Close/kill the focused window","mod-Space        Rotate through the available layout algorithms","mod-Shift-Space  Reset the layouts on the current workSpace to default", "mod-n            Resize/refresh viewed windows to the correct size", "","-- move focus up or down the window stack","mod-Tab        Move focus to the next window", "mod-Shift-Tab  Move focus to the previous window","mod-j          Move focus to the next window","mod-k          Move focus to the previous window","mod-m          Move focus to the master window","","-- modifying the window order","mod-Return   Swap the focused window and the master window","mod-Shift-j  Swap the focused window with the next window","mod-Shift-k  Swap the focused window with the previous window","","-- resizing the master/slave ratio","mod-h  Shrink the master area","mod-l  Expand the master area","","-- floating layer support","mod-t  Push window back into tiling; unfloat and re-tile it","","-- increase or decrease number of windows in the master area","mod-comma  (mod-,)   Increment the number of windows in the master area","mod-period (mod-.)   Deincrement the number of windows in the master area","","-- quit, or restart","mod-Shift-q  Quit xmonad","mod-q        Restart xmonad","mod-[1..9]   Switch to workSpace N","","-- Workspaces & screens","mod-Shift-[1..9]   Move client to workspace N","mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3","mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3","","-- Mouse bindings: default actions bound to mouse events","mod-button1  Set the window to floating mode and move by dragging","mod-button2  Raise the window to the top of the stack","mod-button3  Set the window to floating mode and resize by dragging"]
+--EOF

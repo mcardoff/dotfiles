@@ -6,451 +6,11 @@
 # Your branch is up to date with 'origin/master'.
 #
 # Changes to be committed:
-#	modified:   .emacs
-#	new file:   .emacs.d/.local/etc/transient/history
-#	new file:   .emacs.d/auto-save-list/.saves-28467-mcard-ThinkPad~
-#	new file:   .emacs.d/elpa/archives/gnu/archive-contents
-#	new file:   .emacs.d/elpa/archives/gnu/archive-contents.signed
-#	new file:   .emacs.d/elpa/archives/melpa/archive-contents
-#	new file:   .emacs.d/elpa/async-20200113.1745/async-autoloads.el
-#	new file:   .emacs.d/elpa/async-20200113.1745/async-bytecomp.el
-#	new file:   .emacs.d/elpa/async-20200113.1745/async-bytecomp.elc
-#	new file:   .emacs.d/elpa/async-20200113.1745/async-pkg.el
-#	new file:   .emacs.d/elpa/async-20200113.1745/async.el
-#	new file:   .emacs.d/elpa/async-20200113.1745/async.elc
-#	new file:   .emacs.d/elpa/async-20200113.1745/dired-async.el
-#	new file:   .emacs.d/elpa/async-20200113.1745/dired-async.elc
-#	new file:   .emacs.d/elpa/async-20200113.1745/smtpmail-async.el
-#	new file:   .emacs.d/elpa/async-20200113.1745/smtpmail-async.elc
-#	new file:   .emacs.d/elpa/dash-20200524.1947/dash-autoloads.el
-#	new file:   .emacs.d/elpa/dash-20200524.1947/dash-pkg.el
-#	new file:   .emacs.d/elpa/dash-20200524.1947/dash.el
-#	new file:   .emacs.d/elpa/dash-20200524.1947/dash.elc
-#	new file:   .emacs.d/elpa/dash-20200524.1947/dash.info
-#	new file:   .emacs.d/elpa/dash-20200524.1947/dir
-#	new file:   .emacs.d/elpa/diminish-20191127.1326/diminish-autoloads.el
-#	new file:   .emacs.d/elpa/diminish-20191127.1326/diminish-pkg.el
-#	new file:   .emacs.d/elpa/diminish-20191127.1326/diminish.el
-#	new file:   .emacs.d/elpa/diminish-20191127.1326/diminish.elc
-#	new file:   .emacs.d/elpa/diminish-readme.txt
-#	new file:   .emacs.d/elpa/evil-20200718.842/dir
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-autoloads.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-command-window.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-command-window.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-commands.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-commands.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-common.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-common.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-core.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-core.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-development.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-development.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-digraphs.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-digraphs.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-ex.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-ex.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-integration.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-integration.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-jumps.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-jumps.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-keybindings.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-keybindings.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-macros.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-macros.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-maps.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-maps.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-pkg.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-repeat.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-repeat.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-search.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-search.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-states.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-states.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-types.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-types.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-vars.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil-vars.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil.el
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil.elc
-#	new file:   .emacs.d/elpa/evil-20200718.842/evil.info
-#	new file:   .emacs.d/elpa/evil-visual-mark-mode-20190116.1557/evil-visual-mark-mode-autoloads.el
-#	new file:   .emacs.d/elpa/evil-visual-mark-mode-20190116.1557/evil-visual-mark-mode-pkg.el
-#	new file:   .emacs.d/elpa/evil-visual-mark-mode-20190116.1557/evil-visual-mark-mode.el
-#	new file:   .emacs.d/elpa/evil-visual-mark-mode-20190116.1557/evil-visual-mark-mode.elc
-#	new file:   .emacs.d/elpa/flymake-easy-20140818.755/flymake-easy-autoloads.el
-#	new file:   .emacs.d/elpa/flymake-easy-20140818.755/flymake-easy-pkg.el
-#	new file:   .emacs.d/elpa/flymake-easy-20140818.755/flymake-easy.el
-#	new file:   .emacs.d/elpa/flymake-easy-20140818.755/flymake-easy.elc
-#	new file:   .emacs.d/elpa/flymake-haskell-multi-20170723.146/flymake-haskell-multi-autoloads.el
-#	new file:   .emacs.d/elpa/flymake-haskell-multi-20170723.146/flymake-haskell-multi-pkg.el
-#	new file:   .emacs.d/elpa/flymake-haskell-multi-20170723.146/flymake-haskell-multi.el
-#	new file:   .emacs.d/elpa/flymake-haskell-multi-20170723.146/flymake-haskell-multi.elc
-#	new file:   .emacs.d/elpa/flymake-haskell-multi-20170723.146/haskell_multi
-#	new file:   .emacs.d/elpa/flymake-hlint-20170723.146/flymake-hlint-autoloads.el
-#	new file:   .emacs.d/elpa/flymake-hlint-20170723.146/flymake-hlint-pkg.el
-#	new file:   .emacs.d/elpa/flymake-hlint-20170723.146/flymake-hlint.el
-#	new file:   .emacs.d/elpa/flymake-hlint-20170723.146/flymake-hlint.elc
-#	new file:   .emacs.d/elpa/git-commit-20200701.2112/git-commit-autoloads.el
-#	new file:   .emacs.d/elpa/git-commit-20200701.2112/git-commit-pkg.el
-#	new file:   .emacs.d/elpa/git-commit-20200701.2112/git-commit.el
-#	new file:   .emacs.d/elpa/git-commit-20200701.2112/git-commit.elc
-#	new file:   .emacs.d/elpa/gnupg/pubring.kbx
-#	new file:   .emacs.d/elpa/gnupg/pubring.kbx~
-#	new file:   .emacs.d/elpa/gnupg/trustdb.gpg
-#	new file:   .emacs.d/elpa/goto-chg-20200603.1911/goto-chg-autoloads.el
-#	new file:   .emacs.d/elpa/goto-chg-20200603.1911/goto-chg-pkg.el
-#	new file:   .emacs.d/elpa/goto-chg-20200603.1911/goto-chg.el
-#	new file:   .emacs.d/elpa/goto-chg-20200603.1911/goto-chg.elc
-#	new file:   .emacs.d/elpa/gruber-darker-theme-20200227.2238/gruber-darker-theme-autoloads.el
-#	new file:   .emacs.d/elpa/gruber-darker-theme-20200227.2238/gruber-darker-theme-pkg.el
-#	new file:   .emacs.d/elpa/gruber-darker-theme-20200227.2238/gruber-darker-theme.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/NEWS
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/dir
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/ghc-core.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/ghc-core.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/ghci-script-mode.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/ghci-script-mode.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-align-imports.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-align-imports.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-c2hs.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-c2hs.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-cabal.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-cabal.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-collapse.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-collapse.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-commands.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-commands.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-compile.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-compile.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-complete-module.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-complete-module.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-completions.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-completions.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-customize.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-customize.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-debug.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-debug.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-decl-scan.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-decl-scan.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-doc.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-doc.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-font-lock.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-font-lock.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-ghc-support.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-ghc-support.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-hoogle.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-hoogle.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-indent.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-indent.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-indentation.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-indentation.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-interactive-mode.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-interactive-mode.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-lexeme.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-lexeme.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-load.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-load.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-menu.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-menu.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-mode-autoloads.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-mode-pkg.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-mode.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-mode.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-mode.info
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-modules.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-modules.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-move-nested.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-move-nested.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-navigate-imports.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-navigate-imports.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-presentation-mode.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-presentation-mode.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-process.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-process.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-repl.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-repl.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-sandbox.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-sandbox.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-session.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-session.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-sort-imports.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-sort-imports.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-string.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-string.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-svg.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-svg.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-unicode-input-method.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-unicode-input-method.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-utils.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell-utils.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/haskell.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/highlight-uses-mode.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/highlight-uses-mode.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/inf-haskell.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/inf-haskell.elc
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/logo.svg
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/w3m-haddock.el
-#	new file:   .emacs.d/elpa/haskell-mode-20200531.2255/w3m-haddock.elc
-#	new file:   .emacs.d/elpa/hasklig-mode-20181110.1859/hasklig-mode-autoloads.el
-#	new file:   .emacs.d/elpa/hasklig-mode-20181110.1859/hasklig-mode-pkg.el
-#	new file:   .emacs.d/elpa/hasklig-mode-20181110.1859/hasklig-mode.el
-#	new file:   .emacs.d/elpa/hasklig-mode-20181110.1859/hasklig-mode.elc
-#	new file:   .emacs.d/elpa/hindent-20180518.902/hindent-autoloads.el
-#	new file:   .emacs.d/elpa/hindent-20180518.902/hindent-pkg.el
-#	new file:   .emacs.d/elpa/hindent-20180518.902/hindent.el
-#	new file:   .emacs.d/elpa/hindent-20180518.902/hindent.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/AUTHORS.md
-#	new file:   .emacs.d/elpa/magit-20200723.236/LICENSE
-#	new file:   .emacs.d/elpa/magit-20200723.236/dir
-#	new file:   .emacs.d/elpa/magit-20200723.236/git-rebase.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/git-rebase.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-apply.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-apply.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-autoloads.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-autorevert.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-autorevert.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-bisect.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-bisect.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-blame.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-blame.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-bookmark.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-bookmark.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-branch.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-branch.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-clone.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-clone.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-commit.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-commit.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-core.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-core.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-diff.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-diff.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-ediff.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-ediff.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-extras.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-extras.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-fetch.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-fetch.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-files.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-files.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-git.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-git.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-gitignore.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-gitignore.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-imenu.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-imenu.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-log.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-log.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-margin.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-margin.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-merge.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-merge.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-mode.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-mode.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-notes.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-notes.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-obsolete.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-obsolete.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-patch.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-patch.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-pkg.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-process.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-process.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-pull.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-pull.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-push.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-push.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-reflog.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-reflog.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-refs.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-refs.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-remote.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-remote.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-repos.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-repos.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-reset.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-reset.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-section.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-section.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-sequence.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-sequence.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-stash.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-stash.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-status.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-status.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-submodule.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-submodule.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-subtree.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-subtree.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-tag.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-tag.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-transient.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-transient.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-utils.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-utils.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-wip.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-wip.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-worktree.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit-worktree.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit.el
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit.elc
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit.info
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit.info-1
-#	new file:   .emacs.d/elpa/magit-20200723.236/magit.info-2
-#	new file:   .emacs.d/elpa/micgoline-20160415.326/micgoline-autoloads.el
-#	new file:   .emacs.d/elpa/micgoline-20160415.326/micgoline-pkg.el
-#	new file:   .emacs.d/elpa/micgoline-20160415.326/micgoline.el
-#	new file:   .emacs.d/elpa/micgoline-20160415.326/micgoline.elc
-#	new file:   .emacs.d/elpa/micgoline-readme.txt
-#	new file:   .emacs.d/elpa/move-text-20170909.330/move-text-autoloads.el
-#	new file:   .emacs.d/elpa/move-text-20170909.330/move-text-pkg.el
-#	new file:   .emacs.d/elpa/move-text-20170909.330/move-text.el
-#	new file:   .emacs.d/elpa/move-text-20170909.330/move-text.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-cycle-cursors.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-cycle-cursors.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-edit-lines.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-edit-lines.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-hide-unmatched-lines-mode.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-hide-unmatched-lines-mode.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-mark-more.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-mark-more.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-mark-pop.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-mark-pop.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-separate-operations.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/mc-separate-operations.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/multiple-cursors-autoloads.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/multiple-cursors-core.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/multiple-cursors-core.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/multiple-cursors-pkg.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/multiple-cursors.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/multiple-cursors.elc
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/rectangular-region-mode.el
-#	new file:   .emacs.d/elpa/multiple-cursors-20191210.1759/rectangular-region-mode.elc
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/icons/close.xpm
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/icons/leaf.xpm
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/icons/open.xpm
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/neotree-autoloads.el
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/neotree-pkg.el
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/neotree.el
-#	new file:   .emacs.d/elpa/neotree-20200324.1946/neotree.elc
-#	new file:   .emacs.d/elpa/org-bullets-20200317.1740/org-bullets-autoloads.el
-#	new file:   .emacs.d/elpa/org-bullets-20200317.1740/org-bullets-pkg.el
-#	new file:   .emacs.d/elpa/org-bullets-20200317.1740/org-bullets.el
-#	new file:   .emacs.d/elpa/org-bullets-20200317.1740/org-bullets.elc
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline-autoloads.el
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline-pkg.el
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline-separators.el
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline-separators.elc
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline-themes.el
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline-themes.elc
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline.el
-#	new file:   .emacs.d/elpa/powerline-20200105.2053/powerline.elc
-#	new file:   .emacs.d/elpa/rich-minority-20190419.1136/rich-minority-autoloads.el
-#	new file:   .emacs.d/elpa/rich-minority-20190419.1136/rich-minority-pkg.el
-#	new file:   .emacs.d/elpa/rich-minority-20190419.1136/rich-minority.el
-#	new file:   .emacs.d/elpa/rich-minority-20190419.1136/rich-minority.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-autoloads.el
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-dark-theme.el
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-dark-theme.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-light-theme.el
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-light-theme.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-pkg.el
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-respectful-theme.el
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line-respectful-theme.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line.el
-#	new file:   .emacs.d/elpa/smart-mode-line-20190527.1156/smart-mode-line.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-powerline-theme-20160706.38/smart-mode-line-light-powerline-theme.el
-#	new file:   .emacs.d/elpa/smart-mode-line-powerline-theme-20160706.38/smart-mode-line-light-powerline-theme.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-powerline-theme-20160706.38/smart-mode-line-powerline-theme-autoloads.el
-#	new file:   .emacs.d/elpa/smart-mode-line-powerline-theme-20160706.38/smart-mode-line-powerline-theme-pkg.el
-#	new file:   .emacs.d/elpa/smart-mode-line-powerline-theme-20160706.38/smart-mode-line-powerline-theme.el
-#	new file:   .emacs.d/elpa/smart-mode-line-powerline-theme-20160706.38/smart-mode-line-powerline-theme.elc
-#	new file:   .emacs.d/elpa/smart-mode-line-readme.txt
-#	new file:   .emacs.d/elpa/smex-20151212.2209/smex-autoloads.el
-#	new file:   .emacs.d/elpa/smex-20151212.2209/smex-pkg.el
-#	new file:   .emacs.d/elpa/smex-20151212.2209/smex.el
-#	new file:   .emacs.d/elpa/smex-20151212.2209/smex.elc
-#	new file:   .emacs.d/elpa/spotify-20200615.1418/spotify-autoloads.el
-#	new file:   .emacs.d/elpa/spotify-20200615.1418/spotify-pkg.el
-#	new file:   .emacs.d/elpa/spotify-20200615.1418/spotify.el
-#	new file:   .emacs.d/elpa/spotify-20200615.1418/spotify.elc
-#	new file:   .emacs.d/elpa/spotify-readme.txt
-#	new file:   .emacs.d/elpa/transient-20200719.955/dir
-#	new file:   .emacs.d/elpa/transient-20200719.955/transient-autoloads.el
-#	new file:   .emacs.d/elpa/transient-20200719.955/transient-pkg.el
-#	new file:   .emacs.d/elpa/transient-20200719.955/transient.el
-#	new file:   .emacs.d/elpa/transient-20200719.955/transient.elc
-#	new file:   .emacs.d/elpa/transient-20200719.955/transient.info
-#	new file:   .emacs.d/elpa/undo-tree-0.7.4/undo-tree-autoloads.el
-#	new file:   .emacs.d/elpa/undo-tree-0.7.4/undo-tree-pkg.el
-#	new file:   .emacs.d/elpa/undo-tree-0.7.4/undo-tree.el
-#	new file:   .emacs.d/elpa/undo-tree-0.7.4/undo-tree.elc
-#	new file:   .emacs.d/elpa/with-editor-20200720.2014/dir
-#	new file:   .emacs.d/elpa/with-editor-20200720.2014/with-editor-autoloads.el
-#	new file:   .emacs.d/elpa/with-editor-20200720.2014/with-editor-pkg.el
-#	new file:   .emacs.d/elpa/with-editor-20200720.2014/with-editor.el
-#	new file:   .emacs.d/elpa/with-editor-20200720.2014/with-editor.elc
-#	new file:   .emacs.d/elpa/with-editor-20200720.2014/with-editor.info
-#	new file:   .emacs.d/ido.last
-#	new file:   .emacs.d/smex-items
-#	new file:   .emacs_saves/!etc!wpa_supplicant.conf~
-#	new file:   .emacs_saves/!home!mcard!.bashrc~
-#	new file:   .emacs_saves/!home!mcard!.bin!.xmonad-session-rc~
-#	new file:   .emacs_saves/!home!mcard!.bin!ascii!reverse.txt~
-#	new file:   .emacs_saves/!home!mcard!.bin!ascii!winnin.txt~
-#	new file:   .emacs_saves/!home!mcard!.bin!essid.sh~
-#	new file:   .emacs_saves/!home!mcard!.bin!oldxmo!.xmonad!xpm!xmonadbak.hs~
-#	new file:   .emacs_saves/!home!mcard!.bin!sound.sh~
-#	new file:   .emacs_saves/!home!mcard!.bin!test.sh~
-#	new file:   .emacs_saves/!home!mcard!.bin!wireless.sh~
-#	new file:   .emacs_saves/!home!mcard!.config!gtk-3.0!settings.ini~
-#	new file:   .emacs_saves/!home!mcard!.config!xmobar!xmobarrc~
-#	new file:   .emacs_saves/!home!mcard!.emacs.d!elpa!gruber-darker-theme-20200227.2238!gruber-darker-theme.el~
-#	new file:   .emacs_saves/!home!mcard!.emacs.d!ido.last~
-#	new file:   .emacs_saves/!home!mcard!.emacs~
-#	new file:   .emacs_saves/!home!mcard!.git!COMMIT_EDITMSG~
-#	new file:   .emacs_saves/!home!mcard!.gitconfig~
-#	new file:   .emacs_saves/!home!mcard!.gtkrc-2.0~
-#	new file:   .emacs_saves/!home!mcard!.xmonad!xmonad.hs~
-#	new file:   .emacs_saves/!home!mcard!.xmonad!xpm!ascii.txt~
-#	new file:   .emacs_saves/!home!mcard!.xmonad!xpm!gotem.txt~
-#	new file:   .emacs_saves/!home!mcard!Haskell!First_Principles!Chapter_1.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!First_Principles!Chapter_1_Lit.lhs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!First_Principles!Chapter_3.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!First_Principles!Chapter_4.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!First_Principles!Fum.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!HTMLParser!Parser.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!HTMLParser!htmlParser.org~
-#	new file:   .emacs_saves/!home!mcard!Haskell!Parser!Parser.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!Test!CartProd.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!Test!Fun.hs~
-#	new file:   .emacs_saves/!home!mcard!Haskell!haskell!.git!COMMIT_EDITMSG~
-#	new file:   .emacs_saves/!home!mcard!Haskell!haskell-mode-probe!Main.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!First_Principles!Chapter_6.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!First_Principles!Chapter_7.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!First_Principles!Chapter_8.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!First_Principles!Chapter_9.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!HackerRank!DayOfProgrammer.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!HackerRank!DivisibleSumPairs.hs~
-#	new file:   .emacs_saves/!home!mcard!haskell!HackerRank!MigratoryBirds.hs~
-#	new file:   .emacs_saves/!home!mcard!school!HUM SOC!PS200!Exams!Exam1.tex~
-#	new file:   .emacs_saves/!home!mcard!school!HUM SOC!PS200!Exams!Exam2.tex~
-#	new file:   .emacs_saves/!home!mcard!school!HUM SOC!PS200!Notes.org~
-#	new file:   .emacs_saves/!home!mcard!school!HUM SOC!PS200!Papers!Shih_Chang_Chen.tex~
-#	new file:   .emacs_saves/!home!mcard!school!HUM SOC!PSYC303!Notes.org~
-#	new file:   .emacs_saves/!home!mcard!school!HUM SOC!PSYC303!Notes.tex~
-#	new file:   .emacs_saves/!home!mcard!school!Research!mie theory!Niobium.nb~
-#	new file:   .emacs_saves/!home!mcard!school!Research!mie theory!aux_funcs.py~
-#	new file:   .emacs_saves/!home!mcard!school!Research!mie theory!csvInterp.m~
-#	new file:   .emacs_saves/!home!mcard!school!Research!mie theory!mie-improved.py~
-#	new file:   .emacs_saves/!home!mcard!school!Research!mie theory!todo.org~
-#	new file:   .emacs_saves/!home!mcard!school!mie theory!aux_funcs.py~
-#	new file:   .emacs_saves/!home!mcard!school!mie theory!mie-improved.py~
-#	new file:   .emacs_saves/!home!mcard!school!mie theory!todo.org~
-#	new file:   .emacs_saves/!usr!share!applications!xmonad.desktop~
-#	modified:   .xmonad/xmonad-x86_64-linux
 #	modified:   .xmonad/xmonad.hs
+#
+# Changes not staged for commit:
+#	modified:   .emacs_saves/!home!mcard!.git!COMMIT_EDITMSG~
+#	modified:   .xmonad/xmonad-x86_64-linux
 #	modified:   .xmonad/xmonad.o
 #
 # Untracked files:
@@ -462,13 +22,28 @@
 #	.bash_history
 #	.bash_logout
 #	.bashrc.bak
+#	.bin/changevol.sh
+#	.bin/getsink.sh
+#	.bin/mutevol.sh
 #	.cabal/
 #	.cache/
 #	.cargo/
 #	.cinnamon/
 #	.config/
 #	.dmrc
-#	.emacs~
+#	.emacs-profile
+#	.emacs-profiles.el~
+#	.emacs.d/transient/
+#	.emacs_saves/!home!mcard!.bin!changevol.sh~
+#	.emacs_saves/!home!mcard!.bin!getsink.sh~
+#	.emacs_saves/!home!mcard!.bin!mutevol.sh~
+#	.emacs_saves/!home!mcard!.emacs-profiles.el~
+#	.emacs_saves/!home!mcard!.ssh!config~
+#	.emacs_saves/!home!mcard!regmacs!.emacs.d!ido.last~
+#	.emacs_saves/!home!mcard!regmacs!.emacs.d!init.el~
+#	.emacs_saves/!home!mcard!school!Research!mie theory!LagrangePolynomial.m~
+#	.emacs_saves/!home!mcard!school!Research!mie theory!LargrangePolynomial.m~
+#	.emacs_saves/!home!mcard!school!Research!mie theory!interpolate.m~
 #	.ghc/
 #	.git-credentials
 #	.gitconfig
@@ -476,6 +51,7 @@
 #	.gtkrc-2.0
 #	.gtkrc-xfce
 #	.icons/
+#	.ipython/
 #	.linuxmint/
 #	.local/
 #	.mozilla/
@@ -483,13 +59,14 @@
 #	.pki/
 #	.profile
 #	.python_history
+#	.sage/
+#	.ssh/
 #	.stack/
 #	.sudo_as_admin_successful
 #	.viminfo
 #	.wget-hsts
 #	.xinitrc
 #	.xinputrc
-#	.xmonad/xmobarrc.hs
 #	.xsession-errors
 #	.xsession-errors.old
 #	.xsettingsd
@@ -497,7 +74,12 @@
 #	Downloads/
 #	Pictures/
 #	adobe.deb
+#	chemacs/
+#	doomacs/
 #	haskell/
+#	org-basics.org
+#	regmacs/
 #	school/
 #	snap/
+#	vimstuff.org
 #
