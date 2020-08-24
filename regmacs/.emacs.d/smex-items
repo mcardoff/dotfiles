@@ -1,0 +1,48 @@
+
+;; ----- smex-history -----
+(
+ magit
+ ispell
+ describe-key
+ visual-line-mode
+ auto-fill-mode
+ shell
+ company-mode
+)
+
+;; ----- smex-data -----
+(
+ (list-packages . 11)
+ (package-install . 4)
+ (sml/apply-theme . 1)
+ (powerline-center-evil-theme . 1)
+ (evil-mode . 4)
+ (hs-hide-all . 1)
+ (hs-minor-mode . 2)
+ (diminish . 4)
+ (load-file . 3)
+ (list-faces-display . 2)
+ (list-colors-display . 1)
+ (dired-jump . 1)
+ (octave-mode . 3)
+ (run-octave . 2)
+ (dired . 1)
+ (magit . 5)
+ (rmail . 1)
+ (rmail-show-message . 1)
+ (ispell . 4)
+ (reddit-browser . 3)
+ (visual-line-mode . 4)
+ (package-list-packages . 1)
+ (eww . 1)
+ (auto-fill-mode . 3)
+ (rich-minority-mode . 1)
+ (customize-group . 1)
+ (haskell-interactive-bring . 1)
+ (mkdir . 1)
+ (spotify-current . 1)
+ (describe-key . 2)
+ (replace-string . 13)
+ (company-mode . 1)
+ (shell . 1)
+)

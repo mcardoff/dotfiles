@@ -1,0 +1,628 @@
+Ilka Agricola
+Rudolf Ahlswede
+Wilhelm Ahrens
+Oskar Anderson
+Karl Apfelbacher
+Philipp Apian
+Petrus Apianus
+Michael Artin
+Günter Asser
+Bruno Augenstein
+Georg Aumann
+Isaak Bacharach
+Paul Gustav Heinrich Bachmann
+Reinhold Baer
+Christian Bär
+Wolf Barth
+Friedrich L. Bauer
+August Beer
+Walter Benz
+Rudolf Berghammer
+Felix Bernstein
+Ludwig Berwald
+Karl Bobek
+Friedrich Böhm
+Oskar Bolza
+Karl-Heinz Boseck
+Hermann Bottenbruch
+Benjamin Bramer
+Andreas Brandstädt
+Heinrich Brandt
+Richard Brauer
+Hel Braun
+Alexander von Brill
+Adolf Ferdinand Wenceslaus Brix
+Max Brückner
+Bruno von Freytag-Löringhoff
+Heinrich Bruns
+Roland Bulirsch
+Johann Karl Burckhardt
+Heinrich Burkhardt
+Hans Heinrich Bürmann
+Georg Cantor
+Constantin Carathéodory
+Wilhelm Cauer
+Ludolph van Ceulen
+Otfried Cheong
+David Christiani
+Christopher Clavius
+Stephan Cohn-Vossen
+Paul Cohn
+Armin B. Cremers
+Peter Crüger
+Richard Dedekind
+Richard Dedekind
+Herbert von Denffer
+Christopher Deninger
+Otto Dersch
+Max Deuring
+Anton Deusing
+Wolfgang Doeblin
+Gustav Doetsch
+Andreas Dress
+Heinz-Dieter Ebbinghaus
+Carl Gottlieb Ehler
+Martin Eichler
+Lorentz Eichstadt
+Kirsten Eisenträger
+Joachim Engel
+Karin Erdmann
+Andreas von Ettingshausen
+Johann Faulhaber
+Gustav Fechner
+Dmitry Feichtner-Kozlov
+Käte Fenchel
+Paul Finsler
+Felix Finster
+Bernd Fischer
+Hans Fitting
+Andreas Floer
+W. Frahm
+Wilhelm von Freeden
+Gottlob Frege
+Gerhard Frey
+Robert Fricke
+Robert Frucht
+Wolfgang Heinrich Johannes Fuchs
+Joseph Furttenbach
+Philipp Furtwängler
+Carl Friedrich Gauss
+David Gans
+Nina Gantert
+Harald Garcke
+Joachim von zur Gathen
+Gerhard Geise
+Heide Gluesing-Luerssen
+Johannes von Gmunden
+Christian Goldbach
+Kurt Gödel
+Adolph Göpel
+Rudolf Gorenflo
+Lothar Göttsche
+Hermann Grassmann
+Heinrich Friedrich Gretschel
+Michael Griebel
+Martin Grötschel
+Detlef Gromoll
+Wolfgang Hackbusch
+Wolfgang Hahn
+Rudolf Halin
+Ursula Hamenstädt
+Johannes Hancke
+Wolfgang Händler
+Hermann Hankel
+Raphael Levi Hannover
+Carl Gustav Axel Harnack
+Paul Harzer
+Maria Hasse
+Felix Hausdorff
+Eduard Heine
+Dieter Held
+Kurt Hensel
+Ferdinand Ernst Karl Herberstein
+Maximilian Herzberger
+Edmund Hess
+Karl Hessenberg
+David Hilbert
+Friedrich Hirzebruch
+Eberhard Hopf
+Heinz Hopf
+Jakob Horn
+Günter Hotz
+Annette Huber-Klawitter
+Klaus Hulek
+Gerhard Hund
+Adolf Hurwitz
+Ilse Ipsen
+Caspar Isenkrahe
+Carl Gustav Jacob Jacobi
+Eugen Jahnke
+Ferdinand Joachimsthal
+Johann Lantz
+Philipp von Jolly
+Wilhelm Jordan
+Jürgen Jost
+Joachim Jungius
+Erich Kähler
+Margarete Kahn
+Gabriele Kaiser
+Theodor Kaluza
+Erich Kamke
+Ralph Kaufmann
+Julia Kempe
+Johannes Kepler
+Felix Klein
+Alfred Kneschke
+Hellmuth Kneser
+Martin Kneser
+Herbert Koch
+Karl-Rudolf Koch
+Rudolf Kochendörffer
+Leo Königsberger
+Gottfried Köthe
+Ernst Kötter
+Gerhard Kowalewski
+Leopold Kronecker
+Johann Heinrich Louis Krüger
+Ulrich Kulisch
+Georg Landsberg
+Karl Christian von Langsdorf
+Wilhelm Leber
+Gottfried Wilhelm Leibniz
+Kurt Leichtweiss
+Wolfgang Leinberer
+Thomas Lengauer
+Heinrich-Wolfgang Leopoldt
+Jacob Leupold
+Ferdinand von Lindemann
+Rudolf Lipschitz
+Peter Littelmann
+Martin Löb
+Alfred Loewy
+Paul Lorenzen
+Leopold Löwenheim
+Yuri Luchko
+Wolfgang Lück
+Stephan Luckhaus
+Günter Lumer
+Jacob Lüroth
+Michael Maestlin
+Paul Mahlo
+Helmut Maier
+Hans Carl Friedrich von Mangoldt
+Yuri Manin
+Jens Marklof
+Johannes Marquart
+Christian Gustav Adolph Mayer
+Johann Tobias Mayer
+Ernst Mayr
+Gustav Ferdinand Mehler
+Ludwig Mehlhorn
+Nicholas Mercator
+Franz Mertens
+Uta Merzbach
+Richard Meyer
+Preda Mihăilescu
+Hermann Minkowski
+Otfrid Mittmann
+August Ferdinand Möbius
+Arnold Möller
+Karl Mollweide
+Robert Edouard Moritz
+Jürgen Moser
+Ruth Moufang
+John Müller
+Stefan Müller
+Werner Müller
+Herman Müntz
+Valentin Naboth
+Frank Natterer
+Gabriele Nebe
+Leonard Nelson
+Eugen Netto
+Jürgen Neukirch
+Carl Neumann
+Hanna Neumann
+Walter Neumann
+Mara Neusel
+Nicholas of Cusa
+Carsten Niebuhr
+Hans-Volker Niemeier
+Barbara Niethammer
+Joachim Nitsche
+Georg Nöbeling
+Emmy Noether
+Fritz Noether
+Max Noether
+Frieda Nugel
+Adam Olearius
+Friedrich Wilhelm Opelt
+Volker Oppitz
+Felix Otto
+Moritz Pasch
+Heinz-Otto Peitgen
+Rose Peltesohn
+Oskar Perron
+Fritz Peter
+Stefanie Petermichl
+Hans Petersson
+Carl Adam Petri
+Johann Wilhelm Andreas Pfaff
+Michael Pfannkuche
+Albrecht Pfister
+Adolf Piltz
+Julius Plücker
+Leo August Pochhammer
+Burkard Polster
+Johannes Praetorius
+William Prager
+Alfred Pringsheim
+Heinz Prüfer
+Friedrich Prym
+Georg Friedrich Bernhard Riemann
+Rodolphe Radau
+Thomas von Randow
+Michael Rapoport
+Regiomontanus
+Karin Reich
+Julius Reichelt
+Hermann of Reichenau
+Kurt Reidemeister
+Christian Reiher
+Nicolaus Reimers
+Erasmus Reinhold
+Michel Reiss
+Eric Reissner
+Roberet Remak
+Reinhold Remmert
+Lasse Rempe-Gillen
+Theodor Reye
+Hans-Egon Richert
+Michael M. Richter
+Bernhard Riemann
+Adam Ries
+Willi Rinow
+Abraham Robinson
+Michael Röckner
+Werner Wolfgang Rogosinski
+Karl Rohn
+Helmut Röhrl
+Alex F. T. W. Rosenberg
+Johann Georg Rosenhain
+Arthur Rosenthal
+Markus Rost
+Heinrich August Rothe
+Thomas Royen
+Ferdinand Rudio
+Christoph Rudolff
+Carl David Tolmé Runge
+Iris Runge
+Hans Samelson
+Björn Sandstede
+Lisa Sauermann
+Mathias Schacht
+Helmut H. Schaefer
+Friedrich Wilhelm Schäfke
+Paul Schatz
+Arnd Scheel
+Georg Scheffers
+Adolf Schepp
+Heinrich Scherk
+Otto Schilling
+Victor Schlegel
+Ludwig Schlesinger
+Oscar Schlömilch
+Wilfried Schmid
+Friedrich Karl Schmidt
+Gunther Schmidt
+Theodor Schneider
+Claus P. Schnorr
+Eckehard Schöll
+Arnold Scholz
+Heinrich Scholz
+Peter Scholze
+Johannes Schöner
+Arnold Schönhage
+Erich Schönhardt
+Gaspar Schott
+Martin Schottenloher
+Hieronymus Schreiber
+Ernst Schröder
+Heinrich G. F. Schröder
+Heinrich Schröter
+Karl Schröter
+Hermann Schubert
+Horst Schubert
+Johann Friedrich Schultz
+Friedrich Schur
+Issai Schur
+Edmund Schuster
+Christof Schütte
+Kurt Schütte
+Hermann Schwarz
+Daniel Schwenter
+Hans Schwerdtfeger
+Christoph Scriba
+Paul Scriptoris
+Karl Seebach
+Paul Seidel
+Wladimir Seidel
+Herbert Seifert
+Reinhard Selten
+Bernd Siebert
+Carl Ludwig Siegel
+Max Simon
+Peter Slodowy
+Hans Sommer
+Wilhelm Specht
+Emanuel Sperner
+Theodor Spieker
+Herbert Spohn
+Roland Sprague
+Ludwig Staiger
+Simon von Stampfer
+Angelika Steger
+Karl Stein
+Carl August von Steinheil
+Ernst Steinitz
+Moritz Abraham Stern
+Michael Stifel
+Johannes Stöffler
+Josef Stoer
+Uwe Storch
+Volker Strassen
+Reinhold Strassmann
+Aegidius Strauch II
+Karl Strehl
+Thomas Streicher
+Catharina Stroppel
+Michael Struwe
+Eduard Study
+Ulrich Stuhler
+Friedrich Otto Rudolf Sturm
+Johann Sturm
+Karl-Theodor Sturm
+Bernd Sturmfels
+Wilhelm Süss
+John M. Sullivan
+Rosalind Tanner
+Georg Tannstetter
+Oswald Teichmüller
+Bernhard Friedrich Thibaut
+Carl Johannes Thomae
+Gerhard Thomsen
+William Threlfall
+Ulrike Tillmann
+Heinrich Emil Timerding
+Otto Toeplitz
+Johann Georg Tralles
+Abdias Treu
+Walter Trump
+Ehrenfried Walther von Tschirnhaus
+Reidun Twarock
+Dietrich Tzwyvel
+Nicolas Guisnée
+Helmut Ulm
+Theodor Vahlen
+Rüdiger Valk
+Wilhelm Vauck
+Hermann Vermeil
+Eva Viehmann
+Eckart Viehweg
+Vitello
+Kurt Vogel
+Arndt von Haeseler
+Klaus Wagner
+Manfred Wagner
+Friedhelm Waldhausen
+Marion Walter
+Friedrich Heinrich Albert Wangerin
+Eduard Ritter von Weber
+Heinrich Martin Weber
+Werner Weber
+Katrin Wehrheim
+Dieter Weichert
+Joachim Weickert
+Karl Weierstrass
+Erhard Weigel
+Julius Weingarten
+Michael Weiss
+Paul Weiss
+Ernst August Weiß
+Katrin Wendland
+Elisabeth M. Werner
+Johannes Werner
+Hermann Weyl
+Johannes Widmann
+Arthur Wieferich
+Helmut Wielandt
+Anna Wienhard
+Hermann Wilken
+Rudolf Wille
+Thomas Willwacher
+Ernst Eduard Wiltheiss
+Ernst Witt
+Alexander Witting
+Franz Woepcke
+Barbara Wohlmuth
+Paul Wolfskehl
+Hans Wussing
+Peter Wynn
+Hans Zassenhaus
+Julius August Christoph Zech
+Christian Zeller
+Karl Longin Zeller
+Christoph Zenger
+Sarah Zerbes
+Ernst Zermelo
+Karl Eduard Zetzsche
+Günter M. Ziegler
+Heiner Zieschang
+Johann Jacob Zimmermann
+Thomas Zink
+Howard Hathaway Aiken
+James W. Alexander II
+John V. Atanasoff
+Benjamin Banneker
+Eric Temple Bell
+George David Birkhoff
+Gilbert Ames Bliss
+Maxime Bôcher
+Salomon Bochner
+Nathaniel Bowditch
+Richard Dagobert Brauer
+Ernest William Brown
+Florian Cajori
+Shiing-shen Chern
+Alonzo Church
+John Cocke
+Paul Joseph Cohen
+James S. Coleman
+Julian Lowell Coolidge
+Richard Courant
+Haskell Brooks Curry
+George Dantzig
+Tobias Dantzig
+Leonard Eugene Dickson
+Jesse Douglas
+Etta Zuber Falconer
+Charles Louis Fefferman
+Michael Hartley Freedman
+Kurt Gödel
+Evelyn Granville
+Richard Wesley Hamming
+Juris Varlejs Hartmanis
+Herbert A. Hauptman
+Euphemia Lofton Haynes
+John Henry Holland
+Grace Hopper
+Jerome Karle
+Theodore von Kármán
+Richard Manning Karp
+John George Kemeny
+Arthur Edwin Kennelly
+Stephen Cole Kleene
+Donald Ervin Knuth
+Peter Lax
+Edward Lorenz
+Saunders Mac Lane
+Benoit Mandelbrot
+Max Mason
+John McCarthy
+Curtis McMullen
+John Willard Milnor
+Marvin Minsky
+Richard von Mises
+John F. Nash, Jr.
+Simon Newcomb
+James Roy Newman
+Jerzy Neyman
+Louis Nirenberg
+Benjamin Peirce
+Daniel Gray Quillen
+Dana Stewart Scott
+Claude Shannon
+Lloyd Shapley
+Isadore Manuel Singer
+Joseph Slepian
+Stephen Smale
+Richard Edwin Stearns
+Charles Proteus Steinmetz
+George Robert Stibitz
+Alfred Tarski
+John Tate
+John Griggs Thompson
+William Paul Thurston
+Stanislaw Marcin Ulam
+Francis Robbins Upton
+John H. Van Vleck
+Oswald Veblen
+Warren Weaver
+Hermann Weyl
+Norbert Wiener
+Dorothy Maud Wrinch
+Shing-Tung Yau
+Antoni Zygmund
+John von Neumann
+John Couch Adams
+Michael Francis Atiyah
+Charles Babbage
+Roger Bacon
+Alan Baker
+Peter Barlow
+Roger Bacon
+Isaac Barrow
+Thomas Bayes
+Eric Temple Bell
+Hermann Bondi
+George Boole
+Richard Ewen Borcherds
+Thomas Bradwardine
+Henry Briggs
+Jacob Bronowski
+Ernest William Brown
+Arthur Cayley
+William Kingdon Clifford
+Edward Cocker
+Edward Thomas Copson
+Augustus De Morgan
+John Dee
+Simon Kirwan Donaldson
+Arthur Stanley Eddington
+Andrew Russell Forsyth
+William Timothy Gowers
+John Greaves
+George Green
+James Gregory
+Edmund Gunter
+John Hadley
+Chester Moor Hall
+Edmond Halley
+Godfrey Harold Hardy
+Thomas Harriot
+Douglas R. Hartree
+John Herschel
+William Hodge
+Eaton Hodgkinson
+William George Horner
+Fred Hoyle
+James Jeans
+William Thomson Kelvin
+Ada King
+Horace Lamb
+John Landen
+James Lighthill
+Augustus Edward Hough Love
+John Machin
+Colin Maclaurin
+Edward Arthur Milne
+David Bryant Mumford
+John Napier
+Isaac Newton
+William Oughtred
+Karl Pearson
+Roger Penrose
+John Playfair
+John A. Pople
+Robert Recorde
+Benjamin Robins
+Klaus Friedrich Roth
+Bertrand Russell
+James Stirling
+George Gabriel Stokes
+James Joseph Sylvester
+Peter Guthrie Tait
+Brook Taylor
+Edward Charles Titchmarsh
+Alan Turing
+Herbert Westren Turnbull
+John Wallis
+Edward Waring
+William Whiston
+Alfred North Whitehead
+Henry Whitehead
+Edmund Taylor Whittaker
+Andrew John Wiles
+James H. Wilkinson
+Stephen Wolfram
+Dorothy Maud Wrinch

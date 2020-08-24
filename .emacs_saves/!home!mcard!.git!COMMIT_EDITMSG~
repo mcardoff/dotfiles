@@ -6,17 +6,31 @@
 # Your branch is up to date with 'origin/master'.
 #
 # Changes to be committed:
-#	modified:   .xmonad/xmonad.hs
-#
-# Changes not staged for commit:
+#	modified:   .bashrc
+#	deleted:    .bin/#grep#
+#	modified:   .bin/sound.sh
+#	modified:   .bin/wireless.sh
+#	modified:   .doom.d/config.el
+#	modified:   .doom.d/init.el
+#	modified:   .doom.d/packages.el
+#	modified:   .emacs-profiles.el
 #	modified:   .emacs_saves/!home!mcard!.git!COMMIT_EDITMSG~
+#	modified:   .emacs_saves/!home!mcard!school!HUM SOC!PS200!Papers!Shih_Chang_Chen.tex~
+#	modified:   .emacs_saves/!home!mcard!school!HUM SOC!PSYC303!Notes.org~
+#	modified:   .emacs_saves/!home!mcard!school!Research!mie theory!aux_funcs.py~
+#	modified:   .emacs_saves/!home!mcard!school!Research!mie theory!mie-improved.py~
+#	modified:   .xmonad/xmobarrc.hs
 #	modified:   .xmonad/xmonad-x86_64-linux
+#	modified:   .xmonad/xmonad.hi
+#	modified:   .xmonad/xmonad.hs
 #	modified:   .xmonad/xmonad.o
 #
 # Untracked files:
 #	#&#
+#	#out.txt#
 #	.ICEauthority
 #	.Xauthority
+#	.Xresources
 #	.adobe/
 #	.aptitude/
 #	.bash_history
@@ -24,6 +38,8 @@
 #	.bashrc.bak
 #	.bin/changevol.sh
 #	.bin/getsink.sh
+#	.bin/math/
+#	.bin/mathematicians.sh
 #	.bin/mutevol.sh
 #	.cabal/
 #	.cache/
@@ -31,27 +47,56 @@
 #	.cinnamon/
 #	.config/
 #	.dmrc
+#	.doom.d/custom.el
 #	.emacs-profile
 #	.emacs-profiles.el~
+#	.emacs.d/auto-save-list/
 #	.emacs.d/transient/
 #	.emacs_saves/!home!mcard!.bin!changevol.sh~
 #	.emacs_saves/!home!mcard!.bin!getsink.sh~
+#	.emacs_saves/!home!mcard!.bin!math!mathematicians.txt~
+#	.emacs_saves/!home!mcard!.bin!mathmeticians.sh~
+#	.emacs_saves/!home!mcard!.bin!mathotd.sh~
 #	.emacs_saves/!home!mcard!.bin!mutevol.sh~
+#	.emacs_saves/!home!mcard!.bin!test.py~
+#	.emacs_saves/!home!mcard!.config!powerline-shell!config.json~
+#	.emacs_saves/!home!mcard!.config!ranger!rc.conf~
+#	.emacs_saves/!home!mcard!.config!ranger!rifle.conf~
+#	.emacs_saves/!home!mcard!.config!reddio!config~
 #	.emacs_saves/!home!mcard!.emacs-profiles.el~
 #	.emacs_saves/!home!mcard!.ssh!config~
+#	.emacs_saves/!home!mcard!cpp!main.cpp~
+#	.emacs_saves/!home!mcard!cpp!test.cpp~
+#	.emacs_saves/!home!mcard!haskell!Calculator!Calculator.hs~
+#	.emacs_saves/!home!mcard!haskell!Calculator!Parser.hs~
+#	.emacs_saves/!home!mcard!haskell!HTMLFilter.hs~
+#	.emacs_saves/!home!mcard!haskell!dump!ToPython.hs~
+#	.emacs_saves/!home!mcard!haskell!haskell-graph!Graph.org~
+#	.emacs_saves/!home!mcard!haskell!haskell-graph!Main.hs~
+#	.emacs_saves/!home!mcard!haskell!haskell-graph!Stuff.hs~
+#	.emacs_saves/!home!mcard!haskell!haskell-graph!graph.hs~
+#	.emacs_saves/!home!mcard!haskell!wsprobe!WXTest.hs~
 #	.emacs_saves/!home!mcard!regmacs!.emacs.d!ido.last~
 #	.emacs_saves/!home!mcard!regmacs!.emacs.d!init.el~
+#	.emacs_saves/!home!mcard!school!HUM SOC!PS200!Exams!Exam3.tex~
+#	.emacs_saves/!home!mcard!school!HUM SOC!PS200!Papers!Zingher.tex~
+#	.emacs_saves/!home!mcard!school!HUM SOC!PSYC303!Essay.org~
+#	.emacs_saves/!home!mcard!school!HUM SOC!PSYC303!Essay.tex~
 #	.emacs_saves/!home!mcard!school!Research!mie theory!LagrangePolynomial.m~
 #	.emacs_saves/!home!mcard!school!Research!mie theory!LargrangePolynomial.m~
 #	.emacs_saves/!home!mcard!school!Research!mie theory!interpolate.m~
+#	.emacs_saves/!home!mcard!school!Research!mie theory!temp.temp~
 #	.ghc/
+#	.gimp-2.8/
 #	.git-credentials
 #	.gitconfig
 #	.gnupg/
 #	.gtkrc-2.0
 #	.gtkrc-xfce
+#	.hoogle/
 #	.icons/
 #	.ipython/
+#	.keystrings
 #	.linuxmint/
 #	.local/
 #	.mozilla/
@@ -60,26 +105,47 @@
 #	.profile
 #	.python_history
 #	.sage/
+#	.selected_editor
+#	.spacemacs
 #	.ssh/
 #	.stack/
 #	.sudo_as_admin_successful
+#	.surf/
+#	.thumbnails/
+#	.vim/
 #	.viminfo
 #	.wget-hsts
 #	.xinitrc
 #	.xinputrc
+#	.xmonad/prompt-history
+#	.xournal/
 #	.xsession-errors
 #	.xsession-errors.old
 #	.xsettingsd
 #	2020-07-17-205538_1920x1080_scrot.png
+#	2020-08-01-010736_1920x1080_scrot.png
+#	2020-08-01-010835_1920x1080_scrot.png
+#	2020-08-01-010926_1920x1080_scrot.png
+#	Calibre Library/
+#	Documents/
 #	Downloads/
 #	Pictures/
+#	[a]
 #	adobe.deb
+#	bashtop/
 #	chemacs/
+#	cpp/
+#	dmenu/
 #	doomacs/
 #	haskell/
+#	notes.xoj
 #	org-basics.org
+#	out.txt
+#	ranger
+#	reddio/
 #	regmacs/
 #	school/
 #	snap/
+#	spacemacs/
 #	vimstuff.org
 #

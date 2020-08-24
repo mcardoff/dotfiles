@@ -1,0 +1,28 @@
+re_data = Sort@Import[e_1.csv];
+im_data = Sort@Import[e_2.csv];
+
+re_xmin = Min[re_data[[All,1]]];
+re_xmax = Max[re_data[[All,1]]];
+
+im_xmin = Min[im_data[[All,1]]];
+im_xmax = Max[im_data[[All,1]]];
+
+model = a x^2 + b x + c;
+param = {a,b,c};
+vars  = {x};
+
+re_fit = FindFit[re_data, model, param, vars];
+im_fit = FindFit[im_data, model, param, vars];
+
+re_fun = Function[vars, Evaluate[model./re_fit]];
+im_fun = Function[vars, Evaluate[model./im_fit]];
+
+Show[{
+	ListPlot[re_data],
+	Plot[re_fun[x],{x,re_xmin,re_xmax}]
+	}]
+
+Show[{
+	ListPlot[im_data],
+	Plot[im_fun[x],{x,im_xmin,im_xmax}]
+	}]

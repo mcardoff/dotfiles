@@ -1,0 +1,1157 @@
+#-*- mode: org -*-
+
+* Week 1
+  Other notes in LaTeX document
+** Video 1
+   Notes on: Assessment and diagnosis of Psychopathology
+*** Clinical Assessment
+    - Patient can't concentrate
+    - A lot of mental disorders and neurological problems result in
+      loss of concentration
+    - You have to perform a medical assessment
+    - Assessing Psychological Disorders
+      - Clinical assessment :: The systematic evaluation measurement
+           of psychological, biological, and social/culutural factors
+           in an individual
+      - Purposes ::
+	- Understand individual they need, bio, psyc, etc
+	- Predict behavior
+	- Plan treatment
+	- Evaluate outcome of treatment, includes type of treatment
+          they need, bio, psyc, etc
+      - Key concepts in assessment:
+	1. Reliability
+	   - Consistency in measurement
+	   - Examples :: Test-retest, and inter-rater
+	     - If raters are reliable, then the results should permeate
+               through time
+	2. Validity
+	   - What an assessment approach measures and how well it does so
+	   - How well tests compare to other tests in terms of results
+	   - Examples :: Concurrent and predictive validity
+	     - SAT has predictive validity for college
+	3. Standardization
+	   - Ensures consistency in the use of a technique
+	   - Prdovides population benchmarks for comparison
+	   - Examples :: Structured administration, scoring and
+                  evaluation procedures
+	     - Should be compared with people like you
+      - Sources of Information for Clinical Assessment
+	1. Clinical Interviews
+	   1. Primary technique for gathering data and making
+              decisions
+	   2. Used to elicit data, information, beliefs or
+              attitudes
+	   3. Characteristics ::
+	      - Interaction
+		- Initiated with a goal in mind
+		- One-sided (?)
+	      - Interviews vs. Tests
+		- Less formal or standard
+		- Flexible, no rigid structure
+	   4. Types of Interviews ::
+	      - Intake interview
+		- Clinician ::
+		  - Determine Nature of Client's problems
+		  - Determine appropriateness of services offered
+		  - Define problems and establish goals
+		  - Establish rapport and gather info
+		- Client ::
+		  - Determine appropriateness of services
+		  - Find out about fees, procedures and policies
+		- Detailed description of the problem
+		  - Chief Complaint, symptoms
+		  - Age of onset
+		  - Course of symptoms
+		  - Precipitating events
+		  - Dysfunction in social, occupational,
+                    educational and other areas of life
+		  - Distress that the symptoms cause self or others
+	      - Case history
+		- Detailed description of the client's
+                  background, including:
+		  - Birth and Development
+		  - Family origin
+		  - Education
+		  - Employment
+		  - Leisure
+		  - Sexual History
+		  - Dating/Marital
+		  - Social Network
+		  - Alcohol/Drugs
+		  - Physical Health
+	      - Mental status exam
+		- General appearance and behavior
+		- Speech and thought
+		- Consciousness
+		- Orientation
+		- Attnetion
+		- Suicide risk
+		- Insight
+		- Judgement
+		- Motivation
+		- Mood
+		- General Info
+	      - Crisis interview
+		- Purpose ::
+		  - Resolve problem to avoid catastrophic outcome
+		- Tasks ::
+		  - Provide reassurance
+		  - Assess problem
+		  - Explore resources
+		- Method ::
+		  - Convery understanding
+		  - Projecting a calm and confident demeanor
+	      - Diagnostic interview
+		- Purpose ::
+		  - Arrive at a DSM diagnostiv formulation
+		  - Can be structured or unstructured
+		  - Structured ::
+		    - Standard set of questions asked in sequence
+		    - No deviation from the set order
+		    - Advantages :: Consistency and breadth
+		    - Weaknesses :: Rigid, Lenghty, depth and interviewer may drift from it
+		    - Example :: Diagnostic Interview Schedule
+		  - Unstructured ::
+		    - Any question in any order
+		    - May depend on clinician's theoretical orientation
+		    - Advantages :: Flexibility, depth, and rapport
+		    - Weaknessess :: Least consistent,
+                       breadth, there is a problem of
+                       validity and bias
+		  - Semi-Structured ::
+		    - Standard questions asked in a sequence
+		    - Allows for deviation
+		    - Necessary to have constant responses from patient
+		    - Combines flexibility of unstructured with consistency of structured
+		    - Balances breadth and depth
+		    - Example :: Structured Clinical Interview for DSM Disorders
+	2. Physical Examination
+	   - Helpful in diagnosing mental health problems
+	   - Allows understanding and can rule out physical etiologies
+	     - Toxicities
+	     - Medication side-effects
+	     - Allergic reactions
+	     - Metabolic conditions
+	   - Some medical problems that could cause symptoms of psyc disorders
+	     - Anemia
+	     - Thyroid abnormality
+	     - Brain injuries
+	     - Seizure disorders
+	3. Behavioral Observations
+	   - Assessment
+	     - Focus on present
+	     - Observe relations of behavior and environment
+	     - Identify problematic behaviors
+	     - ABCs:
+	       - *A* ntecedents
+	       - *B* ehaviors
+	       - *C* onsequences
+	   - Types of Behavioral Assessment
+	     - Experimental
+	       - Formal observation
+	       - Direct systematic manipulation of environment
+	     - Descriptive
+	       - Informal
+	       - No direct manipulation
+	       - Naturalistic observation, like impulses in OCD
+	4. Psychological tests
+	   1. Personality assessment
+	      1. Classificaion
+		 - Assists in making diasnoses
+		 - Used with other clinical data
+	      2. Description
+		 - Time efficient method to describe trends in behavior
+	      3. Prediction
+		 - Identifies specific treatment methods
+		 - " specific outcomes
+		 - Risk assessment (suicide, aggression)
+	      4. Different Types of Assessment
+		 - Projective
+		   - Unstructed response format
+		   - Variable set of items determined by clinician
+		   - Results subject to clinical judgement
+		   - Advantages :: Unrehearsed answers, taps into unconscious, less emphasis on IQ, People like it
+		   - Disadvantages :: Less reliable, less valid, little cross-cultural research, nonsystemic administration
+		 - Objective
+		   - Highly structured response format
+		   - consistent set of items involving forced choice
+		   - Results are compared to norms
+		   - Advantages :: Economical testing, simple admin. , objective scoring and interpretation, comparable results
+		   - Disadvantages :: Limited responses, oversimplified interpretation, Face valid measures, can be faked?
+	   2. Intelligence
+	      - Alfred Binet was commissioned to study prodcedures for the education of retarded children in 1904, created intelligence test
+	      - IQ = (mental age)/(chronological age) * 100
+	      - Definitions of intelligence:
+		- Emphasize adaptation
+		- Focus on ability to learn and abstract thinking
+	      - Example include Wechsler Scales
+		- Test vebral comprehension
+		- perceptual reasoning
+		- working memory
+		- processing speed
+	   3. Neuropsychological testing
+	      - Purpose and goals
+		- Assess broad range of skills and abilities
+		- Understand brain-behavior relations
+		- Problems :: False positives and negatives, Time consuming to administer, score and even interpret
+	   4. Psychopysiological Assessment
+	      - Purpose and goals
+		- Assess brain structure and function
+	        - Domains :: Brain Wave activity, cardiorespiratory activity, sweat gland activity
+	5. Examination of Records (previous patients)
+      - Communicating Findings
+	- Psychological Report
+	  - Identifying Information
+	  - Reason for Referral
+	  - Background Information
+	  - Behavioral Observaions
+	  - Assessment Results
+	  - Diagnoses
+	  - Interpretation, Summary, and Recommendations?
+*** Clinical Diagnosis
+    - Diagnostic Classification
+      - Central to all science
+      - shared attributes or relations
+      - Strategies
+	- Idiographic : Uniqueness
+	- Nomothetic : Shared features
+      - Terminology :: Taxonomy, Nosology, Nomenclature
+    - Issues in Diagnosis
+      - Reliability and validity
+      - Biases
+      - Comorbidity, one person can have multiple disorders
+      - Heterogeneity :: Difference in clinical features among members of a group/population
+    - Categorical and Dimensional Approaches
+      - Categorical
+	- Presence vs Absence
+      - Dimensional Approach
+	- Varying amounts
+      - Prototypical Approach
+	- Combination of the previous 2
+	- DSM-5
+    - Syndromal Diagnosis
+      - Every hospital had different diagnostic cues and labels
+      - Standardized nomenclature developed by APA
+      - International Classification of disease introduced through WHO
+    - Early Systems of Classification
+      - DSM-I
+	- Glossary of descriptions of diseases
+	- Recognized neuroses
+	- Psychoanalytic
+	- Nothing with regards to etiology, course, treatment,differential diagnosis
+	- Based on experiences
+	- Not reliable nor valid
+      - DSM-II
+	- Few revisions, just an expanded glossary
+	- Still unreliable and invalid
+      - DSM-III
+	- Atheoretical
+	- Explicit diagnostic criteria
+	- Multi-axial System
+	- Could examine reliability and test limits of criteria
+	- Low reliability for some categories
+	- Overpathologizes some conditions
+      - DSM-III-R
+	- Minor revisions to DSM-II
+      - DSM-IV
+	- Changes based on empirical data
+	- Revision process featuring literature review and reevaluation of existing data
+	- Greater reliability
+	- Less bias
+	- revised in DSM-IV-TR
+      - DSM-5
+	- Revision process involved 5 years of research conferences and literature review
+	- Research actively involved in development
+	- Guiding Principles:
+	  - Intended to be a manual for clinicians
+	  - Revisions should be guided through research
+	  - Continuity maintained where possible
+	  - Best description availible as to how mental disorders can be recognized
+	  - Categorical classification of separate disorders
+	  - Uses dimensional measures
+	  - Non-axial documentation of diagnosis
+    - Multiaxial System
+      1. Clinical Disorders
+      2. Personality disorders and mental retardation
+      3. General medical conditions
+      4. Psychosocial and environmental problems
+      5. Global assessment of functioning
+      6. Axes 1 2 and 3 are combined in DSM-5 to be Psychiatric and Medical Diagnosis
+      7. Axis 4 is now Psychosocial and contextual factors
+      8. Axis 5 is now disability
+    - Unresolved issues
+      - Comorbidity
+      - Dimensional classification
+      - Labeling and stigmatization
+    - Summary
+      - Clinical assessment and Diagnosis
+	- Aims to fully understand Client
+	- Aids in understanding and amerliorating human suffering
+	- Based on relable, valid and standard information
+	- The core of abnormal psychology
+	- A multidimensional perspective
+      - Dangers of diagnosis
+	- Stigmatization
+** Video 2
+   - Reasearch in Psychopathology
+   - Questions driving a science of psychopathology
+     - What problems distress or impair function?
+     - Why do people behave abnormally?
+     - How can we help people behave in more adaptive ways?
+   - Basic Components of Research
+     - Start with atheoretical hypothesis
+       - Not all testable
+       - Science formulates testable hypotheses
+	 - Does use of MDMA over a period of 1 year lead to a decrease in cognitive performance
+	   - Testable
+	 - Is MDMA good for your brain?
+	   - Not testable
+     - Research Design
+       - Method to test hypotheses
+       - Variable: opposite of a constant, can take different values
+	 - Independent : Variable that causes or influences behavior
+	 - Dependent : The change influenced by the independent variable
+       - Considerations:
+	 - Internal validity : The extent to which the results can be attributed to the independent
+           variable
+	 - External validity : The extent to which the results can be generalized or applied
+           outside the study
+	 - Confounds : Uncontrolled variables that influence the results of the study
+	 - Ways to increase internal validity by minimizing confounds:
+	   - Use of Control Groups
+	   - Random assignment procedures
+	   - Use of analog models
+	 - Relation between internal and external validity
+	   - Need balance between the two
+	   - Cant have perfect both
+       - Statistical vs. Clinical Significance
+	 - Stats methods help protect against biases in evaluation of data
+	 - Statistical Significance
+	   - The mathematical calculation of the difference between groups
+	 - Clinical significance
+	   - Whether or not that difference was meaningful
+	 - Statistical significance does not imply clinical meaningfulness
+       - Types of Research Designs
+	 - Case Study
+	   - Extensive observation and detailed description of an individual client
+	   - Foundation of early historic developments in psychopathology
+	   - Limitations
+	     - Low generalizability
+	     - Researcher Bias
+	 - Correlational Research
+	   - The nature of correlation
+	     - Relationship between two variables
+	     - No independent variable is manipulated
+	     - Provides an index of strength of the relation between vars and can be used to
+               predict future behavior
+	     - Useful when it is unethical or not possible to manipulate variables
+	     - Correlation goes from -1 to 1
+	       - 0 means no correlation
+	       - -1 is perfect negative correlation
+		 - One increases as teh other decreases
+	       - 1 is perfect positive correlation
+		 - One increases so does the other
+	     - Abs value close to one is good
+	   - Correlation does not imply causation
+	   - Other limitations
+	     - Cannot determine direction of causation
+	       - Equally likely that A -> B as is B -> A
+	     - Third variable
+	       - Two correlated variables may be linked by a third
+	   - Examples :: Epidemiological Research
+	     - Incidence, prevalence, and course of disorders
+	     - AIDs, trauma following disaster
+	 - Experimental Research
+	   - Independent variable manipulated in a controlled environment
+	   - Establish causal relations
+	   - Maximizes internal validity but limited external validity
+	   - Group Experimental Designs
+	     - Control group vs a treatment group
+	     - Placebo vs double-blind controls
+	       - Both sides do not know about which group is which
+	   - Comparative Treatment designs
+	     - Type of group experiment
+	     - Compare different forms of treatment in similar persons
+	       - Is DBT more effective for treating depression than CBT
+	     - Addresses treatment process and outcome
+	   - Single Case Experimental Design
+	     - Rigorous study of single cases
+	     - Premium on internal validity
+	     - Varied experimental conditions over time
+	     - Repeated measuremnet
+	     - Evaluation of variability, level and trend
+	     - Examples :: Withdrawal Designs, Multiple baseline designs
+	 - Genetic Research
+	   - Family studies
+	     - If its genetic it should be in the family
+	   - Adoptee studies
+	     - Shared environment instead of genes
+	   - Twin studies
+	   - Genetic linkage and association studies
+	 - Studying Behavior over time
+	   - How does the problem develop over time
+	   - Important in prevention and treatment research
+	   - Time based resarch strategies
+	     - Coress sectional designs and the cohort effect
+	     - Longitudinal designs and the cross-generational effect
+	       - Trying to generalize to people who have different life experiences
+	     - Sequential design combines both
+	   - Assets and liabilities of time-based research strategies
+	     - People die over time or forget to respond
+	     - Labor intensive on participants
+       - Is Yawning Contagious?
+	 - Research Design
+	   - Experimental Research
+	   - Independent variable was manipulated (seed yawn)
+	 - Control group?
+	   - Yes, people were not exposed to seed yawn
+	 - Assessment methods?
+	   - Observational
+	 - Randomized participants
+       - Nature of programmatic research and research ethics
+	 - Components of a research program
+	   - Interrelated research questions
+	   - Use several methods
+	   - Conducted in stages, involving replication
+	 - Research Ethics
+	   - Role of institutional review boards
+	   - Informed consent
+	   - Competence, ability to provide consent
+	   - Voluntarism, lack of coercion
+	   - Full information, necessary info to make an informed decision
+	   - Comprehension, understanding about benefits and risks of participation
+     - Summary
+       - Establish and test hypothese
+       - Value of research designs depends on the questions posed
+       - Abnormal psyc is founded in scientific method
+       - Replication is cornerstone of science and programmatic research
+       - Research must occur in the context of ethical considerations and values
+* Week 2
+** Video 1
+   Notes on : Anxiety Disorders
+*** Anxiety Disorders
+    - Overview
+      - Anxiety Disorders
+	- Panic Disorder
+	- Agoraphobia
+	- Social Anxiety disorder
+	- Specific Phobia
+	- Generalized Anxiety Disorder
+    - Physical System (SNS)
+      - Causes increase in heart rate and strength of heartbeat to speed up blood flow
+      - Blood redirected from places not needed to other places
+      - Increase in speed and depth of breathing
+      - Inrease in sweating
+    - Behavioral System
+      - Fight/Flight response
+      - When fight or flight is not possible, foot tapping, pacing or snapping at people
+    - Cognitive System
+      - Shift in attention
+      - Can't concentrate on daily tasks
+      - Anxious people complain that they are easily distracted from daily chores and have trouble
+        with memory
+    - Inverse "U" Shaped function of anxiety
+      - Too little anxiety is bad
+      - Moderate amounts are useful
+      - Severe anxiety is harmful
+    - Definitions
+      - Anxiety
+	- Apprehensive
+	- Future oriented
+	- Somatic symptoms
+      - Fear
+	- Immediate reaction to present danger
+	- Present oriented
+	- Sympathetic nervous system arousal
+**** Panic Disorder
+     - Panic is a sudden or overwhelming fright or terror
+     - Panic Attack: abrupt experience of intense fear in the absence of danger accompanied by
+       physical symptoms
+       - Discrete period of intense fear or discomfort, in which four or more of the following
+         symptooms developed abruptly and reach a peak within 10 minutes
+       - Palpatations
+       - Chest pain
+       - Dizziness
+       - Choking
+       - Trembling
+       - Nausea
+       - shortness of breath
+     - Type
+       - Expected (cued) : almost always occur in certain contexts
+       - Unexpected (uncued) : Out of the blue
+       - Situationally predisposed : occue in certain contexts but not all the time
+     - Criteria
+       - Recurrent unexpected panic attacks
+       - At least one of the attacks has been followed by a month of:
+	 - concern about additional attacks
+	 - Worry of implications of the attack or its consequences
+	 - Significant change in behavior related to attacks
+       - Not due to physiological effects of medications, drugs or medical conditions
+       - Not accounted for by another mental disorder
+       - Panic Disorder = Fear + Anxious apprehension
+     - Epidemiology
+       - Lifetime prevalence
+       - Age of onsent 20 to 24 suddenly
+     - Triple Vulnerability Theory
+       - Anxiety disorders come from 3 vulnerabilities
+       - Biological
+	 - Inherited tendency to specific stress
+	 - Neurobiologically overreactive to events of life
+       - Generalized Psychological
+	 - Believing the world is uncontrollable
+       - Specific Psychological
+	 - Determines which anxiety disorder someone gets
+	 - Involves early learning
+	 - Being taught things are dangerous
+     - Etiology of Panic Disorder
+       - Panic is characteristic response to stress and may have genetic component separate from
+         anxiety (additional over-response SNS)
+       - Panic attacks are learned alarms
+	 - True alarm : Legitimate feat response to dangerous situation
+	 - False alarm : Fear response in absence of danger
+	 - Learned alarm : Fear associated with interoceptive and external cues present during
+           panic attack
+       - Specific Psychological vulnerability
+	 - Unexplained physical sensations are dangerous
+       - Anxious apprehension focused on physical sensations
+       - Development of panic disorder
+       - Possible development of agoraphobia
+     - Interoceptive Avoidance
+       - Avoidance of internal physical sensations
+	 - Exercise
+	 - Saunas
+	 - Horror Movies
+     - Treatment
+       - Medication
+	 - Target serotonergic and GABA systems
+	 - Antidepressants and SSRIs
+	 - Benzodiazepines (Xanax) have been empirically effective
+	   - Not reccomended by psychologists
+       - Panic Control Therapy
+	 - Education about panic attacks
+	 - Gradual exposure to feared interoceptive cues
+	 - Modification of perceptions and attitudes about bodily sensations
+	 - Breathing retraining
+	 - 70% of patients improve
+	 - Best long term outcome is with CBT-based therapy alone
+     - Case Example of Treatment
+       - Examples of in-session exposures
+	 - Spin around in a chair
+	 - Plug your nose and breathe through a straw
+	 - Increase the temperature in the room
+       - Out of session
+	 - Exercise
+	 - Nightclubs with loud bass
+	 - Scary movies
+	 - Sex
+**** Agoraphobia
+     - Criteria
+       - Marked fear or anxiety about 2 (or more) of the following situations
+	 - Public transportation
+	 - Being in open spaces
+	 - Being in enclosed spaces
+	 - Standing in a crowd
+	 - Being outside the home alone
+       - Situations avoided due to thoughts that escape might be difficult or help might not be
+         available if develop panic-like or incapacitating systems
+     - Agoraphobia
+       - Situations almost always provoke fear or anxiety
+       - Actively avoided unless with another person or endured with intense anxiety
+       - Fear out of proportion
+       - Must persist for 6 mos
+     - Epidemiology
+       - Lifetime prevalence at 1.7%
+       - 2:1 likelihood female:male
+       - Late adolescence early adulthood
+       - 30-50% report previous panic attacks or panic disorder
+     - Risk and Prognostic Factors
+       - Temperamental :: Behavioral inhibition
+       - Environmental :: Negative childhood evetns, stressfull events, families with
+                          overprotection and reduced warmth
+       - Genetic :: 61% heritability
+**** Social Anxiety Disorder
+     - Criteria
+       - Marked Fear or anxiety about one or more social situations in which the person is exposed
+         to possible scrutiny by others
+       - The individual fears that he or she will act in a way or show anxiety symptoms that will be
+        seen negatively
+       - Fear or anxiety is out of proportion to actual threat posed by situation and to the context
+       - Present for 6+ months
+       - Social situations almost always provoke fear or anxiety
+       - Social situations avoided or endured with intense anxiety
+       - Specify if performance only
+     - Associated Features
+       - Sensitivity to criticism or rejection
+       - Difficulty being assertive
+       - Low self-esteem or feelings of inferiority
+       - Poor social skills
+     - Epidemiology
+       - Lifetime prevalence of 13%
+       - Age of onset in teens
+       - Generally lifelong course
+     - Etiology
+       - Generalized Bio
+	 - Including inherited temprament of behavioral inhibition
+       - Generalized Psych
+	 - Same as before
+       - Specific Psych
+	 - Social Evaluation is dangerous
+     - Treatment
+       - Tricyclic antidepressants and monoamine oxidase inhibitors
+       - SSRIs Paxil Zoloft and Effexer
+       - Relapse rates are high following discontinuations
+       - CBT
+	 - Assess which social situations are problematic
+	 - Assess beahvior in situations
+	 - Assess their thoughts here
+	 - Teaches more effective strategies
+     - Case Example
+       - Exposure
+	 - Walk into candle store and ask where is the candle store
+	 - Go into starbucks and order something then pay in change
+	 - Sing a song out loud amongst people on a train or on a sidewalk
+	 - Ask for directions to a place you are standing in front of
+	 - Intentionally lose train of though during a class presentation
+**** Specific Phobia
+     - Phobias
+       - Bibliophobia
+	 - Books
+       - Dentophobia
+	 - Dentists
+       - Hippopotomonstrosesquippedabliophobia
+	 - Long words
+       - Pantophobia
+	 - Everything
+       - Triskaidekaphobia
+	 - Number 13
+       - Most common phobia?
+	 - Snakes
+     - Criteria
+       - Marked and persistent fear about presence or anticipation of a specific object or
+         situation?
+       - Exposure provokes an immediate anxiety response
+       - Phobic stimulus is avoided or endured
+       - Fear is excessive or unreasonable
+       - Persistent for at least 6 months
+     - Types of Specific Phobias
+       - Abimal
+       - Natural Environment
+       - Blood-Injection-Injury
+       - Situational (planes, elevators, closed places)
+       - Other (choking, vomiting, contracting an illness)
+     - Epidemiology
+       - Lifetime prevalence 11%
+       - 12 month 7-9%
+       - More prevalent in females
+       - Age of onset is childhood to early adolescence
+       - Chronic
+     - Genetics
+       - 31% of first degree relatives also have a phobia and same time of phobia
+	 - Unsure if its genetic or environmental (adoption study)
+     - Specific Psychological Vulnerability
+       - Psychoanalytic
+	 - Little hans & Oedipal fear
+	 - Fear of horses results from desire for mother & wish to get rid of dad
+	 - Incomplete repression onto symbolic object
+	 - Freud believed that Hans denied these Oedipal fears and projected onto horses
+       - Behvioral
+	 - Two factor model:
+	   - Acquisistion - Classical conditioning
+	   - Maintence - Operant conditioning
+       - Cognitive
+	 - Develop from maladaptive beliefs that specific objects are dangerous
+	 - Treat using cognitive interventions
+       - Evolutionary
+	 - Predilection inherited from ancient ancestors to be afraid of hazards
+	 - Good Evolutionary reasons to be afraid of some things (snakes, heights, etc)
+	 - Objects of phobic fear are non-randomly distributed to objects or situations of specific
+           phobias
+     - Etiology
+       - Generalized Bio
+	 - Heritable tendency to be prepared to associated fear with dangerous objects
+       - Generalized Psyc
+	 - Same
+       - Specific Psyc
+	 - Traumatic conditioning experiences focuses fear on specific object or situation
+     - Treatment
+       - Exposure Therapy
+**** Generalized Anxiety Disorder
+     - Criteria
+       - Excessive anxiety and worry occuring more days than not for at least 6 months
+       - Difficulty contorlling worry
+       - Anxiety/worry associated with at least 3 symptoms
+	 - Restlessness
+	 - Easily fatigued
+	 - Difficulty concentrating
+	 - Irritability
+	 - Muscle Tension
+	 - Sleep disturbance
+       - Worry about anything
+       - Symptoms causes clinically significant distress to function
+       - Not due to substance or general medical condition
+       - Not due to another mental condition
+     - Associated Features
+       - Unfocused worry
+       - Intensity duration or frequency of anxiety if out of proportion to likelihood or impact
+       - Exaggerated startle response
+       - Systems of autonomic hyperarousal
+     - Case Example
+       - Biggest problem is worrying
+       - Recognize wife is more important than book yet worries equally about them
+       - Common symptoms
+       - Stressor was wife getting breast cancer
+     - Epidemiology
+       - Prevalence
+	 - 12-Month 2.9% in adults
+	 - Lifetime 5-9%
+	 - 2/3 female in community samples
+       - Age of onset early adulthood to middle age
+       - Course is chronic but exacerbated by stress
+       - 8% symptom free at 2 year follow up
+     - Genetics
+       - Family studies show 15% of relatives share disorder
+       - Risk for GAD greater for identical twins
+       - Tendency to be anxious and tense is inherited rather than GAD specifically
+       - 30% inheritabel
+     - Etiology
+       - Generalized Bio
+	 - Genetics stuff
+       - Generalized Psyc
+	 - Same as before
+       - Become active under stress
+     - Treatment
+       - Medication
+	 - Xanax, Valium
+	 - Antidepressants
+       - Psychological Treatment
+	 - Same short term benefits
+	 - Better in long term
+	 - CBT interventions focus on threat, process threat at emotional level, using images to
+           induce anxious feelings
+	 - Relaxation
+     - CBT
+       - Education about worry
+       - Confront anxiety-provoking images
+       - Use cognitive therapy techniques to counteract and control worry
+       - Efficacy
+	 - Substantial gains compared to no treatment or alternative treatment
+	 - Particularly effective when combined with family therapy for children
+** Video 2
+   Notes
+*** Trauma and Stress-Related Disorders
+* Week 3
+** Video 1: Dissociative and Somatic Symptom Disorders
+   - Dissociative Disorders
+     - Overview
+       - Involve sever alterations or detachments
+       - Affect identity, memory, or consciousness
+       - Depersonalization, distortion in perception of reality
+       - Rerealization, losing a sense of the external world
+       - Types of DSM-IV-TR DDs
+	 - Depersonalization disorder
+	 - Dissociative amnesia
+	 - " fugue
+	 - " trance disorder
+	 - " identity disorder
+       - Types of DSM-5 DDs
+	 - Depersonalization/Derealization
+	 - Dissociative amnesia
+	 - " identity disorder
+     - Depersonalization/Derealization Disorder
+       - Overview
+	 - Sever and frightening feelings of unreality and detachment
+	 - Triggered by stress or traumatic event
+	 - No disturbance in memory
+	 - Primary problem involves depersonalization and derealization
+	 - Intact reality testing, no psychosis
+       - Diagnostic Criteria
+	 - Persistent and recurrent experiences of depers or dereal or both
+	 - During the experiences, reality testing remains intact
+	 - Symptoms cause clinically significant distress or impairment
+	 - Not attributable to the effects of a substance or other
+           medical condition
+	 - Not better explain by another mental disorder
+       - Associated Features
+	 - May experinece a subjectively altered sense of time
+	 - May experience vague somatic symptoms
+	 - May experience rumination or obsessional preoccupation
+           (obsessing over their own reality)
+	 - Prevalence
+	   - 0.8 -> 2.8%
+	   - High comorbidity with anxiety
+	 - Onset around 16 with chronic course
+       - Causes
+	 - Cognitive deficits in attention, short-term memory and spatial reasoning
+	 - Deficits related to tunnel vision and mind emptiness
+	 - Such persons are easily distracted
+       - Treatment
+	 - Little is known
+	 - no or little studies
+     - Dissociative Amnesia
+       - Overview
+	 - Several forms of psychogenic memory loss
+	 - Generalized vs localized or selective type
+       - Diagnostic Criteria
+	 - Inability to recall important biographic information,
+           usually of a traumatic or stressful nature that is
+           inconsistent with forgetting
+	 - The symptoms cause clinically significant distress or
+           impairment in social occupational or other important areas
+           of functioning
+	 - Not attributable to effects of substance or other mental or
+           medical condition (partial complex seizures or PTSD)
+       - Specifier: Dissociative Fugue
+	 - Fugue = flight
+	 - Take off and find themselves in a new place
+	 - Unable to remember the past
+	 - Unable to remember how they arrived at new locations
+       - Memory deficits and dissociation
+	 - Memory deficits in explicit but not implicit memory
+	 - Explicit memory
+	   - Conscious recall of experiences
+	 - Implicit Memory
+	   - Underlies behaviors based on experiences that cannot be
+             consciously recalled
+       - Course and Causes
+	 - Prevalence
+	   - 1.8-7.3%
+	 - Course
+	   - Begins in adulthood
+	   - Show rapid onset and disspation
+	 - Causes
+	   - Little is known
+	   - Trauma and stress serve as triggers
+	 - Treatment
+	   - Most get better without treatment
+	   - Most remember what they have forgotten
+	   - Therapy is more preventative
+       - Dissociative Identity Disorder
+	 - Overview
+	   - Formerly known as multiple personality disorder
+	   - Defining feature is dissociation of personality
+	   - Adoption of several new identities (as many as 100, avg
+             of 15)
+	   - Identities display unique behaviors, voice and postures
+	   - Forgetting
+	   - Most sever dissociative disorder
+	   - Has no relation to schizophrenia (no thought disorder or
+             behavioral disorganization)
+	 - Diagnostic Criteria
+	   - Disruption of identity characterized by two or more
+             distinct personality states. The disruption in dentity
+             involves marked discontinuity in sense of self and sense
+             of agency as well as alterations in affect, behavior,
+             consciousness, memory, perception, cognition and/or
+             sensory motor functioning
+	   - Recurrent gaps in the recall of everyday events,
+             important personal info and/or traumatic events
+	   - Cause significant distress or impairment
+	   - Not a normal part of a broadly accepted cultural or
+             religious practice
+	   - Not attribuatable to the effects of a substance or
+             another medical condition.
+	 - Unique Aspects of DID
+	   - Alters, different identities
+	   - Host, the identity that keeps other identities together
+	   - Switch, quick transistion from one personality to another
+	     - Switching and the brain, The Many Sides of Jane.
+	 - Stats
+	   - Prevalence
+	     - More common than previously thought 3-6%
+	     - Ratio of females to males is high (9:1)
+	   - Onset
+	     - Onset almost always in childhood
+	     - High comorbidity rates
+	       - Anxiety, substance abuse, personality disorders
+	       - Trauma history is common
+	   - Course
+	     - Lifelong, chronic course
+	 - Causes
+	   - Histories of horrible, unspeakable, child abuse
+	   - Closely related to PTSD, possible an extreme subtype
+	   - Mechanism to escape from the impact of trauma
+	   - Bio. vulnerability possible.
+	   - Suggestibility
+	     - Real and false memories
+	 - Treatment
+	   - Bring unconscious trauma to the surface
+	   - Empathic and supportive therapist
+	   - Focus on reintegration of identities into one fully
+             functioning individual
+	   - Improvement of coping skills
+	   - Identify and neutralize cues/triggers that provoke
+             memories of trauma/dissociation
+	   - Patient must relive and confront early trauma
+	     - Hypnosis
+	   - Medication
+	     - Antidepressants may e helpful but overall, little
+               evidence that medication is effective
+   - Somatic Symptom Disorders
+     - Overview
+       - Somatoform disorders in DSM-IV
+       - Soma means body
+	 - Preoccuptation with health and/or body appearance and functioning
+	 - No identifiable medical condition causing the physical complaints
+       - Types in DSM-IV
+	 - Hypochondriasis
+	 - Somatization
+	 - Conversion disorder
+	 - Pain disorder
+	 - Body dysmorphic disorder
+       - DSM-5
+	 - Illness anxiety dis
+	 - Somatic symptom dis
+	 - Psyc. factors affecting other medical conditions
+	 - Conversion disorder
+	 - Factitious disorders
+     - Somatic Symptom Disorder
+       - Somatization disorder and hypochondriacal reports of
+         significant physical symptoms
+       - Diagnostic Criteria
+	 - One or more somatic symptoms
+	 - Associated thoughts or behaviors
+	   - Persistent thoughts about seriousness of symptoms
+	   - Health related anxiety
+	   - Excessive time and energy
+	 - Substantial impairment in social or occupational functioning
+	 - Symptoms become the person's identity
+	 - Specify if with predominant pain
+       - Prevalence
+	 - Estimated between 5-7%
+	 - Females report more somatic symptoms than males
+	 - May be underdiagnosed in older adults
+	 - Children report abdominal pain, headache, fatigue and nausea
+     - Illness Anxiety Disorder
+       - Overview
+	 - Replaces part of DSM-IV hypochondriasis
+	 - Hypochondriac
+       - Diagnostic Criteria
+	 - Preoccupation with fears of serious illness for at least 6 months
+	 - Absence of notable somatic symptoms
+	 - High health anxiety
+	 - Not better explain by another mental disorder
+	 - Specifiers:
+	   - Care-seeking type
+	     - Frequently go to a doctor
+	   - Care-avoiding type
+	     - Rarely use medical care
+       - Stats
+	 - Prevalence
+	   - 1.3 to 10%
+	   - Similar in males and females
+	 - Onset
+	   - Early to mid adulthuud
+	 - Course
+	   - Chronic, relapsing
+   - Conversion Disorder
+     - Overview
+       - Physical Malfunctioning
+       - Lack physical or organic pathology
+       - Malfunctioning often involved sensory-motor areas
+       - Persons show la belle indifference
+	 - Indifference toward physical problems
+       - Retain most normal functions, but lack awareness
+       - Often precipitated by stress which may take the form of
+         physical injury
+     - Diagnostic Criteria
+       - One or more symptoms of altered voluntary motor or sensory function
+       - Clinical findings provide evidence of incompatibility between
+         the symptom and recognized neurological or meducal conditions
+       - Not better explain by something else
+       - Cause distress or impairment in functioning
+       - Specify: symptom type
+     - Vs Factitious Disorder
+       - Malingering - faking
+       - Factitious disorders
+	 - Falsified symptoms
+	 - Presenting oneself in teh sick role
+	 - Absence of exeternal incentives
+     - Stats
+       - Prevlance
+	 - Rare, but high in neurological settings
+	 - Comorbid with anxiety and mood disorders
+	 - Seen in females
+	 - Common in some cultural and/or religious groups
+       - Onset
+	 - Adolsescence
+       - Course
+	 - Chronic intermittent course
+	 - Children and teens have a better prognosis
+   - Psychological Factors affecting other medical conditions
+     - Diagnostic Criteria
+       - A medical symptom or condition is present
+       - Psyc. or behav. factors adversely affect the medical
+         condition in one or more of the following ways:
+	 - Influenced the course of the medical condition
+	 - Interfere with treatment of the medical condition
+	 - Constitute additional well-established health risks
+	 - Influence underlying pathophysiological precipitatiing or
+           exacerbating symptoms
+       - Not better explained by something else.
+   - Factitious Disorder
+     - Diagnostic Criteria
+       - Falsification of physical or psyc signs or symptoms,
+         induction of injury or disease, associated with identified deception
+       - Individual presents themselves to others as ill, impaired or injured
+       - The deceptive behavbior is evident even in the absence of
+         obvious external rewards
+       - Behavior is not better explained by something else
+   - Factitious Disorder by Proxy
+     - Diagnosis Criteria
+       - Falsification of physical or psychological signs or symptoms,
+         induction of injury aor disease, in another associated with
+         identified deception
+       - The individual presents another person to others, as ill,
+         impaired or injured
+       - The deceptive behavior is evident even in the absence of
+         obvious external rewards
+       - Not better explained by something else
+       - Perpetrator, not victim receives this diagnosis
+   - General Overview
+     - Causes
+       - Genetic and Biological Vulnerabilities
+	 - Increased sensitivity to pain
+       - Early traumatic experinences
+	 - Violence, abuse, deprivation
+       - Learning
+	 - Attention obtained from illness, lack of reinforcement of
+           nonsomatic expressions of distress
+       - Cultural/Social norms
+	 - Devalue and stigmatize psyc suffering
+     - Treatment
+       - Antidepressants offer some help
+       - CBT
+	 - Challenge illness-related misinterpretations
+	 - Provide more substantial and sensitive reassurance and education
+	 - Stress management and coping strategies
+	 - Attending to the trauma
+	 - Remove sources of secondary gain
+	 - Reduce supportive consequences of talk about physical symptoms
+	 - Reduce tendency to visit numerous medical specialists
+           "doctor shopping"
+	 - Assign "gatekeeper" physician
+     - Summary
+       - Features of these disorders
+	 - Extreme distortions in perception and memory
+       - Features of somatic symptom disorders
+	 - Physical problems without an organic cause
+       - Well established treatments are generally lacking
+* Week 4
+** Sleep Wake Disorders
+- Facts about Sleep
+  - We naturally feel tired at 2 am and 2 pm
+  - Most adults need 7-9 hours of sleep
+  - Scientists still dont know if animals dream during REM sleep like humans
+  - One of the primary causes of excessive sleepiness among americans is self-imposed sleep deprivation
+  - High altitudes result in high sleep disruptions, usually >13200 feet or more
+  - 6/10 heathcare professionals do not feel that they have enough time to have a discussion with their patients about insomnia during regular visits
+- Sleep-Wake Disorders
+  - Dyssomnias: Diffuculties in getting enough sleep, sleeping when you want and quality of sleep
+    - Insomnia Disorder
+    - Hypersomnolence Disorder
+    - Narcolepsy
+    - Breathing Related Sleep Disorder
+    - Circadian Sleep Disorder
+  - Parasomnias: Abnormal behavior or physiological events that occur during sleep
+    - Disorder of Arousal
+    - Nightmare Disorder
+    - Rapid Eye Movement Sleep Behavior Disorder
+    - Restless Legs Syndrome
+    - Substance-Induced Sleep Disorder
+- Insomnia
+  - General facts
+    - Dissatisfaction with sleep quantity or quality associated with
+      - Difficulty initiating sleep
+      - Difficulty maintaining sleep
+      - Early-morning awakening
+    - Sleep disturbance causes significant distress in important areas of functioning
+    - Sleep difficulty occurs >3 nights a week
+    - Difficulty is present for at least 3 months
+    - Occurs despite adequate opportunity for sleep
+    - Not better explained by something else
+    - Cant be explained by a substance
+    - Other medical conditions can't explain insomnia
+  - Statistics
+    - 1/3 of population reports symptoms in a given year
+    - Co-morbid with other conditions
+    - Higher prevalence in women at 2:1
+    - Developmental period
+  - Causes
+    - Medical Problems
+    - Issues related to biological clock
+    - Co-occuring disorders
+    - Drug use
+    - Environmental factors
+    - Stress
+    - Unrealistic expectations about how much sleep they need and how disruptive sleep disturbances will be
+    - Learning
+  - Integrative Model
+    - Biological vulnerability and sleep stress are "codependent" this leads to sleep disturbance
+    - These can lead to maladaptive practices
+- Hypersomnolence Disorder
+  - Overview
+    - Excessive Sleepiness despite sleeping for at least 7 hours
+    - Recurrent periods of sleep or lapses into sleep within the same day
+    - A prolonged main sleep episode of more than 9 hours per day that is unrefreshing
+    - Difficulty being fully awake after abrupt awakening
+  - Causes
+    - Little is known
+    - Genetics may play a role
+- Narcolepsy
+  - Overview
+    - Periods of irrepressible need to sleep, lapsing into sleep or napping occuring within the same day
+    - The presence of at least one of:
+      - Cataplexy
+        - Going right into REM after collapsing
+      - Hypocretin Deficiency
+      - Nocturnal sleep polysomnography showing REM latency less than or equal to 15 min or multiple sleep latency test showing a mean latency of about 8 minutes
+  - Stats
+    - Relatively rare
+    - Similar in males and females
+    - Onset during adolescence
+    - Cataplexy hallucinations and sleep paralysis decrease in frequency over time but sleepiness during the day does not diminish with age
+  - Causes
+    - Genetics
+- Circadian Rhythm Sleep Disorder
+  - Overview
+    - Sleep disruption due to an alteration of the circadian system or to a misalignment between the endogenous circadian rhythm and the sleep-wake schedule required by an individual's environment
+    - Sleep disruption leads to excessive sleepiness and/or insomnia
+- Treatment
+  - Medications
+    - Insomia
+      - Benzodiazepines
+      - Cons
+        - Benzodiazepines medications cause excessive sleepiness and are highly addictive
+        - Can lead to re-bound insomnia
+        - May contribute to other problems (sleep walking)
+        - Not intended for long-term use
+    - Hypersomnolence and Narcolepsy
+      - Stimulants
+      - Antidepressants
+  - Environmental
+    - Circadian Rhythm disorders
+      - Scheduling shift changes in clockwise direction
+      - Readjust sleep patterns by going to bed several hours later each night
+      - Bright light therapy
+        - Tricks brain into changing biological clock
+  - Therapy
+    - CBT for Insomnia
+      - Education about sleep
+      - Stimulus control
+        - Guidelines
+          - Use bed for only sleep and sex
+          - Take at least 1 hour to unwind before bed
+          - Keep a regular sleep schedule
+          - Go to bed only when you are sleepy
+          - Get out of bed if awake more than 15 min
+          - Avoid naps
+      - Cognitive interventions
+- Preventing Sleep Disorders
+  - Sleep Hygiene
+    - Stop drinknig caffeine after noon
+    - Cut down or stop alcohol at bedtime
+    - Cut down on nicotine at bedtime
+    - Dont exercise within 3 hours of bedtime
+    - Make bedroom environment comfy
+    - Avoid excessive fluids near bedtime
