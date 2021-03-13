@@ -1,6 +1,6 @@
 Config { font = "xft:Hasklig:pixelsize=14:antialias=true:hinting=true"
        , additionalFonts = []
-       , bgColor = "#1A1A1A"
+       , bgColor = "#181818"
        , fgColor = "#CC8C3C"
        , position = TopW R 100
        , lowerOnStart = True
@@ -22,6 +22,7 @@ Config { font = "xft:Hasklig:pixelsize=14:antialias=true:hinting=true"
                     , Run Com "/home/mcard/.bin/essid.sh" [] "netName" 30
                     , Run Com "/home/mcard/.bin/wireless.sh" [] "wifi" 30
                     , Run Com "/home/mcard/.bin/mathematicians.sh" [] "math" 300
+                    , Run Com "/home/mcard/.bin/eqns.sh" [] "eqn" 300
                     , Run UnsafeStdinReader
                     , Run Battery [ "--template" , "<fc=#cc8c3c>Batt</fc> <acstatus>"
                              , "--Low"      , "10"        -- units: %
@@ -41,5 +42,5 @@ Config { font = "xft:Hasklig:pixelsize=14:antialias=true:hinting=true"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> %UnsafeStdinReader% <fc=#666666>|</fc> %math% <fc=#666666>|</fc>  } { <fc=#cc8c3c>Vol</fc> [<fc=#73c936>%sound%</fc>] <fc=#666666>|</fc> <fc=#cc8c3c>%netName%</fc> [<fc=#f43841>%wifi%</fc>] <fc=#666666>|</fc> %battery% <fc=#666666>|</fc><fc=#cc8c3c>%date%</fc> "
+       , template = "<icon=haskell.xpm/> %UnsafeStdinReader% <fc=#666666>|</fc> %math% <fc=#666666>|</fc> }{ <fc=#666666>|</fc> %eqn% <fc=#666666>|</fc> <fc=#cc8c3c>Vol</fc> [<fc=#73c936>%sound%</fc>] <fc=#666666>|</fc> <fc=#cc8c3c>%netName%</fc> [<fc=#f43841>%wifi%</fc>] <fc=#666666>|</fc> %battery% <fc=#666666>|</fc><fc=#cc8c3c>%date%</fc> "
        }

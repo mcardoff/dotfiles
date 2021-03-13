@@ -1,0 +1,113 @@
+Ampère's circuital law
+Bernoulli's equation
+Bogoliubov-Born-Green-Kirkwood-Yvon hierarchy of equations
+Bessel's differential equation
+Boltzmann equation
+Borda-Carnot equation
+Burger's equation
+Darcy-Weisbach equation
+Dirac equation
+Dirac equation in the algebra of physical space
+Doppler equations
+Drake equation (aka Green Bank equation)
+Earth Similarity Index
+Einstein's field equation
+Einstein-Maxwell-Dirac equations
+Euler equations (fluid dynamics)
+Euler's equations (rigid body dynamics)
+Relativistic Euler equations
+Euler-Lagrange equation
+Faraday's law of induction
+Fokker-Planck equation
+Fresnel equations
+Friedmann equations
+Gauss's law for electricity
+Gauss's law for gravity
+Gauss's law for magnetism
+Gibbs-Helmholtz equation
+Gross-Pitaevskii equation
+Hamilton-Jacobi-Bellman equation
+Helmholtz equation
+Karplus equation
+Kepler's equation
+Kepler's laws of planetary motion
+Kirchhoff's diffraction formula
+Klein-Gordon equation
+Korteweg-de Vries equation
+Landau-Lifshitz-Gilbert equation
+Lane-Emden equation
+Langevin equation
+Levy-Mises equations
+Lindblad equation
+Lorentz equation
+Maxwell's equations
+Maxwell's relations
+Newton's laws of motion
+Navier-Stokes equations
+Reynolds-averaged Navier–Stokes equations
+Prandtl-Reuss equations
+Prony equation
+Rankine-Hugoniot equation
+Roothaan equations
+Sackur-Tetrode equation
+Screened Poisson equation
+Schwinger-Dyson equation
+Sellmeier equation
+Stokes-Einstein relation
+Tsiolkovsky rocket equation
+Van der Waals equation
+Vlasov equation
+Wiener equation
+Arrhenius equation
+Butler–Volmer equation
+Eyring equation
+Henderson–Hasselbach equation
+Michaelis–Menten equation
+Nernst equation
+Schrödinger equation
+Cauchy–Riemann equations
+Chapman–Kolmogorov equation
+Maurer–Cartan equation
+Pell's equation
+Poisson's equation
+Riccati equation
+sine-Gordon equation
+Verhulst equation
+Linear equation
+Quadratic equation
+Cubic equation
+Biquadratic equation
+Quartic equation
+Quintic equation
+Sextic equation
+Characteristic equation
+Class equation
+Comparametric equation
+Difference equation
+Matrix difference equation
+Differential equation
+Matrix differential equation
+Ordinary differential equation
+Partial differential equation
+Total differential equation
+Diophantine equation
+Equation
+Modular equation
+Parametric equation
+Replicator equation
+Advection equation
+Barotropic vorticity equation
+Continuity equation
+Diffusion equation
+Drag equation
+Equation of motion
+Equation of state
+Equation of time
+Heat equation
+Ideal gas equation
+Ionic equation
+Mass-energy equivalence equation
+Primitive equations
+Relativistic wave equations
+Vorticity equation
+Wave equation

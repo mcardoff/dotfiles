@@ -20,6 +20,9 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Spacing
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
 import XMonad.Layout.GridVariants (Grid(Grid))
+import XMonad.Layout.Accordion
+import XMonad.Layout.Circle
+import XMonad.Layout.PerWorkspace
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 
 import XMonad.Util.Run
@@ -66,13 +69,13 @@ doomConfig :: String
 doomConfig = " /home/mcard/doomacs/.emacs.d/init.el"
 
 browser :: String
-browser = "chromium-browser"
+browser = "google-chrome"
 
 myFont :: String
 myFont = "Hasklig:size=13"
 
 myTerm :: String
-myTerm = "gnome-terminal"
+myTerm = "~/.cargo/bin/alacritty"
 
 myFile :: String
 myFile = "nemo"
@@ -99,7 +102,7 @@ myKeys conf@XConfig {XMonad.modMask = sup} = M.fromList $
     , ((sup .|. shf, xK_i), spawn $ editorDoom ++ doomConfig)
     , ((sup, xK_p), spawn $ "dmenu_run " ++ dmenuOptions)
     , ((sup .|. shf, xK_equal), spawn $ "killall xmobar")
-    , ((sup, xK_f), spawn $ myTerm ++ " -- ranger")
+    , ((sup, xK_f), spawn $ myTerm ++ " -e ranger")
     , ((sup .|. shf, xK_f), spawn $ myFile)
     , ((sup, xK_s), spawn $ "cinnamon-settings")
     , ((sup .|. shf, xK_n), spawn $ "nitrogen --restore")
@@ -107,7 +110,10 @@ myKeys conf@XConfig {XMonad.modMask = sup} = M.fromList $
 
       -- PROMPTS
     , ((sup,xK_c), calcPrompt myXPConfig "qalc")
-    , ((sup,xK_z), customBasicPrompt "hoogle --count=1" myXPConfig "hoogle")
+    -- , ((sup,xK_z), customBasicPrompt "hoogle --count=1" myXPConfig "hoogle")
+
+      -- TEST
+--    , ((sup,xK_n), updateLayout "1" (Just tabbed))
 
       -- XMONAD DEFAULTS
     , ((sup .|. shf, xK_c), kill)
@@ -161,8 +167,7 @@ mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 tiled :: Tall a
 tiled = Tall 1 (3/100) (1/2)
 
-floats = renamed [Replace "Float"]
-           $ limitWindows 20 simplestFloat
+floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
 
 grid = renamed [Replace "Grid"]
            $ limitWindows 12 $ mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
@@ -175,19 +180,32 @@ monocle  = renamed [Replace "Monocle"]
 tabs = renamed [Replace "Tabs"]
        $ tabbed shrinkText $
          def { fontName            = myFont
-             , activeColor         = "#282828"
-             , inactiveColor       = "#282828"
+             , activeColor         = "#cc8c3c"
+             , inactiveColor       = "#181818"
              , activeBorderColor   = "#cc8c3c"
-             , inactiveBorderColor = "#95A99F"
+             , inactiveBorderColor = "#181818"
              , activeTextColor     = "#ffffff"
              , inactiveTextColor   = "#ffffff"
              }
 
 
+layouts = avoidStruts $ onWorkspace "float" simplestFloat $
+          grid
+   -- ||| Accordion
+   -- ||| noBorders Circle
+      ||| floats
+      ||| noBorders tabs
+      ||| monocleBare
+   -- ||| tiled
+   -- ||| Full
+
+
 -- Misc.
 
 myWorkspaces :: [String]
-myWorkspaces = ["trm","edt","www","vid","sys","msc"] ++ map show [7..9]
+myWorkspaces = tots ++ rest
+    where tots = ["trm","edt","www","sys","vid","dsc"]
+          rest = map show $ [(length tots)+1..9]
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -195,7 +213,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myXPConfig :: XPConfig
 myXPConfig = def {
                -- font = "xft:Hasklig:pixelsize=14"
-               font =  "-*-bitstream charter-*-*-*-*-14-14-*-*-*-*-*-*"
+               font = "xft:Hasklig:size=13"
              , bgColor = "#282828"
              , fgColor =  "#CC8C3C"
              , bgHLight = "#CC8C3C"
@@ -215,35 +233,30 @@ calcPrompt c ans =
         trim  = f . f
         f = reverse . dropWhile isSpace
 
-customBasicPrompt :: String -> XPConfig -> String -> X ()
-customBasicPrompt pr c an =
-    inputPrompt c (trim an) ?+ \input ->
-        liftIO(runProcessWithInput pr [input] "") >>= customBasicPrompt pr c
-    where
-        trim  = f . f
-        f = reverse . dropWhile isSpace
+-- customBasicPrompt :: String -> XPConfig -> String -> X ()
+-- customBasicPrompt pr c an =
+--     inputPrompt c (trim an) ?+ \input ->
+--         liftIO(runProcessWithInput pr [input] "") >>= customBasicPrompt pr c
+--     where
+--         trim  = f . f
+--         f = reverse . dropWhile isSpace
 
 -- Hooks
-
-layHook = avoidStruts $
-          grid
-      ||| noBorders tabs
-      ||| monocleBare
-      ||| tiled
-      ||| floats
-      ||| Full
 
 manHook :: Query (Endo WindowSet)
 manHook = composeAll
           [ className =? "MPlayer" --> doFloat
           , className =? "Gimp"    --> doFloat
-          , appName =? "lxappearance" --> doShift (myWorkspaces !! 8) <+> doFloat
           , resource =? "desktop_window" --> doIgnore
           , resource =? "kdesktop" --> doIgnore
-          , appName =? myTerm  --> doShift (myWorkspaces !! 0)
-          , appName =? editor  --> doShift (myWorkspaces !! 1)
-          , appName =? browser --> doShift (myWorkspaces !! 2)
-          , appName =? myFile  --> doShift (myWorkspaces !! 3)
+          , className =? "Test Window" --> doFloat
+          , appName =? myTerm  --> doShift (myWorkspaces !! 0) -- Terminal in 1
+          , appName =? editor  --> doShift (myWorkspaces !! 1) -- Emacs in 2
+          , appName =? browser --> doShift (myWorkspaces !! 2) -- Chrome in 3
+          , appName =? myFile  --> doShift (myWorkspaces !! 3) -- File Man. in 4
+          , appName =? "vlc"   --> doShift (myWorkspaces !! 4) -- Video in 5
+          , appName =? "discord" --> doShift (myWorkspaces !! 5) -- Discord in 6
+          , appName =? "lxappearance" --> doShift (myWorkspaces !! 8) <+> doFloat  -- lxappearance in 9
           ]
 
 eveHook :: Event -> X All
@@ -254,7 +267,7 @@ lgHook x1 x2 = dynamicLogWithPP xmobarPP
                   , ppCurrent = wrap "<" ">"
                   , ppVisible = xmobarColor "#FF9800" ""
                   , ppHidden = wrap "*" "*"
-                  , ppHiddenNoWindows = xmobarColor "#666666" ""
+                  , ppHiddenNoWindows = (xmobarColor "#666666" "" .  wrap "[" "]")
                   , ppTitle = xmobarColor "#ffffff" "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
                   , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
@@ -286,7 +299,7 @@ main = do
 
              -- Hooks and Layouts
 
-             , layoutHook = layHook
+             , layoutHook = layouts
              , manageHook = manHook
              , handleEventHook = eveHook
              , logHook = lgHook xmproc0 xmproc1

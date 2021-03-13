@@ -6,6 +6,7 @@
 	comment-line
 	indent-for-tab-command
 	keyboard-escape-quit
+	org-self-insert-command
 	overwrite-mode
 	sh-assignment
 	))
