@@ -1,0 +1,24 @@
+open
+shell %s
+set colorscheme snow
+set colorscheme default
+Q
+
+rename .config
+shell vlc %s
+shell 
+find sch
+find R
+shell emacs %f
+mkdir
+mkdir Calculator
+touch Parser.hs
+shell chromium %s
+search Download
+vim
+e
+shell vim  %s
+search downll
+search download
+l
+search down
