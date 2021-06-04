@@ -1,6 +1,8 @@
-((magit-commit
-  ("--all"))
+((magit-commit nil
+	       ("--all"))
+ (magit-gitignore nil)
  (magit-merge nil)
- (magit-push
-  ("--force")
-  ("--force-with-lease")))
+ (magit-pull nil)
+ (magit-push nil
+	     ("--force")
+	     ("--force-with-lease")))

@@ -24,6 +24,7 @@
 (column-number-mode)
 (show-paren-mode)
 (fringe-mode 1)
+(smooth-scrolling-mode 1)
 (setq inhibit-startup-screen 1)
 (setq visible-bell 1)
 
@@ -33,6 +34,7 @@
 
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
 
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
@@ -55,12 +57,12 @@
 :defer t
 :ensure t
 :custom
-(TeX-view-program-selection '(((output-dvi has-no-display-manager) "dvi2tty") 
-((output-dvi style-pstricks)  "dvips and gv")
- (output-dvi "xdvi")
- (output-pdf "Zathura")
- (output-html "xdg-open")))
-)
+(TeX-view-program-selection 
+'(((output-dvi has-no-display-manager) "dvi2tty") 
+  ((output-dvi style-pstricks)  "dvips and gv")
+   (output-dvi "xdvi")
+   (output-pdf "Zathura")
+   (output-html "xdg-open"))))
 
 ;;(require 'ein)
 ;;(ein:stop)

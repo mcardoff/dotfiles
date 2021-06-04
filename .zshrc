@@ -38,9 +38,9 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
-
 alias ls='exa -al --color=always --group-directories-first'
 alias ..='cd ..'
+
+PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
 
 ~/.bin/ascii.sh

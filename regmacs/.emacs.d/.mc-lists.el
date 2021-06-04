@@ -3,9 +3,17 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+	c-electric-semi&comma
+	c-electric-slash
+	c-indent-line-or-region
 	comment-line
+	f90-electric-insert
 	indent-for-tab-command
 	keyboard-escape-quit
+	magit-gitignore
+	magit-gitignore-in-topdir
+	move-text-down
+	move-text-up
 	org-self-insert-command
 	overwrite-mode
 	sh-assignment

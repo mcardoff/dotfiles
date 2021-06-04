@@ -38,6 +38,7 @@ This is just a few aesthetic changes that make emacs appear to be a lot cleaner
 (column-number-mode)
 (show-paren-mode)
 (fringe-mode 1)
+(smooth-scrolling-mode 1)
 (setq inhibit-startup-screen 1)
 (setq visible-bell 1)
 #+end_src
@@ -54,6 +55,7 @@ Here is the customization for line numbers, including the type
 #+begin_src emacs-lisp
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
 #+end_src
 * Auto Mode File Bindings
 Here is where we associate a particular type of file with a mode, by default emacs does not associate `.m` files with `octave-mode` so we have to tell emacs ourself:

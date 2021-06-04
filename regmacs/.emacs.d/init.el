@@ -1,5 +1,7 @@
 (org-babel-load-file (expand-file-name "EmacsInit.org" user-emacs-directory))
 
+(setq dired-listing-switches "-lah --color=always --group-directories-first")
+
 ;;; shit set by emacs, one day when the world is good I will get rid of this
 
 (custom-set-variables
@@ -9,7 +11,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets org-alert multiple-cursors move-text hasklig-mode haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes))))
+    (markdown-mode smooth-scrolling auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets org-alert multiple-cursors move-text hasklig-mode haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes)))
+ '(ring-bell-function (quote ignore))
+ '(visible-bell t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

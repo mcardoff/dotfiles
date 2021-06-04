@@ -185,12 +185,12 @@ set $dmen (dmenu_run  -fn 'Source Code Pro:size=13' -p '>' -sb '#cc8c3c' -sf '#F
 
 
 bindsym $mod+b exec $browser
-bindsym $mod+f exec (~/.cargo/bin/alacritty -e ranger)
+bindsym $mod+f exec (alacritty -t "Ranger" -e ranger)
 bindsym $mod+o exec emacs
 bindsym $mod+p exec $dmen
 bindsym $mod+Shift+f exec pcmanfm
 bindsym $mod+Shift+o exec (emacs -T "Scratchpad" -f server-start)
-bindsym $mod+Shift+Return exec (alacritty -t "Scratchpad")
+bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
 
 #show scratchpads
 bindsym $mod+i  [class="Emacs" title="Scratchpad"] scratchpad show

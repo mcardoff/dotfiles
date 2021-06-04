@@ -1,0 +1,14 @@
+ls
+bash
+nvcc -o betterboth betterboth.cu
+g++ -o BT BinaryTree.cpp 
+g++ -o BT BinaryTree.cpp 
+g++ -o BT BinaryTree.cpp 
+g++ -o BT BinaryTree.cpp 
+./BT
+g++ -o BT BinaryTree.cpp 
+./BT
+python3 mie-improved.py 
+python3 mie-improved.py 
+python3 mie-improved.py 
+python3 mie-improved.py 
