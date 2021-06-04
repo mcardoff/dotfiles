@@ -1,3 +1,0 @@
-module Parser where
-
-newtype Parser a = Parser {parse :: String -> Maybe (String, a)}

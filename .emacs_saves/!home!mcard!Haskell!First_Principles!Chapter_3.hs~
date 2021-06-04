@@ -1,4 +1,0 @@
-module Chapter_3 where
-
-main :: IO ()
-main = putStrLn "Hello World!"
