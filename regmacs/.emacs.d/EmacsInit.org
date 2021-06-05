@@ -1,5 +1,7 @@
+#+STARTUP:OVERVIEW
 My emacs config
-* Package
+* General Setup
+** Package
 This is required by default to initialize the packages and get the correct repos:
 #+begin_src emacs-lisp
 (require 'package)
@@ -22,12 +24,8 @@ Now we can configure it
 (setq use-package-always-demand 'ein)
 (setq use-package-always-ensure t)
 #+end_src
-* Theme
-I use the `gruber-darker` theme, which compliments emacs very well
-#+begin_src emacs-lisp
-(load-theme 'gruber-darker t)
-#+end_src
-* Appearance
+** Appearance
+*** Aesthetics
 This is just a few aesthetic changes that make emacs appear to be a lot cleaner
 #+begin_src emacs-lisp
 (menu-bar-mode 0)
@@ -38,23 +36,26 @@ This is just a few aesthetic changes that make emacs appear to be a lot cleaner
 (column-number-mode)
 (show-paren-mode)
 (fringe-mode 1)
-(smooth-scrolling-mode 1)
 (setq inhibit-startup-screen 1)
 (setq visible-bell 1)
 #+end_src
 The last bit gets rid of the splash screen when you start emacs, and makes it so it does not make an annoying sound every time youre at the end of a file. This next part is what sets the font:
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil :font "Hasklig" :height 120)
+(set-face-attribute 'default nil :font "Source Code Pro" :height 140)
 #+end_src
 I want to try to use command log mode so I can see what I am doing when messing around with commands
 #+begin_src emacs-lisp
 (use-package command-log-mode)
 #+end_src
-* Line Numbers
+*** Theme
+I use the =gruber-darker= theme, which compliments emacs very well
+#+begin_src emacs-lisp
+(load-theme 'gruber-darker t)
+#+end_src
+*** Line Numbers
 Here is the customization for line numbers, including the type
 #+begin_src emacs-lisp
 (global-display-line-numbers-mode)
-(setq display-line-numbers-type 'relative)
 (setq display-line-numbers-type t)
 #+end_src
 * Auto Mode File Bindings
@@ -64,10 +65,15 @@ Here is where we associate a particular type of file with a mode, by default ema
 #+end_src
 The same goes for `.org` files and `org-mode`
 #+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+#+end_src
+We also want to associate `.cu` with `cuda-mode`
+#+begin_src emacs-lisp
+  ;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 #+end_src
 * Keybindings
 These are just some helpful general functions that make my life a little bit easier, with a table of all of them:
+|---------+------------------------+------------------------|
 | BINDING | DESCRIPTION            | FUNCTION               |
 |---------+------------------------+------------------------|
 | M-1     | Kill other windows     | `delete-other-windows` |
@@ -108,17 +114,41 @@ I have a few snippets available for latex-mode, made using yasnippet:
 *** AUCTeX
 Lets try setting up auctex
 #+BEGIN_SRC emacs-lisp
-(use-package auctex
-:defer t
-:ensure t
-:custom
-(TeX-view-program-selection 
-'(((output-dvi has-no-display-manager) "dvi2tty") 
-  ((output-dvi style-pstricks)  "dvips and gv")
-   (output-dvi "xdvi")
-   (output-pdf "Zathura")
-   (output-html "xdg-open"))))
+    (use-package auctex
+    :defer t
+    :ensure t
+    :custom
+    (TeX-view-program-selection 
+    '(((output-dvi has-no-display-manager) "dvi2tty") 
+      ((output-dvi style-pstricks)  "dvips and gv")
+       (output-dvi "xdvi")
+       (output-pdf "Zathura")
+       (output-html "xdg-open"))))
+
+  (defun my/TeX-view-once (doc)
+    "View TeX output and clean up after `my/TeX-compile-and-view'.
+
+  Call `TeX-view' to display TeX output, and remove this function
+  from `TeX-after-TeX-LaTeX-command-finished-hook', where it may
+  have been placed by `my/TeX-compile-and-view'."
+    (TeX-view)
+    (remove-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
+
+
+  (defun my/TeX-compile-and-view ()
+    "Compile current master file using LaTeX then view output.
+
+  Run the \"LaTeX\" command on the master file for active buffer.
+  When compilation is complete, view output with default
+  viewer (using `TeX-view')."
+    (interactive)
+    (TeX-command "LaTeX" 'TeX-master-file)
+    (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
 #+END_SRC
+** CUDA-Mode
+#+begin_src emacs-lisp
+  (use-package cuda-mode :ensure t)
+#+end_src
 ** Emacs IPython
 This is the jupyter config, but it does not really work for this purpose, it is more useful to do it in the actual .emacs file
 #+BEGIN_SRC emacs-lisp
@@ -130,7 +160,8 @@ This is the jupyter config, but it does not really work for this purpose, it is 
 ;;(set-face-attribute 'ein:cell-input-area 'nil :foreground "FFFFFF" :background "FFFFFF"))
 #+END_SRC
 
-* ido-mode
+* Minibuffer Access
+** ido-mode
 Ido makes `find-file` and other similar functions look a lot nicer, and `smex` is the same but for `M-x`
 #+begin_src emacs-lisp
 ;; (ido-mode 1)
@@ -139,12 +170,16 @@ Ido makes `find-file` and other similar functions look a lot nicer, and `smex` i
 ;; (global-set-key (kbd "M-x") 'smex)
 ;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
-* Ivy Setup
+** Ivy Setup
 Ivy is an alternative to ido, and I am just trying it out, so this is temporary, but may be fully integrated later
 #+begin_src emacs-lisp
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper)
+         ("M-x" . counsel-M-x)
+         ("C-h v" . counsel-describe-variable)
+         ("C-x b" . ivy-switch-buffer)
+         ("C-x C-f" . counsel-find-file)
          :map ivy-minibuffer-map
          ("TAB" . ivy-alt-done)	
          ("C-l" . ivy-alt-done)
@@ -157,9 +192,28 @@ Ivy is an alternative to ido, and I am just trying it out, so this is temporary,
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill)))
-  (ivy-mode 1)
-  #+end_src
-* Multiple Cursors
+#+end_src
+It is sometimes useful to use =ivy-rich= for more useful info on commands and such
+#+begin_src emacs-lisp
+(use-package ivy-rich :diminish )
+(ivy-rich-mode 1)
+#+end_src
+** Counsel
+An addition to ivy is counsel, which makes use of x, we just need to have it installed!
+#+begin_src emacs-lisp
+(use-package counsel :diminish)
+#+end_src
+** All the icons ivy
+This mode adds some bling to ivy and ivy-rich
+#+begin_src emacs-lisp
+(use-package all-the-icons-ivy
+  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+#+end_src
+* Text Editing
+** Multiple Cursors
 Multiple cursors makes your life so much easier when you know how to use them. A helpful use case is you can search for something and place a cursor on each match for example. It helps a lot when heap editing files
 #+begin_src emacs-lisp
 (use-package multiple-cursors
@@ -169,7 +223,7 @@ Multiple cursors makes your life so much easier when you know how to use them. A
 	 ("C-<" . 'mc/mark-previous-like-this)
 	 ("C-c C-<" . 'mc/mark-all-like-this)))
 #+end_src
-* Move Text
+** Move Text
 Similar idea to multiple cursors, this is just really helpful and  pretty much a necessary package
 #+begin_src emacs-lisp
 (use-package move-text
@@ -177,51 +231,12 @@ Similar idea to multiple cursors, this is just really helpful and  pretty much a
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
 #+end_src
-* Org
-Org is a very nice note-taking mode in emacs, I like to have pretty bullets and I like to have the line highlighted when editing, hence the hook region.
-  
-Another useful feature is the agenda that is built in, we specify the directory in which we have our agenda files and a keybind that opens the agenda for easy access
-#+begin_src emacs-lisp
-;;(setq org-agenda-files "C:/Users/mcard/Documents/School/Agenda/Test.org")
-;;(global-set-key (kbd "C-c C-a") 'org-agenda-list)
-#+end_src
-  
-I am also trying out something called org-alert, it is supposed to send you notifications about the items in your agenda. This comprises of the `requires` and `init` tags. 
-
-Here I define a function to set up org mode, involving the different packages I like loaded whe I use org
-#+begin_src emacs-lisp
-(defun mpc/org-mode-setup ()
-  (org-indent-mode)
-  ;;(variable-pitch-mode 1)
-  (visual-line-mode 1)
-  (hl-line-mode 1))
-#+end_src
-
-Since I am trying to move everything to the `use-package` paradigm, here is the translation of all that into `use-package`
-#+begin_src emacs-lisp
-(use-package org
-   :hook (org-mode . mpc/org-mode-setup)
-   :config
-   (setq org-ellipsis " [+]")
-   (setq org-agenda-files "C:/Users/mcard/Documents/School/Agenda/Test.org")
-   (set-face-attribute 'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF")
- )
-
- (use-package org-bullets
-   :after org
-   :hook (org-mode . org-bullets-mode))
-
- (defun mpc/org-mode-visual-fill ()
-   (setq visual-fill-column-width 200
-         visual-fill-column-center-text nil)
-   (visual-fill-column-mode 1))
-
- (use-package visual-fill-column
-   :hook (org-mode . mpc/org-mode-visual-fill))
-#+end_src
-* Diminish
+* Modeline config
+Speaking of the modeline, lets make it even more pretty with a couple of options! However, first we talk about Diminish, which cleans up the default modeline a bit
+** Diminish
 This mode makes it so you do not have any themes clogging up your mode line, and it looks oh so good
 #+begin_src emacs-lisp
+(use-package diminish)
 (diminish 'org-bullets-mode)
 (diminish 'visual-line-mode)
 (diminish 'whitespace-mode)
@@ -229,8 +244,6 @@ This mode makes it so you do not have any themes clogging up your mode line, and
 (diminish 'hasklig-mode)
 (diminish 'eldoc-mode)
 #+end_src
-* Modeline config
-Speaking of the modeline, lets make it even more pretty with a couple of options!
 ** Powerline
 In powerline, there are a couple different options for the various themes, I prefer the vim theme, which I use normally.
 #+begin_src emacs-lisp
@@ -250,24 +263,78 @@ If you are not keen on running any of the powerline themes, you can run doom-mod
   (doom-modeline-height 25)
   (doom-modeline-icon t))
 #+end_src
-* yas
+* Org
+Org is a very nice note-taking mode in emacs, I like to have pretty bullets and I like to have the line highlighted when editing, hence the hook region.
+  
+Another useful feature is the agenda that is built in, we specify the directory in which we have our agenda files and a keybind that opens the agenda for easy access
+  
+I am also trying out something called org-alert, it is supposed to send you notifications about the items in your agenda. This comprises of the `requires` and `init` tags. 
+
+Here I define a function to set up org mode, involving the different packages I like loaded whe I use org
+#+begin_src emacs-lisp
+(defun mpc/org-mode-setup ()
+  (org-indent-mode)
+  ;;(variable-pitch-mode 1)
+  (visual-line-mode 1)
+  (hl-line-mode 1))
+#+end_src
+
+Since I am trying to move everything to the `use-package` paradigm, here is the translation of all that into `use-package`
+#+begin_src emacs-lisp
+(use-package org
+   :hook (org-mode . mpc/org-mode-setup)
+   :config
+   (setq org-ellipsis " [+]")
+   (setq org-agenda-files "~/org/Test.org")
+   (set-face-attribute 'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF")
+ )
+
+ (use-package org-bullets
+   :after org
+   :hook (org-mode . org-bullets-mode))
+
+ (defun mpc/org-mode-visual-fill ()
+   (setq visual-fill-column-width 200
+         visual-fill-column-center-text nil)
+   (visual-fill-column-mode 1))
+
+ (use-package visual-fill-column
+   :hook (org-mode . mpc/org-mode-visual-fill))
+#+end_src
+* Snippets
 Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier
 #+begin_src emacs-lisp
-(setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
-(yas-global-mode)
+  (use-package yasnippet)
+  (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
+  (yas-global-mode)
+#+end_src
+* elfeed
+=elfeed= is an rss reader, for now I use it for some subreddits that are mostly text based, images are possible just not what I require from this:
+#+begin_src emacs-lisp
+  (use-package elfeed
+  :ensure t
+  :custom
+  (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
+                  "http://www.reddit.com/r/Physics/.rss")))
+#+end_src
+Lets try using some extra stuff using `elfeed-goodies`
+#+begin_src emacs-lisp
+  (use-package elfeed-goodies :ensure t)
 #+end_src
 * Doc View
 For some reason `doc-view` did not work for me by default, so I had to change the install directory, that is the only reason for this section
 #+begin_src emacs-lisp
   ;; (setq doc-view-ghostscript-program "C:/Program Files/gs/gs9.53.3/bin/gswin64c.exe")
 #+end_src
+This should only be on windows, hence why it is commented out here
 * Outline
 This mode is super useful when dealing with super long LaTeX files that have confusing structures. At first I had the keybinds set to weird keys, so I changed them to keys that seemed relatively unused
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-;") 'outline-hide-subtree)
-(global-set-key (kbd "C-:") 'outline-show-subtree)
-(global-set-key (kbd "C-'") 'outline-hide-entry)
-(global-set-key (kbd "C-\"") 'outline-show-entry)
+  ;; (use-package outline-minor-mode)
+  (global-set-key (kbd "C-;") 'outline-hide-subtree)
+  (global-set-key (kbd "C-:") 'outline-show-subtree)
+  (global-set-key (kbd "C-'") 'outline-hide-entry)
+  (global-set-key (kbd "C-\"") 'outline-show-entry)
 #+end_src
 ** Extra Headers for LaTeX
    Like I said, my favorite use case for this mode is LaTeX documents,
