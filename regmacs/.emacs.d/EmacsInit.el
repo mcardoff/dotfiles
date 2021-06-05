@@ -14,8 +14,6 @@
 (setq use-package-always-demand 'ein)
 (setq use-package-always-ensure t)
 
-(load-theme 'gruber-darker t)
-
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
@@ -24,21 +22,23 @@
 (column-number-mode)
 (show-paren-mode)
 (fringe-mode 1)
-(smooth-scrolling-mode 1)
 (setq inhibit-startup-screen 1)
 (setq visible-bell 1)
 
-(set-face-attribute 'default nil :font "Hasklig" :height 120)
+(set-face-attribute 'default nil :font "Source Code Pro" :height 140)
 
 (use-package command-log-mode)
 
+(load-theme 'gruber-darker t)
+
 (global-display-line-numbers-mode)
-(setq display-line-numbers-type 'relative)
 (setq display-line-numbers-type t)
 
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+
+;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 
 (defun enlarge-fun () (interactive) (enlarge-window 2))
 (defun shrink-fun () (interactive) (shrink-window 2))
@@ -54,15 +54,37 @@
 (add-hook 'latex-mode-hook (lambda () (outline-minor-mode 1)))
 
 (use-package auctex
-:defer t
-:ensure t
-:custom
-(TeX-view-program-selection 
-'(((output-dvi has-no-display-manager) "dvi2tty") 
-  ((output-dvi style-pstricks)  "dvips and gv")
-   (output-dvi "xdvi")
-   (output-pdf "Zathura")
-   (output-html "xdg-open"))))
+  :defer t
+  :ensure t
+  :custom
+  (TeX-view-program-selection 
+  '(((output-dvi has-no-display-manager) "dvi2tty") 
+    ((output-dvi style-pstricks)  "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Zathura")
+     (output-html "xdg-open"))))
+
+(defun my/TeX-view-once (doc)
+  "View TeX output and clean up after `my/TeX-compile-and-view'.
+
+Call `TeX-view' to display TeX output, and remove this function
+from `TeX-after-TeX-LaTeX-command-finished-hook', where it may
+have been placed by `my/TeX-compile-and-view'."
+  (TeX-view)
+  (remove-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
+
+
+(defun my/TeX-compile-and-view ()
+  "Compile current master file using LaTeX then view output.
+
+Run the \"LaTeX\" command on the master file for active buffer.
+When compilation is complete, view output with default
+viewer (using `TeX-view')."
+  (interactive)
+  (TeX-command "LaTeX" 'TeX-master-file)
+  (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
+
+(use-package cuda-mode :ensure t)
 
 ;;(require 'ein)
 ;;(ein:stop)
@@ -80,6 +102,10 @@
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper)
+         ("M-x" . counsel-M-x)
+         ("C-h v" . counsel-describe-variable)
+         ("C-x b" . ivy-switch-buffer)
+         ("C-x C-f" . counsel-find-file)
          :map ivy-minibuffer-map
          ("TAB" . ivy-alt-done)	
          ("C-l" . ivy-alt-done)
@@ -92,7 +118,17 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill)))
-  (ivy-mode 1)
+
+(use-package ivy-rich :diminish )
+(ivy-rich-mode 1)
+
+(use-package counsel :diminish)
+
+(use-package all-the-icons-ivy
+  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package multiple-cursors
 :diminish
@@ -106,35 +142,7 @@
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
 
-;;(setq org-agenda-files "C:/Users/mcard/Documents/School/Agenda/Test.org")
-;;(global-set-key (kbd "C-c C-a") 'org-agenda-list)
-
-(defun mpc/org-mode-setup ()
-  (org-indent-mode)
-  ;;(variable-pitch-mode 1)
-  (visual-line-mode 1)
-  (hl-line-mode 1))
-
-(use-package org
-   :hook (org-mode . mpc/org-mode-setup)
-   :config
-   (setq org-ellipsis " [+]")
-   (setq org-agenda-files "C:/Users/mcard/Documents/School/Agenda/Test.org")
-   (set-face-attribute 'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF")
- )
-
- (use-package org-bullets
-   :after org
-   :hook (org-mode . org-bullets-mode))
-
- (defun mpc/org-mode-visual-fill ()
-   (setq visual-fill-column-width 200
-         visual-fill-column-center-text nil)
-   (visual-fill-column-mode 1))
-
- (use-package visual-fill-column
-   :hook (org-mode . mpc/org-mode-visual-fill))
-
+(use-package diminish)
 (diminish 'org-bullets-mode)
 (diminish 'visual-line-mode)
 (diminish 'whitespace-mode)
@@ -155,11 +163,47 @@
   (doom-modeline-height 25)
   (doom-modeline-icon t))
 
+(defun mpc/org-mode-setup ()
+  (org-indent-mode)
+  ;;(variable-pitch-mode 1)
+  (visual-line-mode 1)
+  (hl-line-mode 1))
+
+(use-package org
+   :hook (org-mode . mpc/org-mode-setup)
+   :config
+   (setq org-ellipsis " [+]")
+   (setq org-agenda-files "~/org/Test.org")
+   (set-face-attribute 'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF")
+ )
+
+ (use-package org-bullets
+   :after org
+   :hook (org-mode . org-bullets-mode))
+
+ (defun mpc/org-mode-visual-fill ()
+   (setq visual-fill-column-width 200
+         visual-fill-column-center-text nil)
+   (visual-fill-column-mode 1))
+
+ (use-package visual-fill-column
+   :hook (org-mode . mpc/org-mode-visual-fill))
+
+(use-package yasnippet)
 (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
 (yas-global-mode)
 
+(use-package elfeed
+:ensure t
+:custom
+(elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
+                "http://www.reddit.com/r/Physics/.rss")))
+
+(use-package elfeed-goodies :ensure t)
+
 ;; (setq doc-view-ghostscript-program "C:/Program Files/gs/gs9.53.3/bin/gswin64c.exe")
 
+;; (use-package outline-minor-mode)
 (global-set-key (kbd "C-;") 'outline-hide-subtree)
 (global-set-key (kbd "C-:") 'outline-show-subtree)
 (global-set-key (kbd "C-'") 'outline-hide-entry)

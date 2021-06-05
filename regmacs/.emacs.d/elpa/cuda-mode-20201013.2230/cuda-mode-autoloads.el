@@ -22,9 +22,7 @@ The hook `c-mode-common-hook' is run with no args at mode
 initialization, then `cuda-mode-hook'.
 
 Key bindings:
-\\{cuda-mode-map}
-
-\(fn)" t nil)
+\\{cuda-mode-map}" t nil)
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "cuda-mode" '("cuda-")))
 
