@@ -1,7 +1,20 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+################################################################
+################################################################
+##                                                            ##
+##              _               _                             ##
+##             | |__   __ _ ___| |__  _ __ ___                ##
+##             | '_ \ / _` / __| '_ \| '__/ __|               ##
+##             | |_) | (_| \__ \ | | | | | (__                ##
+##             |_.__/ \__,_|___/_| |_|_|  \___|               ##
+##                                                            ##
+##                                                            ##
+################################################################
+################################################################
+
 PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
+PATH="/snap/bin${PATH:+:${PATH}}"
+
+[ -f "~/.ghcup/env" ] && source "~/.ghcup/env"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -12,38 +25,29 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
-# some more ls aliases
-alias ls='exa -al --color=always --group-directories-first'
-alias octave='octave -q --no-gui'
-alias ..='cd ..'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # Alias definitions.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-export EDITOR=emacs
+export EDITOR=emacsclient
+export ALTERNATE_EDITOR=""
 export TERM=xterm-256color
 
-# neofetch --source $FILE --disable cpu gpu --color_blocks off
 NC='\033[0m'
-YELLOW='\033[01;33m'
 RED='\033[01;31m'
+GRE='\033[01;32m'
+YEL='\033[01;33m'
+BLU='\033[01;34m'
+MAG='\033[01;35m'
+CYA='\033[01;36m'
 
 ~/.bin/ascii.sh
 
 force_color_prompt=yes
 title='\e]0; \w\a'
-export PS1="[\[${RED}\]\u\[${NC}\]@\h \[${YELLOW}\]\w \[${NC}\]]\$ \[$(echo -e "$title")\]"
+export PS1="\[${CYA}\][\[${RED}\]\u\[${NC}\]\[${CYA}\]@\[${BLU}\]\h \[${YEL}\]\w\[${CYA}\]]\[${NC}\$\] \[$(echo -e "$title")\]\[${NC}\]"
