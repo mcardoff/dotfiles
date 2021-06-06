@@ -178,14 +178,14 @@ mode "move" {
 
 # my keybinds
 
-set $file "pcmanfm"
-set $browser "brave"
-set $term "~/.cargo/bin/alacritty"
+set $file pcmanfm
+set $browser brave
+set $term ~/.cargo/bin/alacritty
 set $dmen (dmenu_run  -fn 'Source Code Pro:size=13' -p '>' -sb '#cc8c3c' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA' -c -l 20)
 
 
 bindsym $mod+b exec $browser
-bindsym $mod+f exec (alacritty -t "Ranger" -e ranger)
+bindsym $mod+f exec ($term -t "Ranger" -e "ranger")
 bindsym $mod+o exec emacs
 bindsym $mod+p exec $dmen
 bindsym $mod+Shift+f exec pcmanfm
@@ -197,8 +197,11 @@ bindsym $mod+i  [class="Emacs" title="Scratchpad"] scratchpad show
 bindsym $mod+F1 [class="Alacritty" title="Scratchpad"] scratchpad show
 
 # colors
+set $princ #fa9e0d
+
+
 # class                 border  backgr. text    indicator child_border
-client.focused          #cc8c3c #cc8c3c #ffffff #c99c63   #cc8c3c
+client.focused          $princ  $princ  #ffffff #c99c63   $princ 
 client.focused_inactive #333333 #222222 #888888 #292d2e   #222222
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -250,9 +253,9 @@ bar {
 	       background #000000
 	       statusline #ffffff
 
-	       focused_workspace #cc8c3c #cc8c3c #ffffff
-	       active_workspace  #ffffff #cc8c3c #ffffff
-	       inactive_workspace #888888 #222222
+	       focused_workspace $princ  $princ  #ffffff
+	       active_workspace  #ffffff $princ  #ffffff
+	       inactive_workspace #222222 #222222 #888888
 	       urgent_workspace   #ffffff #900000	
 	}	
 }
