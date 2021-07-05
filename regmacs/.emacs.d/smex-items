@@ -1,0 +1,17 @@
+
+;; ----- smex-history -----
+(
+ eshell
+ magit
+ cd
+ 5x5
+ arp
+ dbx
+ dig
+)
+
+;; ----- smex-data -----
+(
+ (magit . 2)
+ (eshell . 1)
+)

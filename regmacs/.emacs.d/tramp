@@ -1,0 +1,28 @@
+;; -*- emacs-lisp -*- <21/07/05 01:57:52 /home/mcard/regmacs/.emacs.d/tramp>
+;; Tramp connection history.  Don't change this file.
+;; Run `M-x tramp-cleanup-all-connections' instead.
+
+(((tramp-file-name "ssh" "cardiff" nil "theory2.phys.iit.edu" nil nil nil)
+  ("uname" "Linux 5.8.0-55-generic")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("pipe-buf" 4096)
+  ("remote-shell" "/bin/sh")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("file-exists" "test -e")
+  ("stat" "env QUOTING_STYLE=locale \\stat")
+  ("id" "/bin/id")
+  ("gid-string" "theory")
+  ("tmpdir" "/ssh:cardiff@theory2.phys.iit.edu:/tmp")
+  ("uid-integer" 1024)
+  ("gid-integer" 1001)
+  ("readlink" "\\readlink")
+  ("case-insensitive" nil)
+  ("~" "/home/cardiff")
+  ("bzr" nil)
+  ("git" nil)
+  ("hg" nil)))

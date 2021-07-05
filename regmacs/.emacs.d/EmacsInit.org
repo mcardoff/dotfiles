@@ -159,7 +159,26 @@ This is the jupyter config, but it does not really work for this purpose, it is 
 ;;(set-face-attribute 'ein:cell-input-prompt 'nil :foreground "181818" :background "282828")
 ;;(set-face-attribute 'ein:cell-input-area 'nil :foreground "FFFFFF" :background "FFFFFF"))
 #+END_SRC
-
+** Projectile
+Projectile is a project management package useful for bigger code projects
+#+begin_src emacs-lisp
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/Projects/Code")
+    (setq projectile-project-search-path '("~/Projects/Code")))
+  (setq projectile-switch-project-action #'projectile-dired))
+#+end_src
+There is some better integration with counsel with porjectile-counsel
+#+begin_src emacs-lisp
+(use-package
+  :after projectile
+  :config (counsel-projectile-mode))
+#+end_src
 * Minibuffer Access
 ** ido-mode
 Ido makes `find-file` and other similar functions look a lot nicer, and `smex` is the same but for `M-x`
