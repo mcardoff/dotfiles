@@ -175,8 +175,8 @@ Projectile is a project management package useful for bigger code projects
 #+end_src
 There is some better integration with counsel with porjectile-counsel
 #+begin_src emacs-lisp
-(use-package
-  :after projectile
+(use-package counsel-projectile
+  :after 'projectile
   :config (counsel-projectile-mode))
 #+end_src
 * Minibuffer Access
@@ -320,6 +320,31 @@ Since I am trying to move everything to the `use-package` paradigm, here is the 
  (use-package visual-fill-column
    :hook (org-mode . mpc/org-mode-visual-fill))
 #+end_src
+* Email/mu4e
+I am trying to get this set up, my mail is currently in ~/Mail and I am using offlineimap to index my email, now we will set it up on the emacs side:
+#+BEGIN_SRC emacs-lisp
+(use-package mu4e
+  :ensure nil
+  :config
+    (setq mu4e-change-filenames-when-moving t)
+    (setq mu4e-update-interval (* 10 60))
+    (setq mu4e-get-mail-command "offlineimap")
+    (setq mu4e-maildir "~/Mail")
+
+    (setq mu4e-drafts-folder "/[Gmail].Drafts")
+    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+    (setq mu4e-refile-folder "/[Gmail].All Mail")
+    (setq mu4e-trash-folder  "/[Gmail].Trash")
+    
+
+    (setq mu4e-maildir-shortcuts
+    '((:maildir "/INBOX"    :key ?i)
+      (:maildir "/[Gmail].Sent Mail" :key ?s)
+      (:maildir "/[Gmail].Trash"     :key ?t)
+      (:maildir "/[Gmail].Drafts"    :key ?d)
+      (:maildir "/[Gmail].All Mail"  :key ?a))))
+      
+#+END_SRC
 * Snippets
 Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier
 #+begin_src emacs-lisp

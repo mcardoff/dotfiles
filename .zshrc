@@ -41,6 +41,11 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 alias ls='exa -al --color=always --group-directories-first'
 alias ..='cd ..'
 
+# Config aliases
+
+alias icf='emacsclient ~/.config/i3/config'
+alias xcf='emacsclient ~/.xmonad/xmonad.hs'
+
 PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
 
 ~/.bin/ascii.sh

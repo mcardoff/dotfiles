@@ -93,6 +93,21 @@ viewer (using `TeX-view')."
 ;;(set-face-attribute 'ein:cell-input-prompt 'nil :foreground "181818" :background "282828")
 ;;(set-face-attribute 'ein:cell-input-area 'nil :foreground "FFFFFF" :background "FFFFFF"))
 
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/Projects/Code")
+    (setq projectile-project-search-path '("~/Projects/Code")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :after 'projectile
+  :config (counsel-projectile-mode))
+
 ;; (ido-mode 1)
 ;; (ido-everywhere 1)
 ;; 
@@ -188,6 +203,27 @@ viewer (using `TeX-view')."
 
  (use-package visual-fill-column
    :hook (org-mode . mpc/org-mode-visual-fill))
+
+(use-package mu4e
+  :ensure nil
+  :config
+    (setq mu4e-change-filenames-when-moving t)
+    (setq mu4e-update-interval (* 10 60))
+    (setq mu4e-get-mail-command "offlineimap")
+    (setq mu4e-maildir "~/Mail")
+
+    (setq mu4e-drafts-folder "/[Gmail].Drafts")
+    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+    (setq mu4e-refile-folder "/[Gmail].All Mail")
+    (setq mu4e-trash-folder  "/[Gmail].Trash")
+    
+
+    (setq mu4e-maildir-shortcuts
+    '((:maildir "/INBOX"    :key ?i)
+      (:maildir "/[Gmail].Sent Mail" :key ?s)
+      (:maildir "/[Gmail].Trash"     :key ?t)
+      (:maildir "/[Gmail].Drafts"    :key ?d)
+      (:maildir "/[Gmail].All Mail"  :key ?a))))
 
 (use-package yasnippet)
 (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))

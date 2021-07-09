@@ -192,9 +192,13 @@ bindsym $mod+Shift+f exec pcmanfm
 bindsym $mod+Shift+o exec (emacs -T "Scratchpad" -f server-start)
 bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
 
-#show scratchpads
-bindsym $mod+i  [class="Emacs" title="Scratchpad"] scratchpad show
-bindsym $mod+F1 [class="Alacritty" title="Scratchpad"] scratchpad show
+# launch scratchpads
+#exec
+
+# show scratchpads
+bindsym F1 [class="Alacritty" title="Scratchpad"] scratchpad show
+bindsym F2 [class="Emacs" title="Scratchpad"] scratchpad show
+bindsym F3 [class="Alacritty" title="Ranger"] scratchpad show
 
 # colors
 set $princ #fa9e0d

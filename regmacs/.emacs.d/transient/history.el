@@ -6,4 +6,5 @@
 	     ("--force")
 	     ("--force-with-lease"))
  (magit-remote
-  ("-f")))
+  ("-f"))
+ (magit-stash nil))
