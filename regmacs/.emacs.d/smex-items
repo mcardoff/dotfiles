@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
+ magit-status
  kill-emacs
  mu4e
  initorg
  list-packages
  package-install
  magit
- cuda-mode
 )
 
 ;; ----- smex-data -----
@@ -34,4 +34,5 @@
  (package-list-packages . 1)
  (mu4e . 2)
  (kill-emacs . 1)
+ (magit-status . 1)
 )

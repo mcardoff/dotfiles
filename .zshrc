@@ -43,8 +43,8 @@ alias ..='cd ..'
 
 # Config aliases
 
-alias icf='emacsclient ~/.config/i3/config'
-alias xcf='emacsclient ~/.xmonad/xmonad.hs'
+alias icf='emacsclient ~/.config/i3/config &'
+alias xcf='emacsclient ~/.xmonad/xmonad.hs &'
 
 PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
 
