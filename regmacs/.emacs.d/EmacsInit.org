@@ -162,16 +162,16 @@ This is the jupyter config, but it does not really work for this purpose, it is 
 ** Projectile
 Projectile is a project management package useful for bigger code projects
 #+begin_src emacs-lisp
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
+  (use-package projectile
+    :diminish projectile-mode
+    :config (projectile-mode)
+    ;; :custom ((projectile-completion-system 'ivy))
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
+    :init
+    (when (file-directory-p "~/Projects/Code")
+      (setq projectile-project-search-path '("~/Projects/Code")))
+    (setq projectile-switch-project-action #'projectile-dired))
 #+end_src
 There is some better integration with counsel with porjectile-counsel
 #+begin_src emacs-lisp
@@ -320,6 +320,8 @@ Since I am trying to move everything to the `use-package` paradigm, here is the 
  (use-package visual-fill-column
    :hook (org-mode . mpc/org-mode-visual-fill))
 #+end_src
+** Org Roam
+Currently my notes are all over the place, org roam should hopefully make that look nicer
 * Email/mu4e
 I am trying to get this set up, my mail is currently in ~/Mail and I am using offlineimap to index my email, now we will set it up on the emacs side:
 #+BEGIN_SRC emacs-lisp
@@ -344,6 +346,11 @@ I am trying to get this set up, my mail is currently in ~/Mail and I am using of
       (:maildir "/[Gmail].Drafts"    :key ?d)
       (:maildir "/[Gmail].All Mail"  :key ?a))))
       
+#+END_SRC
+* Dired
+Dired is the emacs directory editor, I just need to customize a few things
+#+BEGIN_SRC emacs-lisp
+(setq dired-listing-switches "-lXGAh --group-directories-first")
 #+END_SRC
 * Snippets
 Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier
@@ -415,6 +422,10 @@ I really do not like using the default interface for `customize-face` so I decid
 #+begin_src emacs-lisp
 (set-face-attribute 'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
 #+end_src
+** Org mode faces
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+#+END_SRC
 * Ease of Life
 ** Get to config file 
 This is mostly here because on my 60% keyboard it is pretty much impossible to type the ~ key, so instead I made this function
@@ -471,6 +482,7 @@ So I made a pretty easy
   	     (t "failed"))))
    #+end_src
 * Startup
+This will just be used to display startup time and with how many garbage collections
 #+BEGIN_SRC emacs-lisp
 (defun mpc/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
@@ -479,8 +491,10 @@ So I made a pretty easy
                      (time-subtract after-init-time before-init-time)))
            gcs-done))
 
+
 (add-hook 'emacs-startup-hook #'mpc/display-startup-time)
 #+END_SRC
+
 
 
 

@@ -1,38 +1,52 @@
 
 ;; ----- smex-history -----
 (
- magit-status
- kill-emacs
- mu4e
- initorg
- list-packages
- package-install
  magit
+ load-file
+ initorg
+ projectile-run-term
+ projectile-mode
+ package-delete
+ list-faces-display
 )
 
 ;; ----- smex-data -----
 (
- (magit . 4)
- (mkdir . 2)
+ (magit . 8)
+ (mkdir . 3)
  (all-the-icons-install-fonts . 1)
  (replace-string . 7)
  (cuda-mode . 4)
  (c-mode . 1)
- (package-install . 4)
+ (package-install . 5)
  (goto-line . 1)
  (calendar . 1)
  (org-return . 4)
- (initorg . 5)
+ (initorg . 11)
  (byte-compile-file . 1)
- (load-file . 1)
- (list-packages . 2)
+ (load-file . 9)
+ (list-packages . 3)
  (cuda-menu . 2)
  (hl-line-mode . 1)
  (calc . 4)
- (comment-region . 1)
+ (comment-region . 3)
  (uncomment-region . 1)
  (package-list-packages . 1)
  (mu4e . 2)
  (kill-emacs . 1)
  (magit-status . 1)
+ (copy-file . 1)
+ (rename-file . 2)
+ (rename-buffer . 1)
+ (dired-jump . 3)
+ (dired-hide-details-mode . 1)
+ (imenu . 2)
+ (hs-minor-mode . 1)
+ (hs-hide-block . 1)
+ (hs-show-block . 1)
+ (revert-buffer . 1)
+ (list-faces-display . 2)
+ (package-delete . 2)
+ (projectile-mode . 2)
+ (projectile-run-term . 1)
 )

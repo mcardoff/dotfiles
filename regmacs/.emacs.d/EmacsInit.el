@@ -96,7 +96,7 @@ viewer (using `TeX-view')."
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
+  ;; :custom ((projectile-completion-system 'ivy))
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
@@ -225,6 +225,8 @@ viewer (using `TeX-view')."
       (:maildir "/[Gmail].Drafts"    :key ?d)
       (:maildir "/[Gmail].All Mail"  :key ?a))))
 
+(setq dired-listing-switches "-lXGAh --group-directories-first")
+
 (use-package yasnippet)
 (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
 (yas-global-mode)
@@ -268,6 +270,8 @@ viewer (using `TeX-view')."
 
 (set-face-attribute 'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
 
+(set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+
 (defun dotemacs () (interactive) (find-file "~/regmacs/.emacs.d/init.el"))
 
 (defun initorg () (interactive) (find-file "~/regmacs/.emacs.d/EmacsInit.org"))
@@ -310,5 +314,6 @@ viewer (using `TeX-view')."
                    (float-time
                      (time-subtract after-init-time before-init-time)))
            gcs-done))
+
 
 (add-hook 'emacs-startup-hook #'mpc/display-startup-time)
