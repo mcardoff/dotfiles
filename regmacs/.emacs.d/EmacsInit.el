@@ -11,7 +11,6 @@
 (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-demand 'ein)
 (setq use-package-always-ensure t)
 
 (menu-bar-mode 0)
@@ -50,6 +49,12 @@
 (global-set-key (kbd "M-R") 'shrink-fun)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config (setq which-key-idle-delay 0.3)
+)
+
 (add-hook 'latex-mode-hook (lambda () (visual-line-mode 1)))
 (add-hook 'latex-mode-hook (lambda () (outline-minor-mode 1)))
 
@@ -58,40 +63,27 @@
   :ensure t
   :custom
   (TeX-view-program-selection 
-  '(((output-dvi has-no-display-manager) "dvi2tty") 
-    ((output-dvi style-pstricks)  "dvips and gv")
-     (output-dvi "xdvi")
-     (output-pdf "Zathura")
-     (output-html "xdg-open"))))
+    '(((output-dvi has-no-display-manager) "dvi2tty") 
+      ((output-dvi style-pstricks)  "dvips and gv")
+       (output-dvi "xdvi")
+       (output-pdf "Zathura")
+       (output-html "xdg-open"))))
 
 (defun my/TeX-view-once (doc)
   "View TeX output and clean up after `my/TeX-compile-and-view'.
-
-Call `TeX-view' to display TeX output, and remove this function
-from `TeX-after-TeX-LaTeX-command-finished-hook', where it may
-have been placed by `my/TeX-compile-and-view'."
+  Call `TeX-view' to display TeX output, and remove this function
+  from `TeX-after-TeX-LaTeX-command-finished-hook', where it may
+  have been placed by `my/TeX-compile-and-view'."
   (TeX-view)
   (remove-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
 
-
 (defun my/TeX-compile-and-view ()
-  "Compile current master file using LaTeX then view output.
-
-Run the \"LaTeX\" command on the master file for active buffer.
-When compilation is complete, view output with default
-viewer (using `TeX-view')."
+  "Compile current master file using LaTeX then view output. Run the \"LaTeX\" command on the master file for active buffer. When compilation is complete, view output with default viewer (using `TeX-view')."
   (interactive)
   (TeX-command "LaTeX" 'TeX-master-file)
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
 
 (use-package cuda-mode :ensure t)
-
-;;(require 'ein)
-;;(ein:stop)
-;;(use-package ein
-;;:init
-;;(set-face-attribute 'ein:cell-input-prompt 'nil :foreground "181818" :background "282828")
-;;(set-face-attribute 'ein:cell-input-area 'nil :foreground "FFFFFF" :background "FFFFFF"))
 
 (use-package projectile
   :diminish projectile-mode
@@ -108,43 +100,6 @@ viewer (using `TeX-view')."
   :after 'projectile
   :config (counsel-projectile-mode))
 
-;; (ido-mode 1)
-;; (ido-everywhere 1)
-;; 
-;; (global-set-key (kbd "M-x") 'smex)
-;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-         ("M-x" . counsel-M-x)
-         ("C-h v" . counsel-describe-variable)
-         ("C-x b" . ivy-switch-buffer)
-         ("C-x C-f" . counsel-find-file)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill)))
-
-(use-package ivy-rich :diminish )
-(ivy-rich-mode 1)
-
-(use-package counsel :diminish)
-
-(use-package all-the-icons-ivy
-  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
-(use-package all-the-icons-ivy-rich
-  :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
-
 (use-package multiple-cursors
 :diminish
 :bind (("C-S-c C-S-c" . mc/edit-lines)
@@ -157,19 +112,6 @@ viewer (using `TeX-view')."
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
 
-(use-package diminish)
-(diminish 'org-bullets-mode)
-(diminish 'visual-line-mode)
-(diminish 'whitespace-mode)
-(diminish 'yas-minor-mode)
-(diminish 'hasklig-mode)
-(diminish 'eldoc-mode)
-
-;;(powerline-vim-theme)
-;; (powerline-default-theme)
-;; (powerline-center-theme)
-;; (powerline-nano-theme)
-
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -180,29 +122,35 @@ viewer (using `TeX-view')."
 
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
-  ;;(variable-pitch-mode 1)
   (visual-line-mode 1)
   (hl-line-mode 1))
 
 (use-package org
-   :hook (org-mode . mpc/org-mode-setup)
-   :config
-   (setq org-ellipsis " [+]")
-   (setq org-agenda-files "~/org/Test.org")
-   (set-face-attribute 'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF")
- )
+  :hook (org-mode . mpc/org-mode-setup)
+  :init
+  (org-reload)
+  :config
+  (setq org-ellipsis " [+]")
+  (setq org-agenda-files "~/org/Test.org")
+  (set-face-attribute
+  'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF"))
 
- (use-package org-bullets
-   :after org
-   :hook (org-mode . org-bullets-mode))
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode))
 
- (defun mpc/org-mode-visual-fill ()
-   (setq visual-fill-column-width 200
-         visual-fill-column-center-text nil)
-   (visual-fill-column-mode 1))
-
- (use-package visual-fill-column
-   :hook (org-mode . mpc/org-mode-visual-fill))
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/school/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
 
 (use-package mu4e
   :ensure nil
@@ -227,9 +175,11 @@ viewer (using `TeX-view')."
 
 (setq dired-listing-switches "-lXGAh --group-directories-first")
 
-(use-package yasnippet)
-(setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
-(yas-global-mode)
+(use-package yasnippet
+    :init (yas-global-mode)
+    :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
+;;  (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
+;;  (yas-global-mode)
 
 (use-package elfeed
 :ensure t
@@ -262,6 +212,65 @@ viewer (using `TeX-view')."
 ("^%subsection{\\(.*\\)}"    1 'font-latex-sectioning-3-face t)
 ("^%subsubsection{\\(.*\\)}" 1 'font-latex-sectioning-4-face t)
 ("^%paragraph{\\(.*\\)}"     1 'font-latex-sectioning-5-face t)))
+
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+         ("C-x b" . ivy-switch-buffer)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)	
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :init (ivy-mode 1)
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-wrap t)
+  (setq ivy-count-format "(%d/%d) ")
+  (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
+  (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
+  (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist)
+)
+
+(use-package ivy-rich  
+  :init (ivy-rich-mode 1)
+  :after counsel
+  :config
+  (setq ivy-format-function #'ivy-format-function-line))
+
+(use-package all-the-icons-ivy-rich
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package counsel 
+  :demand t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x b" . counsel-ibuffer)
+         ("C-x C-f" . counsel-find-file)
+         ;; ("C-M-j" . counsel-switch-buffer)
+         ("C-M-l" . counsel-imenu)
+         :map minibuffer-local-map
+         ("C-r" . 'counsel-minibuffer-history))
+  :custom
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  (setq ivy-initial-inputs-alist nil)
+)
+
+;;(ido-mode 1)
+;;(ido-everywhere 1)
+;;
+;;(use-package smex
+;;  :ensure t
+;;  :bind (("M-x" . smex)
+;;         ("M-X" . smex-major-mode-commands))
+;;)
+;;(global-set-key (kbd "M-x") 'smex)
+;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (set-face-attribute 'window-divider nil :foreground "#282828")
 (set-face-attribute 'window-divider-first-pixel nil :foreground "#282828")
@@ -317,3 +326,5 @@ viewer (using `TeX-view')."
 
 
 (add-hook 'emacs-startup-hook #'mpc/display-startup-time)
+
+(setq initial-major-mode 'lisp-interaction-mode)
