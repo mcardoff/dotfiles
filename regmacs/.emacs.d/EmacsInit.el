@@ -115,6 +115,8 @@
 
 ;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 
+(add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
+
 (defun enlarge-fun () (interactive) (enlarge-window 2))
 (defun shrink-fun () (interactive) (shrink-window 2))
 (global-set-key (kbd "M-1") 'delete-other-windows)
@@ -190,6 +192,17 @@
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
 
+<<<<<<< HEAD
+=======
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-height 35)
+  (doom-modeline-icon t))
+
+>>>>>>> e044f8f1a6a06eccae272be5619d73042a95c1de
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1)
@@ -209,6 +222,7 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
+<<<<<<< HEAD
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (use-package org-roam			 ;;
 ;;   :init					 ;;
@@ -223,12 +237,53 @@
 ;;   :config					 ;;
 ;;   (org-roam-setup))				 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+=======
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/school/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (use-package mu4e				      ;;
+;;   :ensure nil				      ;;
+;;   :config					      ;;
+;;     (setq mu4e-change-filenames-when-moving t)     ;;
+;;     (setq mu4e-update-interval (* 10 60))	      ;;
+;;     (setq mu4e-get-mail-command "offlineimap")     ;;
+;;     (setq mu4e-maildir "~/Mail")		      ;;
+;; 						      ;;
+;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")    ;;
+;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail") ;;
+;;     (setq mu4e-refile-folder "/[Gmail].All Mail")  ;;
+;;     (setq mu4e-trash-folder  "/[Gmail].Trash")     ;;
+;;     						      ;;
+;; 						      ;;
+;;     (setq mu4e-maildir-shortcuts		      ;;
+;;     '((:maildir "/INBOX"    :key ?i)		      ;;
+;;       (:maildir "/[Gmail].Sent Mail" :key ?s)      ;;
+;;       (:maildir "/[Gmail].Trash"     :key ?t)      ;;
+;;       (:maildir "/[Gmail].Drafts"    :key ?d)      ;;
+;;       (:maildir "/[Gmail].All Mail"  :key ?a))))   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+>>>>>>> e044f8f1a6a06eccae272be5619d73042a95c1de
 
 (set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
 
 (use-package yasnippet
   :init (yas-global-mode)
   :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
+
+(use-package pdf-tools
+  :ensure t
+  :custom (pdf-view-midnight-colors '("#e4e4ef" . "#181818")))
 
 ;; (use-package outline-minor-mode)
 (global-set-key (kbd "C-;") 'outline-hide-subtree)

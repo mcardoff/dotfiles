@@ -1,6 +1,7 @@
 
 ;; ----- smex-history -----
 (
+<<<<<<< HEAD
  comment-box
  initorg
  kill-emacs
@@ -8,10 +9,30 @@
  all-the-icons-ivy-rich-mode
  ivy-rich-mode
  ivy-rich-clear-project-root-cache
+=======
+<<<<<<< Updated upstream
+ load-file
+ magit
+ initorg
+ pdf-view-midnight-minor-mode
+ comment-box
+ pdf-view-mode
+ list-packages
+=======
+ initorg
+ pdf-view-midnight-minor-mode
+ load-file
+ comment-box
+ pdf-view-mode
+ list-packages
+ midnight-mode
+>>>>>>> Stashed changes
+>>>>>>> e044f8f1a6a06eccae272be5619d73042a95c1de
 )
 
 ;; ----- smex-data -----
 (
+<<<<<<< HEAD
  (magit . 8)
  (mkdir . 3)
  (all-the-icons-install-fonts . 1)
@@ -64,4 +85,28 @@
  (all-the-icons-ivy-rich-mode . 2)
  (counsel-package . 2)
  (comment-box . 4)
+=======
+<<<<<<< Updated upstream
+ (magit . 6)
+=======
+ (magit . 5)
+>>>>>>> Stashed changes
+ (eshell . 1)
+ (list-packages . 3)
+ (package-menu-mark-upgrades . 1)
+ (package-autoremove . 1)
+ (initorg . 8)
+ (elfeed . 1)
+ (package-install . 2)
+ (pdf-view-midnight-minor-mode . 8)
+ (pdf-view-mode . 3)
+ (pdf-tools-install . 1)
+ (midnight-mode . 2)
+ (comment-box . 2)
+<<<<<<< Updated upstream
+ (load-file . 2)
+=======
+ (load-file . 1)
+>>>>>>> Stashed changes
+>>>>>>> e044f8f1a6a06eccae272be5619d73042a95c1de
 )
