@@ -171,7 +171,6 @@ The same goes for `.org` files and `org-mode`
 We also want to associate `.cu` with `cuda-mode`
 #+BEGIN_SRC emacs-lisp
   ;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
-<<<<<<< Updated upstream
 #+END_SRC
 =======
 #+end_src
@@ -179,7 +178,6 @@ And of course pdf view for pdfs
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
 #+end_src
->>>>>>> Stashed changes
 * Keybindings
 These are just some helpful general functions that make my life a little bit easier, with a table of all of them:
 |---------+------------------------+------------------------|
@@ -301,7 +299,6 @@ Similar idea to multiple cursors, this is just really helpful and  pretty much a
   :diminish 
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
-<<<<<<< Updated upstream
 #+END_SRC
 ** Org
 *** Org-Mode
@@ -350,7 +347,6 @@ I am also trying out something called org-alert, it is supposed to send you noti
 
 Here I define a function to set up org mode, involving the different packages I like loaded whe I use org
 #+begin_src emacs-lisp
->>>>>>> Stashed changes
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1)
@@ -370,7 +366,6 @@ Here I set up the the actual package
 #+END_SRC
 Here I set up a package called org-bullets that changes the look of the bullets
 #+BEGIN_SRC emacs-lisp
-<<<<<<< Updated upstream
 (use-package org-bullets
   :after org
   :hook (org-mode . org-bullets-mode))
@@ -419,12 +414,9 @@ Currently my notes are all over the place, org roam should hopefully make that l
   ;;       (:maildir "/[Gmail].Drafts"    :key ?d)      ;;
   ;;       (:maildir "/[Gmail].All Mail"  :key ?a))))   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      
->>>>>>> Stashed changes
 #+END_SRC
 ** Snippets
 Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier
-<<<<<<< Updated upstream
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :init (yas-global-mode)
