@@ -11,8 +11,7 @@
  '(global-display-line-numbers-mode t)
  '(ivy-rich-mode t)
  '(org-structure-template-alist
-   (quote
-    (("s" . "src")
+   '(("s" . "src")
      ("e" . "example")
      ("q" . "quote")
      ("v" . "verse")
@@ -21,10 +20,9 @@
      ("C" . "comment")
      ("l" . "latex")
      ("a" . "ascii")
-     ("i" . "index"))))
+     ("i" . "index")))
  '(package-selected-packages
-   (quote
-    (which-key org-roam cuda-mode counsel-projectile projectile all-the-icons-ivy-rich all-the-icons-ivy ivy-rich magit elfeed-goodies elfeed cl-lib cl-libify auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets multiple-cursors move-text haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes))))
+   '(which-key org-roam cuda-mode counsel-projectile projectile all-the-icons-ivy-rich all-the-icons-ivy ivy-rich magit elfeed-goodies elfeed cl-lib cl-libify auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets multiple-cursors move-text haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

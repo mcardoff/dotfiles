@@ -201,11 +201,13 @@ Here is the actual declaration of all of these
 ** Which-Key
 Seeing what keybindings are available!
 #+BEGIN_SRC emacs-lisp
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config (setq which-key-idle-delay 0.3)
-)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (use-package which-key                    ;;
+  ;;   :init (which-key-mode)                  ;;
+  ;;   :diminish which-key-mode                ;;
+  ;;   :config (setq which-key-idle-delay 0.3) ;;
+  ;; )                                         ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+END_SRC
 * Programming Adjacent
 ** LaTeX-Mode
@@ -322,18 +324,20 @@ Here I set up a package called org-bullets that changes the look of the bullets
 *** Org Roam
 Currently my notes are all over the place, org roam should hopefully make that look nicer
 #+BEGIN_SRC emacs-lisp
-(use-package org-roam
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory "~/school/Roam")
-  (org-roam-completion-everywhere t)
-  (org-roam-completion-system 'ivy)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert))
-  :config
-  (org-roam-setup))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (use-package org-roam			 ;;
+  ;;   :init					 ;;
+  ;;   (setq org-roam-v2-ack t)			 ;;
+  ;;   :custom					 ;;
+  ;;   (org-roam-directory "~/school/Roam")	 ;;
+  ;;   (org-roam-completion-everywhere t)		 ;;
+  ;;   (org-roam-completion-system 'ivy)		 ;;
+  ;;   :bind (("C-c n l" . org-roam-buffer-toggle) ;;
+  ;;          ("C-c n f" . org-roam-node-find)	 ;;
+  ;;          ("C-c n i" . org-roam-node-insert))	 ;;
+  ;;   :config					 ;;
+  ;;   (org-roam-setup))				 ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+END_SRC
 *** Org Faces
 #+BEGIN_SRC emacs-lisp
@@ -394,26 +398,28 @@ Lets try using some extra stuff using `elfeed-goodies`
 ** mu4e
 I am trying to get this set up, my mail is currently in ~/Mail and I am using offlineimap to index my email, now we will set it up on the emacs side:
 #+BEGIN_SRC emacs-lisp
-(use-package mu4e
-  :ensure nil
-  :config
-    (setq mu4e-change-filenames-when-moving t)
-    (setq mu4e-update-interval (* 10 60))
-    (setq mu4e-get-mail-command "offlineimap")
-    (setq mu4e-maildir "~/Mail")
-
-    (setq mu4e-drafts-folder "/[Gmail].Drafts")
-    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-    (setq mu4e-refile-folder "/[Gmail].All Mail")
-    (setq mu4e-trash-folder  "/[Gmail].Trash")
-    
-
-    (setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"    :key ?i)
-      (:maildir "/[Gmail].Sent Mail" :key ?s)
-      (:maildir "/[Gmail].Trash"     :key ?t)
-      (:maildir "/[Gmail].Drafts"    :key ?d)
-      (:maildir "/[Gmail].All Mail"  :key ?a))))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (use-package mu4e				    ;;
+  ;;   :ensure nil				            ;;
+  ;;   :config					    ;;
+  ;;     (setq mu4e-change-filenames-when-moving t)     ;;
+  ;;     (setq mu4e-update-interval (* 10 60))	    ;;
+  ;;     (setq mu4e-get-mail-command "offlineimap")     ;;
+  ;;     (setq mu4e-maildir "~/Mail")		    ;;
+  ;; 						    ;;
+  ;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")    ;;
+  ;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail") ;;
+  ;;     (setq mu4e-refile-folder "/[Gmail].All Mail")  ;;
+  ;;     (setq mu4e-trash-folder  "/[Gmail].Trash")     ;;
+  ;;     						    ;;
+  ;; 						    ;;
+  ;;     (setq mu4e-maildir-shortcuts		    ;;
+  ;;     '((:maildir "/INBOX"    :key ?i)		    ;;
+  ;;       (:maildir "/[Gmail].Sent Mail" :key ?s)      ;;
+  ;;       (:maildir "/[Gmail].Trash"     :key ?t)      ;;
+  ;;       (:maildir "/[Gmail].Drafts"    :key ?d)      ;;
+  ;;       (:maildir "/[Gmail].All Mail"  :key ?a))))   ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+END_SRC
 * Ease of Life
 ** Get to config file 

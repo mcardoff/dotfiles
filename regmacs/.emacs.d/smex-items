@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
+ comment-box
  initorg
  kill-emacs
  counsel-package
  all-the-icons-ivy-rich-mode
  ivy-rich-mode
  ivy-rich-clear-project-root-cache
- describe-variable
 )
 
 ;; ----- smex-data -----
@@ -63,4 +63,5 @@
  (ivy-rich-clear-project-root-cache . 1)
  (all-the-icons-ivy-rich-mode . 2)
  (counsel-package . 2)
+ (comment-box . 4)
 )
