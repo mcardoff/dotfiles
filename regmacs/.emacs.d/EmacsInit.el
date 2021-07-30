@@ -39,6 +39,8 @@
 
 ;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 
+(add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
+
 (defun enlarge-fun () (interactive) (enlarge-window 2))
 (defun shrink-fun () (interactive) (shrink-window 2))
 (global-set-key (kbd "M-1") 'delete-other-windows)
@@ -117,7 +119,7 @@
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-buffer-encoding nil)
-  (doom-modeline-height 25)
+  (doom-modeline-height 35)
   (doom-modeline-icon t))
 
 (defun mpc/org-mode-setup ()
@@ -152,26 +154,28 @@
   :config
   (org-roam-setup))
 
-(use-package mu4e
-  :ensure nil
-  :config
-    (setq mu4e-change-filenames-when-moving t)
-    (setq mu4e-update-interval (* 10 60))
-    (setq mu4e-get-mail-command "offlineimap")
-    (setq mu4e-maildir "~/Mail")
-
-    (setq mu4e-drafts-folder "/[Gmail].Drafts")
-    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-    (setq mu4e-refile-folder "/[Gmail].All Mail")
-    (setq mu4e-trash-folder  "/[Gmail].Trash")
-    
-
-    (setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"    :key ?i)
-      (:maildir "/[Gmail].Sent Mail" :key ?s)
-      (:maildir "/[Gmail].Trash"     :key ?t)
-      (:maildir "/[Gmail].Drafts"    :key ?d)
-      (:maildir "/[Gmail].All Mail"  :key ?a))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (use-package mu4e				      ;;
+;;   :ensure nil				      ;;
+;;   :config					      ;;
+;;     (setq mu4e-change-filenames-when-moving t)     ;;
+;;     (setq mu4e-update-interval (* 10 60))	      ;;
+;;     (setq mu4e-get-mail-command "offlineimap")     ;;
+;;     (setq mu4e-maildir "~/Mail")		      ;;
+;; 						      ;;
+;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")    ;;
+;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail") ;;
+;;     (setq mu4e-refile-folder "/[Gmail].All Mail")  ;;
+;;     (setq mu4e-trash-folder  "/[Gmail].Trash")     ;;
+;;     						      ;;
+;; 						      ;;
+;;     (setq mu4e-maildir-shortcuts		      ;;
+;;     '((:maildir "/INBOX"    :key ?i)		      ;;
+;;       (:maildir "/[Gmail].Sent Mail" :key ?s)      ;;
+;;       (:maildir "/[Gmail].Trash"     :key ?t)      ;;
+;;       (:maildir "/[Gmail].Drafts"    :key ?d)      ;;
+;;       (:maildir "/[Gmail].All Mail"  :key ?a))))   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq dired-listing-switches "-lXGAh --group-directories-first")
 
@@ -190,6 +194,10 @@
 (use-package elfeed-goodies :ensure t)
 
 ;; (setq doc-view-ghostscript-program "C:/Program Files/gs/gs9.53.3/bin/gswin64c.exe")
+
+(use-package pdf-tools
+  :ensure t
+  :custom (pdf-view-midnight-colors '("#e4e4ef" . "#181818")))
 
 ;; (use-package outline-minor-mode)
 (global-set-key (kbd "C-;") 'outline-hide-subtree)
