@@ -10,26 +10,19 @@
  ;; If there is more than one, they won't work right.
  '(global-display-line-numbers-mode t)
  '(ivy-rich-mode t)
- '(org-structure-template-alist
-   (quote
-    (("s" . "src")
-     ("e" . "example")
-     ("q" . "quote")
-     ("v" . "verse")
-     ("V" . "verbatim")
-     ("c" . "center")
-     ("C" . "comment")
-     ("l" . "latex")
-     ("a" . "ascii")
-     ("i" . "index"))))
  '(package-selected-packages
-   (quote
-    (which-key org-roam cuda-mode counsel-projectile projectile all-the-icons-ivy-rich all-the-icons-ivy ivy-rich magit elfeed-goodies elfeed cl-lib cl-libify auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets multiple-cursors move-text haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes))))
+<<<<<<< Updated upstream
+   '(org-roam which-key pdf-tools cuda-mode counsel-projectile projectile all-the-icons-ivy-rich all-the-icons-ivy ivy-rich magit elfeed-goodies elfeed cl-lib cl-libify auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets org-alert multiple-cursors move-text hasklig-mode haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes)))
+=======
+   '(pdf-tools cuda-mode counsel-projectile projectile all-the-icons-ivy-rich all-the-icons-ivy ivy-rich magit elfeed-goodies elfeed cl-lib cl-libify auctex ivy all-the-icons doom-modeline yasnippet use-package tramp smex rainbow-mode org-journal org-bullets org-alert multiple-cursors move-text hasklig-mode haskell-mode gruber-darker-theme ein diminish counsel command-log-mode auto-complete airline-themes)))
+>>>>>>> Stashed changes
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ein:cell-input-area ((t (:background "\"282828\""))))
+ '(ein:cell-input-prompt ((t (:background "\"282828\"" :foreground "\"282828\""))))
  '(ivy-current-match ((t (:extend t :background "#ffdd33" :foreground "black"))))
  '(ivy-highlight-face ((t (:inherit \#cc8c3c))))
  '(ivy-minibuffer-match-face-1 ((t (:background "#cc8c3c"))))

@@ -1,66 +1,47 @@
 
 ;; ----- smex-history -----
 (
+<<<<<<< Updated upstream
+ load-file
+ magit
  initorg
- kill-emacs
- counsel-package
- all-the-icons-ivy-rich-mode
- ivy-rich-mode
- ivy-rich-clear-project-root-cache
- describe-variable
+ pdf-view-midnight-minor-mode
+ comment-box
+ pdf-view-mode
+ list-packages
+=======
+ initorg
+ pdf-view-midnight-minor-mode
+ load-file
+ comment-box
+ pdf-view-mode
+ list-packages
+ midnight-mode
+>>>>>>> Stashed changes
 )
 
 ;; ----- smex-data -----
 (
- (magit . 8)
- (mkdir . 3)
- (all-the-icons-install-fonts . 1)
- (replace-string . 7)
- (cuda-mode . 4)
- (c-mode . 1)
- (package-install . 7)
- (goto-line . 1)
- (calendar . 1)
- (org-return . 4)
- (initorg . 37)
- (byte-compile-file . 1)
- (load-file . 14)
- (list-packages . 5)
- (cuda-menu . 2)
- (hl-line-mode . 1)
- (calc . 4)
- (comment-region . 7)
- (uncomment-region . 2)
- (package-list-packages . 1)
- (mu4e . 2)
- (kill-emacs . 3)
- (magit-status . 2)
- (copy-file . 1)
- (rename-file . 2)
- (rename-buffer . 1)
- (dired-jump . 3)
- (dired-hide-details-mode . 1)
- (imenu . 2)
- (hs-minor-mode . 1)
- (hs-hide-block . 1)
- (hs-show-block . 1)
- (revert-buffer . 1)
- (list-faces-display . 2)
- (package-delete . 2)
- (projectile-mode . 2)
- (projectile-run-term . 1)
- (org-reload . 1)
- (org-id-get-create . 1)
- (org-roam-setup . 1)
- (org-roam-db-sync . 1)
- (org-roam-buffer-toggle . 1)
- (org-roam-mode . 1)
- (org-mode . 1)
- (ivy-rich-mode . 21)
- (which-key-mode . 2)
- (command-log-mode . 1)
- (describe-variable . 1)
- (ivy-rich-clear-project-root-cache . 1)
- (all-the-icons-ivy-rich-mode . 2)
- (counsel-package . 2)
+<<<<<<< Updated upstream
+ (magit . 6)
+=======
+ (magit . 5)
+>>>>>>> Stashed changes
+ (eshell . 1)
+ (list-packages . 3)
+ (package-menu-mark-upgrades . 1)
+ (package-autoremove . 1)
+ (initorg . 8)
+ (elfeed . 1)
+ (package-install . 2)
+ (pdf-view-midnight-minor-mode . 8)
+ (pdf-view-mode . 3)
+ (pdf-tools-install . 1)
+ (midnight-mode . 2)
+ (comment-box . 2)
+<<<<<<< Updated upstream
+ (load-file . 2)
+=======
+ (load-file . 1)
+>>>>>>> Stashed changes
 )

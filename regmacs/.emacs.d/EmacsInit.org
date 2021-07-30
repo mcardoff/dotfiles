@@ -171,7 +171,15 @@ The same goes for `.org` files and `org-mode`
 We also want to associate `.cu` with `cuda-mode`
 #+BEGIN_SRC emacs-lisp
   ;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
+<<<<<<< Updated upstream
 #+END_SRC
+=======
+#+end_src
+And of course pdf view for pdfs
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
+#+end_src
+>>>>>>> Stashed changes
 * Keybindings
 These are just some helpful general functions that make my life a little bit easier, with a table of all of them:
 |---------+------------------------+------------------------|
@@ -291,11 +299,56 @@ Similar idea to multiple cursors, this is just really helpful and  pretty much a
   :diminish 
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
+<<<<<<< Updated upstream
 #+END_SRC
 ** Org
 *** Org-Mode
 Org is a very nice note-taking mode in emacs, I like to have pretty bullets and I like to have the line highlighted when editing, hence the hook region. Here I define a function to set up org mode, involving the different packages I like loaded whe I use org
 #+BEGIN_SRC emacs-lisp
+=======
+#+end_src
+* Modeline config
+Speaking of the modeline, lets make it even more pretty with a couple of options! However, first we talk about Diminish, which cleans up the default modeline a bit
+** Diminish
+This mode makes it so you do not have any themes clogging up your mode line, and it looks oh so good
+#+begin_src emacs-lisp
+(use-package diminish)
+(diminish 'org-bullets-mode)
+(diminish 'visual-line-mode)
+(diminish 'whitespace-mode)
+(diminish 'yas-minor-mode)
+(diminish 'hasklig-mode)
+(diminish 'eldoc-mode)
+#+end_src
+** Powerline
+In powerline, there are a couple different options for the various themes, I prefer the vim theme, which I use normally.
+#+begin_src emacs-lisp
+;;(powerline-vim-theme)
+;; (powerline-default-theme)
+;; (powerline-center-theme)
+;; (powerline-nano-theme)
+#+end_src
+** Doom Modeline
+If you are not keen on running any of the powerline themes, you can run doom-modeline, which is used in doom emacs! 
+#+begin_src emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-height 35)
+  (doom-modeline-icon t))
+#+end_src
+* Org
+Org is a very nice note-taking mode in emacs, I like to have pretty bullets and I like to have the line highlighted when editing, hence the hook region.
+  
+Another useful feature is the agenda that is built in, we specify the directory in which we have our agenda files and a keybind that opens the agenda for easy access
+  
+I am also trying out something called org-alert, it is supposed to send you notifications about the items in your agenda. This comprises of the `requires` and `init` tags. 
+
+Here I define a function to set up org mode, involving the different packages I like loaded whe I use org
+#+begin_src emacs-lisp
+>>>>>>> Stashed changes
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1)
@@ -315,6 +368,7 @@ Here I set up the the actual package
 #+END_SRC
 Here I set up a package called org-bullets that changes the look of the bullets
 #+BEGIN_SRC emacs-lisp
+<<<<<<< Updated upstream
 (use-package org-bullets
   :after org
   :hook (org-mode . org-bullets-mode))
@@ -338,15 +392,75 @@ Currently my notes are all over the place, org roam should hopefully make that l
 *** Org Faces
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+=======
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (use-package mu4e				      ;;
+  ;;   :ensure nil				      ;;
+  ;;   :config					      ;;
+  ;;     (setq mu4e-change-filenames-when-moving t)     ;;
+  ;;     (setq mu4e-update-interval (* 10 60))	      ;;
+  ;;     (setq mu4e-get-mail-command "offlineimap")     ;;
+  ;;     (setq mu4e-maildir "~/Mail")		      ;;
+  ;; 						      ;;
+  ;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")    ;;
+  ;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail") ;;
+  ;;     (setq mu4e-refile-folder "/[Gmail].All Mail")  ;;
+  ;;     (setq mu4e-trash-folder  "/[Gmail].Trash")     ;;
+  ;;     						      ;;
+  ;; 						      ;;
+  ;;     (setq mu4e-maildir-shortcuts		      ;;
+  ;;     '((:maildir "/INBOX"    :key ?i)		      ;;
+  ;;       (:maildir "/[Gmail].Sent Mail" :key ?s)      ;;
+  ;;       (:maildir "/[Gmail].Trash"     :key ?t)      ;;
+  ;;       (:maildir "/[Gmail].Drafts"    :key ?d)      ;;
+  ;;       (:maildir "/[Gmail].All Mail"  :key ?a))))   ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      
+>>>>>>> Stashed changes
 #+END_SRC
 ** Snippets
 Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier
+<<<<<<< Updated upstream
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :init (yas-global-mode)
     :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
 #+END_SRC
 ** Outline
+=======
+#+begin_src emacs-lisp
+  (use-package yasnippet)
+  (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
+  (yas-global-mode)
+#+end_src
+* elfeed
+=elfeed= is an rss reader, for now I use it for some subreddits that are mostly text based, images are possible just not what I require from this:
+#+begin_src emacs-lisp
+  (use-package elfeed
+  :ensure t
+  :custom
+  (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
+                  "http://www.reddit.com/r/Physics/.rss")))
+#+end_src
+Lets try using some extra stuff using `elfeed-goodies`
+#+begin_src emacs-lisp
+  (use-package elfeed-goodies :ensure t)
+#+end_src
+* Doc View
+For some reason `doc-view` did not work for me by default, so I had to change the install directory, that is the only reason for this section
+#+begin_src emacs-lisp
+  ;; (setq doc-view-ghostscript-program "C:/Program Files/gs/gs9.53.3/bin/gswin64c.exe")
+#+end_src
+This should only be on windows, hence why it is commented out here
+** PDF View
+If this is your first time running this package make sure you run the install command
+#+begin_src emacs-lisp
+  (use-package pdf-tools
+    :ensure t
+    :custom (pdf-view-midnight-colors '("#e4e4ef" . "#181818")))
+#+end_src
+* Outline
+>>>>>>> Stashed changes
 This mode is super useful when dealing with super long LaTeX files that have confusing structures. At first I had the keybinds set to weird keys, so I changed them to keys that seemed relatively unused
 #+BEGIN_SRC emacs-lisp
   ;; (use-package outline-minor-mode)
