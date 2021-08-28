@@ -1,10 +1,10 @@
 
 ;; ----- smex-history -----
 (
+ emacs-version
+ magit
  life
- life-mode
  find-library
- zone-when-idle
  zone
  doctor
  cookie
@@ -12,7 +12,7 @@
 
 ;; ----- smex-data -----
 (
- (magit . 10)
+ (magit . 11)
  (mkdir . 3)
  (all-the-icons-install-fonts . 1)
  (replace-string . 9)
@@ -81,4 +81,5 @@
  (zone . 3)
  (zone-when-idle . 1)
  (life-mode . 1)
+ (emacs-version . 1)
 )
