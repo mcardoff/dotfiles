@@ -10,7 +10,6 @@ shell
 find sch
 find R
 shell emacs %f
-mkdir
 mkdir Calculator
 touch Parser.hs
 shell chromium %s
@@ -22,3 +21,20 @@ search downll
 search download
 l
 search down
+search downl
+rename 2B_Red 1.jpg
+rename 2B_Red 2.jpg
+rename 2B_Red 3.jpg
+rename 2b_Red 4.jpg
+open_with%space
+h
+find j
+help
+delete
+rename forbidden.sh
+open_with emacs
+shell sudo make uninstall
+search downloads
+make-dir
+mkdir
+mkdir HOWO

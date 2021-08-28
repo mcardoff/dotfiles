@@ -1,38 +1,38 @@
 
 ;; ----- smex-history -----
 (
- initorg
- kill-emacs
- counsel-package
- all-the-icons-ivy-rich-mode
- ivy-rich-mode
- ivy-rich-clear-project-root-cache
- describe-variable
+ life
+ life-mode
+ find-library
+ zone-when-idle
+ zone
+ doctor
+ cookie
 )
 
 ;; ----- smex-data -----
 (
- (magit . 8)
+ (magit . 10)
  (mkdir . 3)
  (all-the-icons-install-fonts . 1)
- (replace-string . 7)
+ (replace-string . 9)
  (cuda-mode . 4)
  (c-mode . 1)
  (package-install . 7)
  (goto-line . 1)
- (calendar . 1)
+ (calendar . 2)
  (org-return . 4)
- (initorg . 37)
+ (initorg . 40)
  (byte-compile-file . 1)
  (load-file . 14)
- (list-packages . 5)
+ (list-packages . 6)
  (cuda-menu . 2)
  (hl-line-mode . 1)
- (calc . 4)
+ (calc . 5)
  (comment-region . 7)
  (uncomment-region . 2)
  (package-list-packages . 1)
- (mu4e . 2)
+ (mu4e . 4)
  (kill-emacs . 3)
  (magit-status . 2)
  (copy-file . 1)
@@ -44,7 +44,7 @@
  (hs-minor-mode . 1)
  (hs-hide-block . 1)
  (hs-show-block . 1)
- (revert-buffer . 1)
+ (revert-buffer . 2)
  (list-faces-display . 2)
  (package-delete . 2)
  (projectile-mode . 2)
@@ -62,5 +62,23 @@
  (describe-variable . 1)
  (ivy-rich-clear-project-root-cache . 1)
  (all-the-icons-ivy-rich-mode . 2)
- (counsel-package . 2)
+ (counsel-package . 3)
+ (org-lint . 1)
+ (w3m . 2)
+ (hanoi . 4)
+ (elfeed . 1)
+ (interactive-haskell-mode . 1)
+ (flymake-hlint-load . 1)
+ (hanoi-unix . 4)
+ (hanoi-unix-64 . 1)
+ (find-library . 2)
+ (butterfly . 2)
+ (animate-birthday-present . 1)
+ (fortune . 1)
+ (cookie . 1)
+ (doctor . 1)
+ (life . 7)
+ (zone . 3)
+ (zone-when-idle . 1)
+ (life-mode . 1)
 )

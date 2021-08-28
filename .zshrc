@@ -40,8 +40,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 alias ls='exa -al --color=always --group-directories-first'
 alias ..='cd ..'
-alias vim='nvim -u ~/.vim/.vimrc'
-alias cat='bat'
+# alias cat='bat'
 
 # Config aliases
 

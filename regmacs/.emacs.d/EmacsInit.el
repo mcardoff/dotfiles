@@ -28,10 +28,86 @@
 
 (use-package command-log-mode)
 
+(set-face-attribute 'window-divider nil :foreground "#282828")
+(set-face-attribute 'window-divider-first-pixel nil :foreground "#282828")
+(set-face-attribute 'window-divider-last-pixel nil :foreground "#282828")
+(set-face-attribute 'fringe nil :foreground "282828" :background "#282828")
+
 (load-theme 'gruber-darker t)
 
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type t)
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-height 25)
+  (doom-modeline-icon t))
+
+(setq dired-listing-switches "-lXGAh --group-directories-first")
+
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+         ("C-x b" . ivy-switch-buffer)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)	
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :init (ivy-mode 1)
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-wrap t)
+  (setq ivy-count-format "(%d/%d) ")
+  (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
+  (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
+  (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist)
+)
+
+(use-package ivy-rich  
+  :init (ivy-rich-mode 1)
+  :after counsel
+  :config
+  (setq ivy-format-function #'ivy-format-function-line))
+
+(use-package all-the-icons-ivy-rich
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package counsel 
+  :demand t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x b" . counsel-ibuffer)
+         ("C-x C-f" . counsel-find-file)
+         ;; ("C-M-j" . counsel-switch-buffer)
+         ("C-M-l" . counsel-imenu)
+         :map minibuffer-local-map
+         ("C-r" . 'counsel-minibuffer-history))
+  :custom
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  (setq ivy-initial-inputs-alist nil))
+
+(set-face-attribute
+  'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
+
+;;(ido-mode 1)
+;;(ido-everywhere 1)
+;;
+;;(use-package smex
+;;  :ensure t
+;;  :bind (("M-x" . smex)
+;;         ("M-X" . smex-major-mode-commands))
+;;)
+;;(global-set-key (kbd "M-x") 'smex)
+;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
@@ -112,14 +188,6 @@
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
 
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-buffer-encoding nil)
-  (doom-modeline-height 25)
-  (doom-modeline-icon t))
-
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1)
@@ -152,44 +220,11 @@
   :config
   (org-roam-setup))
 
-(use-package mu4e
-  :ensure nil
-  :config
-    (setq mu4e-change-filenames-when-moving t)
-    (setq mu4e-update-interval (* 10 60))
-    (setq mu4e-get-mail-command "offlineimap")
-    (setq mu4e-maildir "~/Mail")
-
-    (setq mu4e-drafts-folder "/[Gmail].Drafts")
-    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-    (setq mu4e-refile-folder "/[Gmail].All Mail")
-    (setq mu4e-trash-folder  "/[Gmail].Trash")
-    
-
-    (setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"    :key ?i)
-      (:maildir "/[Gmail].Sent Mail" :key ?s)
-      (:maildir "/[Gmail].Trash"     :key ?t)
-      (:maildir "/[Gmail].Drafts"    :key ?d)
-      (:maildir "/[Gmail].All Mail"  :key ?a))))
-
-(setq dired-listing-switches "-lXGAh --group-directories-first")
+(set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
 
 (use-package yasnippet
-    :init (yas-global-mode)
-    :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
-;;  (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
-;;  (yas-global-mode)
-
-(use-package elfeed
-:ensure t
-:custom
-(elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
-                "http://www.reddit.com/r/Physics/.rss")))
-
-(use-package elfeed-goodies :ensure t)
-
-;; (setq doc-view-ghostscript-program "C:/Program Files/gs/gs9.53.3/bin/gswin64c.exe")
+  :init (yas-global-mode)
+  :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
 
 ;; (use-package outline-minor-mode)
 (global-set-key (kbd "C-;") 'outline-hide-subtree)
@@ -213,73 +248,34 @@
 ("^%subsubsection{\\(.*\\)}" 1 'font-latex-sectioning-4-face t)
 ("^%paragraph{\\(.*\\)}"     1 'font-latex-sectioning-5-face t)))
 
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-         ("C-x b" . ivy-switch-buffer)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :init (ivy-mode 1)
+(use-package elfeed
+:ensure t
+:custom
+(elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
+                "http://www.reddit.com/r/Physics/.rss")))
+
+(use-package elfeed-goodies :ensure t)
+
+(use-package mu4e
+  :ensure nil
   :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-wrap t)
-  (setq ivy-count-format "(%d/%d) ")
-  (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
-  (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
-  (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist)
-)
+    (setq mu4e-change-filenames-when-moving t)
+    (setq mu4e-update-interval (* 10 60))
+    (setq mu4e-get-mail-command "offlineimap")
+    (setq mu4e-maildir "~/Mail")
 
-(use-package ivy-rich  
-  :init (ivy-rich-mode 1)
-  :after counsel
-  :config
-  (setq ivy-format-function #'ivy-format-function-line))
+    (setq mu4e-drafts-folder "/[Gmail].Drafts")
+    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+    (setq mu4e-refile-folder "/[Gmail].All Mail")
+    (setq mu4e-trash-folder  "/[Gmail].Trash")
+    
 
-(use-package all-the-icons-ivy-rich
-  :init (all-the-icons-ivy-rich-mode 1))
-
-(use-package counsel 
-  :demand t
-  :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer)
-         ("C-x C-f" . counsel-find-file)
-         ;; ("C-M-j" . counsel-switch-buffer)
-         ("C-M-l" . counsel-imenu)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history))
-  :custom
-  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
-  :config
-  (setq ivy-initial-inputs-alist nil)
-)
-
-;;(ido-mode 1)
-;;(ido-everywhere 1)
-;;
-;;(use-package smex
-;;  :ensure t
-;;  :bind (("M-x" . smex)
-;;         ("M-X" . smex-major-mode-commands))
-;;)
-;;(global-set-key (kbd "M-x") 'smex)
-;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-
-(set-face-attribute 'window-divider nil :foreground "#282828")
-(set-face-attribute 'window-divider-first-pixel nil :foreground "#282828")
-(set-face-attribute 'window-divider-last-pixel nil :foreground "#282828")
-(set-face-attribute 'fringe nil :foreground "282828" :background "#282828")
-
-(set-face-attribute 'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
-
-(set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+    (setq mu4e-maildir-shortcuts
+    '((:maildir "/INBOX"    :key ?i)
+      (:maildir "/[Gmail].Sent Mail" :key ?s)
+      (:maildir "/[Gmail].Trash"     :key ?t)
+      (:maildir "/[Gmail].Drafts"    :key ?d)
+      (:maildir "/[Gmail].All Mail"  :key ?a))))
 
 (defun dotemacs () (interactive) (find-file "~/regmacs/.emacs.d/init.el"))
 
@@ -323,7 +319,6 @@
                    (float-time
                      (time-subtract after-init-time before-init-time)))
            gcs-done))
-
 
 (add-hook 'emacs-startup-hook #'mpc/display-startup-time)
 

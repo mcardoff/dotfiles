@@ -1,10 +1,10 @@
 ################################################################
 ################################################################
 ##                                                            ##
-##              _    ____                                     ##      
-##             (_)  |__ /  _ __ __  _ __                      ##      
-##             | |   |_ \  \ V  V /| '  \                     ##      
-##             |_|  |___/   \_/\_/ |_|_|_|                    ##      
+##              _    ____                                     ##
+##             (_)  |__ /  _ __ __  _ __                      ##
+##             | |   |_ \  \ V  V /| '  \                     ##
+##             |_|  |___/   \_/\_/ |_|_|_|                    ##
 ##                                                            ##
 ##                                                            ##
 ################################################################
@@ -181,7 +181,7 @@ mode "move" {
 set $file pcmanfm
 set $browser brave
 set $term ~/.cargo/bin/alacritty
-set $dmen (dmenu_run  -fn 'Source Code Pro:size=13' -p '>' -sb '#cc8c3c' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA' -c -l 20)
+set $dmen (dmenu_run -fn 'Source Code Pro:size=13' -p '>' -sb '#cc8c3c' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA' -c -l 20)
 
 
 bindsym $mod+b exec $browser
