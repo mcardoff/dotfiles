@@ -1,0 +1,1 @@
+stty -echo; sudo openconnect --config=/home/mcard/.bin/.openconnect_IIT https://vpn.iit.edu ; stty echo
