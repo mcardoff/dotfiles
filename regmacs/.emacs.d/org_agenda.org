@@ -1,0 +1,2 @@
+~/repos/org-agenda/School Schedules/SP21.org
+~/repos/org-agenda/School Schedules/FA21.org
