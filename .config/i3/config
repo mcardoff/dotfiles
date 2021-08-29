@@ -179,7 +179,7 @@ mode "move" {
 # my keybinds
 
 set $file pcmanfm
-set $browser brave
+set $browser firefox
 set $term ~/.cargo/bin/alacritty
 set $dmen (dmenu_run -fn 'Source Code Pro:size=13' -p '>' -sb '#cc8c3c' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA' -c -l 20)
 

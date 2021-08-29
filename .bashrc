@@ -34,6 +34,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+alias ls='exa -al --color=always --group-directories-first'
+
 export EDITOR=emacsclient
 export ALTERNATE_EDITOR=""
 export TERM=xterm-256color
@@ -50,4 +52,4 @@ CYA='\033[01;36m'
 
 force_color_prompt=yes
 title='\e]0; \w\a'
-export PS1="\[${CYA}\][\[${RED}\]\u\[${NC}\]\[${CYA}\]@\[${BLU}\]\h \[${YEL}\]\w\[${CYA}\]]\[${NC}\$\] \[$(echo -e "$title")\]\[${NC}\]"
+export PS1="${YEL}[${RED}\u${NC}${YEL}@${BLU}\h ${GRE}\w${NC}${YEL}]${RED}$ $(echo -e "$title")${NC}"

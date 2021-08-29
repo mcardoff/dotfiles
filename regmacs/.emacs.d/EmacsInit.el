@@ -43,7 +43,7 @@
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-buffer-encoding nil)
-  (doom-modeline-height 25)
+  (doom-modeline-height 40)
   (doom-modeline-icon t))
 
 (setq dired-listing-switches "-lXGAh --group-directories-first")
@@ -199,7 +199,8 @@
   (org-reload)
   :config
   (setq org-ellipsis " [+]")
-  (setq org-agenda-files "~/org/Test.org")
+  (setq org-directory "~/repos/org-agenda/School Schedules/")
+  (setq org-agenda-files "~/regmacs/.emacs.d/org_agenda.org")
   (set-face-attribute
   'org-ellipsis 'nil :underline 'nil :foreground "FFFFFF"))
 
@@ -256,26 +257,26 @@
 
 (use-package elfeed-goodies :ensure t)
 
-(use-package mu4e
-  :ensure nil
-  :config
-    (setq mu4e-change-filenames-when-moving t)
-    (setq mu4e-update-interval (* 10 60))
-    (setq mu4e-get-mail-command "offlineimap")
-    (setq mu4e-maildir "~/Mail")
+;; (use-package mu4e
+;;   :ensure nil
+;;   :config
+;;     (setq mu4e-change-filenames-when-moving t)
+;;     (setq mu4e-update-interval (* 10 60))
+;;     (setq mu4e-get-mail-command "offlineimap")
+;;     (setq mu4e-maildir "~/Mail")
 
-    (setq mu4e-drafts-folder "/[Gmail].Drafts")
-    (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-    (setq mu4e-refile-folder "/[Gmail].All Mail")
-    (setq mu4e-trash-folder  "/[Gmail].Trash")
-    
+;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")
+;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+;;     (setq mu4e-refile-folder "/[Gmail].All Mail")
+;;     (setq mu4e-trash-folder  "/[Gmail].Trash")
 
-    (setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"    :key ?i)
-      (:maildir "/[Gmail].Sent Mail" :key ?s)
-      (:maildir "/[Gmail].Trash"     :key ?t)
-      (:maildir "/[Gmail].Drafts"    :key ?d)
-      (:maildir "/[Gmail].All Mail"  :key ?a))))
+
+;;     (setq mu4e-maildir-shortcuts
+;;     '((:maildir "/INBOX"    :key ?i)
+;;       (:maildir "/[Gmail].Sent Mail" :key ?s)
+;;       (:maildir "/[Gmail].Trash"     :key ?t)
+;;       (:maildir "/[Gmail].Drafts"    :key ?d)
+;;       (:maildir "/[Gmail].All Mail"  :key ?a))))
 
 (defun dotemacs () (interactive) (find-file "~/regmacs/.emacs.d/init.el"))
 

@@ -102,26 +102,26 @@
 font:
 # Normal font face
   normal:
-    family: Hasklig
+    family: Source Code Pro
     style: Regular
 
 # Bold font face
   bold:
-    family: Hasklig
+    family: Source Code Pro
     style: Bold
 
   # Italic font face
   italic:
-    family: Hasklig
+    family: Source Code Pro
     style: Italic
 
   # Bold italic font face
   #bold_italic:
-    #family: monospace
+    #family: Source Code Pro
     #style: Bold Italic
 
   # Point size
-  size: 13.0
+  size: 8.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
