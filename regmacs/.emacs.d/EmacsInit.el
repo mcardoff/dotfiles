@@ -21,7 +21,7 @@
 (column-number-mode)
 (show-paren-mode)
 (fringe-mode 1)
-(setq inhibit-startup-screen 1)
+(setq inhibit-startup-screen 0)
 (setq visible-bell 1)
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 140)

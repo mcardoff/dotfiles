@@ -1,9 +1,9 @@
 
 ;; ----- smex-history -----
 (
- org-agenda
  initorg
  magit
+ org-agenda
  comment-region
  load-file
  list-packages
@@ -12,7 +12,7 @@
 
 ;; ----- smex-data -----
 (
- (magit . 13)
+ (magit . 15)
  (mkdir . 3)
  (all-the-icons-install-fonts . 2)
  (replace-string . 9)
@@ -22,7 +22,7 @@
  (goto-line . 1)
  (calendar . 2)
  (org-return . 4)
- (initorg . 43)
+ (initorg . 44)
  (byte-compile-file . 1)
  (load-file . 15)
  (list-packages . 7)

@@ -35,12 +35,12 @@ This is just a few aesthetic changes that make emacs appear to be a lot cleaner
 (column-number-mode)
 (show-paren-mode)
 (fringe-mode 1)
-(setq inhibit-startup-screen 1)
+(setq inhibit-startup-screen 0)
 (setq visible-bell 1)
 #+END_SRC
 The last bit gets rid of the splash screen when you start emacs, and makes it so it does not make an annoying sound every time youre at the end of a file. This next part is what sets the font:
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :font "Source Code Pro" :height 140)
+(set-face-attribute 'default nil :font "Source Code Pro" :foundry 'regular :height 140)
 #+END_SRC
 I want to try to use command log mode so I can see what I am doing when messing around with commands
 #+BEGIN_SRC emacs-lisp
@@ -141,8 +141,9 @@ An addition to ivy is counsel, which makes use of x, we just need to have it ins
 *** Face Attribute Changes
 I like to change the face of the main match to be my main highlight color
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute
-  'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
+(set-face-attribute 'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
+(set-face-attribute 'font-lock-keyword-face 'nil :weight 'bold :slant 'italic)
+(set-face-attribute 'font-lock-type-face 'nil :slant 'oblique)
 #+END_SRC
 ** ido-mode
 Ido makes `find-file` and other similar functions look a lot nicer, and `smex` is the same but for `M-x`
@@ -338,7 +339,9 @@ Currently my notes are all over the place, org roam should hopefully make that l
 #+END_SRC
 *** Org Faces
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+  (set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+  ;; remove bold if youre on windows, itll make some squares instead of the regular org-bullets
+  (set-face-attribute 'outline-3 'nil :foreground "#ffdd33" :weight 'bold :family "Source Code Pro" :slant 'normal)
 #+END_SRC
 ** Snippets
 Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier

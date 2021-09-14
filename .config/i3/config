@@ -153,6 +153,7 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
+    bindsym $mod+m mode "move"
 }
 
 # move floating windows with keys
@@ -174,6 +175,8 @@ mode "move" {
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym $mod+m mode "default"
+    bindsym $mod+r mode "resize"
 }
 
 # my keybinds
@@ -201,7 +204,10 @@ bindsym F2 [class="Emacs" title="Scratchpad"] scratchpad show
 bindsym F3 [class="Alacritty" title="Ranger"] scratchpad show
 
 # colors
-set $princ #fa9e0d
+set $princ #8b3622
+set $secon #3774b5
+# set $princ #db3737
+# set $secon #6e92b3
 
 
 # class                 border  backgr. text    indicator child_border
@@ -257,14 +263,14 @@ bar {
 	       background #000000
 	       statusline #ffffff
 
-	       focused_workspace $princ  $princ  #ffffff
-	       active_workspace  #ffffff $princ  #ffffff
+	       focused_workspace $secon  $secon  #ffffff
+	       active_workspace  #ffffff $secon  #ffffff
 	       inactive_workspace #222222 #222222 #888888
 	       urgent_workspace   #ffffff #900000	
 	}	
 }
 
 # exec (picom &)
-exec (compton &)
+exec (compton --config=/home/mcard/.config/compton/compton.conf &)
 exec (nitrogen --restore &)
 exec (lxappearance &)
