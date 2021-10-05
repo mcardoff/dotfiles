@@ -10,9 +10,6 @@
 ################################################################
 ################################################################
 
-set $mod Mod4
-set $alt Mod1
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font xft:Source Code Pro
@@ -24,66 +21,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@   toggle && $refresh_i3status
 bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-
-# Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
-# nm-applet
 exec --no-startup-id nm-applet
-
-# start a terminal
-bindsym $mod+Return exec "~/.cargo/bin/alacritty"
-
-# kill focused window
-bindsym $mod+Shift+c kill
-
-
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# split orientation
-bindsym $mod+c split h
-bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+x fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent/child container
-bindsym $mod+a focus parent
-bindsym $mod+d focus child
 
 # WS Names
 set $ws1 "1:trm"
@@ -97,40 +36,183 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws0 "10"
 
-# switch to workspace
-bindsym $mod+0 workspace $ws0
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
+# local vars
+set $alt Mod1
+set $browser firefox
+set $dmen dmenu_run -sb '#8b3622' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA'
+set $file pcmanfm
+set $mod Mod4
+set $term ~/.cargo/bin/alacritty
 
-# move focused container to workspace
-bindsym $mod+Shift+0 move container to workspace $ws0
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
+# colors
+# Dark Rainbow
+set $princ #8b3622
+set $secon #3774b5
+# AB 2b
+# set $princ #790506
+# set $secon #790506
+# AB Other
+# set $princ #d13d33
+# set $secon #027c81
 
-# reload the configuration file
-bindsym $mod+Shift+q reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
+
+bindsym $mod+a focus parent
+#bindsym $mod+Shift+a
+
+bindsym $mod+b exec $browser
+#bindsym $mod+Shift+b
+
+bindsym $mod+c split h
+bindsym $mod+Shift+c kill
+
+bindsym $mod+d focus child
+#bindsym $mod+Shift+d
+
+bindsym $mod+e layout toggle split
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
+bindsym $mod+f exec ($term -t "Ranger" -e "ranger")
+bindsym $mod+Shift+f exec pcmanfm
 
+#bindsym $mod+g
+#bindsym $mod+Shift+g
+
+bindsym $mod+h focus left
+bindsym $mod+Shift+h move left
+
+#bindsym $mod+i
+#bindsym $mod+Shift+i
+
+bindsym $mod+j focus down
+bindsym $mod+Shift+j move down
+
+bindsym $mod+k focus up
+bindsym $mod+Shift+k move up
+
+bindsym $mod+l focus right
+bindsym $mod+Shift+l move right
+
+bindsym $mod+m mode "move" focus floating
+#bindsym $mod+Shift+m
+
+#bindsym $mod+n
+#bindsym $mod+Shift+n
+
+bindsym $mod+o exec emacs
+#bindsym $mod+Shift+o exec (emacs -T "Scratchpad" -f server-start)
+bindsym $mod+Shift+o exec ~/.bin/emacs.sh
+
+bindsym $mod+p exec $dmen
+#bindsym $mod+Shift+p
+
+#bindsym $mod+q
+bindsym $mod+Shift+q reload
+
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+r restart
+
+bindsym $mod+s layout stacking
+#bindsym $mod+Shift+s
+
+bindsym $mod+t border normal
+bindsym $mod+Shift+t border none
+
+#bindsym $mod+u 
+#bindsym $mod+Shift+u
+
+bindsym $mod+v split v
+#bindsym $mod+Shift+v
+
+bindsym $mod+w layout tabbed
+#bindsym $mod+Shift+w
+
+bindsym $mod+x fullscreen toggle
+#bindsym $mod+Shift+x
+
+#bindsym $mod+y
+#bindsym $mod+Shift+y
+
+# bindsym $mod+z       gaps outer current plus 5
+# bindsym $mod+Shift+z gaps outer current plus 5
+
+bindsym $mod+0 workspace $ws0
+bindsym $mod+Shift+0 move container to workspace $ws0
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+Shift+1 move container to workspace $ws1
+
+bindsym $mod+2 workspace $ws2
+bindsym $mod+Shift+2 move container to workspace $ws2
+
+bindsym $mod+3 workspace $ws3
+bindsym $mod+Shift+3 move container to workspace $ws3
+
+bindsym $mod+4 workspace $ws4
+bindsym $mod+Shift+4 move container to workspace $ws4
+
+bindsym $mod+5 workspace $ws5
+bindsym $mod+Shift+5 move container to workspace $ws5
+
+bindsym $mod+6 workspace $ws6
+bindsym $mod+Shift+6 move container to workspace $ws6
+
+bindsym $mod+7 workspace $ws7
+bindsym $mod+Shift+7 move container to workspace $ws7
+
+bindsym $mod+8 workspace $ws8
+bindsym $mod+Shift+8 move container to workspace $ws8
+
+bindsym $mod+9 workspace $ws9
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+bindsym $mod+Left focus left
+bindsym $mod+Shift+Left move left
+
+bindsym $mod+Down focus down
+bindsym $mod+Shift+Down move down
+
+bindsym $mod+Up focus up
+bindsym $mod+Shift+Up move up
+
+bindsym $mod+Right focus right
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
+
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
+bindsym $alt+Tab workspace next
+bindsym $alt+Shift+Tab workspace prev
+
+bindsym F1  [class="Alacritty" title="Scratchpad"] scratchpad show
+
+bindsym F2  [class="Emacs" title="Scratchpad"] scratchpad show
+
+bindsym F3  [class="Alacritty" title="Ranger"] scratchpad show
+
+#bindsym F4 
+
+#bindsym F5 
+
+#bindsym F6 
+
+#bindsym F7 
+
+#bindsym F8 
+
+#bindsym F9 
+
+#bindsym F10
+
+#bindsym F11
+
+#bindsym F12
+
+# Different modes
 mode "resize" {
     # These bindings trigger as soon as you enter the resize mode
     bindsym h resize shrink width 10 px or 10 ppt
@@ -156,9 +238,6 @@ mode "resize" {
     bindsym $mod+m mode "move"
 }
 
-# move floating windows with keys
-bindsym $mod+m mode "move" focus floating
-
 mode "move" {
     bindsym $mod+Tab focus right
 
@@ -179,39 +258,9 @@ mode "move" {
     bindsym $mod+r mode "resize"
 }
 
-# my keybinds
-
-set $file pcmanfm
-set $browser firefox
-set $term ~/.cargo/bin/alacritty
-set $dmen (dmenu_run -fn 'Source Code Pro:size=13' -p '>' -sb '#cc8c3c' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA' -c -l 20)
-
-
-bindsym $mod+b exec $browser
-bindsym $mod+o exec emacs
-bindsym $mod+p exec $dmen
-bindsym $mod+Shift+f exec pcmanfm
-
-# launch scratchpads
-bindsym $mod+f exec ($term -t "Ranger" -e "ranger")
-bindsym $mod+Shift+o exec (emacs -T "Scratchpad" -f server-start)
-bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
-#exec
-
-# show scratchpads
-bindsym F1 [class="Alacritty" title="Scratchpad"] scratchpad show
-bindsym F2 [class="Emacs" title="Scratchpad"] scratchpad show
-bindsym F3 [class="Alacritty" title="Ranger"] scratchpad show
-
-# colors
-set $princ #8b3622
-set $secon #3774b5
-# set $princ #db3737
-# set $secon #6e92b3
-
-
+# Window Settings
 # class                 border  backgr. text    indicator child_border
-client.focused          $princ  $princ  #ffffff #c99c63   $princ 
+client.focused          $princ  $princ  #ffffff #c99c63      $princ 
 client.focused_inactive #333333 #222222 #888888 #292d2e   #222222
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -223,38 +272,25 @@ client.background       #ffffff
 # smart_gaps inverse_outer
 # gaps inner 8
 # gaps outer 5
-# bindsym $mod+z       gaps outer current plus 5
-# bindsym $mod+Shift+z gaps outer current plus 5
-
 
 new_window normal 0 px
 new_float normal
 hide_edge_borders both
 
 
-# make certain windows floating as well as handle scratchpads
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [title="Scratchpad"] move scratchpad
+for_window [title="Ranger"] move scratchpad
 for_window [title="Customize Look and Feel"] floating enable
 for_window [title="Customize Look and Feel"] move to workspace "LX"
 
-# window modidications
-bindsym $mod+u border none
-bindsym $mod+t border normal
-
-# extra movement
-bindsym $mod+Tab focus right
-bindsym $mod+Shift+Tab focus left
-bindsym $alt+Tab workspace next
-bindsym $alt+Shift+Tab workspace prev
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# i3 Status
 bar {
         status_command (i3status -c ~/.config/i3/i3status.conf)
 	
 	strip_workspace_numbers yes
+	separator_symbol " "
 
 	position bottom
 	tray_padding 0
@@ -270,6 +306,7 @@ bar {
 	}	
 }
 
+# Execute startup stuff
 # exec (picom &)
 exec (compton --config=/home/mcard/.config/compton/compton.conf &)
 exec (nitrogen --restore &)
