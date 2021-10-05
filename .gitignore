@@ -54,3 +54,4 @@ octave-workspace
 /.config/xviewer/
 /.emacs.d/auto-save-list/
 /dmenu/
+auto-save-list
