@@ -1,7 +1,5 @@
 ;;; init.el --- -*- lexical-binding: t; -*-
 
-(require 'cl-lib)
-
 (require 'chemacs
          (expand-file-name "chemacs.el"
                            (file-name-directory
