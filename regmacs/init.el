@@ -40,8 +40,8 @@
 (use-package dashboard
  :custom
  (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
- (dashboard-items '((recents  . 5)
-                    (agenda   . 5)))
+ (dashboard-items '((recents  . 10)
+                    (agenda   . 10)))
  (dashboard-set-heading-icons t)
  (dashboard-set-file-icons t)
  :config (dashboard-setup-startup-hook))
@@ -129,22 +129,27 @@
 
 (defun initorg () (interactive) (find-file (concat user-emacs-directory "EmacsInit.org")))
 
-;; Ease of use
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'split-window-below)
-(global-set-key (kbd "M-3") 'split-window-right)
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key (kbd "M-r") 'enlarge-window)
-(global-set-key (kbd "M-R") 'shrink-window)
+(use-package tramp :defer 5)
 
-;; Using C-z as basic map
-(define-prefix-command 'mpc-map)
-(global-set-key (kbd "C-z") 'mpc-map)
-(global-set-key (kbd "C-z a") 'org-agenda)
-(global-set-key (kbd "C-z l") 'org-agenda-list)
-(global-set-key (kbd "C-z i") 'dotemacs)
-(global-set-key (kbd "C-z d") 'initorg)
+;; Maybe using general?
+(use-package general
+  :config
+  (global-unset-key (kbd "C-z"))
+  (general-define-key
+   :prefix "C-z"
+   "a" 'org-agenda
+   "l" 'org-agenda-list
+   "i" 'dotemacs
+   "d" 'initorg
+   )
+  (general-define-key
+   "<escape>" 'keyboard-escape-quit
+   "M-1" 'delete-other-windows
+   "M-2" 'split-window-below
+   "M-3" 'split-window-right
+   "M-o" 'other-window
+   "M-r" 'enlarge-window
+   "M-R" 'shrink-window))
 
 ;; Which-key because there are so many bindings
 (use-package which-key
@@ -220,6 +225,8 @@
   (org-ellipsis " [+]")
   (org-directory "~/repos/org-agenda/School Schedules/")
   (org-agenda-files (concat user-emacs-directory "org_agenda.org"))
+  (org-todo-keywords
+   '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")))
   (org-structure-template-alist
    '(("s" . "src")
      ("e" . "example")
@@ -263,7 +270,10 @@
 (use-package yasnippet
   :defer 5
   :init (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/eprofiles/regmacs/mysnippets")))
+  :custom (yas-snippet-dirs '("~/eprofiles/default/mysnippets")))
+
+(use-package yasnippet-snippets
+  :after yasnippet)
 
 (use-package elfeed
   :defer 5
@@ -271,26 +281,32 @@
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
 
-;; (use-package mu4e
-;;   :ensure nil
-;;   :config
-;;     (setq mu4e-change-filenames-when-moving t)
-;;     (setq mu4e-update-interval (* 10 60))
-;;     (setq mu4e-get-mail-command "offlineimap")
-;;     (setq mu4e-maildir "~/Mail")
+(use-package mu4e
+  :ensure nil
+  :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  :defer 5 ; Wait until 20 seconds after startup
+  :config
 
-;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")
-;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-;;     (setq mu4e-refile-folder "/[Gmail].All Mail")
-;;     (setq mu4e-trash-folder  "/[Gmail].Trash")
+  ;; This is set to 't' to avoid mail syncing issues when using mbsync
+  (setq mu4e-change-filenames-when-moving t)
 
+  ;; Refresh mail using isync every 10 minutes
+  (setq mu4e-update-interval (* 10 60))
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-maildir "~/Mail")
 
-;;     (setq mu4e-maildir-shortcuts
-;;     '((:maildir "/INBOX"    :key ?i)
-;;       (:maildir "/[Gmail].Sent Mail" :key ?s)
-;;       (:maildir "/[Gmail].Trash"     :key ?t)
-;;       (:maildir "/[Gmail].Drafts"    :key ?d)
-;;       (:maildir "/[Gmail].All Mail"  :key ?a))))
+  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
+  (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
+  (setq mu4e-refile-folder "/[Gmail]/All Mail")
+  (setq mu4e-trash-folder  "/[Gmail]/Trash")
+
+  (setq mu4e-maildir-shortcuts
+      '(("/Inbox"             . ?i)
+        ("/[Gmail]/Sent Mail" . ?s)
+        ("/[Gmail]/Trash"     . ?t)
+        ("/[Gmail]/Drafts"    . ?d)
+        ("/[Gmail]/All Mail"  . ?a))))
+
 
 (setq schoolpath "~/school/")
 (setq templatepath "~/school/template.tex")
@@ -328,22 +344,4 @@
   (lambda ()
     (setq file-name-handler-alist mpc--file-name-handler-alist)))
 
-;;; shit set by emacs, one day when the world is good I will get rid of this
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(elfeed yasnippet which-key websocket visual-fill-column use-package request rainbow-mode projectile powerline popwin polymode pkg-info org-bullets org noflet multiple-cursors move-text magit gruber-darker-theme doom-modeline deferred dashboard cuda-mode counsel cl-libify auctex anaphora all-the-icons-ivy-rich all-the-icons-ivy ace-jump-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ivy-current-match ((t (:extend t :background "#ffdd33" :foreground "black"))))
- '(ivy-minibuffer-match-face-1 ((t (:background "#cc8c3c"))))
- '(ivy-minibuffer-match-highlight ((t (:inherit compilation-warning))))
- '(org-block ((t (:foreground "#e4e4ef"))))
- '(org-ellipsis ((t (:foreground "#FFFFFF" :underline nil))))
- '(outline-3 ((t (:foreground "#ffdd33" :weight bold :family "Source Code Pro" :slant normal)))))
+(setq custom-file (concat user-emacs-directory ".emacs-custom.el"))

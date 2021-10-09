@@ -137,22 +137,43 @@ I have a few functions that need to be used in the following section, so they ar
 ** Custom keybinds
 These are just ease of use for navigating windows, essentially replacing some basic =C-x= functions with the =M= equivalent. However, in addition, there is a couple others too, such as =<escape>= for quitting and =M-r/R= to resize windows.
 #+begin_src emacs-lisp
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (global-set-key (kbd "M-1") 'delete-other-windows)
-  (global-set-key (kbd "M-2") 'split-window-below)
-  (global-set-key (kbd "M-3") 'split-window-right)
-  (global-set-key (kbd "M-o") 'other-window)
-  (global-set-key (kbd "M-r") 'enlarge-window)
-  (global-set-key (kbd "M-R") 'shrink-window)
+;;  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;;  (global-set-key (kbd "M-1") 'delete-other-windows)
+;;  (global-set-key (kbd "M-2") 'split-window-below)
+;;  (global-set-key (kbd "M-3") 'split-window-right)
+;;  (global-set-key (kbd "M-o") 'other-window)
+;;  (global-set-key (kbd "M-r") 'enlarge-window)
+;;  (global-set-key (kbd "M-R") 'shrink-window)
 #+end_src
 Here I define =C-z= as a map for some of my commonly used functions defined in the previous section
 #+begin_src emacs-lisp
-  (define-prefix-command 'mpc-map)
-  (global-set-key (kbd "C-z") 'mpc-map)
-  (global-set-key (kbd "C-z a") 'org-agenda)
-  (global-set-key (kbd "C-z l") 'org-agenda-list)
-  (global-set-key (kbd "C-z i") 'dotemacs)
-  (global-set-key (kbd "C-z d") 'initorg)
+;;  (define-prefix-command 'mpc-map)
+;;  (global-set-key (kbd "C-z") 'mpc-map)
+;;  (global-set-key (kbd "C-z a") 'org-agenda)
+;;  (global-set-key (kbd "C-z l") 'org-agenda-list)
+;;  (global-set-key (kbd "C-z i") 'dotemacs)
+;;  (global-set-key (kbd "C-z d") 'initorg)
+#+end_src
+You could do this, or use =general.el=
+#+begin_src emacs-lisp
+  (use-package general
+  :config
+  (global-unset-key (kbd "C-z"))
+  (general-define-key
+   :prefix "C-z"
+   "a" 'org-agenda
+   "l" 'org-agenda-list
+   "i" 'dotemacs
+   "d" 'initorg
+   )
+  (general-define-key
+   "<escape>" 'keyboard-escape-quit
+   "M-1" 'delete-other-windows
+   "M-2" 'split-window-below
+   "M-3" 'split-window-right
+   "M-o" 'other-window
+   "M-r" 'enlarge-window
+   "M-R" 'shrink-window))
 #+end_src
 As an added bonus I have the =which-key= mode installed, so I can see which commands I have binded above:
 #+begin_src emacs-lisp

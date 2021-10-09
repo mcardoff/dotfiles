@@ -8,6 +8,8 @@
 	TeX-insert-backslash
 	beginning-of-visual-line
 	end-of-visual-line
+	indent-for-tab-command
+	kill-region
 	move-text-up
 	org-beginning-of-line
 	org-kill-line

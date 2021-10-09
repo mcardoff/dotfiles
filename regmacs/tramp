@@ -1,6 +1,5 @@
-;; -*- emacs-lisp -*- <21/07/28 10:38:55 /home/mcard/regmacs/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <21/10/08 14:36:24 /home/mcard/eprofiles/default/tramp>
 ;; Tramp connection history.  Don't change this file.
-;; You can delete it, forcing Tramp to reapply the checks.
+;; Run `M-x tramp-cleanup-all-connections' instead.
 
-(((tramp-file-name "ssh" "cardiff" nil "theory2.phys.iit.edu" nil nil nil)
-  nil))
+(nil)

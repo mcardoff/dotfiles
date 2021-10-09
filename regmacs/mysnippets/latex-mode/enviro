@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: env
+# key: env
+# --
+\begin{$1}
+$0
+\end{$1}

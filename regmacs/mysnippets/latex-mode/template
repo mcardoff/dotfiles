@@ -4,7 +4,7 @@
 # --
 \documentclass[12pt]{article}
 
-\title{$1}
+\title{\vspace{-3em}$1}
 \author{Michael Cardiff}
 \date{\today}
 
@@ -17,6 +17,7 @@
 \usepackage{bm}
 \usepackage{enumitem}
 \usepackage{float}
+\usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 
 % figures
@@ -41,6 +42,7 @@
   \end{figure}
 }
 
+\renewcommand{\L}{\mathcal{L}}
 
 \begin{document}
 \maketitle

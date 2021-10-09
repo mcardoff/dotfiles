@@ -34,7 +34,7 @@ set $ws6 "6:disc"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws0 "10"
+set $ws10 "10"
 
 # local vars
 set $alt Mod1
@@ -99,7 +99,6 @@ bindsym $mod+m mode "move" focus floating
 #bindsym $mod+Shift+n
 
 bindsym $mod+o exec emacs
-#bindsym $mod+Shift+o exec (emacs -T "Scratchpad" -f server-start)
 bindsym $mod+Shift+o exec ~/.bin/emacs.sh
 
 bindsym $mod+p exec $dmen
@@ -135,8 +134,8 @@ bindsym $mod+x fullscreen toggle
 # bindsym $mod+z       gaps outer current plus 5
 # bindsym $mod+Shift+z gaps outer current plus 5
 
-bindsym $mod+0 workspace $ws0
-bindsym $mod+Shift+0 move container to workspace $ws0
+bindsym $mod+0 workspace $ws10
+bindsym $mod+Shift+0 move container to workspace $ws10
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -274,9 +273,8 @@ client.background       #ffffff
 # gaps outer 5
 
 new_window normal 0 px
-new_float normal
+new_float normal 0 px
 hide_edge_borders both
-
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -284,6 +282,9 @@ for_window [title="Scratchpad"] move scratchpad
 for_window [title="Ranger"] move scratchpad
 for_window [title="Customize Look and Feel"] floating enable
 for_window [title="Customize Look and Feel"] move to workspace "LX"
+for_window [class="Firefox"] move to workspace $ws3
+for_window [class="Cinnamon-settings.py"] move to workspace $ws4
+for_window [class="discord"] move to workspace $ws6
 
 # i3 Status
 bar {
