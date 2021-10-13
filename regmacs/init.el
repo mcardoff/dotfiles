@@ -26,8 +26,8 @@
  :foundry 'regular
  :height 140)
 
-(cond ((not (package-installed-p 'gruber-darker-theme)) (use-package gruber-darker-theme)
-       (t (load-theme 'gruber-darker t))))
+(cond ((not (package-installed-p 'gruber-darker-theme)) (use-package gruber-darker-theme))
+       (t (load-theme 'gruber-darker t)))
 
 ;; Doom modeline
 (use-package doom-modeline
