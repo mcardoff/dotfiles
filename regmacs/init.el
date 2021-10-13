@@ -125,9 +125,17 @@
   (TeX-command "LaTeX" 'TeX-master-file)
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
 
-(defun dotemacs () (interactive) (find-file (concat user-emacs-directory "init.el")))
+(defun dotemacs ()
+  "Opens init.el"
+  (interactive)
+  (find-file (concat user-emacs-directory "init.el")))
 
-(defun initorg () (interactive) (find-file (concat user-emacs-directory "EmacsInit.org")))
+(defun initorg ()
+  "Opens EmacsInit.org"
+  (interactive)
+  (find-file (concat user-emacs-directory "EmacsInit.org")))
+
+(load-file (concat user-emacs-directory "configfuns.el"))
 
 (use-package tramp :defer 5)
 
@@ -140,8 +148,19 @@
    "a" 'org-agenda
    "l" 'org-agenda-list
    "i" 'dotemacs
-   "d" 'initorg
+   "d" 'initorg)
+
+  (general-define-key
+   :prefix "C-z c"
+   "a" 'alaconfig
+   "e" 'dotemacs
+   "i" 'i3config
+   "k" 'kakconfig
+   "p" 'pbconfig
+   "r" 'rngconfig
    )
+   
+  
   (general-define-key
    "<escape>" 'keyboard-escape-quit
    "M-1" 'delete-other-windows

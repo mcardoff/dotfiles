@@ -58,3 +58,5 @@ auto-save-list
 recentf
 org-roam.db
 elpa/
+/regmacs/.org-id-locations
+regmacs/transient
