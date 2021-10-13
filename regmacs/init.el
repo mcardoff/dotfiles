@@ -26,7 +26,8 @@
  :foundry 'regular
  :height 140)
 
-(load-theme 'gruber-darker t)
+(cond ((not (package-installed-p 'gruber-darker-theme)) (use-package gruber-darker-theme)
+       (t (load-theme 'gruber-darker t))))
 
 ;; Doom modeline
 (use-package doom-modeline
@@ -149,7 +150,7 @@
    "l" 'org-agenda-list
    "i" 'dotemacs
    "d" 'initorg)
-
+  
   (general-define-key
    :prefix "C-z c"
    "a" 'alaconfig
@@ -270,8 +271,9 @@
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
   :custom
-  (org-roam-v2-ack t)
   (org-roam-directory "~/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
@@ -322,9 +324,15 @@
         ("/[Gmail]/Sent Mail" . ?s)
         ("/[Gmail]/Trash"     . ?t)
         ("/[Gmail]/Drafts"    . ?d)
-        ("/[Gmail]/All Mail"  . ?a))))
+        ("/[Gmail]/All Mail"  . ?a)
+	("/[Gmail]/Teacher Emails/Sullivan"   . ?z)
+	("/[Gmail]/Teacher Emails/Dr. Z"      . ?x)
+	("/[Gmail]/Teacher Emails/Littlejohn" . ?c)
+	("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
+	("/[Gmail]/Teacher Emails/Hood"       . ?b)
+	("/[Gmail]/Teacher Emails/IPRO"       . ?n))))
 
-
+;; -------------------- ;;
 (setq schoolpath "~/school/")
 (setq templatepath "~/school/template.tex")
   
@@ -332,8 +340,9 @@
   (let ((fname
          (read-file-name
          (concat subj ": ")
-	     (concat schoolpath (concat code "/HW/")))))
-  (copy-file templatepath fname) (find-file fname)))
+	 (concat schoolpath (concat code "/HW/")))))
+    (copy-file templatepath fname)
+    (find-file fname)))
 
 (defun starthw ()
   (interactive)
