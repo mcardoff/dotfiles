@@ -60,3 +60,4 @@ org-roam.db
 elpa/
 /regmacs/.org-id-locations
 regmacs/transient
+/regmacs/network-security.data

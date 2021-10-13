@@ -131,8 +131,8 @@ bindsym $mod+x fullscreen toggle
 #bindsym $mod+y
 #bindsym $mod+Shift+y
 
-# bindsym $mod+z       gaps outer current plus 5
-# bindsym $mod+Shift+z gaps outer current plus 5
+bindsym $mod+z exec (i3lock -i ~/Pictures/blurred.png)
+# bindsym $mod+Shift+z
 
 bindsym $mod+0 workspace $ws10
 bindsym $mod+Shift+0 move container to workspace $ws10
@@ -238,23 +238,22 @@ mode "resize" {
 }
 
 mode "move" {
-    bindsym $mod+Tab focus right
+      bindsym  $mod+Tab focus right
 
-    bindsym Left  move left
-    bindsym Down  move down
-    bindsym Up    move up
-    bindsym Right move right
+      bindsym  Left   move    left
+      bindsym  Down   move    down
+      bindsym  Up     move    up
+      bindsym  Right  move    right
+      bindsym  h      move    left
+      bindsym  j      move    down
+      bindsym  k      move    up
+      bindsym  l      move    right
 
-    bindsym h     move left
-    bindsym j     move down
-    bindsym k     move up
-    bindsym l     move right
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+m mode "default"
-    bindsym $mod+r mode "resize"
+    # back     to     normal: Enter or Escape
+      bindsym  Return mode "default"
+      bindsym  Escape mode "default"
+      bindsym  $mod+m mode "default"
+      bindsym  $mod+r mode "resize"
 }
 
 # Window Settings

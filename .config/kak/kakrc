@@ -1,2 +1,5 @@
 add-highlighter global/ number-lines
+
 colorscheme gruber-darker-theme
+
+

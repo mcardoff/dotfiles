@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("~/.emacs.d/early-init.el"
+(("org-capture-last-stored"
+ (filename . "~/Roam/20211013121736-fall_2021_classes.org")
+ (front-context-string . "This is a link t")
+ (rear-context-string . "ll 2021 Classes\n")
+ (position . 95))
+("~/.emacs.d/early-init.el"
  (filename . "~/dotfiles/regmacs/init.el")
  (front-context-string . "\n )\n\n;; Which-ke")
  (rear-context-string . " :prefix \"C-z\"\n ")
