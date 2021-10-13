@@ -14,7 +14,10 @@
 PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
 PATH="/snap/bin${PATH:+:${PATH}}"
 
+export XDG_CONFIG_HOME=$HOME/.config
+
 [ -f "~/.ghcup/env" ] && source "~/.ghcup/env"
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
