@@ -61,3 +61,4 @@ elpa/
 /regmacs/.org-id-locations
 regmacs/transient
 /regmacs/network-security.data
+regmacs/.emacs-custom.el
