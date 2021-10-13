@@ -309,6 +309,7 @@ bar {
 
 # Execute startup stuff
 # exec (picom &)
-exec (compton --config=/home/mcard/.config/compton/compton.conf &)
+exec (compton)
+#--config=/home/mcard/.config/compton/compton.conf &)
 exec (nitrogen --restore &)
 exec (lxappearance &)
