@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yasnippet-snippets tramp general elfeed yasnippet which-key websocket visual-fill-column use-package request rainbow-mode projectile powerline popwin polymode pkg-info org-bullets org noflet multiple-cursors move-text magit gruber-darker-theme doom-modeline deferred dashboard cuda-mode counsel cl-libify auctex anaphora all-the-icons-ivy-rich all-the-icons-ivy)))
+   '(org-roam yasnippet-snippets which-key websocket visual-fill-column use-package tramp request rainbow-mode projectile powerline popwin polymode pkg-info org-bullets org noflet multiple-cursors move-text magit gruber-darker-theme general elfeed doom-modeline deferred dashboard cuda-mode counsel cl-libify auctex anaphora all-the-icons-ivy-rich all-the-icons-ivy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

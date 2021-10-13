@@ -1,5 +1,7 @@
 ((magit-commit nil
 	       ("--all"))
+ (magit-diff
+  ("--no-ext-diff" "--stat"))
  (magit-gitignore nil)
  (magit-merge nil)
  (magit-pull nil)

@@ -250,19 +250,17 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
-;; (use-package org-roam
-;;   :init
-;;   (setq org-roam-v2-ack t)
-;;   :custom
-;;   (org-roam-directory "~/school/Roam")
-;;   (org-roam-completion-everywhere t)
-;;   (org-roam-completion-system 'ivy)
-;;   :bind (("C-c n l" . org-roam-buffer-toggle)
-;;          ("C-c n f" . org-roam-node-find)
-;;          ("C-c n i" . org-roam-node-insert))
-;;   :config
-;;   (org-roam-setup))
-
+(use-package org-roam
+  :custom
+  (org-roam-v2-ack t)
+  (org-roam-directory "~/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :bind (("C-z n l" . org-roam-buffer-toggle)
+         ("C-z n f" . org-roam-node-find)
+         ("C-z n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
 
 (use-package magit
   :defer 5)

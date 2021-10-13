@@ -14,6 +14,7 @@
 	org-beginning-of-line
 	org-kill-line
 	org-self-insert-command
+	org-todo
 	org-yank
 	xref-pop-marker-stack
 	))
