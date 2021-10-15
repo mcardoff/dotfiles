@@ -110,8 +110,8 @@
 
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
-  (visual-line-mode 1)
-  (hl-line-mode 1))
+  ;; (hl-line-mode 1)
+  (visual-line-mode 1))
 
 (defun mpc/TeX-view-once (doc)
   "View TeX output and clean up after `my/TeX-compile-and-view'.
