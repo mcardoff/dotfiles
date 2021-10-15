@@ -131,7 +131,7 @@ bindsym $mod+x fullscreen toggle
 #bindsym $mod+y
 #bindsym $mod+Shift+y
 
-bindsym $mod+z exec (i3lock -i ~/Pictures/blurred.png)
+bindsym $mod+z exec (~/.bin/i3lock.sh)
 # bindsym $mod+Shift+z
 
 bindsym $mod+0 workspace $ws10
