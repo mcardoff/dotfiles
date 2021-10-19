@@ -171,9 +171,11 @@
    "M-3" 'split-window-right
    "M-o" 'other-window
    "M-r" 'enlarge-window
-   "M-R" 'shrink-window))
+   "M-R" 'shrink-window
+   "M-." 'enlarge-window-horizontally
+   "M-," 'shrink-window-horizontally))
 
-;; Which-key because there are so many bindings
+;; which-key because there are so many bindings
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
