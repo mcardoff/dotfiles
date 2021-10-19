@@ -28,8 +28,6 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-shopt -s checkwinsize
-
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Alias definitions.
