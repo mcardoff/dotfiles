@@ -6,24 +6,25 @@ This config is not complete, some of it remains in the original init.el for star
 I use the =use-package= package loading system. It works pretty well for improving startup time:
 #+begin_src emacs-lisp
   (setq package-archives '(
-          ("melpa" . "https://melpa.org/packages/")
-          ("org" . "https://orgmode.org/elpa/")
-          ("elpa" . "https://elpa.gnu.org/packages/")))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
-(unless (package-installed-p 'use-package) (package-install 'use-package))
+            ("melpa" . "https://melpa.org/packages/")
+            ("org" . "https://orgmode.org/elpa/")
+            ("elpa" . "https://elpa.gnu.org/packages/")))
+  
+  (unless (package-installed-p 'use-package) (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 #+end_src
 * Visuals
 ** Theme
 This is the remainder of the visual changes that could not be put in the early-init.el file, that are specific to this emacs profile, such as the default font and the theme
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil
-   :font "Source Code Pro"
-   :foundry 'regular
-   :height 140)
+    :font "Source Code Pro"
+    :foundry 'regular
+    :height 140)
   
-  (load-theme 'gruber-darker t)
+  (use-package gruber-darker-them
+    :config (load-theme 'gruber-darker t))
 #+end_src
 ** Modeline & Startup
 The other unique aspect of my config is the doom modeline and the dashboard, seen at startup:
@@ -44,7 +45,8 @@ The other unique aspect of my config is the doom modeline and the dashboard, see
    (dashboard-set-file-icons t)
    :config (dashboard-setup-startup-hook))
 #+end_src
-* Completion framework
+Dashboard is a little finnicky and does not always work with multiple profiles
+* Completion Framework
 Initially I used Ido for the completion framework, and it was not the best, so now I use the Ivy framework, which seems to work a lot better despite the fact it is a lot bigger, but it has a lot more info than Ido.
 #+begin_src emacs-lisp
   (use-package ivy
@@ -99,11 +101,6 @@ Ivy rich is a way to improve the info given, including directory info and icons 
     :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
 * Plain elisp
-** Auto modes
-Since octave mode is built-in, there is no easy way to add =.m= files to the octave audo mode list using use-package, so I do it here:
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-#+end_src
 ** Custom functions
 I have a few functions that need to be used in the following section, so they are all compiled here:
 #+begin_src emacs-lisp
@@ -130,61 +127,67 @@ I have a few functions that need to be used in the following section, so they ar
     (TeX-command "LaTeX" 'TeX-master-file)
     (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
   
-  (defun dotemacs () (interactive) (find-file (concat user-emacs-directory "init.el")))
+  (defun dotemacs ()
+    (interactive)
+    (find-file (concat user-emacs-directory "init.el")))
   
-  (defun initorg () (interactive) (find-file (concat user-emacs-directory "EmacsInit.org")))
+  (defun initorg ()
+    (interactive)
+    (find-file (concat user-emacs-directory "EmacsInit.org")))
+#+end_src
+I also have a custom file that defines =find-files= for use in =general.el= down below.
+#+begin_src emacs-lisp
+  (load-file (concat user-emacs-directory "configfuns.el"))
 #+end_src
 ** Custom keybinds
-These are just ease of use for navigating windows, essentially replacing some basic =C-x= functions with the =M= equivalent. However, in addition, there is a couple others too, such as =<escape>= for quitting and =M-r/R= to resize windows.
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-;;  (global-set-key (kbd "M-1") 'delete-other-windows)
-;;  (global-set-key (kbd "M-2") 'split-window-below)
-;;  (global-set-key (kbd "M-3") 'split-window-right)
-;;  (global-set-key (kbd "M-o") 'other-window)
-;;  (global-set-key (kbd "M-r") 'enlarge-window)
-;;  (global-set-key (kbd "M-R") 'shrink-window)
-#+end_src
-Here I define =C-z= as a map for some of my commonly used functions defined in the previous section
-#+begin_src emacs-lisp
-;;  (define-prefix-command 'mpc-map)
-;;  (global-set-key (kbd "C-z") 'mpc-map)
-;;  (global-set-key (kbd "C-z a") 'org-agenda)
-;;  (global-set-key (kbd "C-z l") 'org-agenda-list)
-;;  (global-set-key (kbd "C-z i") 'dotemacs)
-;;  (global-set-key (kbd "C-z d") 'initorg)
-#+end_src
-You could do this, or use =general.el=
+Here I set some useful keys for navigating windows as well as my personal keymap in =C-z= for a couple things. General makes it easy to define keys with a leader key, which is usefile when you have a lot. I start by getting rid of the stupid =C-z= binding that suspends the window, useless for someone using a tiling wm.
 #+begin_src emacs-lisp
   (use-package general
-  :config
-  (global-unset-key (kbd "C-z"))
-  (general-define-key
-   :prefix "C-z"
-   "a" 'org-agenda
-   "l" 'org-agenda-list
-   "i" 'dotemacs
-   "d" 'initorg
-   )
-  (general-define-key
-   "<escape>" 'keyboard-escape-quit
-   "M-1" 'delete-other-windows
-   "M-2" 'split-window-below
-   "M-3" 'split-window-right
-   "M-o" 'other-window
-   "M-r" 'enlarge-window
-   "M-R" 'shrink-window))
+    :config
+    (global-unset-key (kbd "C-z"))
+#+end_src
+Now I define some bindings to =C-z= for my sanity:
+#+begin_src emacs-lisp
+    (general-define-key
+     :prefix "C-z"
+     "a" 'org-agenda
+     "l" 'org-agenda-list
+     "i" 'dotemacs
+     "d" 'initorg)
+#+end_src  
+I also define some quick links to my config, I could achieve this with bookmarks, which I will hopefully do at some point soon. 
+#+begin_src emacs-lisp
+    (general-define-key
+     :prefix "C-z c"
+     "a" 'alaconfig
+     "e" 'dotemacs
+     "i" 'i3config
+     "k" 'kakconfig
+     "p" 'pbconfig
+     "r" 'rngconfig)
+#+end_src  
+Finally some useful commands for window navigations
+#+begin_src emacs-lisp
+    (general-define-key
+     "<escape>" 'keyboard-escape-quit
+     "M-1" 'delete-other-windows
+     "M-2" 'split-window-below
+     "M-3" 'split-window-right
+     "M-o" 'other-window
+     "M-r" 'enlarge-window
+     "M-R" 'shrink-window))
 #+end_src
 As an added bonus I have the =which-key= mode installed, so I can see which commands I have binded above:
 #+begin_src emacs-lisp
   (use-package which-key
     :init (which-key-mode)
     :diminish which-key-mode
+    :defer
     :custom (which-key-idle-delay 0.3))  
 #+end_src
 * Text-Editing modes
 ** LaTeX
-So far, I am loving aucTeX for my LaTeX documents, and it is helping my editing, so I use that!
+So far, I am loving AUCTeX for my LaTeX documents, and it is helping my editing, so I use that!
 #+begin_src emacs-lisp
   (use-package auctex
     :defer 
@@ -213,7 +216,8 @@ So far, I am loving aucTeX for my LaTeX documents, and it is helping my editing,
        ("picture")
        ("tabbing"))))
 #+end_src
-** Moving text
+** Text Manipulation
+*** Moving text
 Move-text is usefule for moving text line by line at a time, especially with blocks of text.
 #+begin_src emacs-lisp
   (use-package move-text
@@ -222,7 +226,7 @@ Move-text is usefule for moving text line by line at a time, especially with blo
     :bind (("M-p" . 'move-text-up)
            ("M-n" . 'move-text-down)))
 #+end_src
-** Multiple cursors
+*** Multiple cursors
 Just another fairly basic feature in a modern editor to edit multiple occurences of something, or even multiple lines!
 #+begin_src emacs-lisp
   (use-package multiple-cursors
@@ -233,7 +237,7 @@ Just another fairly basic feature in a modern editor to edit multiple occurences
            ("C-<"         . 'mc/mark-previous-like-this)
            ("C-c C-<"     . 'mc/mark-all-like-this)))
 #+end_src
-** Snippets
+*** Snippets
 Snippets are another useful feature in emacs, especially when making literate configurations like this. 
 #+begin_src emacs-lisp
   (use-package yasnippet
@@ -241,6 +245,11 @@ Snippets are another useful feature in emacs, especially when making literate co
     :init (yas-global-mode)
     :custom (yas-snippet-dirs '("~/eprofiles/regmacs/mysnippets")))
 #+end_src
+You might want to add these snippets to your directory, however I find them somewhat annoying when editing elisp
+#+begin_example
+  (use-package yasnippet-snippets
+    :after yasnippet)
+#+end_example
 ** Org mode
 Org mode is super useful, but if you are reading this you probably know that
 #+begin_src emacs-lisp
@@ -251,27 +260,54 @@ Org mode is super useful, but if you are reading this you probably know that
     (org-directory "~/repos/org-agenda/School Schedules/")
     (org-agenda-files (concat user-emacs-directory "org_agenda.org"))
     (org-structure-template-alist
-     '(("s" . "src")
-       ("e" . "example")
-       ("q" . "quote")
-       ("v" . "verse")
-       ("V" . "verbatim")
-       ("c" . "center")
-       ("C" . "comment")
-       ("l" . "latex")
-       ("a" . "ascii")
-       ("i" . "index")))
+     '(("s"  . "src")
+       ("e"  . "example")
+       ("q"  . "quote")
+       ("v"  . "verse")
+       ("V"  . "verbatim")
+       ("c"  . "center")
+       ("C"  . "comment")
+       ("l"  . "latex")
+       ("a"  . "ascii")
+       ("i"  . "index")
+       ("el" . "src emacs-lisp")))
     :custom-face
-    (org-block    ((t (:foreground "#e4e4ef"))))
-    (org-ellipsis ((t (:foreground "#FFFFFF" :underline nil))))
-    (outline-3    ((t (:foreground "#ffdd33" :weight bold :family "Source Code Pro" :slant normal))))
+    (org-block    ((t :foreground "#e4e4ef")))
+    (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
+    (org-level-1  ((t :inherit 'outline-1 :height 1.20)))
+    (org-level-2  ((t :inherit 'outline-2 :height 1.15)))
+    (org-level-3  ((t :inherit 'outline-3 :height 1.10)))
+    (org-level-4  ((t :inherit 'outline-4 :height 1.05)))
+    (org-level-5  ((t :inherit 'outline-5 :height 1.00)))
+    (org-level-6  ((t :inherit 'outline-6 :height 1.00)))
+    (org-level-7  ((t :inherit 'outline-7 :height 1.00)))
+    (org-level-8  ((t :inherit 'outline-8 :height 1.00)))
     :config
-    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
-  
+    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+    (require 'org-tempo))
+#+end_src
+Org-Bullets is useful in making an org document look nice.
+#+begin_src emacs-lisp
   (use-package org-bullets
     :defer
     :after org
     :hook (org-mode . org-bullets-mode))
+#+end_src
+*** Org-Roam
+Roam is an interesting note taking system, so far it is useful for note taking in class especially during lectures, using the zettelkasten thought process
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :init
+    (setq org-roam-v2-ack t)
+    :custom
+    (org-roam-directory "~/Roam")
+    (org-roam-completion-everywhere t)
+    (org-roam-completion-system 'ivy)
+    :bind (("C-z n l" . org-roam-buffer-toggle)
+           ("C-z n f" . org-roam-node-find)
+           ("C-z n i" . org-roam-node-insert))
+    :config
+    (org-roam-setup))
 #+end_src
 * Coding Adjacent
 ** Magit
@@ -280,20 +316,25 @@ I love magit, it is super robust to use, and the config is drop dead simple to u
   (use-package magit
     :defer 5)
 #+end_src
+** Tramp
+Tramp is useful for editing files on remote machines
+#+begin_src emacs-lisp
+  (use-package tramp :defer)
+#+end_src
 ** Projectile
 I have not really gotten to use projectile too much, but I have a config for it, so maybe one day I will use it.
 #+begin_src emacs-lisp
-  (use-package projectile
-    :defer
-    :diminish projectile-mode
-    :config (projectile-mode)
+  ;; (use-package projectile
+    ;; :defer
+    ;; :diminish projectile-mode
+    ;; :config (projectile-mode)
     ;; :custom ((projectile-completion-system 'ivy))
-    :bind-keymap
-    ("C-z p" . projectile-command-map)
-    :init
-    (when (file-directory-p "~/Projects/Code")
-      (setq projectile-project-search-path '("~/Projects/Code")))
-    (setq projectile-switch-project-action #'projectile-dired))
+    ;; :bind-keymap
+    ;; ("C-z p" . projectile-command-map)
+    ;; :init
+    ;; (when (file-directory-p "~/Projects/Code")
+      ;; (setq projectile-project-search-path '("~/Projects/Code")))
+    ;; (setq projectile-switch-project-action #'projectile-dired))
 #+end_src
 ** Cuda
 I need to edit =CUDA= files for research, so I need =CUDA-mode=:
@@ -303,7 +344,14 @@ I need to edit =CUDA= files for research, so I need =CUDA-mode=:
     :config
     (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 #+end_src
-* MISC
+** Octave
+Octave is a useful alternative to Mathematica or MATLAB
+#+begin_src emacs-lisp
+  (use-package octave
+    :defer
+    :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
+#+end_src
+* Fun Stuff!
 ** Elfeed
 elfeed is fun
 #+begin_src emacs-lisp
@@ -313,8 +361,58 @@ elfeed is fun
     (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                     "http://www.reddit.com/r/Physics/.rss")))
 #+end_src
+** mu4e
+This is an email system for emacs, I still am unable to actually send mail with it but I am getting there!
+#+begin_src emacs-lisp
+  (use-package mu4e
+    :ensure nil
+    :load-path "/usr/share/emacs/site-lisp/mu4e/"
+    :defer 1 ; Wait until 1 seconds after startup
+    :custom
+    ;; This is set to 't' to avoid mail syncing issues when using mbsync
+    (mu4e-change-filenames-when-moving t)
+  
+    ;; Refresh mail using isync every 10 minutes
+    (mu4e-update-interval (* 10 60))
+    (mu4e-get-mail-command "mbsync -a")
+    (mu4e-maildir "~/Mail")
+  
+    (mu4e-drafts-folder "/[Gmail]/Drafts")
+    (mu4e-sent-folder   "/[Gmail]/Sent Mail")
+    (mu4e-refile-folder "/[Gmail]/All Mail")
+    (mu4e-trash-folder  "/[Gmail]/Trash")
+  
+    (mu4e-maildir-shortcuts
+     '(("/Inbox"             . ?i)
+       ("/[Gmail]/Sent Mail" . ?s)
+       ("/[Gmail]/Trash"     . ?t)
+       ("/[Gmail]/Drafts"    . ?d)
+       ("/[Gmail]/All Mail"  . ?a)
+       ("/[Gmail]/Teacher Emails/Sullivan"   . ?z)
+       ("/[Gmail]/Teacher Emails/Dr. Z"      . ?x)
+       ("/[Gmail]/Teacher Emails/Littlejohn" . ?c)
+       ("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
+       ("/[Gmail]/Teacher Emails/Hood"       . ?b)
+       ("/[Gmail]/Teacher Emails/IPRO"       . ?n))))  
+#+end_src
+Sending mail requires we use the =smtpmail= builtin package
+#+begin_src emacs-lisp
+  (use-package smtpmail
+    :ensure nil
+    :custom
+    (smtp-smtp-server "smtp.gmail.com")
+    (smtpmail-smtp-service 587)
+    (smtpmail-stream-type 'ssl)
+    (smtpmail-auth-credentials
+     '(("smtp.gmail.com" 587 "mcardiff0321"
+        (with-temp-buffer
+          (insert-files-contents "~/.pass")
+          (buffer-string)))))
+    :config
+    (setq message-send-mail-function 'smtpmail-send-it))
+#+end_src
 ** Homework stuff
-bleh
+I made these without the idea of template expansions, so theyre kind of useless now
 #+begin_src emacs-lisp
   (setq schoolpath "~/school/")
   (setq templatepath "~/school/template.tex")

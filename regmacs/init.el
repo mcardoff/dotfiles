@@ -113,6 +113,9 @@
   ;; (hl-line-mode 1)
   (visual-line-mode 1))
 
+(defun mpc/doc-view-setup ()
+  (display-line-numbers-mode 0))
+
 (defun mpc/TeX-view-once (doc)
   "View TeX output and clean up after `my/TeX-compile-and-view'.
   Call `TeX-view' to display TeX output, and remove this function
@@ -139,8 +142,6 @@
 
 (load-file (concat user-emacs-directory "configfuns.el"))
 
-(use-package tramp :defer 5)
-
 ;; Maybe using general?
 (use-package general
   :config
@@ -148,9 +149,10 @@
   (general-define-key
    :prefix "C-z"
    "a" 'org-agenda
-   "l" 'org-agenda-list
+   "d" 'initorg
    "i" 'dotemacs
-   "d" 'initorg)
+   "l" 'org-agenda-list
+   "m" 'counsel-imenu)
   
   (general-define-key
    :prefix "C-z c"
@@ -161,7 +163,6 @@
    "p" 'pbconfig
    "r" 'rngconfig
    )
-   
   
   (general-define-key
    "<escape>" 'keyboard-escape-quit
@@ -205,26 +206,11 @@
      ("picture")
      ("tabbing"))))
 
-(use-package cuda-mode
-  :defer
-  :config
-  (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
-
-(use-package projectile
-  :defer
-  :diminish projectile-mode
-  :config (projectile-mode)
-  ;; :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-z p" . projectile-command-map)
-  :init
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-;; (use-package counsel-projectile
-;;   :after 'projectile
-;;   :config (counsel-projectile-mode))
+(use-package move-text
+  :defer 2
+  :diminish 
+  :bind (("M-p" . 'move-text-up)
+         ("M-n" . 'move-text-down)))
 
 (use-package multiple-cursors
   :defer 2
@@ -234,36 +220,46 @@
 	 ("C-<"         . 'mc/mark-previous-like-this)
 	 ("C-c C-<"     . 'mc/mark-all-like-this)))
 
-(use-package move-text
-  :defer 2
-  :diminish 
-  :bind (("M-p" . 'move-text-up)
-         ("M-n" . 'move-text-down)))
+(use-package yasnippet
+  :defer 5
+  :init (yas-global-mode)
+  :custom (yas-snippet-dirs '("~/eprofiles/default/mysnippets")))
 
+;; (use-package yasnippet-snippets
+  ;; :after yasnippet)
+
+(require 'org-tempo)
 (use-package org
   :hook (org-mode . mpc/org-mode-setup)
   :custom
   (org-ellipsis " [+]")
   (org-directory "~/repos/org-agenda/School Schedules/")
   (org-agenda-files (concat user-emacs-directory "org_agenda.org"))
-  (org-todo-keywords
-   '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")))
   (org-structure-template-alist
-   '(("s" . "src")
-     ("e" . "example")
-     ("q" . "quote")
-     ("v" . "verse")
-     ("V" . "verbatim")
-     ("c" . "center")
-     ("C" . "comment")
-     ("l" . "latex")
-     ("a" . "ascii")
-     ("i" . "index")))
+   '(("s"  . "src")
+     ("e"  . "example")
+     ("q"  . "quote")
+     ("v"  . "verse")
+     ("V"  . "verbatim")
+     ("c"  . "center")
+     ("C"  . "comment")
+     ("l"  . "latex")
+     ("a"  . "ascii")
+     ("i"  . "index")
+     ("el" . "src emacs-lisp")))
   :custom-face
-  (org-block    ((t (:foreground "#e4e4ef"))))
-  (org-ellipsis ((t (:foreground "#FFFFFF" :underline nil))))
-  (outline-3    ((t (:foreground "#ffdd33" :weight bold :family "Source Code Pro" :slant normal))))
+  (org-block    ((t :foreground "#e4e4ef")))
+  (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
+  (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
+  (org-level-2  ((t :inherit 'outline-2 :height 1.0)))
+  (org-level-3  ((t :inherit 'outline-3 :height 1.0)))
+  (org-level-4  ((t :inherit 'outline-4 :height 1.0)))
+  (org-level-5  ((t :inherit 'outline-5 :height 1.0)))
+  (org-level-6  ((t :inherit 'outline-6 :height 1.0)))
+  (org-level-7  ((t :inherit 'outline-7 :height 1.0)))
+  (org-level-8  ((t :inherit 'outline-8 :height 1.0)))
   :config
+  (setq org-tempo-keywords-alist nil)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (use-package org-bullets
@@ -284,16 +280,42 @@
   :config
   (org-roam-setup))
 
+(use-package doc-view
+  :ensure nil
+  :defer 2
+  :hook (doc-view-mode . mpc/doc-view-setup))
+
 (use-package magit
   :defer 5)
 
-(use-package yasnippet
-  :defer 5
-  :init (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/eprofiles/default/mysnippets")))
+;; (use-package tramp
+;;   :defer 5)
 
-(use-package yasnippet-snippets
-  :after yasnippet)
+;; (use-package projectile
+;;   :defer
+;;   :diminish projectile-mode
+;;   :config (projectile-mode)
+;;   ;; :custom ((projectile-completion-system 'ivy))
+;;   :bind-keymap
+;;   ("C-z p" . projectile-command-map)
+;;   :init
+;;   (when (file-directory-p "~/Projects/Code")
+;;     (setq projectile-project-search-path '("~/Projects/Code")))
+;;   (setq projectile-switch-project-action #'projectile-dired))
+
+;; (use-package counsel-projectile
+;;   :after 'projectile
+;;   :config (counsel-projectile-mode))
+
+(use-package cuda-mode
+  :defer
+  :config
+  (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
+
+(use-package octave
+  :ensure nil
+  :defer
+  :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
 (use-package elfeed
   :defer 5
@@ -304,34 +326,33 @@
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
-  :defer 5 ; Wait until 20 seconds after startup
-  :config
-
+  :defer 1 ; Wait until 1 seconds after startup
+  :custom
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
-  (setq mu4e-change-filenames-when-moving t)
-
+  (mu4e-change-filenames-when-moving t)
+  
   ;; Refresh mail using isync every 10 minutes
-  (setq mu4e-update-interval (* 10 60))
-  (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-maildir "~/Mail")
-
-  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
-  (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
-  (setq mu4e-refile-folder "/[Gmail]/All Mail")
-  (setq mu4e-trash-folder  "/[Gmail]/Trash")
-
-  (setq mu4e-maildir-shortcuts
-      '(("/Inbox"             . ?i)
-        ("/[Gmail]/Sent Mail" . ?s)
-        ("/[Gmail]/Trash"     . ?t)
-        ("/[Gmail]/Drafts"    . ?d)
-        ("/[Gmail]/All Mail"  . ?a)
-	("/[Gmail]/Teacher Emails/Sullivan"   . ?z)
-	("/[Gmail]/Teacher Emails/Dr. Z"      . ?x)
-	("/[Gmail]/Teacher Emails/Littlejohn" . ?c)
-	("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
-	("/[Gmail]/Teacher Emails/Hood"       . ?b)
-	("/[Gmail]/Teacher Emails/IPRO"       . ?n))))
+  (mu4e-update-interval (* 10 60))
+  (mu4e-get-mail-command "mbsync -a")
+  (mu4e-maildir "~/Mail")
+  
+  (mu4e-drafts-folder "/[Gmail]/Drafts")
+  (mu4e-sent-folder   "/[Gmail]/Sent Mail")
+  (mu4e-refile-folder "/[Gmail]/All Mail")
+  (mu4e-trash-folder  "/[Gmail]/Trash")
+  
+  (mu4e-maildir-shortcuts
+   '(("/Inbox"             . ?i)
+     ("/[Gmail]/Sent Mail" . ?s)
+     ("/[Gmail]/Trash"     . ?t)
+     ("/[Gmail]/Drafts"    . ?d)
+     ("/[Gmail]/All Mail"  . ?a)
+     ("/[Gmail]/Teacher Emails/Sullivan"   . ?z)
+     ("/[Gmail]/Teacher Emails/Dr. Z"      . ?x)
+     ("/[Gmail]/Teacher Emails/Littlejohn" . ?c)
+     ("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
+     ("/[Gmail]/Teacher Emails/Hood"       . ?b)
+     ("/[Gmail]/Teacher Emails/IPRO"       . ?n))))
 
 ;; -------------------- ;;
 (setq schoolpath "~/school/")
@@ -348,27 +369,26 @@
 (defun starthw ()
   (interactive)
   (let ((x (upcase (read-string "Class Shorthand: "))))
-    (cond ((string= x "CM") (gencopy "CM" "PHYS309")) ;; Classical
-  	  ((string= x "QM") (gencopy "QM" "PHYS406")) ;; UG Quantum
-  	  ((string= x "EM") (gencopy "EM" "PHYS414")) ;; E&M
-  	  ((string= x "MM") (gencopy "MM" "PHYS502")) ;; Grad Math Methods
-  	  ((string= x "GQ") (gencopy "GQ" "PHYS510")) ;; Grad Quantum
+    (cond ((string= x "CM") (gencopy "CM" "PHYS309"))
+  	  ((string= x "QM") (gencopy "QM" "PHYS406"))
+  	  ((string= x "EM") (gencopy "EM" "PHYS414"))
+  	  ((string= x "MM") (gencopy "MM" "PHYS502"))
+  	  ((string= x "GQ") (gencopy "GQ" "PHYS510"))
   	  (t "failed"))))
 
 (defun continuehw ()
   (interactive)
   (let ((x (upcase (read-string "Class Shorthand: "))))
-    (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/"))) ;; Classical
-  	  ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/"))) ;; UG Quantum
-  	  ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/"))) ;; E&M
-  	  ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/"))) ;; Grad Math Methods
-  	  ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/"))) ;; Grad Quantum
+    (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/")))
+  	  ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/")))
+  	  ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/")))
+  	  ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/")))
+  	  ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/")))
   	  (t "failed"))))
 
 ;;;; END OF EMACSINIT.EL
 
 (add-hook 'emacs-startup-hook
-  (lambda ()
-    (setq file-name-handler-alist mpc--file-name-handler-alist)))
+  (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
 
 (setq custom-file (concat user-emacs-directory ".emacs-custom.el"))

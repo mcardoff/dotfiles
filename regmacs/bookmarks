@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
+(("Cardiff_Report_1.tex"
+ (filename . "~/school/PHYS427/Report 1/Cardiff_Report_1.tex")
+ (front-context-string . "  \n\\end{abstract")
+ (rear-context-string . "ys. There is an ")
+ (position . 1438))
+("org-capture-last-stored"
  (filename . "~/Roam/20211013121736-fall_2021_classes.org")
  (front-context-string . "This is a link t")
  (rear-context-string . "ll 2021 Classes\n")
