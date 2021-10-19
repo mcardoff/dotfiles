@@ -65,7 +65,7 @@ set $cgood #3774b5
 # set $secon #027c81
 
 
-bindsym $mod+a focus parent
+#bindsym $mod+a 
 #bindsym $mod+Shift+a
 
 bindsym $mod+b exec $browser
@@ -74,8 +74,8 @@ bindsym $mod+b exec $browser
 bindsym $mod+c split h
 bindsym $mod+Shift+c kill
 
-bindsym $mod+d focus child
-#bindsym $mod+Shift+d
+bindsym $mod+d       focus child
+bindsym $mod+Shift+d focus parent
 
 bindsym $mod+e layout toggle split
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
@@ -218,11 +218,6 @@ mode "resize" {
     bindsym j resize grow   height 5 px or 5 ppt
     bindsym k resize shrink height 5 px or 5 ppt
     bindsym l resize grow   width  5 px or 5 ppt
-
-    bindsym u move left
-    bindsym i move down
-    bindsym o move up
-    bindsym p move right
     
     # same bindings, but for the arrow keys
     bindsym Left resize shrink width 10 px or 10 ppt

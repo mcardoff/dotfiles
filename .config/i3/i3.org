@@ -1,0 +1,92 @@
+* Dictionary
+Here is a useful reference to show my i3 keybindings. First a dictionary on what each symbol means
+|--------+------------|
+| Symbol | Key        |
+|--------+------------|
+| S      | Shift      |
+| s      | Super/Win  |
+| M      | Alt/Meta   |
+| C      | Control    |
+| <key>  | Non-AN key |
+|--------+------------|
+* Standard mode Binds
+|-------------+---------------------------------|
+| Keybind     | Function                        |
+|-------------+---------------------------------|
+| s+b         | Open Firefox                    |
+| s+c         | Horizontal split                |
+| s+S+c       | Kill window                     |
+| s+d         | Focus child                     |
+| s+S+d       | Focus parent                    |
+| s+e         | Split layout                    |
+| s+S+e       | Exit i3                         |
+| s+f         | Open Ranger scratchpad          |
+| s+S+f       | Open graphical file manager     |
+| s+h         | Focus left                      |
+| s+S+h       | Move window left                |
+| s+j         | Focus down                      |
+| s+S+j       | Move window down                |
+| s+k         | Focus up                        |
+| s+S+k       | Move window up                  |
+| s+l         | Focus right                     |
+| s+S+l       | Move window right               |
+| s+m         | Move window mode                |
+| s+n         | (TEMP) Open a polybar bar       |
+| s+S+n       | (TEMP) kill polybar             |
+| s+o         | Open emacs                      |
+| s+S+o       | Run emacs profile script        |
+| s+p         | run dmenu                       |
+| s+S+q       | Reload config                   |
+| s+r         | Resize mode                     |
+| s+S+r       | Restart i3                      |
+| s+t         | Add border to window            |
+| s+S+t       | Remove border from window       |
+| s+v         | Vertical split                  |
+| s+w         | Tabbed layout                   |
+| s+x         | Fullscreen window               |
+| s+z         | Lock with i3lock                |
+| s+<0-9>     | Focus to workspace n            |
+| s+S+<0-9>   | Move window to workspace n      |
+| s+<Arrow>   | Same as s+h/j/k/l               |
+| s+S+<Arrow> | Same as s+S+h/j/k/l             |
+| s+<SPC>     | Toggle mode                     |
+| s+S+<SPC>   | Toggle floating window          |
+| s+<RET>     | Open terminal                   |
+| s+S+<RET>   | open scratchpad terminal        |
+| s+<.>       | (TEMP) open scratchpad schedule |
+| s+<TAB>     | Focus l/r                       |
+| s+S+<TAB>   | Move l/r                        |
+| M+<TAB>     | Next workspace                  |
+| M+S+<TAB>   | Previous workspace              |
+| <F1>        | Open terminal Scratchpad        |
+| <F2>        | Open emacs Scratchpad           |
+| <F3>        | Open ranger Scratchpad          |
+| <F4>        | Open schedule Scratchpad        |
+|-------------+---------------------------------|
+* Resize mode
+|-----------+---------------|
+| Key       | Function      |
+|-----------+---------------|
+| h/<Left>  | Shrink width  |
+| j/<Down>  | Grow Height   |
+| k/<Up>    | Shrink Height |
+| l/<Right> | Grow width    |
+| Return    | Default mode  |
+| Escape    | Default mode  |
+| s+r       | Default mode  |
+| s+m       | Move mode     |
+|-----------+---------------|
+* Move mode
+|-----------+--------------|
+| Key       | Function     |
+|-----------+--------------|
+| s+<TAB>   | Focus Right  |
+| h/<Left>  | Move left    |
+| j/<Down>  | Move Down    |
+| k/<Up>    | Move Up      |
+| l/<Right> | Move Right   |
+| Return    | Default mode |
+| Escape    | Default mode |
+| s+r       | Resize mode  |
+| s+m       | Default mode |
+|-----------+--------------|
