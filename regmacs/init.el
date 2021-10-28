@@ -105,8 +105,8 @@
 
 ;; defuns
 (defun mpc/LaTeX-setup ()
-  (visual-line-mode 1)
-  (hl-line-mode 1))
+  ;; (hl-line-mode 1)
+  (visual-line-mode 1))
 
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
@@ -161,12 +161,11 @@
    "i" 'i3config
    "k" 'kakconfig
    "p" 'pbconfig
-   "r" 'rngconfig
-   )
+   "r" 'rngconfig)
   
   (general-define-key
    "<escape>" 'keyboard-escape-quit
-   "M-1" 'delete-other-windows
+   "M-1" 'shell-command
    "M-2" 'split-window-below
    "M-3" 'split-window-right
    "M-o" 'other-window
@@ -217,8 +216,8 @@
 (use-package multiple-cursors
   :defer 2
   :diminish
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-	 ("C->"         . mc/mark-next-like-this)
+  :bind (("C-S-c C-S-c" . 'mc/edit-lines)
+	 ("C->"         . 'mc/mark-next-like-this)
 	 ("C-<"         . 'mc/mark-previous-like-this)
 	 ("C-c C-<"     . 'mc/mark-all-like-this)))
 
@@ -233,6 +232,7 @@
 (require 'org-tempo)
 (use-package org
   :hook (org-mode . mpc/org-mode-setup)
+  :bind (("<C-M-return>" . org-insert-todo-subheading))
   :custom
   (org-ellipsis " [+]")
   (org-directory "~/repos/org-agenda/School Schedules/")
@@ -253,13 +253,6 @@
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
   (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
-  (org-level-2  ((t :inherit 'outline-2 :height 1.0)))
-  (org-level-3  ((t :inherit 'outline-3 :height 1.0)))
-  (org-level-4  ((t :inherit 'outline-4 :height 1.0)))
-  (org-level-5  ((t :inherit 'outline-5 :height 1.0)))
-  (org-level-6  ((t :inherit 'outline-6 :height 1.0)))
-  (org-level-7  ((t :inherit 'outline-7 :height 1.0)))
-  (org-level-8  ((t :inherit 'outline-8 :height 1.0)))
   :config
   (setq org-tempo-keywords-alist nil)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
@@ -273,6 +266,7 @@
   :init
   (setq org-roam-v2-ack t)
   :custom
+  (org-roam-graph-executable "dot")
   (org-roam-directory "~/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
@@ -293,21 +287,21 @@
 ;; (use-package tramp
 ;;   :defer 5)
 
-;; (use-package projectile
-;;   :defer
-;;   :diminish projectile-mode
-;;   :config (projectile-mode)
-;;   ;; :custom ((projectile-completion-system 'ivy))
-;;   :bind-keymap
-;;   ("C-z p" . projectile-command-map)
-;;   :init
-;;   (when (file-directory-p "~/Projects/Code")
-;;     (setq projectile-project-search-path '("~/Projects/Code")))
-;;   (setq projectile-switch-project-action #'projectile-dired))
+(use-package projectile
+  :defer
+  :diminish projectile-mode
+  :config (projectile-mode)
+  ;; :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-z p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/Projects/Code")
+    (setq projectile-project-search-path '("~/Projects/Code")))
+  (setq projectile-switch-project-action #'projectile-dired))
 
-;; (use-package counsel-projectile
-;;   :after 'projectile
-;;   :config (counsel-projectile-mode))
+(use-package counsel-projectile
+  :after 'projectile
+  :config (counsel-projectile-mode))
 
 (use-package cuda-mode
   :defer
@@ -318,6 +312,23 @@
   :ensure nil
   :defer
   :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
+
+(use-package haskell-mode
+  :defer
+  :bind (("C-c C-c" . compile))
+  :hook ((haskell-mode . interactive-haskell-mode)
+	 (haskell-mode . haskell-indent-mode))
+  :custom
+  (haskell-stylish-on-save t))
+
+;; linting in haskell
+(use-package hlint-refactor
+  :defer
+  :after haskell-mode
+  :hook (haskell-mode . hlint-refactor-mode))
+
+(use-package yaml-mode
+  :defer)
 
 (use-package elfeed
   :defer 5

@@ -348,8 +348,24 @@ I need to edit =CUDA= files for research, so I need =CUDA-mode=:
 Octave is a useful alternative to Mathematica or MATLAB
 #+begin_src emacs-lisp
   (use-package octave
+    :ensure nil
     :defer
     :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
+#+end_src
+** Haskell
+I love Haskell, every so often I will go back and use it for fun, and the haskell mode in melpa is very useful.
+#+begin_src emacs-lisp
+  (use-package haskell-mode
+    :defer
+    :config
+    (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+    (add-to-list 'auto-mode-alist '("\\.lhs$" . haskell-literate-mode)))
+#+end_src
+** Clojure
+Oh boy here is go functional programming again
+#+begin_src emacs-lisp
+  (use-package clojure-mode
+    :defer)
 #+end_src
 * Fun Stuff!
 ** Elfeed

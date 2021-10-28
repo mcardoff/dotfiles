@@ -1,5 +1,19 @@
-;; -*- emacs-lisp -*- <21/10/08 14:36:24 /home/mcard/eprofiles/default/tramp>
+;; -*- emacs-lisp -*- <21/10/28 10:35:22 /home/mcard/eprofiles/default/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
-(nil)
+(((tramp-file-name "ssh" "cardiff" nil "theory2.phys.iit.edu" nil nil nil)
+  ("uname" "Linux 5.11.0-37-generic")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("pipe-buf" 4096)
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("case-insensitive" nil)
+  ("stat" "env QUOTING_STYLE=locale \\stat")
+  ("id" "/bin/id")
+  ("gid-string" "theory")
+  ("gid-integer" 1001)
+  ("readlink" "\\readlink")))

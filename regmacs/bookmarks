@@ -8,10 +8,10 @@
  (rear-context-string . "ys. There is an ")
  (position . 1438))
 ("org-capture-last-stored"
- (filename . "~/Roam/20211013121736-fall_2021_classes.org")
- (front-context-string . "This is a link t")
- (rear-context-string . "ll 2021 Classes\n")
- (position . 95))
+ (filename . "~/Roam/20211026111833-intellectual_property.org")
+ (front-context-string . "* Intellectual P")
+ (rear-context-string . "ectual Property\n")
+ (position . 99))
 ("~/.emacs.d/early-init.el"
  (filename . "~/dotfiles/regmacs/init.el")
  (front-context-string . "\n )\n\n;; Which-ke")
