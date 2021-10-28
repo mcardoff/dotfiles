@@ -39,7 +39,8 @@ set $ws10 "10"
 # local vars
 set $alt Mod1
 set $browser firefox
-set $dmen dmenu_run -sb '#8b3622' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA'
+set $dmen dmenu_run
+#-sb '#8b3622' -sf '#FAFAFA' -nb '#282828' -nf '#FAFAFA'
 set $file pcmanfm
 set $mod Mod4
 set $term ~/.cargo/bin/alacritty
@@ -48,12 +49,14 @@ set $term ~/.cargo/bin/alacritty
 set $white #ffffff
 set $white-alt #888888
 set $background #181818
-set $background-alt #282828
+set $bg-alt #282828
 
 # gruber
 set $princ #cc8c3c
 set $secon #ffdd33
 set $focus #8b3622
+set $active #7b4032
+set $alert #f43841
 set $cgood #3774b5
 # Dark Rainbow
 # set $princ #8b3622
@@ -275,6 +278,7 @@ for_window [window_role="task_dialog"] floating enable
 for_window [class="lxappearance"]      floating enable
 for_window [title="Bluetooth"]         floating enable
 for_window [class="feh"] floating enable
+for_window [class="Matplotlib"] floating enable
 
 for_window [title="Ranger"] resize set 1400 px 800 px
 
@@ -301,19 +305,17 @@ bar {
 	tray_padding 0
 
 	colors {
-	       background #282828
+	       background $bg-alt
 	       statusline $white
 
 	       focused_workspace  $focus  $focus  $white
-	       active_workspace   $white  $secon  $white
-	       inactive_workspace #282828 #282828 $white-alt
-	       urgent_workspace   $white  #900000	
+	       active_workspace   $active $active $white
+	       inactive_workspace $bg-alt $bg-alt $white-alt
+	       urgent_workspace   $white  $alert
 	}	
 }
 
 # Execute startup stuff
-# exec (picom &)
-exec (compton)
-#--config=/home/mcard/.config/compton/compton.conf &)
-exec (nitrogen --restore &)
-exec (lxappearance &)
+exec_always (~/.bin/ranger.sh)
+exec_always (~/.bin/i3init.sh)
+
