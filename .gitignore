@@ -1,4 +1,6 @@
 *~
+*#
+regmacs/session.*
 *.png
 *.deb
 octave-workspace
