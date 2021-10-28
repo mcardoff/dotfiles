@@ -64,3 +64,5 @@ elpa/
 regmacs/transient
 /regmacs/network-security.data
 regmacs/.emacs-custom.el
+.mc-lists.el
+history
