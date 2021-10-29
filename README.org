@@ -1,0 +1,16 @@
+#+TITLE:Dotfiles
+* Deploy script
+Here is a list of what I have to do for the deploy script
+- [X] Check if script is being run in correct dir
+- [X] Copy wallpaper into ~/Pictures for use in Nitrogen
+  - [X] WORKING
+- [X] Generate emacs structure [4/4]
+  - [X] Link .emacs.d
+  - [X] Link .emacsenv
+  - [X] Link eprofiles
+  - [X] Link chemacs files [2/2]
+    - [X] .emacs-profile
+    - [X] .emacs-profiles.el
+- [ ] Generate Config structure [0/1]
+  - [ ] All files in dotfiles/.config
+- [ ] Link bin
