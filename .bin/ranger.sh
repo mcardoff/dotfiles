@@ -5,8 +5,7 @@ pid=$(pgrep ranger)
 
 if [ -n "$pid" ] ; then
     echo $pid
-    kill $pid
+else
+    alacritty -t Ranger -e ranger
 fi
-
-(alacritty -t Ranger -e ranger &)
 		     
