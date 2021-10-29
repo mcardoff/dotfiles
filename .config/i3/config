@@ -49,7 +49,8 @@ set $term ~/.cargo/bin/alacritty
 ## colors
 set $white #ffffff
 set $white-alt #888888
-set $background #181818
+set $black #000000
+set $bg #181818
 set $bg-alt #282828
 
 ### my theme colors
@@ -254,12 +255,12 @@ mode "move" {
 }
 
 # Window Settings
-# class                 border  backgr. text    indicator child_border
-client.focused          $focus  $focus  $white  #c99c63   $focus 
-client.focused_inactive #333333 #222222 $white-alt #292d2e   #222222
-client.unfocused        #333333 #222222 $white-alt #292d2e   #222222
-client.urgent           #2f343a #900000 $white  #900000   #900000
-client.placeholder      #000000 #0c0c0c $white  #000000   #0c0c0c
+# class                 border  backgr. text       indicator child_border
+client.focused          $focus  $focus  $white     $active   $active
+client.focused_inactive $bg     $bg-alt $white-alt $bg       $bg-alt
+client.unfocused        $bg     $bg-alt $white-alt $bg       $bg-alt
+client.urgent           $alert  $alert  $white     $alert    $alert
+client.placeholder      $black  $black  $white     $black    #0c0c0c
 
 client.background       $white
 
@@ -267,6 +268,7 @@ client.background       $white
 # smart_gaps inverse_outer
 # gaps inner 8
 # gaps outer 5
+exec ($term -t "Ranger" -e "ranger")
 
 new_window normal 0 px
 new_float normal 0 px
@@ -275,11 +277,13 @@ hide_edge_borders both
 for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [class="Lxappearance"]      floating enable
+for_window [class="feh"]               floating enable
+for_window [class="Nitrogen"]          floating enable
+for_window [class="Matplotlib"]        floating enable
 for_window [title="Bluetooth"]         floating enable
-for_window [class="feh"] floating enable
-for_window [class="Matplotlib"] floating enable
 
 for_window [title="Ranger"] resize set 1400 px 800 px
+for_window [title="Ranger"] move left 100 px
 
 for_window [title="Ranger"]               move scratchpad
 for_window [title="Scratchpad"]           move scratchpad
