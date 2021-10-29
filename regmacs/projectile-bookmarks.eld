@@ -1,1 +1,1 @@
-("~/dotfiles/" "~/Projects/Code/Haskell/Graphics/" "~/repos/org-agenda/")
+("~/school/" "~/dotfiles/" "~/Projects/Code/Haskell/Graphics/" "~/repos/org-agenda/")
