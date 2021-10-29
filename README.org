@@ -13,4 +13,4 @@ Here is a list of what I have to do for the deploy script
     - [X] .emacs-profiles.el
 - [ ] Generate Config structure [0/1]
   - [ ] All files in dotfiles/.config
-- [ ] Link bin
+- [ ] Link ./.bin to ~/.bin
