@@ -2,6 +2,7 @@
 *#
 regmacs/session.*
 *.png
+!background.png
 *.deb
 octave-workspace
 /school/
