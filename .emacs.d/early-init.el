@@ -1,9 +1,9 @@
-;;; early-init.el --- -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
 (setq package--init-file-ensured t)
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
-(setq comp-deferred-compilation nil native-comp-deferred-compilation nil)
+
 (setq load-prefer-newer noninteractive)
 (setq byte-compile-warnings '(cl-functions))
 (setq inhibit-startup-screen 0)
@@ -52,4 +52,5 @@
          (expand-file-name "chemacs.el"
                            (file-name-directory
                             (file-truename load-file-name))))
+
 (chemacs-load-user-early-init)
