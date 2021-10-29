@@ -20,3 +20,4 @@ elpa/
 regmacs/.emacs-custom.el
 .mc-lists.el
 history
+savehist
