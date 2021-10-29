@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/git-gutter-fringe/git-gutter-fringe.el

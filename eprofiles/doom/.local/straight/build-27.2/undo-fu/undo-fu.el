@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/emacs-undo-fu/undo-fu.el

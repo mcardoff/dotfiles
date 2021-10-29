@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/emacs-company-dict/company-dict.el

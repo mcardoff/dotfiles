@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/embark/embark.el

@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/flycheck-popup-tip/flycheck-popup-tip.el

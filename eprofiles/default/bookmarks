@@ -1,0 +1,20 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("Cardiff_Report_1.tex"
+ (filename . "~/school/PHYS427/Report 1/Cardiff_Report_1.tex")
+ (front-context-string . "  \n\\end{abstract")
+ (rear-context-string . "ys. There is an ")
+ (position . 1438))
+("org-capture-last-stored"
+ (filename . "~/Roam/20211028153255-berkman_10_28_21.org")
+ (front-context-string)
+ (rear-context-string . "erkman 10-28-21\n")
+ (position . 94))
+("~/.emacs.d/early-init.el"
+ (filename . "~/dotfiles/regmacs/init.el")
+ (front-context-string . "\n )\n\n;; Which-ke")
+ (rear-context-string . " :prefix \"C-z\"\n ")
+ (position . 4845))
+)

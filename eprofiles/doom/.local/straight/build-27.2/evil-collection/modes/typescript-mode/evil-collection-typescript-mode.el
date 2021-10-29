@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/evil-collection/modes/typescript-mode/evil-collection-typescript-mode.el

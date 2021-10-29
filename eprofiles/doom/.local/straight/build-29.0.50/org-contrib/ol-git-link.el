@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/org-contrib/lisp/ol-git-link.el

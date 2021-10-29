@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/evil-org-mode/evil-org-agenda.el

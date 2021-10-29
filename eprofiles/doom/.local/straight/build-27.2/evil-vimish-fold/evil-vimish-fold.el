@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/evil-vimish-fold/evil-vimish-fold.el

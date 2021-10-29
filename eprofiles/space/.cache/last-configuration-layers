@@ -1,0 +1,2 @@
+
+(setq dotspacemacs-configuration-layers '(emacs-lisp helm multiple-cursors treemacs))

@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/auto-yasnippet/auto-yasnippet.el

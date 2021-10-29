@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/browse-at-remote/browse-at-remote.el

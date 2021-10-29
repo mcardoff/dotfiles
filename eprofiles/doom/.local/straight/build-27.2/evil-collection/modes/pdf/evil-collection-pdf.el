@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/evil-collection/modes/pdf/evil-collection-pdf.el

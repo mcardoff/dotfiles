@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/expand-region.el/cperl-mode-expansions.el

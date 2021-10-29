@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/doom-modeline/doom-modeline-segments.el

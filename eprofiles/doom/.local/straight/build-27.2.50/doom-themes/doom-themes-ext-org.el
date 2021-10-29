@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/emacs-doom-themes/doom-themes-ext-org.el

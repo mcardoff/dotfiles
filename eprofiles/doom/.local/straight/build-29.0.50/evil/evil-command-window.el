@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/evil/evil-command-window.el

@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/shrink-path.el/shrink-path.el

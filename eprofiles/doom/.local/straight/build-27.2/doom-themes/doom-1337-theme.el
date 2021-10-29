@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doomacs/.local/straight/repos/emacs-doom-themes/themes/doom-1337-theme.el

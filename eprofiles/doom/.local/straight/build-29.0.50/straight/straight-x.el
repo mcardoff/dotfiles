@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/straight.el/straight-x.el

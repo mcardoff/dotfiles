@@ -1,0 +1,1 @@
+/home/mcard/eprofiles/doom/.local/straight/repos/dumb-jump/dumb-jump.el
