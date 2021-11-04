@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/use-package/bind-key.el

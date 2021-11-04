@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/annalist.el/annalist.el

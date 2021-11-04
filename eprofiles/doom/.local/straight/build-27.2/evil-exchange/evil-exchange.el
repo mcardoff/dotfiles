@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/evil-exchange/evil-exchange.el

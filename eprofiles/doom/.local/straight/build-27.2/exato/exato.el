@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/exato/exato.el

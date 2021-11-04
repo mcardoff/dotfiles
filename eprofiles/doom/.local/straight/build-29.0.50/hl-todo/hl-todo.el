@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doom/.local/straight/repos/hl-todo/hl-todo.el

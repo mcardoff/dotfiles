@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/emacs-doom-themes/themes/doom-gruvbox-light-theme.el

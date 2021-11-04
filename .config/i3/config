@@ -264,10 +264,6 @@ client.placeholder      $black  $black  $white     $black    #0c0c0c
 
 client.background       $white
 
-# gaps
-# smart_gaps inverse_outer
-# gaps inner 8
-# gaps outer 5
 exec ($term -t "Ranger" -e "ranger")
 
 new_window normal 0 px
@@ -283,11 +279,11 @@ for_window [class="Matplotlib"]        floating enable
 for_window [title="Bluetooth"]         floating enable
 
 for_window [title="Ranger"] resize set 1400 px 800 px
-for_window [title="Ranger"] move left 100 px
+for_window [title="Ranger"] move [absolute] position center
 
 for_window [title="Ranger"]               move scratchpad
 for_window [title="Scratchpad"]           move scratchpad
-for_window [class="Lxappearance"]         move to workspace "LX"
+for_window [class="Lxappearance"]         move to scratchpad
 for_window [class="Firefox"]              move to workspace $ws3
 for_window [class="Cinnamon-settings.py"] move to workspace $ws4
 for_window [class="discord"]              move to workspace $ws6

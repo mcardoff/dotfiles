@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doom/.local/straight/repos/evil-goggles/evil-goggles.el

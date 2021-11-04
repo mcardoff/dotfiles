@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doom/.local/straight/repos/org-contrib/lisp/org-attach-embedded-images.el

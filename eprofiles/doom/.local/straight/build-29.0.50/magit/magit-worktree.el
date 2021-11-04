@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doom/.local/straight/repos/magit/lisp/magit-worktree.el

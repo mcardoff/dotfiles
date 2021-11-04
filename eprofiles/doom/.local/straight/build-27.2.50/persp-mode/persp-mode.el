@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doom/.local/straight/repos/persp-mode.el/persp-mode.el

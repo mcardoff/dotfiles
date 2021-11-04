@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/git-gutter-fringe/git-gutter-fringe.el

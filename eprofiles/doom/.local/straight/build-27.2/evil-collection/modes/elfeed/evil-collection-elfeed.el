@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/evil-collection/modes/elfeed/evil-collection-elfeed.el

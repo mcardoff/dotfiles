@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/evil-collection/modes/helpful/evil-collection-helpful.el

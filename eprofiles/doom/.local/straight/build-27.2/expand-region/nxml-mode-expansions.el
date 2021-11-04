@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/expand-region.el/nxml-mode-expansions.el

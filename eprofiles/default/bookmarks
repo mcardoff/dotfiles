@@ -8,10 +8,10 @@
  (rear-context-string . "ys. There is an ")
  (position . 1438))
 ("org-capture-last-stored"
- (filename . "~/Roam/20211028153255-berkman_10_28_21.org")
+ (filename . "~/Roam/20211101104258-427_lab_3_notes.org")
  (front-context-string)
- (rear-context-string . "erkman 10-28-21\n")
- (position . 94))
+ (rear-context-string . " 427 Lab 3 Notes")
+ (position . 92))
 ("~/.emacs.d/early-init.el"
  (filename . "~/dotfiles/regmacs/init.el")
  (front-context-string . "\n )\n\n;; Which-ke")

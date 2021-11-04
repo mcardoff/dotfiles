@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doom/.local/straight/repos/diff-hl/diff-hl-show-hunk.el

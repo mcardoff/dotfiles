@@ -1,1 +1,0 @@
-/home/mcard/eprofiles/doomacs/.local/straight/repos/emacs-doom-themes/doom-themes-ext-treemacs.el

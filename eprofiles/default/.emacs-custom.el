@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(clojure-mode yasnippet yaml-mode which-key use-package rainbow-mode org-roam org-bullets multiple-cursors move-text magit hlint-refactor haskell-mode gruber-darker-theme general flymake-easy esup elfeed doom-modeline dashboard cuda-mode counsel-projectile auctex all-the-icons-ivy-rich)))
+   '(yasnippet yaml-mode which-key use-package rainbow-mode org-roam org-bullets multiple-cursors move-text magit hlint-refactor haskell-mode gruber-darker-theme general flymake-easy esup elfeed doom-modeline dashboard cuda-mode counsel-projectile clojure-mode auctex all-the-icons-ivy-rich)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

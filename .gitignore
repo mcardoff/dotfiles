@@ -22,5 +22,5 @@ regmacs/.emacs-custom.el
 .mc-lists.el
 history
 savehist
-eprofiles/doom/.local
-eprofiles/space/.cache
+/eprofiles/doom/.local
+/eprofiles/space/.cache
