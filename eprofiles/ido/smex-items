@@ -1,0 +1,17 @@
+
+;; ----- smex-history -----
+(
+ load-theme
+ package-delete
+ cd
+ 5x5
+ arp
+ dbx
+ dig
+)
+
+;; ----- smex-data -----
+(
+ (package-delete . 1)
+ (load-theme . 1)
+)
