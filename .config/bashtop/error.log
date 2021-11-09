@@ -238,3 +238,158 @@ New instance of bashtop version: 0.9.25 Pid: 108897
   warnings.warn("ignoring %r for file %r" % (err, path),
 /usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
   warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 158238
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 163434
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 164455
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 165040
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/home/mcard/.config/bashtop/user_themes/mine.theme: line 67: `theme[cached_start]': not a valid identifier
+/home/mcard/.config/bashtop/user_themes/mine.theme: line 67: #70c0b1: command not found
+08:23:46 PM ERROR: On line 67 
+/home/mcard/.config/bashtop/user_themes/mine.theme: line 68: theme[cached_mid]: command not found
+08:23:46 PM ERROR: On line 68 
+/home/mcard/.config/bashtop/user_themes/mine.theme: line 69: theme[cached_end]: command not found
+08:23:46 PM ERROR: On line 69 
+ 
+New instance of bashtop version: 0.9.25 Pid: 165138
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 168123
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 168919
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 169757
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 170025
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 170995
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 172460
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+ 
+New instance of bashtop version: 0.9.25 Pid: 187956
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon0/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring FileNotFoundError(2, 'No such file or directory') for file '/sys/class/hwmon/hwmon2/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(6, 'No such device or address') for file '/sys/class/hwmon/hwmon4/temp2_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/lib/python3/dist-packages/psutil/_pslinux.py:1222: RuntimeWarning: ignoring OSError(61, 'No data available') for file '/sys/class/hwmon/hwmon6/temp1_input'
+  warnings.warn("ignoring %r for file %r" % (err, path),
+/usr/local/bin/bashtop: line 2182: ((: 128.0°C,: syntax error: invalid arithmetic operator (error token is ".0°C,")
+/usr/local/bin/bashtop: line 2201: (high: missing `)' (error token is "high")
