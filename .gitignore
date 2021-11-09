@@ -1,9 +1,11 @@
 *~
 *#
-regmacs/session.*
+*.eln
+*.log
 *.png
-!background.png
 *.deb
+regmacs/session.*
+!background.png
 octave-workspace
 /school/
 /.emacs_saves/
@@ -27,7 +29,7 @@ savehist
 transient
 /eprofiles/evil/tramp
 /eprofiles/ido/tramp
-*.eln
 /.emacs.d/eln-cache/
-*.log
 .emacs-custom.el
+games
+eprofiles/space/layers/+fun/
