@@ -34,3 +34,7 @@ transient
 games
 eprofiles/space/layers/+fun/
 request
+.emacsenv/cache
+.org-id-locations
+org-roam.db
+network-security.data
