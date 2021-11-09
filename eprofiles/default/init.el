@@ -3,7 +3,7 @@
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq native-comp-deferred-compilation t)
 (setq file-name-handler-alist nil)
-(setq backup-directory-alist '(("." . "~/eprofiles/default/.emacs_saves/")))
+(setq backup-directory-alist '(("." . "~/.emacsenv/cache/")))
 
 ;; This pattern will end with a large startup time,
 ;; we should just expand it to init.el when we change it

@@ -2,7 +2,7 @@
 ;;; Startup stuff
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
-(setq backup-directory-alist '(("." . "~/eprofiles/regmacs/.emacs_saves/")))
+(setq backup-directory-alist '(("." . "~/.emacsenv/cache/")))
 
 ;; (org-babel-load-file (expand-file-name "EmacsInit.org" user-emacs-directory))
 
