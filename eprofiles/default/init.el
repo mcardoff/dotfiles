@@ -1,10 +1,36 @@
 ;; -*- lexical-binding: t; -*-
 ;;; Startup stuff
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
+(setq native-comp-deferred-compilation t)
 (setq file-name-handler-alist nil)
 (setq backup-directory-alist '(("." . "~/eprofiles/default/.emacs_saves/")))
 
+;; This pattern will end with a large startup time,
+;; we should just expand it to init.el when we change it
 ;; (org-babel-load-file (expand-file-name "EmacsInit.org" user-emacs-directory))
+
+;; (defvar cache-file "~/eprofiles/default/cache/autoloads")
+
+;; (defun initialize ()
+;;   (unless (load cache-file t t)
+;;     (setq package-activated-list nil)
+;;     (package-initialize)
+;;     (with-temp-buffer
+;;       ;; (cl-pushnew doom-core-dir load-path :test #'string=)
+;;       (dolist (desc (delq nil (mapcar #'cdr package-alist)))
+;;         (let ((load-file-name (concat (package--autoloads-file-name desc) ".el")))
+;;           (when (file-readable-p load-file-name)
+;;             (condition-case _
+;;                 (while t (insert (read (current-buffer))))
+;;               (end-of-file)))))
+;;       (prin1 `(setq load-path ',load-path
+;;                     auto-mode-alist ',auto-mode-alist
+;;                     Info-directory-list ',Info-directory-list)
+;;              (current-buffer))
+;;       (write-file (concat cache-file ".el"))
+;;       (byte-compile-file cache-file))))
+
+;; (initialize)
 
 ;;;; BEGIN EMACSINIT.EL
 
@@ -15,6 +41,8 @@
           ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
+
+(package-initialize)
 (require 'use-package)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
@@ -40,15 +68,21 @@
 
 ;; dashboard
 (use-package dashboard
- :custom
- (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
- (dashboard-items '((recents  . 10)
-                    (agenda   . 10)))
- (dashboard-set-heading-icons t)
- (dashboard-set-file-icons t)
- :config (dashboard-setup-startup-hook))
+  :hook (after-init . dashboard-setup-startup-hook)
+  :custom
+  (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
+  (dashboard-items '((recents  . 10)
+                     (agenda   . 10)))
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
+  :config (dashboard-setup-startup-hook))
 
 ;; Completion frameworks
+
+;; company
+(use-package company
+  :diminish
+  :init (global-company-mode))
 
 ;; ivy
 (use-package ivy
@@ -56,7 +90,7 @@
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
          :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
+         ("TAB" . ivy-alt-done)
          ("C-j" . ivy-next-line)
          ("C-k" . ivy-previous-line)
          :map ivy-switch-buffer-map
@@ -149,10 +183,11 @@
   (general-define-key
    :prefix "C-z"
    "a" 'org-agenda
-   "d" 'initorg
+   "d" 'org-roam-dailies-capture-today
    "i" 'dotemacs
    "l" 'org-agenda-list
-   "m" 'counsel-imenu)
+   "m" 'counsel-imenu
+   "o" 'initorg)
   
   (general-define-key
    :prefix "C-z c"
@@ -172,7 +207,9 @@
    "M-r" 'enlarge-window
    "M-R" 'shrink-window
    "M-." 'enlarge-window-horizontally
-   "M-," 'shrink-window-horizontally))
+   "M-," 'shrink-window-horizontally
+   "C-<SPC>" 'rectangle-mark-mode
+   "C-x <SPC>" 'set-mark-command))
 
 ;; which-key because there are so many bindings
 (use-package which-key
@@ -181,7 +218,7 @@
   :custom (which-key-idle-delay 0.3))
 
 (use-package auctex
-  :defer 
+  :defer
   :hook
   (TeX-mode . mpc/LaTeX-setup)
   (plain-TeX-mode . mpc/LaTeX-setup)
@@ -189,7 +226,7 @@
   (LaTeX-mode . mpc/LaTeX-setup)
   (docTeX-mode . mpc/LaTeX-setup)
   :custom
-  (TeX-view-program-selection 
+  (TeX-view-program-selection
     '(((output-dvi has-no-display-manager) "dvi2tty") 
       ((output-dvi style-pstricks)  "dvips and gv")
        (output-dvi "xdvi")
@@ -230,7 +267,27 @@
   ;; :after yasnippet)
 
 (require 'org-tempo)
+(use-package org-bullets
+  :defer
+  ;; :after org
+  :hook (org-mode . org-bullets-mode))
+
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-graph-executable "dot")
+  (org-roam-directory "~/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :bind (("C-z n l" . org-roam-buffer-toggle)
+         ("C-z n f" . org-roam-node-find)
+         ("C-z n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+
 (use-package org
+  :defer
   :hook (org-mode . mpc/org-mode-setup)
   :bind (("<C-M-return>" . org-insert-todo-subheading))
   :custom
@@ -257,25 +314,6 @@
   (setq org-tempo-keywords-alist nil)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
-(use-package org-bullets
-  :defer
-  :after org
-  :hook (org-mode . org-bullets-mode))
-
-(use-package org-roam
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-graph-executable "dot")
-  (org-roam-directory "~/Roam")
-  (org-roam-completion-everywhere t)
-  (org-roam-completion-system 'ivy)
-  :bind (("C-z n l" . org-roam-buffer-toggle)
-         ("C-z n f" . org-roam-node-find)
-         ("C-z n i" . org-roam-node-insert))
-  :config
-  (org-roam-setup))
-
 (use-package doc-view
   :ensure nil
   :defer 2
@@ -288,7 +326,6 @@
 ;;   :defer 5)
 
 (use-package projectile
-  :defer
   :diminish projectile-mode
   :config (projectile-mode)
   ;; :custom ((projectile-completion-system 'ivy))
@@ -300,6 +337,7 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 (use-package counsel-projectile
+  :defer
   :after 'projectile
   :config (counsel-projectile-mode))
 
@@ -309,8 +347,8 @@
   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 
 (use-package octave
-  :ensure nil
   :defer
+  :ensure nil
   :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
 (use-package haskell-mode
@@ -368,14 +406,14 @@
      ("/[Gmail]/Teacher Emails/IPRO"       . ?n))))
 
 ;; -------------------- ;;
-(setq schoolpath "~/school/")
-(setq templatepath "~/school/template.tex")
+(defvar schoolpath "~/school/")
+(defvar templatepath "~/school/template.tex")
   
 (defun gencopy (subj code)
   (let ((fname
          (read-file-name
          (concat subj ": ")
-	 (concat schoolpath (concat code "/HW/")))))
+         (concat schoolpath (concat code "/HW/")))))
     (copy-file templatepath fname)
     (find-file fname)))
 
@@ -383,21 +421,21 @@
   (interactive)
   (let ((x (upcase (read-string "Class Shorthand: "))))
     (cond ((string= x "CM") (gencopy "CM" "PHYS309"))
-  	  ((string= x "QM") (gencopy "QM" "PHYS406"))
-  	  ((string= x "EM") (gencopy "EM" "PHYS414"))
-  	  ((string= x "MM") (gencopy "MM" "PHYS502"))
-  	  ((string= x "GQ") (gencopy "GQ" "PHYS510"))
-  	  (t "failed"))))
+          ((string= x "QM") (gencopy "QM" "PHYS406"))
+          ((string= x "EM") (gencopy "EM" "PHYS414"))
+          ((string= x "MM") (gencopy "MM" "PHYS502"))
+          ((string= x "GQ") (gencopy "GQ" "PHYS510"))
+          (t "failed"))))
 
 (defun continuehw ()
   (interactive)
   (let ((x (upcase (read-string "Class Shorthand: "))))
     (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/")))
-  	  ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/")))
-  	  ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/")))
-  	  ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/")))
-  	  ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/")))
-  	  (t "failed"))))
+          ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/")))
+          ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/")))
+          ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/")))
+          ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/")))
+          (t "failed"))))
 
 ;;;; END OF EMACSINIT.EL
 

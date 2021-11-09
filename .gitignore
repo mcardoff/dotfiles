@@ -24,3 +24,10 @@ history
 savehist
 /eprofiles/doom/.local
 /eprofiles/space/.cache
+transient
+/eprofiles/evil/tramp
+/eprofiles/ido/tramp
+*.eln
+/.emacs.d/eln-cache/
+*.log
+.emacs-custom.el

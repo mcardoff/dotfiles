@@ -1,17 +1,21 @@
 
 ;; ----- smex-history -----
 (
- load-theme
+ visual-line-mode
+ org-bullets-mode
+ org-indent-mode
+ org-reload
  package-delete
+ load-theme
  cd
- 5x5
- arp
- dbx
- dig
 )
 
 ;; ----- smex-data -----
 (
- (package-delete . 1)
+ (package-delete . 3)
  (load-theme . 1)
+ (org-reload . 1)
+ (org-indent-mode . 1)
+ (org-bullets-mode . 1)
+ (visual-line-mode . 1)
 )

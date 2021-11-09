@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <21/11/01 21:02:38 /home/mcard/eprofiles/default/tramp>
+;; -*- emacs-lisp -*- <21/11/08 01:07:35 /home/mcard/eprofiles/default/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
@@ -16,4 +16,12 @@
   ("file-exists" "test -e")
   ("gid-string" "theory")
   ("readlink" "\\readlink")
-  ("case-insensitive" nil)))
+  ("case-insensitive" nil)
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("~" "/home/cardiff")
+  ("bzr" nil)
+  ("git" nil)
+  ("hg" nil)
+  ("uid-integer" 1024)))

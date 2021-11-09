@@ -1,5 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
-
+;; (setq package-enable-at-startup nil)
 (setq package--init-file-ensured t)
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
@@ -8,6 +8,7 @@
 (setq byte-compile-warnings '(cl-functions))
 (setq inhibit-startup-screen 0)
 (setq visible-bell 1)
+(setq comp-deferred-compilation t)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)

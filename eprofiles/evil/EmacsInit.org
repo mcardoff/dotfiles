@@ -1,0 +1,499 @@
+#+STARTUP:OVERVIEW
+My emacs config
+* General Setup
+** Package
+This is required by default to initialize the packages and get the correct repos:
+#+BEGIN_SRC emacs-lisp
+;; (require 'package)
+(setq package-archives '(
+          ("melpa" . "https://melpa.org/packages/")
+          ("org" . "https://orgmode.org/elpa/")
+          ("elpa" . "https://elpa.gnu.org/packages/")))
+
+    
+;;(unless package-archive-contents (package-refresh-contents))
+#+END_SRC
+ Now we have added melpa to our package archives and initialized packages.  We also want to use the use-package style, so we add use-package if it is not installed already
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package) (package-install 'use-package))
+#+END_SRC
+Now we can configure it
+#+BEGIN_SRC emacs-lisp
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+END_SRC
+** Appearance
+*** Aesthetics
+This is just a few aesthetic changes that make emacs appear to be a lot cleaner
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(tooltip-mode 0)
+(window-divider-mode)
+(column-number-mode)
+(show-paren-mode)
+(fringe-mode 1)
+(setq inhibit-startup-screen 0)
+(setq visible-bell 1)
+#+END_SRC
+The last bit gets rid of the splash screen when you start emacs, and makes it so it does not make an annoying sound every time youre at the end of a file. This next part is what sets the font:
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :font "Source Code Pro" :foundry 'regular :height 140)
+#+END_SRC
+I want to try to use command log mode so I can see what I am doing when messing around with commands
+#+BEGIN_SRC emacs-lisp
+(use-package command-log-mode)
+#+END_SRC
+I like a smooth transition between windows, the following is necessary
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'window-divider nil :foreground "#282828")
+(set-face-attribute 'window-divider-first-pixel nil :foreground "#282828")
+(set-face-attribute 'window-divider-last-pixel nil :foreground "#282828")
+(set-face-attribute 'fringe nil :foreground "#282828" :background "#282828")
+ #+END_SRC
+*** Theme
+I use the =gruber-darker= theme, which compliments emacs very well
+#+BEGIN_SRC emacs-lisp
+(load-theme 'gruber-darker t)
+#+END_SRC
+*** Line Numbers
+Here is the customization for line numbers, including the type
+#+BEGIN_SRC emacs-lisp
+(global-display-line-numbers-mode)
+(setq display-line-numbers-type t)
+#+END_SRC
+** Modeline config
+I am currently making use of the doom modeline, but there are alternatives
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-height 40)
+  (doom-modeline-icon t))
+#+END_SRC
+** Dired
+Dired is the emacs directory editor, I just need to customize a few things
+#+BEGIN_SRC emacs-lisp
+(setq dired-listing-switches "-lXGAh --group-directories-first")
+#+END_SRC
+* Completion Frameworks
+** Ivy
+*** Main
+Ivy is an alternative to ido, and I am just trying it out, so this is temporary, but may be fully integrated later
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+         ("C-x b" . ivy-switch-buffer)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)	
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :init (ivy-mode 1)
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-wrap t)
+  (setq ivy-count-format "(%d/%d) ")
+  (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
+  (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
+  (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist)
+)
+#+END_SRC
+*** Ivy Rich
+It is sometimes useful to use =ivy-rich= for more useful info on commands and such
+#+BEGIN_SRC emacs-lisp
+(use-package ivy-rich  
+  :init (ivy-rich-mode 1)
+  :after counsel
+  :config
+  (setq ivy-format-function #'ivy-format-function-line))
+
+(use-package all-the-icons-ivy-rich
+  :init (all-the-icons-ivy-rich-mode 1))
+#+END_SRC
+*** Counsel
+An addition to ivy is counsel, which makes use of x, we just need to have it installed!
+#+BEGIN_SRC emacs-lisp
+(use-package counsel 
+  :demand t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x b" . counsel-ibuffer)
+         ("C-x C-f" . counsel-find-file)
+         ;; ("C-M-j" . counsel-switch-buffer)
+         ("C-M-l" . counsel-imenu)
+         :map minibuffer-local-map
+         ("C-r" . 'counsel-minibuffer-history))
+  :custom
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  (setq ivy-initial-inputs-alist nil))
+#+END_SRC
+*** Face Attribute Changes
+I like to change the face of the main match to be my main highlight color
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'ivy-current-match 'nil :foreground "black" :background "#ffdd33")
+(set-face-attribute 'font-lock-keyword-face 'nil :weight 'bold :slant 'italic)
+(set-face-attribute 'font-lock-type-face 'nil :slant 'oblique)
+#+END_SRC
+** ido-mode
+Ido makes `find-file` and other similar functions look a lot nicer, and `smex` is the same but for `M-x`
+#+BEGIN_SRC emacs-lisp
+
+;;(ido-mode 1)
+;;(ido-everywhere 1)
+;;
+;;(use-package smex
+;;  :ensure t
+;;  :bind (("M-x" . smex)
+;;         ("M-X" . smex-major-mode-commands))
+;;)
+;;(global-set-key (kbd "M-x") 'smex)
+;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+#+END_SRC
+* Auto Mode File Bindings
+Here is where we associate a particular type of file with a mode, by default emacs does not associate `.m` files with `octave-mode` so we have to tell emacs ourself:
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+#+END_SRC
+The same goes for `.org` files and `org-mode`
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+#+END_SRC
+We also want to associate `.cu` with `cuda-mode`
+#+BEGIN_SRC emacs-lisp
+  ;; (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
+#+END_SRC
+* Keybindings
+These are just some helpful general functions that make my life a little bit easier, with a table of all of them:
+|---------+------------------------+------------------------|
+| BINDING | DESCRIPTION            | FUNCTION               |
+|---------+------------------------+------------------------|
+| M-1     | Kill other windows     | `delete-other-windows` |
+| M-2     | Split horizontally     | `split-window-below`   |
+| M-3     | Split vertically       | `split-window-right`   |
+| M-o     | Go to the other window | `other-window`         |
+| M-r     | Enlarge current window | `enlarge-window 16`    |
+| S-M-R   | Shrink current window  | `shrink-window 2`      |
+| ESC     | Quit                   | `keyboard-escape-quit  |
+|---------+------------------------+------------------------|
+  
+Here is the actual declaration of all of these
+#+BEGIN_SRC emacs-lisp
+(defun enlarge-fun () (interactive) (enlarge-window 2))
+(defun shrink-fun () (interactive) (shrink-window 2))
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-below)
+(global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "M-r") 'enlarge-fun)
+(global-set-key (kbd "M-R") 'shrink-fun)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+END_SRC
+** Which-Key
+Seeing what keybindings are available!
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config (setq which-key-idle-delay 0.3)
+)
+#+END_SRC
+* Programming Adjacent
+** LaTeX-Mode
+There are a couple things I like to have enabled with LaTeX mode as well, which make everything a little easier to see as well as edit:
+#+BEGIN_SRC emacs-lisp
+(add-hook 'latex-mode-hook (lambda () (visual-line-mode 1)))
+(add-hook 'latex-mode-hook (lambda () (outline-minor-mode 1)))
+#+END_SRC
+I have a few snippets available for latex-mode, made using yasnippet:
+| SNIPPET  | DESCRIPTION                       |
+|----------+-----------------------------------|
+| qm       | 6 blank sections                  |
+| probs    | 5 blank sections                  |
+| frac     | fraction, prompts for inputs      |
+| template | in progress, copies template file |
+*** AUCTeX
+Lets try setting up auctex
+#+BEGIN_SRC emacs-lisp
+(use-package auctex
+  :defer t
+  :ensure t
+  :custom
+  (TeX-view-program-selection 
+    '(((output-dvi has-no-display-manager) "dvi2tty") 
+      ((output-dvi style-pstricks)  "dvips and gv")
+       (output-dvi "xdvi")
+       (output-pdf "Zathura")
+       (output-html "xdg-open"))))
+
+(defun my/TeX-view-once (doc)
+  "View TeX output and clean up after `my/TeX-compile-and-view'.
+  Call `TeX-view' to display TeX output, and remove this function
+  from `TeX-after-TeX-LaTeX-command-finished-hook', where it may
+  have been placed by `my/TeX-compile-and-view'."
+  (TeX-view)
+  (remove-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
+
+(defun my/TeX-compile-and-view ()
+  "Compile current master file using LaTeX then view output. Run the \"LaTeX\" command on the master file for active buffer. When compilation is complete, view output with default viewer (using `TeX-view')."
+  (interactive)
+  (TeX-command "LaTeX" 'TeX-master-file)
+  (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'my/TeX-view-once))
+#+END_SRC
+** CUDA-Mode
+#+BEGIN_SRC emacs-lisp
+  (use-package cuda-mode :ensure t)
+#+END_SRC
+** Projectile
+Projectile is a project management package useful for bigger code projects
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  ;; :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/Projects/Code")
+    (setq projectile-project-search-path '("~/Projects/Code")))
+  (setq projectile-switch-project-action #'projectile-dired))
+#+END_SRC
+There is some better integration with counsel with porjectile-counsel
+#+BEGIN_SRC emacs-lisp
+(use-package counsel-projectile
+  :after 'projectile
+  :config (counsel-projectile-mode))
+#+END_SRC
+* Text Editing
+** Multiple Cursors
+Multiple cursors makes your life so much easier when you know how to use them. A helpful use case is you can search for something and place a cursor on each match for example. It helps a lot when heap editing files
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors
+:diminish
+:bind (("C-S-c C-S-c" . mc/edit-lines)
+       ("C->" . mc/mark-next-like-this)
+	 ("C-<" . 'mc/mark-previous-like-this)
+	 ("C-c C-<" . 'mc/mark-all-like-this)))
+#+END_SRC
+** Move Text
+Similar idea to multiple cursors, this is just really helpful and  pretty much a necessary package
+#+BEGIN_SRC emacs-lisp
+(use-package move-text
+  :diminish 
+  :bind (("M-p" . 'move-text-up)
+         ("M-n" . 'move-text-down)))
+#+END_SRC
+** Org
+*** Org-Mode
+Org is a very nice note-taking mode in emacs, I like to have pretty bullets and I like to have the line highlighted when editing, hence the hook region. Here I define a function to set up org mode, involving the different packages I like loaded whe I use org
+#+BEGIN_SRC emacs-lisp
+(defun mpc/org-mode-setup ()
+  (org-indent-mode)
+  (visual-line-mode 1)
+  (hl-line-mode 1))
+#+END_SRC
+Here I set up the the actual package
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :hook (org-mode . mpc/org-mode-setup)
+  :init
+  (org-reload)
+  :config
+  (setq org-ellipsis " [+]")
+  (setq org-directory "~/repos/org-agenda/School Schedules/")
+  (setq org-agenda-files "~/eprofiles/regmacs/.emacs.d/org_agenda.org")
+  (set-face-attribute
+  'org-ellipsis 'nil :underline 'nil :foreground "#FFFFFF"))
+#+END_SRC
+Here I set up a package called org-bullets that changes the look of the bullets
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode))
+#+END_SRC
+*** Org Roam
+Currently my notes are all over the place, org roam should hopefully make that look nicer
+#+BEGIN_SRC emacs-lisp
+(use-package org-roam
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/school/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+#+END_SRC
+*** Org Faces
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'org-block 'nil :foreground "#e4e4ef")
+  ;; remove bold if youre on windows, itll make some squares instead of the regular org-bullets
+  (set-face-attribute 'outline-3 'nil :foreground "#ffdd33" :weight 'bold :family "Source Code Pro" :slant 'normal)
+#+END_SRC
+** Snippets
+Snippets will save your life when doing repetitive tasks, use them often and your life will be so much easier
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :init (yas-global-mode)
+    :custom (yas-snippet-dirs '("~/eprofiles/regmacs/.emacs.d/mysnippets")))
+#+END_SRC
+** Outline
+This mode is super useful when dealing with super long LaTeX files that have confusing structures. At first I had the keybinds set to weird keys, so I changed them to keys that seemed relatively unused
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package outline-minor-mode)
+  (global-set-key (kbd "C-;") 'outline-hide-subtree)
+  (global-set-key (kbd "C-:") 'outline-show-subtree)
+  (global-set-key (kbd "C-'") 'outline-hide-entry)
+  (global-set-key (kbd "C-\"") 'outline-show-entry)
+#+END_SRC
+** Extra Headers for LaTeX
+   Like I said, my favorite use case for this mode is LaTeX documents,
+   so it makes sense to outline the section headers in LaTeX:
+   #+BEGIN_SRC emacs-lisp
+   (setq TeX-outline-extra
+      '(("%chapter" 1)
+        ("%section" 2)
+        ("%subsection" 3)
+        ("%subsubsection" 4)
+        ("%paragraph" 5)))
+   #+END_SRC
+   Now we have to tell it what keywords to font lock
+   #+BEGIN_SRC emacs-lisp
+   (font-lock-add-keywords
+   'latex-mode
+   '(("^%\\(chapter\\|\\(sub\\|subsub\\)?section\\|paragraph\\)" 0 'font-lock-keyword-face t)
+   ("^%chapter{\\(.*\\)}"       1 'font-latex-sectioning-1-face t)
+   ("^%section{\\(.*\\)}"       1 'font-latex-sectioning-2-face t)
+   ("^%subsection{\\(.*\\)}"    1 'font-latex-sectioning-3-face t)
+   ("^%subsubsection{\\(.*\\)}" 1 'font-latex-sectioning-4-face t)
+   ("^%paragraph{\\(.*\\)}"     1 'font-latex-sectioning-5-face t)))
+   #+END_SRC
+* Making Emacs do Regular Computer things
+** elfeed
+=elfeed= is an rss reader, for now I use it for some subreddits that are mostly text based, images are possible just not what I require from this:
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed
+  :ensure t
+  :custom
+  (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
+                  "http://www.reddit.com/r/Physics/.rss")))
+#+END_SRC
+Lets try using some extra stuff using `elfeed-goodies`
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed-goodies :ensure t)
+#+END_SRC
+** mu4e
+I am trying to get this set up, my mail is currently in ~/Mail and I am using offlineimap to index my email, now we will set it up on the emacs side:
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package mu4e
+  ;;   :ensure nil
+  ;;   :config
+  ;;     (setq mu4e-change-filenames-when-moving t)
+  ;;     (setq mu4e-update-interval (* 10 60))
+  ;;     (setq mu4e-get-mail-command "offlineimap")
+  ;;     (setq mu4e-maildir "~/Mail")
+
+  ;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")
+  ;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+  ;;     (setq mu4e-refile-folder "/[Gmail].All Mail")
+  ;;     (setq mu4e-trash-folder  "/[Gmail].Trash")
+    
+
+  ;;     (setq mu4e-maildir-shortcuts
+  ;;     '((:maildir "/INBOX"    :key ?i)
+  ;;       (:maildir "/[Gmail].Sent Mail" :key ?s)
+  ;;       (:maildir "/[Gmail].Trash"     :key ?t)
+  ;;       (:maildir "/[Gmail].Drafts"    :key ?d)
+  ;;       (:maildir "/[Gmail].All Mail"  :key ?a))))
+#+END_SRC
+* Ease of Life
+** Get to config file 
+This is mostly here because on my 60% keyboard it is pretty much impossible to type the ~ key, so instead I made this function
+#+BEGIN_SRC emacs-lisp
+(defun dotemacs () (interactive) (find-file "~/eprofiles/regmacs/.emacs.d/init.el"))
+#+END_SRC
+To make life easier here is also one to get to this file
+#+BEGIN_SRC emacs-lisp
+(defun initorg () (interactive) (find-file "~/eprofiles/regmacs/.emacs.d/EmacsInit.org"))
+#+END_SRC
+** Get a directory for saves
+This gets rid of annoying duplicate files with ~ at the end with backup data
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs_saves")))
+#+END_SRC
+** Copy HW Files
+I made this as a little project to avoid the tedium of:
+   - Copying a template file into a complicated directory
+   - Opening it, typing the long directory again
+   - Typing repetitive section headers
+So I made a pretty easy
+#+BEGIN_SRC emacs-lisp
+(setq schoolpath "~/School/")
+(setq templatepath "~/School/template.tex")
+  
+(defun gencopy (subj code)
+  (let ((fname
+         (read-file-name
+         (concat subj ": ")
+	     (concat schoolpath (concat code "/HW/")))))
+  (copy-file templatepath fname) (find-file fname)))
+
+(defun starthw ()
+  (interactive)
+  (let ((x (upcase (read-string "Class Shorthand: "))))
+    (cond ((string= x "CM") (gencopy "CM" "PHYS309")) ;; Classical
+  	  ((string= x "QM") (gencopy "QM" "PHYS406")) ;; UG Quantum
+  	  ((string= x "EM") (gencopy "EM" "PHYS414")) ;; E&M
+  	  ((string= x "MM") (gencopy "MM" "PHYS502")) ;; Grad Math Methods
+  	  ((string= x "GQ") (gencopy "GQ" "PHYS510")) ;; Grad Quantum
+  	  (t "failed"))))
+   #+END_SRC
+** Go to HW Files
+   This uses a similar structure to copying files, but just for accessing them since I am lazy
+   #+BEGIN_SRC emacs-lisp
+   (defun continuehw ()
+     (interactive)
+     (let ((x (upcase (read-string "Class Shorthand: "))))
+       (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/"))) ;; Classical
+  	     ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/"))) ;; UG Quantum
+  	     ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/"))) ;; E&M
+  	     ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/"))) ;; Grad Math Methods
+  	     ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/"))) ;; Grad Quantum
+  	     (t "failed"))))
+   #+END_SRC
+* Startup
+This will just be used to display startup time and with how many garbage collections
+#+BEGIN_SRC emacs-lisp
+(defun mpc/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                     (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'mpc/display-startup-time)
+#+END_SRC
+It is also helpful to start the *scratch* buffer in fundamental mode
+#+BEGIN_SRC emacs-lisp
+(setq initial-major-mode 'fundamental-mode)
+#+END_SRC
+Use this to see all the messages in the message buffer:
+#+begin_src emacs-lisp
+(setq message-log-max t)
+#+end_src
+
+
+
+
