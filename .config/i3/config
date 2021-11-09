@@ -193,13 +193,14 @@ bindsym $mod+Return       exec $term
 bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
 
 bindcode $mod+60 exec (feh ~/Pictures/schedule.png --title Scratchpad)
+bindcode $mod+107 exec (scrot -s)
 
 bindsym $mod+Tab       focus right
 bindsym $mod+Shift+Tab focus left
 bindsym $alt+Tab       workspace next
 bindsym $alt+Shift+Tab workspace prev
 
-bindsym F1 [class="Alacritty" title="Scratchpad"] scratchpad show
+bindsym F1 [class="Alacritty" title="sp"]         scratchpad show
 bindsym F2 [class="Emacs"     title="Scratchpad"] scratchpad show
 bindsym F3 [class="Alacritty" title="Ranger"]     scratchpad show
 bindsym F4 [class="feh"       title="Scratchpad"] scratchpad show
@@ -315,5 +316,8 @@ bar {
 }
 
 # Execute startup stuff
+exec ($term -t "sp")
+exec ($term -t "Ranger" -e "ranger")
+exec (emacs --eval (server-start) -T "Scratchpad")
 exec_always (~/.bin/ranger.sh)
 exec_always (~/.bin/i3init.sh)
