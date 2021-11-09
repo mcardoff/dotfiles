@@ -290,8 +290,7 @@
 
 (use-package evil-collection
   :after evil
-  :config
-  (evil-collection-init))
+  :config (evil-collection-init))
 
 (use-package hydra
   :defer t)
@@ -302,7 +301,7 @@
 (use-package yasnippet
   :defer 5
   :init (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/eprofiles/regmacs/mysnippets")))
+  :custom (yas-snippet-dirs '("~/eprofiles/evil/mysnippets")))
 
 (use-package elfeed
   :defer 5
