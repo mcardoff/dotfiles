@@ -5,33 +5,6 @@
 (setq file-name-handler-alist nil)
 (setq backup-directory-alist '(("." . "~/.emacsenv/cache/")))
 
-;; This pattern will end with a large startup time,
-;; we should just expand it to init.el when we change it
-;; (org-babel-load-file (expand-file-name "EmacsInit.org" user-emacs-directory))
-
-;; (defvar cache-file "~/eprofiles/default/cache/autoloads")
-
-;; (defun initialize ()
-;;   (unless (load cache-file t t)
-;;     (setq package-activated-list nil)
-;;     (package-initialize)
-;;     (with-temp-buffer
-;;       ;; (cl-pushnew doom-core-dir load-path :test #'string=)
-;;       (dolist (desc (delq nil (mapcar #'cdr package-alist)))
-;;         (let ((load-file-name (concat (package--autoloads-file-name desc) ".el")))
-;;           (when (file-readable-p load-file-name)
-;;             (condition-case _
-;;                 (while t (insert (read (current-buffer))))
-;;               (end-of-file)))))
-;;       (prin1 `(setq load-path ',load-path
-;;                     auto-mode-alist ',auto-mode-alist
-;;                     Info-directory-list ',Info-directory-list)
-;;              (current-buffer))
-;;       (write-file (concat cache-file ".el"))
-;;       (byte-compile-file cache-file))))
-
-;; (initialize)
-
 ;;;; BEGIN EMACSINIT.EL
 
 ;; package stuff
@@ -42,8 +15,9 @@
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
 
-(package-initialize)
-(require 'use-package)
+;; requires for emacs 28
+;; (package-initialize)
+;; (require 'use-package)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
@@ -57,6 +31,26 @@
 (cond ((not (package-installed-p 'gruber-darker-theme))
        (use-package gruber-darker-theme))
       (t (load-theme 'gruber-darker t)))
+
+;; Speed
+(use-package rainbow-mode
+  :defer t)
+
+(use-package recentf
+  ;; Loads after 1 second of idle time.
+  :defer t)
+
+(use-package saveplace
+  :defer t)
+
+(use-package saveplace-pdf-view
+  :defer t)
+
+(use-package server
+  :defer t)
+
+(use-package autorevert
+  :defer t)
 
 ;; Doom modeline
 (use-package doom-modeline
@@ -81,11 +75,14 @@
 
 ;; company
 (use-package company
+  :defer t
   :diminish
   :init (global-company-mode))
 
 ;; ivy
 (use-package ivy
+  :defer t
+  :after counsel
   :diminish
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
@@ -120,9 +117,12 @@
   (ivy-format-function #'ivy-format-function-line))
 
 (use-package all-the-icons-ivy-rich
+  :defer t
+  :after ivy-rich
   :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package counsel
+  :defer t
   :bind (("M-x" . counsel-M-x)
          ;; ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file)
@@ -133,9 +133,6 @@
   :custom
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   (ivy-initial-inputs-alist nil))
-
-;; Auto mode for Octave
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 ;; defuns
 (defun mpc/LaTeX-setup ()
@@ -174,10 +171,11 @@
   (interactive)
   (find-file (concat user-emacs-directory "EmacsInit.org")))
 
-(load-file (concat user-emacs-directory "configfuns.el"))
+;; (load-file (concat user-emacs-directory "configfuns.el"))
 
 ;; Maybe using general?
 (use-package general
+  ;; :defer 1
   :config
   (global-unset-key (kbd "C-z"))
   (general-define-key
@@ -213,7 +211,7 @@
 
 ;; which-key because there are so many bindings
 (use-package which-key
-  :init (which-key-mode)
+  :config (which-key-mode)
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
 
@@ -260,7 +258,7 @@
 
 (use-package yasnippet
   :defer 5
-  :init (yas-global-mode)
+  :config (yas-global-mode)
   :custom (yas-snippet-dirs '("~/eprofiles/default/mysnippets")))
 
 ;; (use-package yasnippet-snippets
@@ -273,6 +271,7 @@
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
+  :after general
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -326,33 +325,35 @@
 ;;   :defer 5)
 
 (use-package projectile
+  :after general
+  :defer 10
   :diminish projectile-mode
   :config (projectile-mode)
   ;; :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-z p" . projectile-command-map)
-  :init
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
+  :bind-keymap ("C-z p" . projectile-command-map)
+  ;; :init
+  ;; (when (file-directory-p "~/Projects/Code")
+    ;; (setq projectile-project-search-path '("~/Projects/Code")))
+  ;; (setq projectile-switch-project-action #'projectile-dired)
+  )
 
 (use-package counsel-projectile
-  :defer
-  :after 'projectile
+  :defer 10
+  :after projectile
   :config (counsel-projectile-mode))
 
 (use-package cuda-mode
-  :defer
+  :defer 10
   :config
   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 
 (use-package octave
-  :defer
+  :defer 10
   :ensure nil
   :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
 (use-package haskell-mode
-  :defer
+  :defer 10
   :bind (("C-c C-c" . compile))
   :hook ((haskell-mode . interactive-haskell-mode)
 	 (haskell-mode . haskell-indent-mode))
@@ -361,15 +362,17 @@
 
 ;; linting in haskell
 (use-package hlint-refactor
-  :defer
+  :defer 10
   :after haskell-mode
   :hook (haskell-mode . hlint-refactor-mode))
 
-(use-package yaml-mode
-  :defer)
+(use-package clojure-mode :defer 10)
+
+(use-package yaml-mode :defer 10)
 
 (use-package elfeed
-  :defer 5
+  :defer 10
+  :after dashboard
   :custom
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
@@ -377,7 +380,7 @@
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
-  :defer 1 ; Wait until 1 seconds after startup
+  :defer 10 ; Wait until 1 seconds after startup
   :custom
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
@@ -391,6 +394,15 @@
   (mu4e-sent-folder   "/[Gmail]/Sent Mail")
   (mu4e-refile-folder "/[Gmail]/All Mail")
   (mu4e-trash-folder  "/[Gmail]/Trash")
+
+  ;; smtp settings
+  (user-mail-address "mcardiff@hawk.iit.edu")
+  (smtpmail-default-smtp-server "smtp.gmail.com")
+  (smtpmail-local-domain "gmail.com")
+  (smtpmail-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-service 587)
+
+  (message-send-mail-function 'smtpmail-send-it)
   
   (mu4e-maildir-shortcuts
    '(("/Inbox"             . ?i)
@@ -404,6 +416,38 @@
      ("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
      ("/[Gmail]/Teacher Emails/Hood"       . ?b)
      ("/[Gmail]/Teacher Emails/IPRO"       . ?n))))
+
+;; now smtp stuff
+(defvar my-mu4e-account-alist
+  '(("Gmail"
+     (mu4e-sent-folder "/[Gmail]/Sent Mail")
+     (user-mail-address "mcardiff@hawk.iit.edu")
+     (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
+     (smtpmail-local-domain "gmail.com")
+     (smtpmail-default-smtp-server "smtp.gmail.com")
+     (smtpmail-smtp-server "smtp.gmail.com")
+     (smtpmail-smtp-service 587))))
+
+
+(defun my-mu4e-set-account ()
+  "Set the account for composing a message.
+   This function is taken from: 
+     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
+  (let* ((account
+    (if mu4e-compose-parent-message
+    (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+    (string-match "/\\(.*?\\)/" maildir)
+    (match-string 1 maildir))
+    (completing-read (format "Compose with account: (%s) "
+    (mapconcat #'(lambda (var) (car var)) my-mu4e-account-alist "/"))
+    (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+    nil t nil nil (caar my-mu4e-account-alist))))
+    (account-vars (cdr (assoc account my-mu4e-account-alist))))
+    (if account-vars
+    (mapc #'(lambda (var) (set (car var) (cadr var))) account-vars)
+    (error "No email account found"))))
+(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+
 
 ;; -------------------- ;;
 (defvar schoolpath "~/school/")
