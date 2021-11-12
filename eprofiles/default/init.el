@@ -291,14 +291,7 @@
   :custom
   (org-ellipsis " [+]")
   (org-directory "~/repos/org-agenda/School Schedules/")
-
-  (org-capture-templates
-   '(("t" "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")))
   (org-agenda-files (list org-directory))
-  (org-structure-template-alist
-   '(("s" . "src"      ) ("e"  . "example") ("q" . "quote"  ) ("v" . "verse" )
-     ("V"  . "verbatim") ("c" . "center"  ) ("C" . "comment") ("l"  . "latex")
-     ("a" . "ascii"    ) ("i" . "index"   ) ("el" . "src emacs-lisp")))
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
@@ -308,6 +301,21 @@
   (setq org-refile-targets '((mpc/org-agenda-list :level . 2)))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
+
+(setq org-capture-templates
+      '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
+	("h"  "Homework flow")
+	("m"  "Mail Workflow")
+	("mf" "Follow Up" entry (file+olp "~/Mail/Mail.org" "Follow Up")
+	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\n%i" :immediate-finish t)
+	("mr" "Read Later" entry (file+olp "~/Mail/Mail.org" "Read Later")
+	 "* TODO Read %:subject, Received %:date\n%a\n%i" :immediate-finish t)
+	))
+
+(setq org-structure-template-alist
+      '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
+	("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
+	("a" . "ascii"   ) ("i" . "index"  ) ("el" . "src emacs-lisp")))
 
 (use-package doc-view
   :ensure nil
@@ -373,12 +381,6 @@
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
 
-(setq message-signature
-"Michael Cardiff
-Senior
-IIT PHYS '22")
-
-;; (require 'org-mu4e)
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
@@ -394,33 +396,26 @@ IIT PHYS '22")
   (mu4e-update-interval (* 10 60))
   (mu4e-get-mail-command "mbsync -a")
   (mu4e-maildir "~/Mail")
-  
   (mu4e-drafts-folder "/[Gmail]/Drafts")
   (mu4e-sent-folder   "/[Gmail]/Sent Mail")
   (mu4e-refile-folder "/[Gmail]/All Mail")
   (mu4e-trash-folder  "/[Gmail]/Trash")
 
   ;; smtp settings
+  (message-send-mail-function 'smtpmail-send-it)
   (user-mail-address "mcardiff@hawk.iit.edu")
   (smtpmail-default-smtp-server "smtp.gmail.com")
   (smtpmail-local-domain "gmail.com")
   (smtpmail-smtp-server "smtp.gmail.com")
   (smtpmail-smtp-service 587)
-
-  (message-send-mail-function 'smtpmail-send-it)
   
   (mu4e-maildir-shortcuts
    '(("/Inbox"             . ?i)
      ("/[Gmail]/Sent Mail" . ?s)
      ("/[Gmail]/Trash"     . ?t)
      ("/[Gmail]/Drafts"    . ?d)
-     ("/[Gmail]/All Mail"  . ?a)
-     ("/[Gmail]/Teacher Emails/Sullivan"   . ?z)
-     ("/[Gmail]/Teacher Emails/Dr. Z"      . ?x)
-     ("/[Gmail]/Teacher Emails/Littlejohn" . ?c)
-     ("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
-     ("/[Gmail]/Teacher Emails/Hood"       . ?b)
-     ("/[Gmail]/Teacher Emails/IPRO"       . ?n))))
+     ("/[Gmail]/All Mail"  . ?a)))
+  :config (require 'org-mu4e))
 
 ;; now smtp stuff
 (defvar my-mu4e-account-alist
