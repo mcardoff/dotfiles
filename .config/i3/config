@@ -10,21 +10,14 @@
 ################################################################
 ################################################################
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
+# Font
 font xft:Source Code Pro
 
-# Use pactl to adjust volume in PulseAudio
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   -10% && $refresh_i3status
-bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@   toggle && $refresh_i3status
-bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+#
+# LOCAL VARS
+#
 
-floating_modifier $mod
-exec --no-startup-id nm-applet
-
-# WS Names
+## ws names
 set $ws1 "1:trm"
 set $ws2 "2:edt"
 set $ws3 "3:www"
@@ -36,30 +29,39 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws0 "0"
 
-#
-# LOCAL VARS
-#
-set $alt Mod1
-set $browser firefox
-set $dmen dmenu_run
-set $file pcmanfm
+## defined by i3
+set $refresh_i3status killall -SIGUSR1 i3status
 set $mod Mod4
+set $alt Mod1
+
+## apps
+set $browser firefox
+set $file pcmanfm
 set $term ~/.cargo/bin/alacritty
 
 ## colors
-set $white #ffffff
+set $white     #ffffff
 set $white-alt #888888
-set $black #000000
-set $bg #181818
-set $bg-alt #282828
+set $black     #000000
+set $bg        #181818
+set $bg-alt    #282828
 
 ### my theme colors
-set $princ #cc8c3c
-set $secon #ffdd33
-set $focus #8b3622
+set $princ  #cc8c3c
+set $secon  #ffdd33
+set $focus  #8b3622
 set $active #7b4032
-set $alert #f43841
-set $cgood #3774b5
+set $alert  #f43841
+set $cgood  #3774b5
+
+#
+# STARTUP
+#
+
+exec --no-startup-id nm-applet
+exec_always (~/.bin/openers/ranger.sh)
+exec_always (~/.bin/i3init.sh)
+exec_always (~/.bin/openers/scratchpad_check.sh)
 
 #
 # KEYBINDS
@@ -68,24 +70,24 @@ set $cgood #3774b5
 # change workspace
 ## standard workspace movement
 bindsym $mod+0 workspace $ws10
-bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+1 workspace $ws1
-bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+2 workspace $ws2
-bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+3 workspace $ws3
-bindsym $mod+Shift+3 move container to workspace $ws3
 bindsym $mod+4 workspace $ws4
-bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+5 workspace $ws5
-bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+6 workspace $ws6
-bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+7 workspace $ws7
-bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+8 workspace $ws8
-bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+9 workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 ## visual workspace movement
 bindsym $alt+Tab       workspace next
@@ -111,6 +113,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Right focus right
 bindsym $mod+Shift+Right move right
 ## misc
+floating_modifier $mod
 bindsym $mod+space focus mode_toggle
 bindsym $mod+d focus child
 bindsym $mod+Shift+d focus parent
@@ -120,17 +123,12 @@ bindsym $mod+Shift+Tab focus left
 # execs
 bindsym $mod+o exec emacs
 bindsym $mod+Shift+o exec ~/.bin/emacs.sh
-bindsym $mod+p exec $dmen
-bindsym $mod+f exec ($term -t "Ranger" -e "ranger")
+bindsym $mod+p exec dmenu_run
 bindsym $mod+Shift+f exec pcmanfm
 bindsym $mod+Return exec $term
-bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
 bindsym $mod+z exec (~/.bin/i3lock.sh)
 bindsym $mod+b exec $browser
-# bindcode $mod+60 exec (feh ~/Pictures/schedule.png --title Scratchpad)
-bindcode $mod+107 exec (scrot -s)
-# bindsym $mod+n exec (polybar main)
-# bindsym $mod+Shift+n exec (killall polybar)
+bindcode $mod+107 exec (scrot -s) # printscreen
 
 # change window
 bindsym $mod+t border normal
@@ -156,16 +154,28 @@ bindsym  $mod+m  move window down
 bindcode $mod+59 move window up 
 bindcode $mod+60 move window right
 
+# audio
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@   -10% && $refresh_i3status
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@   toggle && $refresh_i3status
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
 # scratchpad
-bindsym F1 [class="Alacritty" title="sp"]         scratchpad show
-bindsym F2 [class="Emacs"     title="Scratchpad"] scratchpad show
-bindsym F3 [class="Alacritty" title="Ranger"]     scratchpad show
-bindsym F4 [class="feh"       title="Scratchpad"] scratchpad show
+## function keys
+bindsym F1 [class="Alacritty" title="dropterm"] scratchpad show
+bindsym F2 [class="Emacs"     title="notepad"]  scratchpad show
+bindsym F3 [class="Alacritty" title="Ranger"]   scratchpad show
+bindsym F4 [class="feh"       title="Schedule"] scratchpad show
+## Natural bindings
+bindsym $mod+Shift+s [class="feh"       title="Schedule"]      scratchpad show
+bindsym $mod+Shift+Return [class="Alacritty" title="dropterm"] scratchpad show
+bindsym $mod+f [class="Alacritty" title="Ranger"]              scratchpad show
 
 # restart/reloading
 bindsym $mod+Shift+q reload
 bindsym $mod+Shift+w restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
 
 # unbound
 
@@ -263,11 +273,15 @@ for_window [class="Nitrogen"]          floating enable
 for_window [class="Matplotlib"]        floating enable
 for_window [title="Bluetooth"]         floating enable
 
-for_window [title="Ranger"] resize set 1400 px 800 px
+for_window [class="Emacs"] border none
+
 for_window [title="Ranger"] move [absolute] position center
+for_window [title="Ranger"] resize set 1400 px 800 px
 
 for_window [title="Ranger"]               move scratchpad
-for_window [title="Scratchpad"]           move scratchpad
+for_window [title="notepad"]              move scratchpad
+for_window [title="dropterm"]             move scratchpad
+for_window [title="Schedule"]             move scratchpad
 for_window [class="Lxappearance"]         move to scratchpad
 for_window [class="Firefox"]              move to workspace $ws3
 for_window [class="Cinnamon-settings.py"] move to workspace $ws4
@@ -300,8 +314,7 @@ bar {
 }
 
 # Execute startup stuff
-exec ($term -t "sp")
-exec ($term -t "Ranger" -e "ranger")
-exec (emacs --eval (server-start) -T "Scratchpad")
-exec_always (~/.bin/ranger.sh)
-exec_always (~/.bin/i3init.sh)
+# exec_always ($term -t "Scratchpad")
+# exec ($term -t "Ranger" -e "ranger")
+# 
+# exec_always (emacsclient -c -a="" -T "scratchpad:emacs" )
