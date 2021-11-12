@@ -65,156 +65,134 @@ set $cgood #3774b5
 # KEYBINDS
 #
 
-#bindsym $mod+a 
-#bindsym $mod+Shift+a
-
-bindsym $mod+b exec $browser
-#bindsym $mod+Shift+b
-
-bindsym $mod+c split h
-bindsym $mod+Shift+c kill
-
-bindsym $mod+d       focus child
-bindsym $mod+Shift+d focus parent
-
-bindsym $mod+e layout toggle split
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-bindsym $mod+f exec ($term -t "Ranger" -e "ranger")
-# [class="Alacritty" title="Ranger"]     scratchpad show
-bindsym $mod+Shift+f exec pcmanfm
-
-#bindsym $mod+g
-#bindsym $mod+Shift+g
-
-bindsym $mod+h focus left
-bindsym $mod+Shift+h move left
-
-#bindsym $mod+i
-#bindsym $mod+Shift+i
-
-bindsym $mod+j focus down
-bindsym $mod+Shift+j move down
-
-bindsym $mod+k focus up
-bindsym $mod+Shift+k move up
-
-bindsym $mod+l focus right
-bindsym $mod+Shift+l move right
-
-bindsym $mod+m mode "move" focus floating
-#bindsym $mod+Shift+m
-
-bindsym $mod+n exec (polybar main)
-bindsym $mod+Shift+n exec (killall polybar)
-
-bindsym $mod+o exec emacs
-bindsym $mod+Shift+o exec ~/.bin/emacs.sh
-
-bindsym $mod+p exec $dmen
-#bindsym $mod+Shift+p
-
-#bindsym $mod+q
-bindsym $mod+Shift+q reload
-
-bindsym $mod+r mode "resize"
-bindsym $mod+Shift+r restart
-
-bindsym $mod+s layout stacking
-#bindsym $mod+Shift+s
-
-bindsym $mod+t border normal
-bindsym $mod+Shift+t border none
-
-#bindsym $mod+u 
-#bindsym $mod+Shift+u
-
-bindsym $mod+v split v
-#bindsym $mod+Shift+v
-
-bindsym $mod+w layout tabbed
-#bindsym $mod+Shift+w
-
-bindsym $mod+x fullscreen toggle
-#bindsym $mod+Shift+x
-
-#bindsym $mod+y
-#bindsym $mod+Shift+y
-
-bindsym $mod+z exec (~/.bin/i3lock.sh)
-# bindsym $mod+Shift+z
-
-bindsym $mod+0                         workspace $ws10
+# change workspace
+## standard workspace movement
+bindsym $mod+0 workspace $ws10
 bindsym $mod+Shift+0 move container to workspace $ws10
-
-bindsym $mod+1                         workspace $ws1
+bindsym $mod+1 workspace $ws1
 bindsym $mod+Shift+1 move container to workspace $ws1
-
-bindsym $mod+2                         workspace $ws2
+bindsym $mod+2 workspace $ws2
 bindsym $mod+Shift+2 move container to workspace $ws2
-
-bindsym $mod+3                         workspace $ws3
+bindsym $mod+3 workspace $ws3
 bindsym $mod+Shift+3 move container to workspace $ws3
-
-bindsym $mod+4                         workspace $ws4
+bindsym $mod+4 workspace $ws4
 bindsym $mod+Shift+4 move container to workspace $ws4
-
-bindsym $mod+5                         workspace $ws5
+bindsym $mod+5 workspace $ws5
 bindsym $mod+Shift+5 move container to workspace $ws5
-
-bindsym $mod+6                         workspace $ws6
+bindsym $mod+6 workspace $ws6
 bindsym $mod+Shift+6 move container to workspace $ws6
-
-bindsym $mod+7                         workspace $ws7
+bindsym $mod+7 workspace $ws7
 bindsym $mod+Shift+7 move container to workspace $ws7
-
-bindsym $mod+8                         workspace $ws8
+bindsym $mod+8 workspace $ws8
 bindsym $mod+Shift+8 move container to workspace $ws8
-
-bindsym $mod+9                         workspace $ws9
+bindsym $mod+9 workspace $ws9
 bindsym $mod+Shift+9 move container to workspace $ws9
-
-bindsym $mod+Left focus left
-bindsym $mod+Shift+Left move left
-
-bindsym $mod+Down focus down
-bindsym $mod+Shift+Down move down
-
-bindsym $mod+Up focus up
-bindsym $mod+Shift+Up move up
-
-bindsym $mod+Right focus right
-bindsym $mod+Shift+Right move right
-
-bindsym $mod+space focus mode_toggle
-bindsym $mod+Shift+space floating toggle
-
-bindsym $mod+Return       exec $term
-bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
-
-bindcode $mod+60 exec (feh ~/Pictures/schedule.png --title Scratchpad)
-bindcode $mod+107 exec (scrot -s)
-
-bindsym $mod+Tab       focus right
-bindsym $mod+Shift+Tab focus left
+## visual workspace movement
 bindsym $alt+Tab       workspace next
 bindsym $alt+Shift+Tab workspace prev
 
+# change focus/move windows
+## vim keys
+bindsym $mod+h focus left
+bindsym $mod+Shift+h move left
+bindsym $mod+j focus down
+bindsym $mod+Shift+j move down
+bindsym $mod+k focus up
+bindsym $mod+Shift+k move up
+bindsym $mod+l focus right
+bindsym $mod+Shift+l move right
+## arrow keys
+bindsym $mod+Left focus left
+bindsym $mod+Shift+Left move left
+bindsym $mod+Down focus down
+bindsym $mod+Shift+Down move down
+bindsym $mod+Up focus up
+bindsym $mod+Shift+Up move up
+bindsym $mod+Right focus right
+bindsym $mod+Shift+Right move right
+## misc
+bindsym $mod+space focus mode_toggle
+bindsym $mod+d focus child
+bindsym $mod+Shift+d focus parent
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
+
+# execs
+bindsym $mod+o exec emacs
+bindsym $mod+Shift+o exec ~/.bin/emacs.sh
+bindsym $mod+p exec $dmen
+bindsym $mod+f exec ($term -t "Ranger" -e "ranger")
+bindsym $mod+Shift+f exec pcmanfm
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
+bindsym $mod+z exec (~/.bin/i3lock.sh)
+bindsym $mod+b exec $browser
+bindcode $mod+60 exec (feh ~/Pictures/schedule.png --title Scratchpad)
+bindcode $mod+107 exec (scrot -s)
+# bindsym $mod+n exec (polybar main)
+# bindsym $mod+Shift+n exec (killall polybar)
+
+# change window
+bindsym $mod+t border normal
+bindsym $mod+Shift+t border none
+bindsym $mod+Shift+c kill
+bindsym $mod+Shift+space floating toggle
+
+# change mode
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+r mode "move" focus floating 
+
+# layout
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+x fullscreen toggle
+bindsym $mod+c split h
+bindsym $mod+v split v
+
+# scratchpad
 bindsym F1 [class="Alacritty" title="sp"]         scratchpad show
 bindsym F2 [class="Emacs"     title="Scratchpad"] scratchpad show
 bindsym F3 [class="Alacritty" title="Ranger"]     scratchpad show
 bindsym F4 [class="feh"       title="Scratchpad"] scratchpad show
-#bindsym F5 
-#bindsym F6 
-#bindsym F7 
-#bindsym F8 
-#bindsym F9 
+
+# restart/reloading
+bindsym $mod+Shift+q reload
+bindsym $mod+Shift+w restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# unbound
+
+#bindsym       $mod+q
+#bindsym $mod+Shift+y
+#bindsym       $mod+y
+#bindsym       $mod+u 
+#bindsym $mod+Shift+u
+#bindsym       $mod+i
+#bindsym $mod+Shift+i
+#bindsym $mod+Shift+p
+#bindsym $mod+Shift+a
+#bindsym       $mod+a 
+#bindsym $mod+Shift+s
+#bindsym       $mod+g
+#bindsym $mod+Shift+g
+#bindsym $mod+Shift+b
+#bindsym $mod+Shift+z
+#bindsym $mod+Shift+x
+#bindsym $mod+Shift+v
+#bindsym       $mod+m 
+#bindsym $mod+Shift+m
+#bindsym F5
+#bindsym F6
+#bindsym F7
+#bindsym F8
+#bindsym F9
 #bindsym F10
 #bindsym F11
 #bindsym F12
 
 #
-# DIFFERENT MODES
+# MODE DEFINITIONS
 #
 mode "resize" {
     # These bindings trigger as soon as you enter the resize mode
