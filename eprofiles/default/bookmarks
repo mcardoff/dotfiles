@@ -2,19 +2,34 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Cardiff_Report_1.tex"
- (filename . "~/school/PHYS427/Report 1/Cardiff_Report_1.tex")
- (front-context-string . "  \n\\end{abstract")
- (rear-context-string . "ys. There is an ")
- (position . 1438))
-("org-capture-last-stored"
- (filename . "~/Roam/20211101104258-427_lab_3_notes.org")
- (front-context-string)
- (rear-context-string . " 427 Lab 3 Notes")
- (position . 92))
-("~/.emacs.d/early-init.el"
- (filename . "~/dotfiles/regmacs/init.el")
- (front-context-string . "\n )\n\n;; Which-ke")
+(("alacritty config "
+ (filename . "~/dotfiles/.config/alacritty/alacritty.yml")
+ (front-context-string . "# Configuration ")
+ (rear-context-string)
+ (position . 1))
+("i3 config"
+ (filename . "~/dotfiles/.config/i3/config")
+ (front-context-string . "################")
+ (rear-context-string)
+ (position . 1))
+("SP22Plan.org"
+ (filename . "~/school/SP22Plan.org")
+ (front-context-string . "Plan for SP22\n* ")
+ (rear-context-string)
+ (position . 1))
+("school"
+ (filename . "~/school/")
+ (front-context-string . "CS485\n  drwxrwxr")
+ (rear-context-string . "0K Nov  5 01:41 ")
+ (position . 106))
+("init.el"
+ (filename . "~/dotfiles/eprofiles/default/init.el")
+ (front-context-string . ";; -*- lexical-b")
+ (rear-context-string)
+ (position . 1))
+("early-init.el"
+ (filename . "~/.emacs.d/early-init.el")
+ (front-context-string . ";;; -*- lexical-binding: t; -*-")
  (rear-context-string . " :prefix \"C-z\"\n ")
  (position . 4845))
 )
