@@ -161,6 +161,12 @@
   (TeX-command "LaTeX" 'TeX-master-file)
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
 
+(defun mpc/org-agenda-list ()
+  (delq nil
+	(mapcar (lambda (buffer)
+		  (buffer-file-name buffer))
+		(org-buffer-list 'files t))))
+
 (defun dotemacs ()
   "Opens init.el"
   (interactive)
@@ -171,30 +177,32 @@
   (interactive)
   (find-file (concat user-emacs-directory "EmacsInit.org")))
 
-;; (load-file (concat user-emacs-directory "configfuns.el"))
 
 ;; Maybe using general?
 (use-package general
   ;; :defer 1
   :config
+  ;; (load-file (concat user-emacs-directory "configfuns.el"))
   (global-unset-key (kbd "C-z"))
   (general-define-key
    :prefix "C-z"
+   "C-c" 'org-capture
    "a" 'org-agenda
    "d" 'org-roam-dailies-capture-today
    "i" 'dotemacs
    "l" 'org-agenda-list
    "m" 'counsel-imenu
-   "o" 'initorg)
+   "o" 'initorg
+   "u" 'mu4e)
   
-  (general-define-key
-   :prefix "C-z c"
-   "a" 'alaconfig
-   "e" 'dotemacs
-   "i" 'i3config
-   "k" 'kakconfig
-   "p" 'pbconfig
-   "r" 'rngconfig)
+  ;; (general-define-key
+  ;;  :prefix "C-z c"
+  ;;  "a" 'alaconfig
+  ;;  "e" 'dotemacs
+  ;;  "i" 'i3config
+  ;;  "k" 'kakconfig
+  ;;  "p" 'pbconfig
+  ;;  "r" 'rngconfig)
   
   (general-define-key
    "<escape>" 'keyboard-escape-quit
@@ -292,26 +300,23 @@
   :custom
   (org-ellipsis " [+]")
   (org-directory "~/repos/org-agenda/School Schedules/")
-  (org-agenda-files (concat user-emacs-directory "org_agenda.org"))
+
+  (org-capture-templates
+   '(("t" "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")))
+  (org-agenda-files (list org-directory))
   (org-structure-template-alist
-   '(("s"  . "src")
-     ("e"  . "example")
-     ("q"  . "quote")
-     ("v"  . "verse")
-     ("V"  . "verbatim")
-     ("c"  . "center")
-     ("C"  . "comment")
-     ("l"  . "latex")
-     ("a"  . "ascii")
-     ("i"  . "index")
-     ("el" . "src emacs-lisp")))
+   '(("s" . "src"      ) ("e"  . "example") ("q" . "quote"  ) ("v" . "verse" )
+     ("V"  . "verbatim") ("c" . "center"  ) ("C" . "comment") ("l"  . "latex")
+     ("a" . "ascii"    ) ("i" . "index"   ) ("el" . "src emacs-lisp")))
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
   (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
   :config
   (setq org-tempo-keywords-alist nil)
+  (setq org-refile-targets '((mpc/org-agenda-list :level . 2)))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+
 
 (use-package doc-view
   :ensure nil
