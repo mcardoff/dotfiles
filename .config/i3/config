@@ -127,7 +127,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+Return exec ($term -t "Scratchpad")
 bindsym $mod+z exec (~/.bin/i3lock.sh)
 bindsym $mod+b exec $browser
-bindcode $mod+60 exec (feh ~/Pictures/schedule.png --title Scratchpad)
+# bindcode $mod+60 exec (feh ~/Pictures/schedule.png --title Scratchpad)
 bindcode $mod+107 exec (scrot -s)
 # bindsym $mod+n exec (polybar main)
 # bindsym $mod+Shift+n exec (killall polybar)
@@ -149,6 +149,12 @@ bindsym $mod+s layout stacking
 bindsym $mod+x fullscreen toggle
 bindsym $mod+c split h
 bindsym $mod+v split v
+
+# moving floating windows
+bindsym  $mod+n  move window left 
+bindsym  $mod+m  move window down   
+bindcode $mod+59 move window up 
+bindcode $mod+60 move window right
 
 # scratchpad
 bindsym F1 [class="Alacritty" title="sp"]         scratchpad show
@@ -211,7 +217,7 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
-    bindsym $mod+m mode "move"
+    # bindsym $mod+m mode "move"
 }
 
 mode "move" {
