@@ -195,15 +195,6 @@
    "o" 'initorg
    "u" 'mu4e)
   
-  ;; (general-define-key
-  ;;  :prefix "C-z c"
-  ;;  "a" 'alaconfig
-  ;;  "e" 'dotemacs
-  ;;  "i" 'i3config
-  ;;  "k" 'kakconfig
-  ;;  "p" 'pbconfig
-  ;;  "r" 'rngconfig)
-  
   (general-define-key
    "<escape>" 'keyboard-escape-quit
    "M-1" 'shell-command
