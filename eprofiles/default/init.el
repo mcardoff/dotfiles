@@ -382,11 +382,20 @@
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
 
+(setq message-signature
+"Michael Cardiff
+Senior
+IIT PHYS '22")
+
+;; (require 'org-mu4e)
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
-  :defer 10 ; Wait until 1 seconds after startup
+  :defer 1 ; Wait until 1 seconds after startup
   :custom
+  ;; Mail signature
+  (mu4e-compose-signature-auto-include t)
+  (mu4e-compose-signature "Michael Cardiff\nSenior\nIIT PHYS '22")
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
   
