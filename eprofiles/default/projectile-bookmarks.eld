@@ -1,1 +1,0 @@
-("~/dotfiles/" "~/Roam/" "~/repos/org-agenda/" "~/school/" "~/Projects/Code/Python/Sorting-Visualizer/" "~/Projects/Code/Python/Pathfinding-Visualization/" "~/repos/emacs-27/" "~/repos/ArchTitus/" "~/Projects/Code/Haskell/Graphics/")
