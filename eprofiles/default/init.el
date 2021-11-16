@@ -290,7 +290,7 @@
   :bind (("<C-M-return>" . org-insert-todo-subheading))
   :custom
   (org-ellipsis " [+]")
-  (org-directory "~/repos/org-agenda/School Schedules/")
+  (org-directory "~/repos/org-agenda/Agenda Files/")
   (org-agenda-files (list org-directory))
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
@@ -306,11 +306,12 @@
       '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
 	("h"  "Homework flow")
 	("m"  "Mail Workflow")
-	("mf" "Follow Up" entry (file+olp "~/Mail/Mail.org" "Follow Up")
-	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\n%i" :immediate-finish t)
-	("mr" "Read Later" entry (file+olp "~/Mail/Mail.org" "Read Later")
-	 "* TODO Read %:subject, Received %:date\n%a\n%i" :immediate-finish t)
-	))
+	("mf" "Follow Up" entry
+	 (file+olp "~/repos/org-agenda/Agenda Files/Mail.org" "Follow Up")
+	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\")) \n%i":immediate-finish t)
+	("mr" "Read Later" entry
+	 (file+olp "~/repos/org-agenda/Agenda Files/Mail.org" "Read Later")
+	  "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t)))
 
 (setq org-structure-template-alist
       '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
@@ -393,7 +394,7 @@
   (mu4e-change-filenames-when-moving t)
   
   ;; Refresh mail using isync every 10 minutes
-  (mu4e-update-interval (* 10 60))
+  (mu4e-update-interval (* 1 10))
   (mu4e-get-mail-command "mbsync -a")
   (mu4e-maildir "~/Mail")
   (mu4e-drafts-folder "/[Gmail]/Drafts")
@@ -402,6 +403,7 @@
   (mu4e-trash-folder  "/[Gmail]/Trash")
 
   ;; smtp settings
+  (smtpmail-stream-type 'starttls)
   (message-send-mail-function 'smtpmail-send-it)
   (user-mail-address "mcardiff@hawk.iit.edu")
   (smtpmail-default-smtp-server "smtp.gmail.com")
@@ -446,6 +448,7 @@
     (if account-vars
     (mapc #'(lambda (var) (set (car var) (cadr var))) account-vars)
     (error "No email account found"))))
+
 (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
 

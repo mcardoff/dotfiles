@@ -3,10 +3,10 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "~/Roam/20211112095750-427_lab_6_notes.org")
- (front-context-string . "* Procedure\n* No")
- (rear-context-string . "427 Lab 6 Notes\n")
- (position . 93))
+ (filename . "~/repos/org-agenda/Agenda Files/Mail.org")
+ (front-context-string . "** TODO Follow U")
+ (rear-context-string . "rad school apps\n")
+ (position . 694))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
