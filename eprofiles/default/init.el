@@ -144,7 +144,7 @@
   ;; (hl-line-mode 1)
   (visual-line-mode 1))
 
-(defun mpc/doc-view-setup ()
+(defun mpc/no-lines-setup ()
   (display-line-numbers-mode 0))
 
 (defun mpc/TeX-view-once (doc)
@@ -321,7 +321,7 @@
 (use-package doc-view
   :ensure nil
   :defer 2
-  :hook (doc-view-mode . mpc/doc-view-setup))
+  :hook (doc-view-mode . mpc/no-lines-setup))
 
 (use-package magit
   :defer 5)
@@ -382,19 +382,26 @@
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
 
+(setq smtpmail-default-smtp-server "smtp.gmail.com")
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
   :defer 1 ; Wait until 1 seconds after startup
+  :hook
+  (mu4e-view-mode . mpc/no-lines-setup)
+  (mu4e-headers-mode . mpc/no-lines-setup)
+  (mu4e-main-mode . mpc/no-lines-setup)
+  (mu4e-compose-mode . mpc/no-lines-setup)
   :custom
   ;; Mail signature
   (mu4e-compose-signature-auto-include t)
   (mu4e-compose-signature "Michael Cardiff\nSenior\nIIT PHYS '22")
+
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
   
   ;; Refresh mail using isync every 10 minutes
-  (mu4e-update-interval (* 1 10))
+  (mu4e-update-interval (* 10 60))
   (mu4e-get-mail-command "mbsync -a")
   (mu4e-maildir "~/Mail")
   (mu4e-drafts-folder "/[Gmail]/Drafts")
@@ -402,54 +409,66 @@
   (mu4e-refile-folder "/[Gmail]/All Mail")
   (mu4e-trash-folder  "/[Gmail]/Trash")
 
-  ;; smtp settings
-  (smtpmail-stream-type 'starttls)
-  (message-send-mail-function 'smtpmail-send-it)
-  (user-mail-address "mcardiff@hawk.iit.edu")
-  (smtpmail-default-smtp-server "smtp.gmail.com")
-  (smtpmail-local-domain "gmail.com")
-  (smtpmail-smtp-server "smtp.gmail.com")
-  (smtpmail-smtp-service 587)
-  
   (mu4e-maildir-shortcuts
    '(("/Inbox"             . ?i)
      ("/[Gmail]/Sent Mail" . ?s)
      ("/[Gmail]/Trash"     . ?t)
      ("/[Gmail]/Drafts"    . ?d)
      ("/[Gmail]/All Mail"  . ?a)))
+
+  ;; smtp settings
+  (message-send-mail-function 'smtpmail-send-it)
+  (smtpmail-stream-type 'starttls)
+  (user-full-name "Michael Cardiff")
+  (user-mail-address "mcardiff@hawk.iit.edu")
+  (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
+  (smtpmail-local-domain "gmail.com")
+  (smtpmail-default-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-service 587)
+
+  ;; password
+  (auth-source-pass-filename "~/.password-store/mbsync/")
+  
   :config (require 'org-mu4e))
 
+;; password stuff
+(use-package auth-source-pass
+  :ensure nil
+  :init (auth-source-pass-enable))
+
+(use-package pass)
+
 ;; now smtp stuff
-(defvar my-mu4e-account-alist
-  '(("Gmail"
-     (mu4e-sent-folder "/[Gmail]/Sent Mail")
-     (user-mail-address "mcardiff@hawk.iit.edu")
-     (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
-     (smtpmail-local-domain "gmail.com")
-     (smtpmail-default-smtp-server "smtp.gmail.com")
-     (smtpmail-smtp-server "smtp.gmail.com")
-     (smtpmail-smtp-service 587))))
+;; (defvar my-mu4e-account-alist
+;;   '(("Gmail"
+;;      (mu4e-sent-folder "/[Gmail]/Sent Mail")
+;;      (user-mail-address "mcardiff@hawk.iit.edu")
+;;      (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
+;;      (smtpmail-local-domain "gmail.com")
+;;      (smtpmail-default-smtp-server "smtp.gmail.com")
+;;      (smtpmail-smtp-server "smtp.gmail.com")
+;;      (smtpmail-smtp-service 587))))
 
 
-(defun my-mu4e-set-account ()
-  "Set the account for composing a message.
-   This function is taken from: 
-     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
-  (let* ((account
-    (if mu4e-compose-parent-message
-    (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-    (string-match "/\\(.*?\\)/" maildir)
-    (match-string 1 maildir))
-    (completing-read (format "Compose with account: (%s) "
-    (mapconcat #'(lambda (var) (car var)) my-mu4e-account-alist "/"))
-    (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-    nil t nil nil (caar my-mu4e-account-alist))))
-    (account-vars (cdr (assoc account my-mu4e-account-alist))))
-    (if account-vars
-    (mapc #'(lambda (var) (set (car var) (cadr var))) account-vars)
-    (error "No email account found"))))
+;; (defun my-mu4e-set-account ()
+;;   "Set the account for composing a message.
+;;    This function is taken from: 
+;;     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
+;;   (let* ((account
+;;     (if mu4e-compose-parent-message
+;;     (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+;;     (string-match "/\\(.*?\\)/" maildir)
+;;     (match-string 1 maildir))
+;;     (completing-read (format "Compose with account: (%s) "
+;;     (mapconcat #'(lambda (var) (car var)) my-mu4e-account-alist "/"))
+;;     (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+;;     nil t nil nil (caar my-mu4e-account-alist))))
+;;     (account-vars (cdr (assoc account my-mu4e-account-alist))))
+;;     (if account-vars
+;;     (mapc #'(lambda (var) (set (car var) (cadr var))) account-vars)
+;;     (error "No email account found"))))
 
-(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
 
 ;; -------------------- ;;
