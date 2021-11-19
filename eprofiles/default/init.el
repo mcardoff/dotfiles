@@ -275,7 +275,7 @@
   (setq org-roam-v2-ack t)
   :custom
   (org-roam-graph-executable "dot")
-  (org-roam-directory "~/Roam")
+  (org-roam-directory "~/Org/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
   :bind (("C-z n l" . org-roam-buffer-toggle)
@@ -290,7 +290,7 @@
   :bind (("<C-M-return>" . org-insert-todo-subheading))
   :custom
   (org-ellipsis " [+]")
-  (org-directory "~/repos/org-agenda/Agenda Files/")
+  (org-directory "~/Org/Agenda/Agenda Files/")
   (org-agenda-files (list org-directory))
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
@@ -307,10 +307,10 @@
 	("h"  "Homework flow")
 	("m"  "Mail Workflow")
 	("mf" "Follow Up" entry
-	 (file+olp "~/repos/org-agenda/Agenda Files/Mail.org" "Follow Up")
+	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")
 	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\")) \n%i":immediate-finish t)
 	("mr" "Read Later" entry
-	 (file+olp "~/repos/org-agenda/Agenda Files/Mail.org" "Read Later")
+	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Read Later")
 	  "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t)))
 
 (setq org-structure-template-alist
@@ -338,7 +338,7 @@
   :bind-keymap ("C-z p" . projectile-command-map)
   ;; :init
   ;; (when (file-directory-p "~/Projects/Code")
-    ;; (setq projectile-project-search-path '("~/Projects/Code")))
+    ;; (setq projectile-project-search-path '("~/Coding/Projects/Code")))
   ;; (setq projectile-switch-project-action #'projectile-dired)
   )
 
@@ -379,6 +379,7 @@
   :defer 10
   :after dashboard
   :custom
+  (elfeed-db-directory "~/.config/elfeed")
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
 
