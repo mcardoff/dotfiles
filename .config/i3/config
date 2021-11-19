@@ -37,7 +37,7 @@ set $alt Mod1
 ## apps
 set $browser firefox
 set $file pcmanfm
-set $term ~/.cargo/bin/alacritty
+set $term "~/.local/share/cargo/bin/alacritty"
 
 ## colors
 set $white     #ffffff
@@ -69,7 +69,7 @@ exec_always (~/.bin/openers/scratchpad_check.sh)
 
 # change workspace
 ## standard workspace movement
-bindsym $mod+0 workspace $ws10
+bindsym $mod+0 workspace $ws0
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -79,7 +79,7 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+0 move container to workspace $ws0
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -224,10 +224,10 @@ mode "resize" {
     bindsym Right resize grow width 10 px or 10 ppt
 
     # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
-    # bindsym $mod+m mode "move"
+    bindsym Return       mode "default"
+    bindsym Escape       mode "default"
+    bindsym $mod+r       mode "default"
+    bindsym $mod+Shift+r mode "move"
 }
 
 mode "move" {
@@ -245,7 +245,7 @@ mode "move" {
     # back     to     normal: Enter or Escape
       bindsym  Return mode "default"
       bindsym  Escape mode "default"
-      bindsym  $mod+m mode "default"
+      bindsym  $mod+Shift+r mode "default"
       bindsym  $mod+r mode "resize"
 }
 
@@ -275,16 +275,21 @@ for_window [title="Bluetooth"]         floating enable
 
 for_window [class="Emacs"] border none
 
-for_window [title="Ranger"] move [absolute] position center
-for_window [title="Ranger"] resize set 1400 px 800 px
+# Resize Scratchpads
+for_window [title="Ranger"]   resize set 1400 px 800 px
+
+# Center them
+for_window [title="Ranger"]   move absolute position center
+for_window [title="notepad"]  move absolute position center
+for_window [title="dropterm"] move absolute position center
 
 for_window [title="Ranger"]               move scratchpad
 for_window [title="notepad"]              move scratchpad
 for_window [title="dropterm"]             move scratchpad
 for_window [title="Schedule"]             move scratchpad
-for_window [class="Lxappearance"]         move to scratchpad
+for_window [class="Lxappearance"]         move scratchpad
 for_window [class="Firefox"]              move to workspace $ws3
-for_window [class="Cinnamon-settings.py"] move to workspace $ws4
+for_window [class="Cinnamon-settings.py"] move to workspace $ws5
 for_window [class="discord"]              move to workspace $ws6
 
 # polybar
