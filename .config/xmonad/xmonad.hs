@@ -84,9 +84,8 @@ xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 -- STARTUP
 --
 startHook :: X ()
-startHook = spawn "nm-applet" >> mempty
-            -- spawn "~/.bin/openers/ranger.sh" >>
-            -- spawn "~/.bin/i3init.sh" >>
+startHook = spawn "nm-applet" >>
+            spawn "~/.bin/i3init.sh"
 
 --
 -- KEYBINDS
@@ -244,34 +243,33 @@ manHook = composeAll
           , resource =? "desktop_window" --> doIgnore
           , resource =? "kdesktop" --> doIgnore
           , className =? "Test Window" --> doFloat
-          , appName =? term  --> doShift (myWorkspaces !! 0) -- Terminal in 1
           , appName =? browser --> doShift (myWorkspaces !! 2) -- browser in 3
-          , appName =? fileman  --> doShift (myWorkspaces !! 3) -- File Man. in 4
-          , appName =? "vlc"   --> doShift (myWorkspaces !! 4) -- Video in 5
-          , appName =? "discord" --> doShift (myWorkspaces !! 5) -- Discord in 6
-          , appName =? "lxappearance" --> doShift (myWorkspaces !! 8) <+> doFloat  -- lxappearance in 9
+          , appName =? fileman  --> doShift (myWorkspaces !! 3) -- file man. in 4
+          , appName =? "vlc"   --> doShift (myWorkspaces !! 4) -- video in 5
+          , appName =? "discord" --> doShift (myWorkspaces !! 5) -- discord in 6
+          , appName =? "lxappearance" --> doShift "NSP" <+> doFloat  -- lxappearance in scratchpads
           ]
 
 eveHook :: Event -> X All
 eveHook = mempty
 
-lgHook x1 x2 = dynamicLogWithPP xmobarPP
-                  { ppOutput = \x -> hPutStrLn x1 x >> hPutStrLn x2 x
-                  , ppCurrent = wrap "<" ">"
-                  , ppVisible = xmobarColor "#FF9800" ""
-                  , ppHidden = wrap "*" "*"
-                  , ppHiddenNoWindows = (xmobarColor "#666666" "" .  wrap "[" "]")
-                  , ppTitle = xmobarColor "#ffffff" "" . shorten 25
+lgHook x1 = dynamicLogWithPP xmobarPP
+                  { ppOutput = hPutStrLn x1
+                  , ppCurrent = xmobarColor white focol . sp
+                  , ppVisible = xmobarColor white active
+                  , ppHidden = xmobarColor altwhite altbg . sp
+                  , ppHiddenNoWindows = \s -> "" --xmobarColor "#666666" "" . wrap " " " "
+                  , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
-                  , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
+                  , ppUrgent = xmobarColor white alert . sp
                   , ppExtras = [windowCount]
                   , ppOrder = id
                   }
+            where sp = wrap " " " "
 
 main :: IO ()
 main = do
-  xmproc0 <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
-  xmproc1 <- spawnPipe $ "xmobar -x 1 " ++ xmobarPath
+  xmproc <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
   xmonad $ docks def {
              -- Basics
                modMask = mod4Mask
@@ -285,14 +283,14 @@ main = do
 
              -- Bindings
              , keys = myKeys
-             -- , mouseBindings = myMouseBindings
+             , mouseBindings = myMouseBindings
 
              -- Hooks and Layouts
 
              , layoutHook = layouts
              , manageHook = manHook <+> namedScratchpadManageHook scratchpads
              , handleEventHook = eveHook
-             , logHook = lgHook xmproc0 xmproc1
+             , logHook = lgHook xmproc -- <+> nsHideOnFocusLoss scratchpads
              , startupHook = startHook
          }
 
