@@ -4,11 +4,12 @@
 # if it equals one, it is just the grep process, we do not need to run again
 
 # Ranger 
-[ -z "$(pgrep ranger)" ] && (~/.cargo/bin/alacritty -t Ranger -e ranger &)
+[ -z "$(pgrep ranger)" ] &&
+    (~/.local/share/cargo/bin/alacritty -t Ranger -e ranger &)
 
 # dropdown term
 [ $(ps -ef | grep dropterm | wc -l) -eq 1 ] &&
-    ~/.cargo/bin/alacritty -t dropterm &
+    ~/.local/share/cargo/bin/alacritty -t dropterm &
 
 # emacs running server
 [ $(ps -ef | grep notepad | wc -l) -eq 1 ] &&
