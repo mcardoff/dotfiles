@@ -1,5 +1,5 @@
 export ZDOTDIR="$HOME/.config/zsh"
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export HISTFILE="$XDG_CONFIG_HOME/zsh/.zsh_history"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="-"
 # export GNUPGHOME="$XDG_DATA_HOME/gnupg"
