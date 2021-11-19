@@ -189,23 +189,14 @@ scratchpads = [
 
 -- Layouts
 
-mySpacing :: Integer -> l a
-          -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
-
-tiled :: Tall a
 tiled = Tall 1 (3/100) (1/2)
-
 floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
-
 grid = renamed [Replace "Grid"]
-           $ limitWindows 12 $ mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
-
+       $ limitWindows 12 $ mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
 monocleBare = noBorders $ monocle
-
 monocle  = renamed [Replace "Monocle"]
            $ limitWindows 20 Full
-
 tabs = renamed [Replace "Tabs"]
        $ tabbed shrinkText $
          def { fontName            = myFont
@@ -216,7 +207,6 @@ tabs = renamed [Replace "Tabs"]
              , activeTextColor     = white
              , inactiveTextColor   = white
              }
-
 
 layouts = avoidStruts $ onWorkspace "float" simplestFloat $
           grid
@@ -258,7 +248,7 @@ lgHook x1 = dynamicLogWithPP xmobarPP
                   , ppCurrent = xmobarColor white focol . sp
                   , ppVisible = xmobarColor white active
                   , ppHidden = xmobarColor altwhite altbg . sp
-                  , ppHiddenNoWindows = \s -> "" --xmobarColor "#666666" "" . wrap " " " "
+                  , ppHiddenNoWindows = xmobarColor altwhite "" . wrap " " " "
                   , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
                   , ppUrgent = xmobarColor white alert . sp
