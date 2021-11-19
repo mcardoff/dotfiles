@@ -5,21 +5,41 @@ SINK=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head 
 NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 num=$(( NOW / 10 ))
 
+
+# case $num in
+#   0)  bar='----------' ;;
+#   1)  bar='/---------' ;;
+#   2)  bar='//--------' ;;
+#   3)  bar='///-------' ;;
+#   4)  bar='////------' ;;
+#   5)  bar='/////-----' ;;
+#   6)  bar='//////----' ;;
+#   7)  bar='///////---' ;;
+#   8)  bar='////////--' ;;
+#   9)  bar='/////////-' ;;
+#   10) bar='//////////' ;;
+#   *)  bar='----!!----' ;;
+# esac
+
 case $num in
-  0)  bar='----------' ;;
-  1)  bar='#---------' ;;
-  2)  bar='##--------' ;;
-  3)  bar='###-------' ;;
-  4)  bar='####------' ;;
-  5)  bar='#####-----' ;;
-  6)  bar='######----' ;;
-  7)  bar='#######---' ;;
-  8)  bar='########--' ;;
-  9)  bar='#########-' ;;
-  10) bar='##########' ;;
+  0)  bar='<icon=vol0.xpm/>' ;;
+  1)  bar='<icon=vol1.xpm/>' ;;
+  2)  bar='<icon=vol1.xpm/>' ;;
+  3)  bar='<icon=vol1.xpm/>' ;;
+  4)  bar='<icon=vol2.xpm/>' ;;
+  5)  bar='<icon=vol2.xpm/>' ;;
+  6)  bar='<icon=vol2.xpm/>' ;;
+  7)  bar='<icon=vol3.xpm/>' ;;
+  8)  bar='<icon=vol3.xpm/>' ;;
+  9)  bar='<icon=vol3.xpm/>' ;;
+  10) bar='<icon=vol.xpm/>' ;;
   *)  bar='----!!----' ;;
 esac
 
-echo $bar
+if [ "$(pactl list sinks | grep Mute | awk '{$1=$1};1')" = "Mute: yes" ] ; then
+    echo '<icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc>"
+else
+    echo $bar "$NOW%"
+fi
 
 exit 0

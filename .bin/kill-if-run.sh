@@ -1,10 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-pid=$(pgrep $1)
-
-if [ -n "$pid" ] ; then # if it is running, kill it
-    kill $pid
-fi
+[ -n "$(pgrep $1)" ] && kill $(pgrep $1)
 
 # run it again
 if [ -n "$2" ] ; then
