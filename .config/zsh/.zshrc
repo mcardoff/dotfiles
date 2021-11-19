@@ -7,11 +7,6 @@ plugins=(git)
 
 DISABLE_AUTO_TITLE="false"
 
-# Export path
-PATH="$HOME/.cargo/bin${PATH:+:${PATH}}"
-PATH="/snap/bin${PATH:+:${PATH}}"
-PATH="$HOME/.local/bin${PATH:+:${PATH}}"
-
 # Set up the prompt
 PROMPT='%B%F{3}[%F{1}%n%F{3}@%F{4}%m %F{2}%~%F{3}]%F{1}$%f%b '
 
