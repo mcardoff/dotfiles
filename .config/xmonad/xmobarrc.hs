@@ -1,7 +1,7 @@
 Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
        , additionalFonts = []
        , bgColor = "#181818"
-       , fgColor = "#CC8C3C"
+       , fgColor = "#8B3622"
        , position = TopW R 100
        , lowerOnStart = True
        , hideOnStart = False
@@ -24,23 +24,32 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
                     , Run Com "/home/mcard/.bin/mathematicians.sh" [] "math" 300
                     , Run Com "/home/mcard/.bin/eqns.sh" [] "eqn" 300
                     , Run UnsafeStdinReader
-                    , Run Battery [ "--template" , "<fc=#cc8c3c>Batt</fc> <acstatus>"
+                    , Run Battery [ "--template" , "<fc=#8b3622>Batt</fc> <acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "#c73c3f"
+                             , "--low"      , "#8b3622"
                              , "--normal"   , "#cc8c3c"
-                             , "--high"     , "#73c936"
+                             , "--high"     , "#ffdd33"
                              , "--"
                                 -- battery specific options
                                 -- discharging status
                                 , "-o"	    , "<left>% (<timeleft>)"
                                 -- AC "on" status
-                                , "-O"	    , "<fc=#cc8c3c>Charging</fc>"
+                                , "-O"	    , "<fc=#8b3622>Charging</fc>"
                                 -- charged status
                                 , "-i"	    , "<fc=#73c936>Charged</fc>"
                              ] 50
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<icon=haskell.xpm/> %UnsafeStdinReader% <fc=#666666>|</fc> %math% <fc=#666666>|</fc> }{ <fc=#666666>|</fc> %eqn% <fc=#666666>|</fc> <fc=#cc8c3c>Vol</fc> [<fc=#73c936>%sound%</fc>] <fc=#666666>|</fc> <fc=#cc8c3c>%netName%</fc> [<fc=#f43841>%wifi%</fc>] <fc=#666666>|</fc> %battery% <fc=#666666>|</fc><fc=#cc8c3c>%date%</fc> "
+       , template = "<icon=haskell.xpm/>%UnsafeStdinReader%<fc=#666666>|</fc>\
+                    \ %math% \
+                    \ <fc=#666666>|</fc> }\
+                    \{ <fc=#666666>|</fc>\
+                    \ %eqn% \
+                    \ <fc=#666666>|</fc>\
+                    \ <fc=#FFFFFF>Vol</fc> [<fc=#73c936>%sound%</fc>] \
+                    \<fc=#666666>|</fc>\
+                    \ <fc=#FFFFFF>%netName%</fc>\
+                    \ <fc=#FFFFFF>[<fc=#f43841>%wifi%</fc>]</fc? <fc=#666666>|</fc> %battery% <fc=#666666>|</fc><fc=#8b3622>%date%</fc> "
        }
