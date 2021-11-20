@@ -3,7 +3,7 @@ BAT="/sys/class/power_supply/BAT0/"
 MAX=$(cat $BAT/energy_full)
 CUR=$(cat $BAT/energy_now)
 PER=$(( 100 * CUR / MAX ))
-num=$((PER / 10))
+num=$(($PER * 8 / 100))
 
 case $num in
   0)  bar='<icon=battery_on_0.xpm/><fc=#8b3622>' ;;
@@ -15,7 +15,7 @@ case $num in
   6)  bar='<icon=battery_on_6.xpm/><fc=#73c936>' ;;
   7)  bar='<icon=battery_on_7.xpm/><fc=#73c936>' ;;
   8)  bar='<icon=battery_on_8.xpm/><fc=#73c936>' ;;
-  *)  bar='Error in Battery' ;;
+  *)  bar='Error in Battery<fc=#73c936>' ;;
 esac
 
-echo $bar "$PER%</fc>"
+echo $bar "$PER%</fc>" 
