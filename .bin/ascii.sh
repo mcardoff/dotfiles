@@ -1,9 +1,5 @@
-#!/bin/bash
-NC=`tput sgr0`
-N=$(shuf -i 1-10 -n 1)
-COL=`tput setaf $N`
+#!/bin/sh
 FILE=$(shuf -n1 -e ~/.bin/ascii/*)
-CONTENT=`cat $FILE`
-WCOLORS=${COL}${CONTENT}${NC}
-force_color_prompt=yes
-printf "${WCOLORS}"'\n' # prints a boi
+N=$(shuf -n 1 -e 1 2 3 4 5 6 7 9)
+# echo $N
+printf "$(tput setaf $N)$(cat "$FILE")$(tput sgr0)\n"

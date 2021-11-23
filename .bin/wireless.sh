@@ -6,26 +6,11 @@ iwconfig wlp2s0 2>&1 | grep -q no\ wireless\ extensions\. && {
 }
 
 essid=$(~/.bin/essid.sh)
-stngth=`iwconfig wlp2s0 | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1`
+stngth=$(iwconfig wlp2s0 | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1)
 
 [ -z "$stngth" ] && echo "Disconnected!" && exit 0
 
-bars=`expr $stngth / 10`
-
-# case $bars in
-#   0)  bar='----------' ;;
-#   1)  bar='/---------' ;;
-#   2)  bar='//--------' ;;
-#   3)  bar='///-------' ;;
-#   4)  bar='////------' ;;
-#   5)  bar='/////-----' ;;
-#   6)  bar='//////----' ;;
-#   7)  bar='///////---' ;;
-#   8)  bar='////////--' ;;
-#   9)  bar='/////////-' ;;
-#   10) bar='//////////' ;;
-#   *)  bar='----!!----' ;;
-# esac
+bars=$(($stngth / 10))
 
 case $bars in
   0)  bar='<icon=wifi0.xpm/><fc=#ffffff>' ;;
@@ -38,8 +23,8 @@ case $bars in
   7)  bar='<icon=wifi3.xpm/><fc=#ffdd33>' ;;
   8)  bar='<icon=wifi4.xpm/><fc=#73c936>' ;;
   9)  bar='<icon=wifi4.xpm/><fc=#73c936>' ;;
-  10) bar= '<icon=wifi.xpm/><fc=#73c936>' ;;
-  *)  bar='----!!----' ;;
+  10) bar='<icon=wifi5.xpm/><fc=#73c936>' ;;
+  *)  bar='----!!----<fc=#ffffff>' ;;
 esac
 
 echo $bar "$stngth%" $essid "</fc>"

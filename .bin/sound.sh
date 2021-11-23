@@ -5,21 +5,9 @@ SINK=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head 
 NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 num=$(( NOW / 10 ))
 
-
-# case $num in
-#   0)  bar='----------' ;;
-#   1)  bar='/---------' ;;
-#   2)  bar='//--------' ;;
-#   3)  bar='///-------' ;;
-#   4)  bar='////------' ;;
-#   5)  bar='/////-----' ;;
-#   6)  bar='//////----' ;;
-#   7)  bar='///////---' ;;
-#   8)  bar='////////--' ;;
-#   9)  bar='/////////-' ;;
-#   10) bar='//////////' ;;
-#   *)  bar='----!!----' ;;
-# esac
+[ "$(pactl list sinks | grep Mute | awk '{$1=$1};1')" = "Mute: yes" ] &&
+    echo '<icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc>" &&
+    exit 0
 
 case $num in
   0)  bar='<icon=vol0.xpm/>' ;;
@@ -36,10 +24,6 @@ case $num in
   *)  bar='----!!----' ;;
 esac
 
-if [ "$(pactl list sinks | grep Mute | awk '{$1=$1};1')" = "Mute: yes" ] ; then
-    echo '<icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc>"
-else
-    echo $bar "$NOW%"
-fi
+echo $bar "$NOW%"
 
 exit 0
