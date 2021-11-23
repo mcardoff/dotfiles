@@ -169,20 +169,20 @@ scratchpads = [
  -- format :: NS <name> <command> <query> <hook>
    NS "dropterm" (term ++ " --class dropterm -t dropterm")
        (appName =? "dropterm")
-       (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
+       (customFloating $ W.RationalRect (1/12) (1/4) (1/6) (1/2))
 
- , NS "Ranger" (term ++" --class Ranger -t Ranger -e ranger")
+ , NS "Ranger" (term ++ " --class Ranger -t Ranger -e ranger")
        (appName =? "Ranger")
-       (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
+       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
  , NS "Notepad" "emacs -T notepad \
       \--eval='(unless (boundp 'server-process) (server-start))'"
       (title =? "notepad")
-      (customFloating  $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
+      (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
 
  , NS "Schedule" "feh ~/Pictures/schedule.png --title 'Schedule'"
       (title =? "Schedule")
-      (customFloating  $ W.RationalRect (3/14) (1/6) (4/7) (13/20))
+      (customFloating  $ W.RationalRect (1.53/8) (3.13/20) (2.47/4) (6.87/10))
  ]
 
 
@@ -212,6 +212,7 @@ layouts = avoidStruts $ onWorkspace "float" simplestFloat $
           grid
    -- ||| Accordion
    -- ||| noBorders Circle
+   -- ||| Circle
       ||| floats
       ||| noBorders tabs
       ||| monocleBare
@@ -227,17 +228,18 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 -- Hooks
 
 manHook :: Query (Endo WindowSet)
-manHook = composeAll
-          [ className =? "MPlayer" --> doFloat
-          , className =? "Gimp"    --> doFloat
-          , resource =? "desktop_window" --> doIgnore
-          , resource =? "kdesktop" --> doIgnore
+manHook = composeAll $
+          [ className =? "MPlayer"     --> doFloat
+          , className =? "Gimp"        --> doFloat
           , className =? "Test Window" --> doFloat
-          , appName =? browser --> doShift (myWorkspaces !! 2) -- browser in 3
-          , appName =? fileman  --> doShift (myWorkspaces !! 3) -- file man. in 4
-          , appName =? "vlc"   --> doShift (myWorkspaces !! 4) -- video in 5
-          , appName =? "discord" --> doShift (myWorkspaces !! 5) -- discord in 6
-          , appName =? "lxappearance" --> doShift "NSP" <+> doFloat  -- lxappearance in scratchpads
+          , className =? "Matplotlib"  --> doFloat
+          , resource =? "desktop_window" --> doIgnore
+          , resource =? "kdesktop"       --> doIgnore
+          , appName =? browser   --> doShift (myWorkspaces !! 2)
+          , appName =? fileman   --> doShift (myWorkspaces !! 3)
+          , appName =? "discord" --> doShift (myWorkspaces !! 4)
+          , appName =? "vlc"     --> doShift (myWorkspaces !! 5)
+          , appName =? "lxappearance" --> doShift "NSP" <+> doFloat
           ]
 
 eveHook :: Event -> X All
