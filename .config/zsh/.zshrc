@@ -1,5 +1,19 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+autoload -U colors && colors
+
+# history
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+
+# autocomplete
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/mcard/.config/zsh/.oh-my-zsh/"
@@ -18,3 +32,6 @@ alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 print -Pn "\e]0;%m:%~\a"
 # memescript
 ~/.bin/ascii.sh
+
+# zsh-syntax-highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null
