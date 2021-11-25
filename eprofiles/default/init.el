@@ -311,7 +311,7 @@
 	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\")) \n%i":immediate-finish t)
 	("mr" "Read Later" entry
 	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Read Later")
-	  "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i" :immediate-finish t)))
+	  "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-read-date)\n\n%a\n\n%i" :immediate-finish t)))
 
 (setq org-structure-template-alist
       '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
@@ -400,6 +400,8 @@
 
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
+
+  (mu4e-mu-home "~/.config/mu/")
   
   ;; Refresh mail using isync every 10 minutes
   (mu4e-update-interval (* 10 60))
@@ -429,6 +431,7 @@
   (smtpmail-smtp-service 587)
 
   ;; password
+  (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
   (auth-source-pass-filename "~/.password-store/mbsync/")
   
   :config (require 'org-mu4e))
