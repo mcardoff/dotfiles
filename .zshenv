@@ -10,7 +10,8 @@ export XDG_RUNTIME_DIR="/run/user/$UID"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
 export STACK_ROOT="$XDG_DATA_HOME"/stack 
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export STACK_ROOT="$XDG_DATA_HOME"/stack
 export PATH="$HOME/.local/share/cargo/bin${PATH:+:${PATH}}"
@@ -35,3 +36,9 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 export MANPAGER='bat --style=grid'
+export XMONAD_CACHE_DIR="$XDG_CACHE_HOME"/xmonad
+export XMONAD_CONFIG_DIR="$XDG_CONFIG_HOME"/xmonad
+export XMONAD_DATA_DIR="$XDG_DATA_HOME"/xmonad
+export GVIMINIT='let $MYGVIMRC="$XDG_CONFIG_HOME/vim/gvimrc" | source $MYGVIMRC'
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+export MU_HOME="$HOME"/.config/mu
