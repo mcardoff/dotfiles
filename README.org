@@ -11,6 +11,17 @@ Here is a list of what I have to do for the deploy script
   - [X] Link chemacs files [2/2]
     - [X] .emacs-profile
     - [X] .emacs-profiles.el
-- [ ] Generate Config structure [0/1]
-  - [ ] All files in dotfiles/.config
 - [ ] Link ./.bin to ~/.bin
+- [X] source ~/.zshenv for config stuff
+- [X] Configs
+  - [X] alacritty
+  - [X] bashtop
+  - [X] git
+  - [X] i3
+  - [X] kak
+  - [X] polybar
+  - [X] ranger
+  - [X] xmonad
+  - [X] zsh
+* Notes
+For my git config, if you do not already have one, it will simply copy mine, you will need to change it
