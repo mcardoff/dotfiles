@@ -33,12 +33,12 @@ import qualified XMonad.StackSet                     as W
 import           XMonad.Util.EZConfig
 import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.Run
-
+import           XMonad.Util.WorkspaceCompare
 --
 -- Local vars
 --
 myWorkspaces :: [String]
-myWorkspaces = tots ++ rest
+myWorkspaces = tots ++ rest ++ ["NSP"]
     where tots = ["trm","edt","www","sch","dsc","vid"]
           rest = map show $ [(length tots)+1..9]
 
@@ -56,7 +56,7 @@ browser :: String
 browser = "firefox"
 
 fileman :: String
-fileman = "pcmanfm"
+fileman = "nemo"
 
 term :: String
 term = "/home/mcard/.local/share/cargo/bin/alacritty"
@@ -169,7 +169,7 @@ scratchpads = [
  -- format :: NS <name> <command> <query> <hook>
    NS "dropterm" (term ++ " --class dropterm -t dropterm")
        (appName =? "dropterm")
-       (customFloating $ W.RationalRect (1/12) (1/4) (1/6) (1/2))
+       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
  , NS "Ranger" (term ++ " --class Ranger -t Ranger -e ranger")
        (appName =? "Ranger")
@@ -250,14 +250,25 @@ lgHook x1 = dynamicLogWithPP xmobarPP
                   , ppCurrent = xmobarColor white focol . sp
                   , ppVisible = xmobarColor white active
                   , ppHidden = xmobarColor altwhite altbg . sp
-                  , ppHiddenNoWindows = xmobarColor altwhite "" . wrap " " " "
+                  , ppHiddenNoWindows = xmobarColor altwhite "" . sp
                   , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
+                  , ppWsSep = ""
                   , ppUrgent = xmobarColor white alert . sp
                   , ppExtras = [windowCount]
+                  , ppSort = fmap (.namedScratchpadFilterOutWorkspace) (mkWsSort getWsCompare')
                   , ppOrder = id
                   }
             where sp = wrap " " " "
+                  getWsCompare' :: X WorkspaceCompare
+                  getWsCompare' = do
+                    wsIndex <- getWsIndex
+                    return $ \a b -> f (wsIndex a) (wsIndex b) `mappend` compare a b
+                        where
+                          f Nothing Nothing   = EQ
+                          f (Just _) Nothing  = LT
+                          f Nothing (Just _)  = GT
+                          f (Just x) (Just y) = compare x y
 
 main :: IO ()
 main = do
@@ -279,10 +290,10 @@ main = do
 
              -- Hooks and Layouts
 
-             , layoutHook = layouts
+             , layoutHook = layouts 
              , manageHook = manHook <+> namedScratchpadManageHook scratchpads
              , handleEventHook = eveHook
-             , logHook = lgHook xmproc -- <+> nsHideOnFocusLoss scratchpads
+             , logHook = lgHook xmproc 
              , startupHook = startHook
          }
 
