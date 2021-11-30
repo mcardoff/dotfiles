@@ -41,3 +41,5 @@ ido.last
 smex-items
 .zcompdump*
 *.errors
+*.o
+*.hi
