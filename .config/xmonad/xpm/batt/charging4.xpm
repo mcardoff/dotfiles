@@ -2,8 +2,8 @@
 static char *XPM_icon[] = {
 "24 16 4 1 12 8",
 "  c None",
-". c #8b3622",
-"Y c #cc8c3c",
+". c #cc8c3c",
+"Y c #f0c674",
 "w c #707880",
 "                        ",
 " wwwwwwwwwwwwwwwwwwww   ",
