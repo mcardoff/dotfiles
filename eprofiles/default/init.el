@@ -298,7 +298,7 @@
   (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
   :config
   (setq org-tempo-keywords-alist nil)
-  (setq org-refile-targets '((mpc/org-agenda-list :level . 2)))
+  (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 
@@ -417,7 +417,13 @@
      ("/[Gmail]/Sent Mail" . ?s)
      ("/[Gmail]/Trash"     . ?t)
      ("/[Gmail]/Drafts"    . ?d)
-     ("/[Gmail]/All Mail"  . ?a)))
+     ("/[Gmail]/All Mail"  . ?a)
+     ("/Teacher Emails/Sullivan"   . ?z)
+     ("/Teacher Emails/Hood"       . ?x)
+     ("/Teacher Emails/Rosenberg"  . ?c)
+     ("/Teacher Emails/IPRO"       . ?v)
+     ("/Teacher Emails/Littlejohn" . ?b)
+     ("/Teacher Emails/Dr. Z"       . ?n)))
 
   ;; smtp settings
   (message-send-mail-function 'smtpmail-send-it)

@@ -2,11 +2,21 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "~/repos/org-agenda/Agenda Files/Mail.org")
- (front-context-string . "** TODO Follow U")
- (rear-context-string . "rad school apps\n")
- (position . 694))
+(("org-capture-last-stored-marker"
+ (filename . "~/Org/Agenda/Agenda Files/GradSchool.org")
+ (front-context-string . "** TODO Brandeis")
+ (rear-context-string . "ively together.\n")
+ (position . 6461))
+("org-refile-last-stored"
+ (filename . "~/Org/Agenda/Agenda Files/GradSchool.org")
+ (front-context-string . "** TODO Brandeis")
+ (rear-context-string . "ively together.\n")
+ (position . 6461))
+("org-capture-last-stored"
+ (filename . "~/Org/Agenda/Agenda Files/FA21.org")
+ (front-context-string . "* TODO Brandeis ")
+ (rear-context-string . "ur record, etc.\n")
+ (position . 11190))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
