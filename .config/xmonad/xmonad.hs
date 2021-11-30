@@ -7,6 +7,7 @@ import           Data.Tuple
 import           System.Exit
 import           XMonad
 import           XMonad.Actions.CycleWS
+import           XMonad.Actions.FloatKeys
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Layout.Accordion
@@ -37,8 +38,8 @@ import           XMonad.Util.WorkspaceCompare
 --
 -- Local vars
 --
-myWorkspaces :: [String]
-myWorkspaces = tots ++ rest ++ ["NSP"]
+myWS :: [String]
+myWS = tots ++ rest ++ ["NSP"]
     where tots = ["trm","edt","www","sch","dsc","vid"]
           rest = map show $ [(length tots)+1..9]
 
@@ -80,6 +81,15 @@ cgood  = "#3774b5"
 xmobarPath :: String
 xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 
+
+dec :: Num a => a
+dec = 10
+
+l = (-dec,   0)
+d = (   0, dec)
+u = (   0,-dec)
+r = ( dec,   0)
+
 --
 -- STARTUP
 --
@@ -96,17 +106,26 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
       ((alt, xK_Tab), nextWS)
     , ((alt .|. shf, xK_Tab), prevWS)
     -- focus movement
-    , ((mod, xK_h), sendMessage Shrink)
     , ((mod, xK_j), windows W.focusDown)
     , ((mod .|. shf, xK_j), windows W.swapDown)
     , ((mod, xK_k), windows W.focusUp)
     , ((mod .|. shf, xK_k), windows W.swapUp)
-    , ((mod, xK_l), sendMessage Expand)
-    , ((mod, xK_m), windows W.focusMaster)
-    -- misc
     , ((mod, xK_d), withFocused toggleFloat)
     , ((mod, xK_Tab), windows W.focusDown)
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
+    -- Resize in tiled mode
+    , ((mod, xK_h), sendMessage Shrink)
+    , ((mod, xK_l), sendMessage Expand)
+    -- Move floating windows
+    , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
+    , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
+    , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
+    , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
+    -- Resize Floating Windows
+    , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow l (0,0))
+    , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d (0,0))
+    , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow u (0,0))
+    , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r (0,0))
     -- execs
     , ((mod, xK_o), spawn "emacs")
     , ((mod .|. shf, xK_o), spawn "~/.bin/emacs.sh")
@@ -121,10 +140,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- workspace
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
-    , ((mod, xK_n), refresh)
     , ((mod, xK_t), withFocused $ windows . W.sink)
-    , ((mod, xK_comma), sendMessage (IncMasterN 1))
-    , ((mod, xK_period), sendMessage (IncMasterN (-1)))
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile; xmonad --restart")
 
@@ -138,7 +154,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, xK_F2), namedScratchpadAction scratchpads "Notepad")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((0, xK_F4), namedScratchpadAction scratchpads "Schedule")
-    ]
+    ] 
     ++
     [((mo .|. mod, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
@@ -190,33 +206,39 @@ scratchpads = [
 -- Layouts
 
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
-tiled = Tall 1 (3/100) (1/2)
-floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
-grid = renamed [Replace "Grid"]
-       $ limitWindows 12 $ mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
-monocleBare = noBorders $ monocle
-monocle  = renamed [Replace "Monocle"]
-           $ limitWindows 20 Full
-tabs = renamed [Replace "Tabs"]
-       $ tabbed shrinkText $
-         def { fontName            = myFont
-             , activeColor         = focol
-             , inactiveColor       = bg
-             , activeBorderColor   = focol
-             , inactiveBorderColor = bg
-             , activeTextColor     = white
-             , inactiveTextColor   = white
-             }
 
-layouts = avoidStruts $ onWorkspace "float" simplestFloat $
-          grid
+tiled = Tall 1 (3/100) (1/2)
+
+floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
+
+grid = renamed [Replace "Grid"] $ limitWindows 12 $
+       mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
+monocleBare = noBorders $ monocle
+
+monocle = renamed [Replace "Monocle"]
+           $ limitWindows 20 Full
+
+tabConfig = def { fontName            = "Source_Code_Pro"
+                , activeColor         = focol
+                , inactiveColor       = bg
+                , activeBorderColor   = focol
+                , inactiveBorderColor = bg
+                , activeTextColor     = white
+                , inactiveTextColor   = white
+                }
+             
+tabs = renamed [Replace "Tabs"]
+       $ tabbed shrinkText tabConfig
+         
+
+easytabs = renamed [Replace "Simple Tabs"]
+           $ tabbedLeft shrinkText tabConfig
+
+layouts = avoidStruts $ onWorkspace "sch" simplestFloat $
+          grid ||| tiled ||| floats ||| noBorders tabs ||| easytabs ||| monocleBare
    -- ||| Accordion
    -- ||| noBorders Circle
    -- ||| Circle
-      ||| floats
-      ||| noBorders tabs
-      ||| monocleBare
-   -- ||| tiled
    -- ||| Full
 
 
@@ -229,17 +251,15 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 manHook :: Query (Endo WindowSet)
 manHook = composeAll $
-          [ className =? "MPlayer"     --> doFloat
-          , className =? "Gimp"        --> doFloat
-          , className =? "Test Window" --> doFloat
-          , className =? "Matplotlib"  --> doFloat
-          , resource =? "desktop_window" --> doIgnore
-          , resource =? "kdesktop"       --> doIgnore
-          , appName =? browser   --> doShift (myWorkspaces !! 2)
-          , appName =? fileman   --> doShift (myWorkspaces !! 3)
-          , appName =? "discord" --> doShift (myWorkspaces !! 4)
-          , appName =? "vlc"     --> doShift (myWorkspaces !! 5)
-          , appName =? "lxappearance" --> doShift "NSP" <+> doFloat
+          [ className =? "Gimp"           --> doFloat
+          , className =? "Test Window"    --> doFloat
+          , className =? "Matplotlib"     --> doFloat
+          , resource  =? "desktop_window" --> doIgnore
+          , resource  =? "kdesktop"       --> doIgnore
+          , appName   =? browser          --> doShift (myWS !! 2)
+          , appName   =? fileman          --> doShift (myWS !! 3)
+          , appName   =? "discord"        --> doShift (myWS !! 4)
+          , appName   =? "vlc"            --> doShift (myWS !! 5)
           ]
 
 eveHook :: Event -> X All
@@ -279,7 +299,7 @@ main = do
              , terminal = term
              , focusFollowsMouse = True
              , clickJustFocuses = False
-             , workspaces = myWorkspaces
+             , workspaces = myWS
              , normalBorderColor = bg
              , focusedBorderColor = focol
              , borderWidth = 2
@@ -289,7 +309,6 @@ main = do
              , mouseBindings = myMouseBindings
 
              -- Hooks and Layouts
-
              , layoutHook = layouts 
              , manageHook = manHook <+> namedScratchpadManageHook scratchpads
              , handleEventHook = eveHook
