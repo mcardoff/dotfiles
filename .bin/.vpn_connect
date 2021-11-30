@@ -1,1 +1,3 @@
-stty -echo; sudo openconnect --config=/home/mcard/.bin/.openconnect_IIT https://vpn.iit.edu ; stty echo
+stty -echo;
+sudo openconnect --user=mcardiff@hawk.iit.edu --authgroup=IIT-VPN-USERS --passwd-on-stdin https://vpn.iit.edu;
+stty echo
