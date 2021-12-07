@@ -14,7 +14,6 @@
           ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-
 ;; requires for emacs 28
 ;; (package-initialize)
 ;; (require 'use-package)
@@ -37,7 +36,6 @@
   :defer t)
 
 (use-package recentf
-  ;; Loads after 1 second of idle time.
   :defer t)
 
 (use-package saveplace
@@ -46,8 +44,8 @@
 (use-package saveplace-pdf-view
   :defer t)
 
-(use-package server
-  :defer t)
+;; (use-package server
+;;   :defer t)
 
 (use-package autorevert
   :defer t)
@@ -205,8 +203,8 @@
    "M-R" 'shrink-window
    "M-." 'enlarge-window-horizontally
    "M-," 'shrink-window-horizontally
-   "C-<SPC>" 'rectangle-mark-mode
-   "C-x <SPC>" 'set-mark-command))
+   "C-<SPC>" 'set-mark-command
+   "C-x <SPC>" 'rectangle-mark-mode))
 
 ;; which-key because there are so many bindings
 (use-package which-key
@@ -230,6 +228,9 @@
        (output-pdf "Zathura")
        (output-html "xdg-open")))
   
+  (LaTeX-section-hook
+   '(LaTeX-section-heading LaTeX-section-title LaTeX-section-section))
+
   (LaTeX-indent-environment-list
    '(("verbatim" current-indentation)
      ("verbatim*" current-indentation)
@@ -301,6 +302,26 @@
   (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
+(setq org-format-latex-header
+      "\\documentclass{article}
+\\usepackage[usenames]{color}
+\\usepackage{physics} 
+\\usepackage{siunitx} 
+\DeclareSIUnit\angstrom{\text {Å}}
+\\pagestyle{empty}             % do not remove
+% The settings below are copied from fullpage.sty
+\\setlength{\\textwidth}{\\paperwidth}
+\\addtolength{\\textwidth}{-3cm}
+\\setlength{\\oddsidemargin}{1.5cm}
+\\addtolength{\\oddsidemargin}{-2.54cm}
+\\setlength{\\evensidemargin}{\\oddsidemargin}
+\\setlength{\\textheight}{\\paperheight}
+\\addtolength{\\textheight}{-\\headheight}
+\\addtolength{\\textheight}{-\\headsep}
+\\addtolength{\\textheight}{-\\footskip}
+\\addtolength{\\textheight}{-3cm}
+\\setlength{\\topmargin}{1.5cm}
+\\addtolength{\\topmargin}{-2.54cm}")
 
 (setq org-capture-templates
       '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
