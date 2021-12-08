@@ -43,3 +43,4 @@ smex-items
 *.errors
 *.o
 *.hi
+/eprofiles/default/spotify-cred.el

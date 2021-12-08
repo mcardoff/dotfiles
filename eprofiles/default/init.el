@@ -470,6 +470,20 @@
 
 (use-package pass)
 
+;; spotify
+(use-package counsel-spotify
+  :bind (("C-z f"   . counsel-spotify-next)
+	 ("C-z b"   . counsel-spotify-previous)
+	 ("C-z s t" . counsel-spotify-toggle-play-pause)
+	 ("C-z s a" . counsel-spotify-search-album)
+	 ("C-z s s" . counsel-spotify-search-track)
+	 ("C-z s d" . counsel-spotify-search-artist)
+	 ("C-z s f" . counsel-spotify-search-playlist)
+	 ("C-z s g" . counsel-spotify-search-tracks-by-album)
+	 ("C-z s h" . counsel-spotify-search-tracks-by-artist)))
+
+(load-file (concat user-emacs-directory "spotify-cred.el"))
+
 ;; now smtp stuff
 ;; (defvar my-mu4e-account-alist
 ;;   '(("Gmail"
