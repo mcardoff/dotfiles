@@ -14,10 +14,23 @@
           ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-;; requires for emacs 28
-(package-initialize)
-(setq use-package-always-ensure t)
-(unless (package-installed-p 'use-package) (package-install 'use-package))
+;; straight.el setup
+(defvar bootstrap-version)
+(let ((bootstrap-file
+      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+
+(setq straight-use-package-by-default t)
+(straight-use-package 'use-package)
 
 ;; Visual stuff
 
@@ -26,9 +39,7 @@
  :foundry 'regular
  :height 140)
 
-(cond ((not (package-installed-p 'gruber-darker-theme))
-       (use-package gruber-darker-theme))
-      (t (load-theme 'gruber-darker t)))
+(use-package gruber-darker-theme :config (load-theme 'gruber-darker t))
 
 ;; Speed
 (use-package rainbow-mode
@@ -62,9 +73,8 @@
   :hook (after-init . dashboard-setup-startup-hook)
   :custom
   (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
-  (dashboard-items '((recents   . 10)
-		     (bookmarks . 10)
-                     (agenda    . 10)))
+  (dashboard-items '((recents  . 10)
+                     (agenda   . 10)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
   :config (dashboard-setup-startup-hook))
@@ -73,11 +83,14 @@
 
 ;; company
 (use-package company
+  :defer t
   :diminish
   :init (global-company-mode))
 
 ;; ivy
 (use-package ivy
+  :defer t
+  :after counsel
   :diminish
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
@@ -107,15 +120,17 @@
 
 (use-package ivy-rich
   :init (ivy-rich-mode 1)
-  :after ivy
+  :after counsel
   :custom
   (ivy-format-function #'ivy-format-function-line))
 
 (use-package all-the-icons-ivy-rich
+  :defer t
   :after ivy-rich
   :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package counsel
+  :defer t
   :bind (("M-x" . counsel-M-x)
          ;; ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file)
@@ -173,6 +188,7 @@
 
 ;; Maybe using general?
 (use-package general
+  ;; :defer 1
   :config
   ;; (load-file (concat user-emacs-directory "configfuns.el"))
   (global-unset-key (kbd "C-z"))
@@ -209,11 +225,11 @@
 (use-package auctex
   :defer
   :hook
-  (TeX-mode       . mpc/LaTeX-setup)
+  (TeX-mode . mpc/LaTeX-setup)
   (plain-TeX-mode . mpc/LaTeX-setup)
-  (TeXinfo-mode   . mpc/LaTeX-setup)
-  (LaTeX-mode     . mpc/LaTeX-setup)
-  (docTeX-mode    . mpc/LaTeX-setup)
+  (TeXinfo-mode . mpc/LaTeX-setup)
+  (LaTeX-mode . mpc/LaTeX-setup)
+  (docTeX-mode . mpc/LaTeX-setup)
   :custom
   (TeX-view-program-selection
     '(((output-dvi has-no-display-manager) "dvi2tty") 
@@ -255,43 +271,47 @@
   :config (yas-global-mode)
   :custom (yas-snippet-dirs '("~/eprofiles/default/mysnippets")))
 
+;; (use-package yasnippet-snippets
+;; :after yasnippet)
+
 (require 'org-tempo)
-(use-package org-bullets
-  :defer
-  ;; :after org
-  :hook (org-mode . org-bullets-mode))
-
-(use-package org-roam
-  :after general
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-graph-executable "dot")
-  (org-roam-directory "~/Org/Roam")
-  (org-roam-completion-everywhere t)
-  (org-roam-completion-system 'ivy)
-  :bind (("C-z n l" . org-roam-buffer-toggle)
-         ("C-z n f" . org-roam-node-find)
-         ("C-z n i" . org-roam-node-insert))
-  :config
-  (org-roam-setup))
-
 (use-package org
-  :defer
-  :hook (org-mode . mpc/org-mode-setup)
-  :bind (("<C-M-return>" . org-insert-todo-subheading))
-  :custom
-  (org-ellipsis " [+]")
-  (org-directory "~/Org/Agenda/")
-  (org-agenda-files (list org-directory))
-  :custom-face
-  (org-block    ((t :foreground "#e4e4ef")))
-  (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
-  (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
-  :config
-  (setq org-tempo-keywords-alist nil)
-  (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+  :straight nil
+ :defer
+ :hook (org-mode . mpc/org-mode-setup)
+ :bind (("<C-M-return>" . org-insert-todo-subheading))
+ :custom
+ (org-ellipsis " [+]")
+ (org-directory "~/Org/Agenda/")
+ (org-agenda-files (list org-directory))
+ :custom-face
+ (org-block    ((t :foreground "#e4e4ef")))
+ (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
+ (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
+ :config
+ (setq org-tempo-keywords-alist nil)
+ (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
+ (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+
+;; (use-package org-bullets
+  ;; :defer
+  ;; :after org
+  ;; :hook (org-mode . org-bullets-mode))
+
+;; (use-package org-roam
+  ;; :after general
+  ;; :init
+  ;; (setq org-roam-v2-ack t)
+  ;; :custom
+  ;; (org-roam-graph-executable "dot")
+  ;; (org-roam-directory "~/Org/Roam")
+  ;; (org-roam-completion-everywhere t)
+  ;; (org-roam-completion-system 'ivy)
+  ;; :bind (("C-z n l" . org-roam-buffer-toggle)
+         ;; ("C-z n f" . org-roam-node-find)
+         ;; ("C-z n i" . org-roam-node-insert))
+  ;; :config
+  ;; (org-roam-setup))
 
 (setq org-format-latex-header
       "\\documentclass{article}
@@ -338,18 +358,26 @@
 (use-package magit
   :defer 5)
 
-;; (use-package projectile
-;;   :after general
-;;   :defer 10
-;;   :diminish projectile-mode
-;;   :config (projectile-mode)
-;;   :bind-keymap ("C-z p" . projectile-command-map)
-;;   )
+;; (use-package tramp
+;;   :defer 5)
 
-;; (use-package counsel-projectile
-;;   :defer 10
-;;   :after projectile
-;;   :config (counsel-projectile-mode))
+(use-package projectile
+  :after general
+  :defer 10
+  :diminish projectile-mode
+  :config (projectile-mode)
+  ;; :custom ((projectile-completion-system 'ivy))
+  :bind-keymap ("C-z p" . projectile-command-map)
+  ;; :init
+  ;; (when (file-directory-p "~/Projects/Code")
+    ;; (setq projectile-project-search-path '("~/Coding/Projects/Code")))
+  ;; (setq projectile-switch-project-action #'projectile-dired)
+  )
+
+(use-package counsel-projectile
+  :defer 10
+  :after projectile
+  :config (counsel-projectile-mode))
 
 (use-package cuda-mode
   :defer 10
@@ -375,7 +403,7 @@
   :after haskell-mode
   :hook (haskell-mode . hlint-refactor-mode))
 
-;; (use-package clojure-mode :defer 10)
+(use-package clojure-mode :defer 10)
 
 (use-package yaml-mode :defer 10)
 
@@ -387,15 +415,11 @@
   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                   "http://www.reddit.com/r/Physics/.rss")))
 
-;; (load-file mu4e-setup.el)
-
 (setq smtpmail-default-smtp-server "smtp.gmail.com")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
 (use-package mu4e
-  :ensure nil
+  :straight nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
-  ;; :defer 1
+  :defer 1 ; Wait until 1 seconds after startup
   :hook
   (mu4e-view-mode . mpc/no-lines-setup)
   (mu4e-headers-mode . mpc/no-lines-setup)
@@ -448,13 +472,11 @@
   (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
   (auth-source-pass-filename "~/.password-store/mbsync/")
   
-  :config
-  ;;(require 'org-mu4e)
-  )
+  :config (require 'org-mu4e))
 
 ;; password stuff
 (use-package auth-source-pass
-  :ensure nil
+  :straight nil
   :init (auth-source-pass-enable))
 
 (use-package pass)
@@ -472,6 +494,38 @@
 	 ("C-z s h" . counsel-spotify-search-tracks-by-artist)))
 
 (load-file (concat user-emacs-directory "spotify-cred.el"))
+
+;; now smtp stuff
+;; (defvar my-mu4e-account-alist
+;;   '(("Gmail"
+;;      (mu4e-sent-folder "/[Gmail]/Sent Mail")
+;;      (user-mail-address "mcardiff@hawk.iit.edu")
+;;      (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
+;;      (smtpmail-local-domain "gmail.com")
+;;      (smtpmail-default-smtp-server "smtp.gmail.com")
+;;      (smtpmail-smtp-server "smtp.gmail.com")
+;;      (smtpmail-smtp-service 587))))
+
+
+;; (defun my-mu4e-set-account ()
+;;   "Set the account for composing a message.
+;;    This function is taken from: 
+;;     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
+;;   (let* ((account
+;;     (if mu4e-compose-parent-message
+;;     (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+;;     (string-match "/\\(.*?\\)/" maildir)
+;;     (match-string 1 maildir))
+;;     (completing-read (format "Compose with account: (%s) "
+;;     (mapconcat #'(lambda (var) (car var)) my-mu4e-account-alist "/"))
+;;     (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+;;     nil t nil nil (caar my-mu4e-account-alist))))
+;;     (account-vars (cdr (assoc account my-mu4e-account-alist))))
+;;     (if account-vars
+;;     (mapc #'(lambda (var) (set (car var) (cadr var))) account-vars)
+;;     (error "No email account found"))))
+
+
 
 ;; -------------------- ;;
 (defvar schoolpath "~/school/")

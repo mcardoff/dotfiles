@@ -15,8 +15,9 @@
           ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
+(package-initialize)
 ;; (require 'package)
-(require 'use-package)
+;; (require 'use-package)
 
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))

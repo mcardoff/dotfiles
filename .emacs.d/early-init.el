@@ -9,6 +9,8 @@
 (setq inhibit-startup-screen 0)
 (setq visible-bell 1)
 (setq comp-deferred-compilation t)
+(setq warning-suppress-types '((comp)))
+(setq comp-deferred-compilation t)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
