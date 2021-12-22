@@ -25,3 +25,17 @@ Here is a list of what I have to do for the deploy script
   - [X] zsh
 * Notes
 For my git config, if you do not already have one, it will simply copy mine, you will need to change it
+* Necessary Programs
+- =alacritty= terminal
+- =isync= for mail
+- =ranger= for a terminal based FM
+- =firefox= browser
+- =xmonad= and =xmonad-contrib= or =i3=
+- =bashtop= for process monitoring
+- =zsh= shell
+- =git= duh?
+- =kakoune= for a terminal based text editor
+- =emacs= for a non-terminal based editor
+- =polybar= but my config is not used in it anywhere
+- =dmenu= my build of it reccomended
+ 

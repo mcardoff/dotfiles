@@ -140,6 +140,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- workspace
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
+    -- , ((mod, xK_x), setLayout monocleBare)
     , ((mod, xK_t), withFocused $ windows . W.sink)
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile; xmonad --restart")
@@ -231,16 +232,8 @@ tabs = renamed [Replace "Tabs"]
        $ tabbed shrinkText tabConfig
          
 
-easytabs = renamed [Replace "Simple Tabs"]
-           $ tabbedLeft shrinkText tabConfig
-
 layouts = avoidStruts $ onWorkspace "sch" simplestFloat $
-          grid ||| tiled ||| floats ||| noBorders tabs ||| easytabs ||| monocleBare
-   -- ||| Accordion
-   -- ||| noBorders Circle
-   -- ||| Circle
-   -- ||| Full
-
+          grid ||| noBorders tabs ||| monocleBare ||| floats
 
 -- Misc.
 

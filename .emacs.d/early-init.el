@@ -1,25 +1,28 @@
 ;;; -*- lexical-binding: t; -*-
 ;; (setq package-enable-at-startup nil)
-(setq package--init-file-ensured t)
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+(setq package--init-file-ensured t
+      gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6
+      load-prefer-newer noninteractive
+      byte-compile-warnings '(cl-functions)
+      inhibit-startup-screen 0
+      visible-bell 1
+      comp-deferred-compilation t
+      warning-suppress-types '((comp))
+      comp-deferred-compilation t
+      display-line-numbers-type t
+      dired-listing-switches "-lgXGDAh --group-directories-first"
+      message-log-max t)
 
-(setq load-prefer-newer noninteractive)
-(setq byte-compile-warnings '(cl-functions))
-(setq inhibit-startup-screen 0)
-(setq visible-bell 1)
-(setq comp-deferred-compilation t)
-(setq warning-suppress-types '((comp)))
-(setq comp-deferred-compilation t)
-
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-(tooltip-mode 0)
-(window-divider-mode)
-(column-number-mode)
-(show-paren-mode)
-(fringe-mode 1)
+(menu-bar-mode                    0)
+(tool-bar-mode                    0)
+(scroll-bar-mode                  0)
+(tooltip-mode                     0)
+(window-divider-mode              1)
+(column-number-mode               1)
+(show-paren-mode                  1)
+(fringe-mode                      1)
+(global-display-line-numbers-mode 1)
 
 (set-face-attribute 'window-divider nil
  :foreground "#282828")
@@ -31,10 +34,6 @@
  :foreground "#282828"
  :background "#282828")
 
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type t)
-(setq dired-listing-switches "-lgXGDAh --group-directories-first")
-(setq message-log-max t)
 
 (defun mpc/display-startup-time ()
   (interactive)
@@ -46,10 +45,8 @@
 
 
 (add-hook 'emacs-startup-hook #'mpc/display-startup-time)
-(add-hook 'emacs-startup-hook
-  (lambda ()
-    (setq gc-cons-threshold 16777216 ; 16mb
-          gc-cons-percentage 0.1)))
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
+					       gc-cons-percentage 0.1)))
 
 (require 'chemacs
          (expand-file-name "chemacs.el"

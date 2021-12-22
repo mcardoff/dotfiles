@@ -262,7 +262,8 @@
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
-  :after general
+  :defer
+  ;; :after general
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -292,27 +293,6 @@
   (setq org-tempo-keywords-alist nil)
   (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
-
-(setq org-format-latex-header
-      "\\documentclass{article}
-\\usepackage[usenames]{color}
-\\usepackage{physics} 
-\\usepackage{siunitx} 
-\DeclareSIUnit\angstrom{\text {Å}}
-\\pagestyle{empty}             % do not remove
-% The settings below are copied from fullpage.sty
-\\setlength{\\textwidth}{\\paperwidth}
-\\addtolength{\\textwidth}{-3cm}
-\\setlength{\\oddsidemargin}{1.5cm}
-\\addtolength{\\oddsidemargin}{-2.54cm}
-\\setlength{\\evensidemargin}{\\oddsidemargin}
-\\setlength{\\textheight}{\\paperheight}
-\\addtolength{\\textheight}{-\\headheight}
-\\addtolength{\\textheight}{-\\headsep}
-\\addtolength{\\textheight}{-\\footskip}
-\\addtolength{\\textheight}{-3cm}
-\\setlength{\\topmargin}{1.5cm}
-\\addtolength{\\topmargin}{-2.54cm}")
 
 (setq org-capture-templates
       '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
@@ -379,13 +359,13 @@
 
 (use-package yaml-mode :defer 10)
 
-(use-package elfeed
-  :defer 10
-  :after dashboard
-  :custom
-  (elfeed-db-directory "~/.config/elfeed")
-  (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
-                  "http://www.reddit.com/r/Physics/.rss")))
+;; (use-package elfeed
+;;   :defer 10
+;;   :after dashboard
+;;   :custom
+;;   (elfeed-db-directory "~/.config/elfeed")
+;;   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
+;;                   "http://www.reddit.com/r/Physics/.rss")))
 
 ;; (load-file mu4e-setup.el)
 
@@ -395,7 +375,7 @@
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
-  ;; :defer 1
+  :defer 1
   :hook
   (mu4e-view-mode . mpc/no-lines-setup)
   (mu4e-headers-mode . mpc/no-lines-setup)
@@ -449,7 +429,7 @@
   (auth-source-pass-filename "~/.password-store/mbsync/")
   
   :config
-  ;;(require 'org-mu4e)
+  (require 'org-mu4e)
   )
 
 ;; password stuff
