@@ -1,7 +1,7 @@
 IMAPAccount gmail
 Host imap.gmail.com
 User mcardiff@hawk.iit.edu
-PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/gmail.gpg"
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/share/pass/mbsync/gmail.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -14,8 +14,8 @@ Path ~/Mail/
 Inbox ~/Mail/Inbox
 
 Channel gmail
-Master :gmail-remote:
-Slave :gmail-local:
+Far :gmail-remote:
+Near :gmail-local:
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
 Create Both
 SyncState *
