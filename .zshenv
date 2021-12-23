@@ -1,7 +1,3 @@
-export ZDOTDIR="$HOME/.config/zsh"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-export LESSHISTFILE="-"
-# export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -9,14 +5,19 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_RUNTIME_DIR="/run/user/$UID"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export LESSHISTFILE="-"
+export ZDOTDIR="$HOME/.config/zsh"
+export PATH="$HOME/.local/share/cargo/bin${PATH:+:${PATH}}"
+export PATH="$HOME/.local/bin${PATH:+:${PATH}}"
+export PATH="/snap/bin${PATH:+:${PATH}}"
+export MANPATH="/usr/local/texlive/2021/texmf-dist/doc/man${MANPATH:+:${MANPATH}}"
+export INFOPATH="/usr/local/texlive/2021/texmf-dist/doc/info${INFOPATH:+:${INFOPATH}}"
 export STACK_ROOT="$XDG_DATA_HOME"/stack 
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export STACK_ROOT="$XDG_DATA_HOME"/stack
-export PATH="$HOME/.local/share/cargo/bin${PATH:+:${PATH}}"
-export PATH="/snap/bin${PATH:+:${PATH}}"
-export PATH="$HOME/.local/bin${PATH:+:${PATH}}"
 export TEXMFHOME="$XDG_DATA_HOME/texmf"
 export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 export TEXMFCONFIG="$XDG_CONFIG_HOME/texlive/texmf-config"
@@ -42,3 +43,16 @@ export XMONAD_DATA_DIR="$XDG_DATA_HOME"/xmonad
 export GVIMINIT='let $MYGVIMRC="$XDG_CONFIG_HOME/vim/gvimrc" | source $MYGVIMRC'
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export MU_HOME="$HOME"/.config/mu
+export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
+export XSERVERRC="$XDG_CONFIG_HOME"/X11/xserverrc
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
+export TEXMFHOME=$XDG_DATA_HOME/texmf
+export TEXMFVAR=$XDG_CACHE_HOME/texlive/texmf-var
+export TEXMFCONFIG=$XDG_CONFIG_HOME/texlive/texmf-config
+
+#if [ "$(tty)" = '/dev/tty1' ]; then
+#    [ -n "$CDM_SPAWN" ] && return
+#    # Avoid executing cdm(1) when X11 has already been started.
+#    [ -z "$DISPLAY$SSH_TTY$(pgrep xinit)" ] && exec cdm
+#fi

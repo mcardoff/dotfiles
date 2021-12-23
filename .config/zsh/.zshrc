@@ -1,4 +1,6 @@
-# If you come from bash you might have to change your $PATH.
+# start x if it isnt running
+[[ -z "$(pgrep X)" ]] && startx
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 autoload -U colors && colors
@@ -15,10 +17,6 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/mcard/.config/zsh/.oh-my-zsh/"
-plugins=(git)
-
 DISABLE_AUTO_TITLE="false"
 
 # Set up the prompt
@@ -34,4 +32,4 @@ print -Pn "\e]0;%m:%~\a"
 ~/.bin/ascii.sh
 
 # zsh-syntax-highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null
+source ~/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null
