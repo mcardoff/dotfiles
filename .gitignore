@@ -44,3 +44,4 @@ smex-items
 *.o
 *.hi
 /eprofiles/default/spotify-cred.el
+*.pyc
