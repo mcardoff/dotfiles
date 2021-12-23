@@ -57,10 +57,10 @@ browser :: String
 browser = "firefox"
 
 fileman :: String
-fileman = "nemo"
+fileman = "pcmanfm"
 
 term :: String
-term = "/home/mcard/.local/share/cargo/bin/alacritty"
+term = "alacritty"
 
 -- basic colors
 white    = "#ffffff"
