@@ -3,7 +3,7 @@
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq native-comp-deferred-compilation t)
 (setq file-name-handler-alist nil)
-(setq backup-directory-alist '(("." . "~/.emacsenv/cache/")))
+(setq backup-directory-alist '(("." . "~/.config/emacs/cache/")))
 
 ;;;; BEGIN EMACSINIT.EL
 
@@ -51,30 +51,30 @@
 
 ;; Doom modeline
 (use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-buffer-encoding nil)
-  (doom-modeline-height 40)
-  (doom-modeline-icon t))
+ :init (doom-modeline-mode 1)
+ :custom
+ (doom-modeline-buffer-encoding nil)
+ (doom-modeline-height 40)
+ (doom-modeline-icon t))
 
 ;; dashboard
 (use-package dashboard
-  :hook (after-init . dashboard-setup-startup-hook)
-  :custom
-  (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
-  (dashboard-items '((recents   . 10)
+ :hook (after-init . dashboard-setup-startup-hook)
+ :custom
+ (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
+ (dashboard-items '((recents   . 10)
 		     (bookmarks . 10)
-                     (agenda    . 10)))
-  (dashboard-set-heading-icons t)
-  (dashboard-set-file-icons t)
-  :config (dashboard-setup-startup-hook))
+                    (agenda    . 10)))
+ (dashboard-set-heading-icons t)
+ (dashboard-set-file-icons t)
+ :config (dashboard-setup-startup-hook))
 
 ;; Completion frameworks
 
 ;; company
 (use-package company
-  :diminish
-  :init (global-company-mode))
+ :diminish
+ :init (global-company-mode))
 
 ;; ivy
 (use-package ivy
@@ -174,7 +174,6 @@
 ;; Maybe using general?
 (use-package general
   :config
-  ;; (load-file (concat user-emacs-directory "configfuns.el"))
   (global-unset-key (kbd "C-z"))
   (general-define-key
    :prefix "C-z"
@@ -253,17 +252,15 @@
 (use-package yasnippet
   :defer 5
   :config (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/eprofiles/default/mysnippets")))
+  :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
 
 (require 'org-tempo)
 (use-package org-bullets
   :defer
-  ;; :after org
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
   :defer
-  ;; :after general
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -284,7 +281,7 @@
   :custom
   (org-ellipsis " [+]")
   (org-directory "~/Org/Agenda/")
-  (org-agenda-files (list org-directory))
+  (org-agenda-files (directory-files-recursively "~/Org/Agenda/" "\\.org$"))
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
@@ -312,60 +309,29 @@
 
 (use-package doc-view
   :ensure nil
-  :defer 2
+  :defer
   :hook (doc-view-mode . mpc/no-lines-setup))
 
 (use-package magit
   :defer 5)
 
-;; (use-package projectile
-;;   :after general
-;;   :defer 10
-;;   :diminish projectile-mode
-;;   :config (projectile-mode)
-;;   :bind-keymap ("C-z p" . projectile-command-map)
-;;   )
-
-;; (use-package counsel-projectile
-;;   :defer 10
-;;   :after projectile
-;;   :config (counsel-projectile-mode))
-
 (use-package cuda-mode
-  :defer 10
+  :defer
   :config
   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 
 (use-package octave
-  :defer 10
+  :defer
   :ensure nil
   :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
 (use-package haskell-mode
-  :defer 10
+  :defer
   :bind (("C-c C-c" . compile))
   :hook ((haskell-mode . interactive-haskell-mode)
 	 (haskell-mode . haskell-indent-mode))
   :custom
   (haskell-stylish-on-save t))
-
-;; linting in haskell
-(use-package hlint-refactor
-  :defer 10
-  :after haskell-mode
-  :hook (haskell-mode . hlint-refactor-mode))
-
-;; (use-package clojure-mode :defer 10)
-
-(use-package yaml-mode :defer 10)
-
-;; (use-package elfeed
-;;   :defer 10
-;;   :after dashboard
-;;   :custom
-;;   (elfeed-db-directory "~/.config/elfeed")
-;;   (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
-;;                   "http://www.reddit.com/r/Physics/.rss")))
 
 ;; (load-file mu4e-setup.el)
 
@@ -389,7 +355,7 @@
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
 
-  (mu4e-mu-home "~/.config/mu/")
+  (mu4e-mu-home "~/.cache/mu/")
   
   ;; Refresh mail using isync every 10 minutes
   (mu4e-update-interval (* 10 60))
@@ -401,17 +367,16 @@
   (mu4e-trash-folder  "/[Gmail]/Trash")
 
   (mu4e-maildir-shortcuts
-   '(("/Inbox"             . ?i)
-     ("/[Gmail]/Sent Mail" . ?s)
-     ("/[Gmail]/Trash"     . ?t)
-     ("/[Gmail]/Drafts"    . ?d)
-     ("/[Gmail]/All Mail"  . ?a)
-     ("/Teacher Emails/Sullivan"   . ?z)
-     ("/Teacher Emails/Hood"       . ?x)
-     ("/Teacher Emails/Rosenberg"  . ?c)
-     ("/Teacher Emails/IPRO"       . ?v)
-     ("/Teacher Emails/Littlejohn" . ?b)
-     ("/Teacher Emails/Dr. Z"       . ?n)))
+   '(("/Inbox"                   . ?i)
+     ("/[Gmail]/Sent Mail"       . ?s)
+     ("/[Gmail]/Trash"           . ?t)
+     ("/[Gmail]/Drafts"          . ?d)
+     ("/[Gmail]/All Mail"        . ?a)
+     ("/Teacher Emails/Dr. Z"    . ?z)
+     ("/Teacher Emails/Sullivan" . ?x)
+     ("/Teacher Emails/Shylnov"  . ?c)
+     ("/Teacher Emails/IPRO"     . ?v)
+     ("/Teacher Emails/Terry"    . ?b)))
 
   ;; smtp settings
   (message-send-mail-function 'smtpmail-send-it)
@@ -426,11 +391,10 @@
 
   ;; password
   (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
-  (auth-source-pass-filename "~/.password-store/mbsync/")
+  (auth-source-pass-filename "~/.local/share/pass/mbsync/")
   
   :config
-  (require 'org-mu4e)
-  )
+  (require 'org-mu4e))
 
 ;; password stuff
 (use-package auth-source-pass
@@ -440,18 +404,18 @@
 (use-package pass)
 
 ;; spotify
-(use-package counsel-spotify
-  :bind (("C-z f"   . counsel-spotify-next)
-	 ("C-z b"   . counsel-spotify-previous)
-	 ("C-z s t" . counsel-spotify-toggle-play-pause)
-	 ("C-z s a" . counsel-spotify-search-album)
-	 ("C-z s s" . counsel-spotify-search-track)
-	 ("C-z s d" . counsel-spotify-search-artist)
-	 ("C-z s f" . counsel-spotify-search-playlist)
-	 ("C-z s g" . counsel-spotify-search-tracks-by-album)
-	 ("C-z s h" . counsel-spotify-search-tracks-by-artist)))
+;; (use-package counsel-spotify
+;;   :bind (("C-z f"   . counsel-spotify-next)
+;; 	 ("C-z b"   . counsel-spotify-previous)
+;; 	 ("C-z s t" . counsel-spotify-toggle-play-pause)
+;; 	 ("C-z s a" . counsel-spotify-search-album)
+;; 	 ("C-z s s" . counsel-spotify-search-track)
+;; 	 ("C-z s d" . counsel-spotify-search-artist)
+;; 	 ("C-z s f" . counsel-spotify-search-playlist)
+;; 	 ("C-z s g" . counsel-spotify-search-tracks-by-album)
+;; 	 ("C-z s h" . counsel-spotify-search-tracks-by-artist)))
 
-(load-file (concat user-emacs-directory "spotify-cred.el"))
+;; (load-file (concat user-emacs-directory "spotify-cred.el"))
 
 ;; -------------------- ;;
 (defvar schoolpath "~/school/")
