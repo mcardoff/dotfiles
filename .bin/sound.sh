@@ -20,8 +20,8 @@ case $num in
   7)  bar='<icon=vol3.xpm/>' ;;
   8)  bar='<icon=vol3.xpm/>' ;;
   9)  bar='<icon=vol3.xpm/>' ;;
-  10) bar='<icon=vol.xpm/>' ;;
-  *)  bar='----!!----' ;;
+  10) bar='<icon=vol.xpm/>'  ;;
+  *)  bar='<icon=vol.xpm/>'  ;;
 esac
 
 echo $bar "$NOW%"
