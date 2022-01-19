@@ -60,7 +60,7 @@ fileman :: String
 fileman = "pcmanfm"
 
 term :: String
-term = "alacritty"
+term = "st"
 
 -- basic colors
 white    = "#ffffff"
@@ -184,11 +184,11 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 scratchpads :: [NamedScratchpad]
 scratchpads = [
  -- format :: NS <name> <command> <query> <hook>
-   NS "dropterm" (term ++ " --class dropterm -t dropterm")
+   NS "dropterm" (term ++ " --class dropterm --title dropterm")
        (appName =? "dropterm")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
- , NS "Ranger" (term ++ " --class Ranger -t Ranger -e ranger")
+ , NS "Ranger" (term ++ " --class Ranger --title Ranger -e ranger")
        (appName =? "Ranger")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
@@ -199,7 +199,7 @@ scratchpads = [
 
  , NS "Schedule" "feh ~/Pictures/schedule.png --title 'Schedule'"
       (title =? "Schedule")
-      (customFloating  $ W.RationalRect (1.53/8) (3.13/20) (2.47/4) (6.87/10))
+      (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
  ]
 
 
