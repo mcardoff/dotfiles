@@ -2,11 +2,9 @@
 ;;; Startup stuff
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
-(setq backup-directory-alist '(("." . "~/eprofiles/default/.emacs_saves/")))
+(setq backup-directory-alist '(("." . "~/.config/emacs/cache/")))
 
 ;; (org-babel-load-file (expand-file-name "EmacsInit.org" user-emacs-directory))
-
-(defvar cache-file "~/eprofiles/default/cache/autoloads")
 ;;;; BEGIN EMACSINIT.EL
 
 ;; package stuff
@@ -15,9 +13,9 @@
           ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(package-initialize)
+;; (package-initialize)
 ;; (require 'package)
-;; (require 'use-package)
+(require 'use-package)
 
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
@@ -49,8 +47,13 @@
   :bind (("M-x" . smex)
 	 ("M-X" . smex-major-mode-commands)))
 
-;; Auto mode for Octave
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+;; swiper for better search
+(use-package swiper
+  :diminish
+  :defer
+  :bind (("C-s" . swiper))
+  :custom-face
+  (ivy-current-match ((t (:extend t :background "#ffdd33" :foreground "black")))))
 
 (defun dotemacs ()
   "Opens init.el"

@@ -15,7 +15,7 @@
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; requires for emacs 28
-(package-initialize)
+;; (package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
@@ -170,6 +170,8 @@
   (interactive)
   (find-file (concat user-emacs-directory "EmacsInit.org")))
 
+(defun org-gimme-date ()
+  (format-time-string (car org-time-stamp-formats) (org-read-date nil t)))
 
 ;; Maybe using general?
 (use-package general
@@ -279,6 +281,7 @@
   :hook (org-mode . mpc/org-mode-setup)
   :bind (("<C-M-return>" . org-insert-todo-subheading))
   :custom
+  (org-tags-column 0)
   (org-ellipsis " [+]")
   (org-directory "~/Org/Agenda/")
   (org-agenda-files (directory-files-recursively "~/Org/Agenda/" "\\.org$"))
@@ -294,6 +297,24 @@
 (setq org-capture-templates
       '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
 	("h"  "Homework flow")
+	("hz" "PHYS 437" entry
+	 (id "8a056dbf-1082-47be-8c64-c3249ac5a9ae")
+	 "* TODO 437 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hx" "PHYS 440" entry 
+	 (id "e6e3eb9b-91f9-4047-8ca5-e049775341b8")
+	 "* TODO 440 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hc" "PHYS 518" entry
+	 (id "abc1d28d-c5a6-4f0e-bda4-44adbacb3179")
+	 "* TODO 518 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hv" "PHYS 546" entry
+	 (id "fdd24cd5-2a9e-484a-bba9-be02996265a1")
+	 "* TODO 546 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hb" "PHYS 553" entry
+	 (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
+	 "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hn" "IPRO 497"
+	 (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
+	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
 	("m"  "Mail Workflow")
 	("mf" "Follow Up" entry
 	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")

@@ -1,8 +1,8 @@
 ;;; -*- lexical-binding: t; -*-
 ;; (setq package-enable-at-startup nil)
-(setq user-emacs-directory "~/.config/emacs/"
-      user-init-file       "~/.config/emacs/init.el"
-      auto-save-list-file-name "~/.config/emacs/cache")
+;; (setq user-emacs-directory "~/.config/emacs/"
+;;       user-init-file       "~/.config/emacs/init.el"
+;;       auto-save-list-file-name "~/.config/emacs/cache")
 
 
 (setq package--init-file-ensured t
