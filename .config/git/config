@@ -1,3 +1,7 @@
 [user]
 	email = mcardiff0321@gmail.com
 	name = Michael Cardiff
+[init]
+	defaultBranch = main
+[core]
+	pager = bat --style=grid
