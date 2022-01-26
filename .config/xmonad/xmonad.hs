@@ -102,10 +102,12 @@ startHook = spawn "nm-applet" >>
 --
 
 myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
-    [ -- Workspace movement
+    [
+    -- Movement & General WM stuff 
+    --- Workspace movement
       ((alt, xK_Tab), nextWS)
     , ((alt .|. shf, xK_Tab), prevWS)
-    -- focus movement
+    --- Focus movement
     , ((mod, xK_j), windows W.focusDown)
     , ((mod .|. shf, xK_j), windows W.swapDown)
     , ((mod, xK_k), windows W.focusUp)
@@ -113,39 +115,41 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_d), withFocused toggleFloat)
     , ((mod, xK_Tab), windows W.focusDown)
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
-    -- Resize in tiled mode
+    --- Resize in tiled mode
     , ((mod, xK_h), sendMessage Shrink)
     , ((mod, xK_l), sendMessage Expand)
-    -- Move floating windows
+    --- Move floating windows
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
     , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
     , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
-    -- Resize Floating Windows
+    --- Resize Floating Windows
     , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow l (0,0))
     , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d (0,0))
     , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow u (0,0))
     , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r (0,0))
+    --- Kill window
+    , ((mod .|. shf, xK_c), kill)
+    --- Change WS layout
+    , ((mod, xK_space), sendMessage NextLayout)
+    , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
+    , ((mod, xK_t), withFocused $ windows . W.sink) -- set window to non-floating
     -- execs
+    --- apps
     , ((mod, xK_o), spawn "emacs")
-    , ((mod .|. shf, xK_o), spawn "~/.bin/emacs.sh")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod .|. shf, xK_f), spawn $ fileman)
     , ((mod, xK_Return), spawn term)
-    , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
     , ((mod, xK_b), spawn $ browser)
     , ((mod, xK_Print), spawn "scrot -s")
-    -- window modification
-    , ((mod .|. shf, xK_c), kill)
-    -- workspace
-    , ((mod, xK_space), sendMessage NextLayout)
-    , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
-    -- , ((mod, xK_x), setLayout monocleBare)
-    , ((mod, xK_t), withFocused $ windows . W.sink)
+    --- scripts
+    , ((mod .|. shf, xK_o), spawn "~/.bin/emacs.sh")
+    , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
+    , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
+    -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile; xmonad --restart")
-
-      -- MISC
+    -- MISC
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
