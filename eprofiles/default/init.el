@@ -296,25 +296,23 @@
 
 (setq org-capture-templates
       '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
+	;; Homeworks
 	("h"  "Homework flow")
-	("hz" "PHYS 437" entry
-	 (id "8a056dbf-1082-47be-8c64-c3249ac5a9ae")
+	("hz" "PHYS 437" entry (id "8a056dbf-1082-47be-8c64-c3249ac5a9ae")
 	 "* TODO 437 HW %?\nDEADLINE: %(org-gimme-date)")
-	("hx" "PHYS 440" entry 
-	 (id "e6e3eb9b-91f9-4047-8ca5-e049775341b8")
+	("hx" "PHYS 440" entry (id "e6e3eb9b-91f9-4047-8ca5-e049775341b8")
 	 "* TODO 440 HW %?\nDEADLINE: %(org-gimme-date)")
-	("hc" "PHYS 518" entry
-	 (id "abc1d28d-c5a6-4f0e-bda4-44adbacb3179")
+	("hc" "PHYS 518" entry (id "abc1d28d-c5a6-4f0e-bda4-44adbacb3179")
 	 "* TODO 518 HW %?\nDEADLINE: %(org-gimme-date)")
-	("hv" "PHYS 546" entry
-	 (id "fdd24cd5-2a9e-484a-bba9-be02996265a1")
+	("hv" "PHYS 546" entry (id "fdd24cd5-2a9e-484a-bba9-be02996265a1")
 	 "* TODO 546 HW %?\nDEADLINE: %(org-gimme-date)")
-	("hb" "PHYS 553" entry
-	 (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
+	("hb" "PHYS 553" entry (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
 	 "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)")
-	("hn" "IPRO 497"
-	 (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
+	("hn" "IPRO 497" entry (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
 	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+	("hm" "IPRO Meeting" entry (id "850a0ac3-317a-4ccc-bdbe-5b07ca95475f")
+	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+	;; Mails
 	("m"  "Mail Workflow")
 	("mf" "Follow Up" entry
 	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")
