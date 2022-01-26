@@ -188,11 +188,11 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 scratchpads :: [NamedScratchpad]
 scratchpads = [
  -- format :: NS <name> <command> <query> <hook>
-   NS "dropterm" (term ++ " --class dropterm --title dropterm")
+   NS "dropterm" (term ++ " -c dropterm -t dropterm")
        (appName =? "dropterm")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
- , NS "Ranger" (term ++ " --class Ranger --title Ranger -e ranger")
+ , NS "Ranger" (term ++ " -c Ranger -t Ranger -e ranger")
        (appName =? "Ranger")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
