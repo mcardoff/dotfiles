@@ -173,6 +173,13 @@
 (defun org-gimme-date ()
   (format-time-string (car org-time-stamp-formats) (org-read-date nil t)))
 
+
+(defvar cur-school-path "~/school/SP22/")
+(defun make-phys-hw-file (class num)
+  (let ((hwnum (shell-command-to-string
+		(format "~/.bin/find_next_hw.sh %s%s" class num))))
+  (format "%s%s%s/Cardiff_%s_HW_%s.tex" cur-school-path class num num hwnum)))
+
 ;; Maybe using general?
 (use-package general
   :config
@@ -299,15 +306,15 @@
 	;; Homeworks
 	("h"  "Homework flow")
 	("hz" "PHYS 437" entry (id "8a056dbf-1082-47be-8c64-c3249ac5a9ae")
-	 "* TODO 437 HW %?\nDEADLINE: %(org-gimme-date)")
+	 "* TODO 437 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"437\")][Associated File]]")
 	("hx" "PHYS 440" entry (id "e6e3eb9b-91f9-4047-8ca5-e049775341b8")
 	 "* TODO 440 HW %?\nDEADLINE: %(org-gimme-date)")
 	("hc" "PHYS 518" entry (id "abc1d28d-c5a6-4f0e-bda4-44adbacb3179")
 	 "* TODO 518 HW %?\nDEADLINE: %(org-gimme-date)")
 	("hv" "PHYS 546" entry (id "fdd24cd5-2a9e-484a-bba9-be02996265a1")
-	 "* TODO 546 HW %?\nDEADLINE: %(org-gimme-date)")
+	 "* TODO 546 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"546\")][Associated File]]")
 	("hb" "PHYS 553" entry (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
-	 "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)")
+	 "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"553\")][Associated File]]")
 	("hn" "IPRO 497" entry (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
 	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
 	("hm" "IPRO Meeting" entry (id "850a0ac3-317a-4ccc-bdbe-5b07ca95475f")
