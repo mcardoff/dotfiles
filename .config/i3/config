@@ -37,7 +37,7 @@ set $alt Mod1
 ## apps
 set $browser firefox
 set $file pcmanfm
-set $term "~/.local/share/cargo/bin/alacritty"
+set $term "st"
 
 ## colors
 set $white     #ffffff
@@ -128,6 +128,7 @@ bindsym $mod+Shift+f exec pcmanfm
 bindsym $mod+Return exec $term
 bindsym $mod+z exec (~/.bin/i3lock.sh)
 bindsym $mod+b exec $browser
+bindsym $mod+Shift+b exec (~/.bin/books.sh)
 bindcode $mod+107 exec (scrot -s) # printscreen
 
 # change window
@@ -162,7 +163,7 @@ bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT
 
 # scratchpad
 ## function keys
-bindsym F1 [class="Alacritty" title="dropterm"] scratchpad show
+bindsym F1 [class="st" title="dropterm"] scratchpad show
 bindsym F2 [class="Emacs"     title="notepad"]  scratchpad show
 bindsym F3 [class="Alacritty" title="Ranger"]   scratchpad show
 bindsym F4 [class="feh"       title="Schedule"] scratchpad show
@@ -192,7 +193,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 #bindsym $mod+Shift+s
 #bindsym       $mod+g
 #bindsym $mod+Shift+g
-#bindsym $mod+Shift+b
 #bindsym $mod+Shift+z
 #bindsym $mod+Shift+x
 #bindsym $mod+Shift+v
