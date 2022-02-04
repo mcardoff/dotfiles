@@ -236,8 +236,9 @@ tabs = renamed [Replace "Tabs"]
        $ tabbed shrinkText tabConfig
          
 
-layouts = avoidStruts $ onWorkspace "sch" simplestFloat $
-          grid ||| noBorders tabs ||| monocleBare ||| floats
+layouts = avoidStruts
+        $ onWorkspace "sch" simplestFloat -- on ws 4 do a floating ws
+        $ grid ||| noBorders tabs ||| monocleBare ||| floats
 
 -- Misc.
 
@@ -257,6 +258,7 @@ manHook = composeAll $
           , appName   =? fileman          --> doShift (myWS !! 3)
           , appName   =? "discord"        --> doShift (myWS !! 4)
           , appName   =? "vlc"            --> doShift (myWS !! 5)
+          , className =? "Ranger"         --> doShift "NS"
           ]
 
 eveHook :: Event -> X All
