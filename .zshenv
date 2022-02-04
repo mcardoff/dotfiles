@@ -49,9 +49,6 @@ export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
 export TEXMFCONFIG="$XDG_CONFIG_HOME"/texlive/texmf-config
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 
-#if [ "$(tty)" = '/dev/tty1' ]; then
-#    [ -n "$CDM_SPAWN" ] && return
-#    # Avoid executing cdm(1) when X11 has already been started.
-#    [ -z "$DISPLAY$SSH_TTY$(pgrep xinit)" ] && exec cdm
-#fi
 . "/home/mcard/.local/share/cargo/env"
+
+setxkbmap -option ctrl:nocaps
