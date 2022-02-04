@@ -19,9 +19,9 @@
  (position . 6461))
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/SP22.org")
- (front-context-string . "*** TODO IPRO We")
- (rear-context-string . "2022-01-21 Fri>\n")
- (position . 2462))
+ (front-context-string . "*** TODO 437 HW ")
+ (rear-context-string . "2022-02-07 Mon>\n")
+ (position . 1046))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
