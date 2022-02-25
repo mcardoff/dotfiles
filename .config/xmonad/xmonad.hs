@@ -186,25 +186,26 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 
 -- Scratchpads
 scratchpads :: [NamedScratchpad]
+-- scratchpads = []
 scratchpads = [
- -- format :: NS <name> <command> <query> <hook>
-   NS "dropterm" (term ++ " -c dropterm -t dropterm")
-       (appName =? "dropterm")
+  -- format :: NS <name> <command> <query> <hook>
+    NS "dropterm" (term ++ " -c dropterm -t dropterm")
+       (className =? "dropterm")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
- , NS "Ranger" (term ++ " -c Ranger -t Ranger -e ranger")
-       (appName =? "Ranger")
+  , NS "Ranger" (term ++ " -c Ranger -t Ranger -e ranger")
+       (className =? "Ranger")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
- , NS "Notepad" "emacs -T notepad \
-      \--eval='(unless (boundp 'server-process) (server-start))'"
-      (title =? "notepad")
-      (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
+  , NS "Notepad" "emacs -T notepad \
+       \--eval='(unless (boundp 'server-process) (server-start))'"
+       (title =? "notepad")
+       (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
 
- , NS "Schedule" "feh ~/Pictures/schedule.png --title 'Schedule'"
-      (title =? "Schedule")
-      (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
- ]
+  , NS "Schedule" "feh ~/Pictures/schedule.png --title 'Schedule'"
+       (title =? "Schedule")
+       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+  ]
 
 
 
@@ -259,6 +260,7 @@ manHook = composeAll $
           , appName   =? "discord"        --> doShift (myWS !! 4)
           , appName   =? "vlc"            --> doShift (myWS !! 5)
           , className =? "Ranger"         --> doShift "NS"
+          , className =? "dropterm"       --> doShift "NS"
           ]
 
 eveHook :: Event -> X All
