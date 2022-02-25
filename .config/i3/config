@@ -115,7 +115,6 @@ bindsym $mod+Shift+Right move right
 ## misc
 floating_modifier $mod
 bindsym $mod+space focus mode_toggle
-bindsym $mod+d focus child
 bindsym $mod+Shift+d focus parent
 bindsym $mod+Tab focus right
 bindsym $mod+Shift+Tab focus left
@@ -142,9 +141,9 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Shift+r mode "move" focus floating 
 
 # layout
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+a layout tabbed
 bindsym $mod+s layout stacking
+bindsym $mod+d layout toggle split
 bindsym $mod+x fullscreen toggle
 bindsym $mod+c split h
 bindsym $mod+v split v
@@ -164,13 +163,15 @@ bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT
 # scratchpad
 ## function keys
 bindsym F1 [class="dropterm"] scratchpad show
-bindsym F2 [class="Emacs"     title="notepad"]  scratchpad show
-bindsym F3 [title="Ranger"]   scratchpad show
-bindsym F4 [class="feh"       title="Schedule"] scratchpad show
+bindsym F2 [class="Emacs" title="notepad"] scratchpad show
+bindsym F3 [title="Ranger"] scratchpad show
+bindsym F4 [class="feh" title="Schedule"] scratchpad show
+bindsym F5 [class="vim" title="vim"] scratchpad show
 ## Natural bindings
 bindsym $mod+Shift+s [class="feh" title="Schedule"] scratchpad show
 bindsym $mod+Shift+Return [class="dropterm"] scratchpad show
 bindsym $mod+f [title="Ranger"] scratchpad show
+bindsym $mod+e [class="vim" title="vim"] scratchpad show
 
 # restart/reloading
 bindsym $mod+Shift+q reload
@@ -282,20 +283,17 @@ for_window [title="Ranger"]   resize set 1400 px 800 px
 for_window [title="Ranger"]   move absolute position center
 for_window [title="notepad"]  move absolute position center
 for_window [title="dropterm"] move absolute position center
+for_window [class="vim"]      move absolute position center
 
 for_window [title="Ranger"]               move scratchpad
 for_window [title="notepad"]              move scratchpad
 for_window [class="dropterm"]             move scratchpad
 for_window [title="Schedule"]             move scratchpad
+for_window [class="vim"]		  move scratchpad
 for_window [class="Lxappearance"]         move scratchpad
 for_window [class="Firefox"]              move to workspace $ws3
 for_window [class="Cinnamon-settings.py"] move to workspace $ws5
 for_window [class="discord"]              move to workspace $ws6
-
-# polybar
-# bar {
-	# status_command (polybar main)   
-# }
 
 # i3status
 bar {
@@ -317,9 +315,3 @@ bar {
 	       urgent_workspace   $white  $alert
 	}	
 }
-
-# Execute startup stuff
-# exec_always ($term -t "Scratchpad")
-# exec ($term -t "Ranger" -e "ranger")
-# 
-# exec_always (emacsclient -c -a="" -T "scratchpad:emacs" )

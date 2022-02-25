@@ -11,6 +11,10 @@
 [ $(ps -ef | grep dropterm | wc -l) -eq 1 ] &&
     st -c "dropterm" &
 
+# vim term
+[ $(ps -ef | grep vim | wc -l) -eq 1 ] &&
+    st -c "vim" -t "vim" -e vim &
+
 # emacs running server
 # [ $(ps -ef | grep notepad | wc -l) -eq 1 ] &&
     # emacs -T notepad --eval="(unless (boundp 'server-process) (server-start))" &
