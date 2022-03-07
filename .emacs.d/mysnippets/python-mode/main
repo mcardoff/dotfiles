@@ -1,0 +1,12 @@
+# -*- mode: python -*-
+# name: mainpy
+# key: mainpy
+# --
+
+def main():
+    # insert code here
+    $0print('Hello World!')
+    
+
+if __name__ == "__main__":
+    main()
