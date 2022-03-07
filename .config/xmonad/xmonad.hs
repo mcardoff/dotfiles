@@ -1,7 +1,7 @@
 -- IMPORTS
-import           Control.Arrow                       (first)
+import           Control.Arrow (first)
 import           Data.Char
-import qualified Data.Map                            as M
+import qualified Data.Map as M
 import           Data.Monoid
 import           Data.Tuple
 import           System.Exit
@@ -10,9 +10,10 @@ import           XMonad.Actions.CycleWS
 import           XMonad.Actions.FloatKeys
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.Circle
-import           XMonad.Layout.GridVariants          (Grid (Grid))
+import           XMonad.Layout.GridVariants (Grid (Grid))
 import           XMonad.Layout.LayoutModifier
 import           XMonad.Layout.LimitWindows          (decreaseLimit,
                                                       increaseLimit,
@@ -22,7 +23,7 @@ import           XMonad.Layout.MultiToggle           (EOT (EOT), mkToggle,
 import           XMonad.Layout.MultiToggle.Instances (StdTransformers (MIRROR, NBFULL, NOBORDERS))
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
-import           XMonad.Layout.Renamed               (Rename (Replace), renamed)
+import           XMonad.Layout.Renamed (Rename (Replace), renamed)
 import           XMonad.Layout.SimplestFloat
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
@@ -30,7 +31,7 @@ import qualified XMonad.Layout.ToggleLayouts         as T (ToggleLayout (Toggle)
                                                            toggleLayouts)
 import           XMonad.Prompt
 import           XMonad.Prompt.Input
-import qualified XMonad.StackSet                     as W
+import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig
 import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.Run
@@ -70,17 +71,24 @@ bg       = "#181818"
 altbg    = "#282828"
 
 -- theme colors
+-- 'gruber' colors
 princ  = "#cc8c3c"
 secon  = "#ffdd33"
 focol  = "#8b3622"
 active = "#7b4032"
+inactive = altbg
 alert  = "#f43841"
 cgood  = "#3774b5"
+
+-- gay gay gay colors
+-- focol  = "#f7a8b8"
+-- active = "#55cdfc"
+-- inactive = "#55cdfc"
+-- alert  = "#f43841"
 
 -- Paths
 xmobarPath :: String
 xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
-
 
 dec :: Num a => a
 dec = 10
@@ -115,6 +123,8 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_d), withFocused toggleFloat)
     , ((mod, xK_Tab), windows W.focusDown)
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
+    , ((mod, xK_l), windows W.focusUp)
+    , ((mod, xK_h), windows W.focusDown)
     --- Resize in tiled mode
     , ((mod, xK_h), sendMessage Shrink)
     , ((mod, xK_l), sendMessage Expand)
@@ -137,6 +147,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- execs
     --- apps
     , ((mod, xK_o), spawn "emacs")
+    , ((mod, xK_v), spawn "st -e vim")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod .|. shf, xK_f), spawn $ fileman)
     , ((mod, xK_Return), spawn term)
@@ -150,15 +161,16 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile; xmonad --restart")
     -- MISC
-    , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-    , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+    , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
 
       -- Scratchpads
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
-    , ((0, xK_F2), namedScratchpadAction scratchpads "Notepad")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
+    , ((0, xK_F2), namedScratchpadAction scratchpads "Notepad")
     , ((0, xK_F4), namedScratchpadAction scratchpads "Schedule")
+    , ((0, xK_F5), namedScratchpadAction scratchpads "vimwindow")
     ] 
     ++
     [((mo .|. mod, k), windows $ f i)
@@ -198,12 +210,16 @@ scratchpads = [
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
   , NS "Notepad" "emacs -T notepad \
-       \--eval='(unless (boundp 'server-process) (server-start))'"
+                 \ --eval='(unless (boundp 'server-process) (server-start))'"
        (title =? "notepad")
        (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
 
   , NS "Schedule" "feh ~/Pictures/schedule.png --title 'Schedule'"
        (title =? "Schedule")
+       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+
+  , NS "vimwindow" (term ++ " -c vim -e vim")
+       (className =? "vim")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
   ]
 
@@ -215,31 +231,27 @@ mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
 tiled = Tall 1 (3/100) (1/2)
 
-floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
+--floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
 
 grid = renamed [Replace "Grid"] $ limitWindows 12 $
        mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
-monocleBare = noBorders $ monocle
-
-monocle = renamed [Replace "Monocle"]
-           $ limitWindows 20 Full
 
 tabConfig = def { fontName            = "Source_Code_Pro"
                 , activeColor         = focol
-                , inactiveColor       = bg
+                , inactiveColor       = inactive
                 , activeBorderColor   = focol
-                , inactiveBorderColor = bg
+                , inactiveBorderColor = inactive
                 , activeTextColor     = white
                 , inactiveTextColor   = white
                 }
              
-tabs = renamed [Replace "Tabs"]
-       $ tabbed shrinkText tabConfig
+-- tabs = renamed [Replace "Tabs"]
+--        $ tabbed shrinkText tabConfig
          
 
-layouts = avoidStruts
-        $ onWorkspace "sch" simplestFloat -- on ws 4 do a floating ws
-        $ grid ||| noBorders tabs ||| monocleBare ||| floats
+layouts =  onWorkspace "sch" simplestFloat $
+           (as grid) ||| noBorders Full -- ||| noBorders tabs ||| floats
+               where as = avoidStruts
 
 -- Misc.
 
@@ -270,7 +282,7 @@ lgHook x1 = dynamicLogWithPP xmobarPP
                   { ppOutput = hPutStrLn x1
                   , ppCurrent = xmobarColor white focol . sp
                   , ppVisible = xmobarColor white active
-                  , ppHidden = xmobarColor altwhite altbg . sp
+                  , ppHidden = xmobarColor altwhite inactive . sp
                   , ppHiddenNoWindows = xmobarColor altwhite "" . sp
                   , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
@@ -301,7 +313,7 @@ main = do
              , focusFollowsMouse = True
              , clickJustFocuses = False
              , workspaces = myWS
-             , normalBorderColor = bg
+             , normalBorderColor = inactive
              , focusedBorderColor = focol
              , borderWidth = 2
 
@@ -311,8 +323,8 @@ main = do
 
              -- Hooks and Layouts
              , layoutHook = layouts 
-             , manageHook = manHook <+> namedScratchpadManageHook scratchpads
-             , handleEventHook = eveHook
+             , manageHook = manHook <+> (namedScratchpadManageHook scratchpads) -- <+> fullscreenEventHook
+             , handleEventHook = eveHook <+> fullscreenEventHook
              , logHook = lgHook xmproc 
              , startupHook = startHook
          }
