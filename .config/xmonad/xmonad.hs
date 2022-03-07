@@ -73,16 +73,17 @@ altbg    = "#282828"
 -- theme colors
 -- 'gruber' colors
 princ  = "#cc8c3c"
-secon  = "#ffdd33"
-focol  = "#8b3622"
+-- secon  = "#ffdd33"
+-- focol  = "#8b3622"
 active = "#7b4032"
 inactive = altbg
 alert  = "#f43841"
 cgood  = "#3774b5"
 
 -- gay gay gay colors
--- focol  = "#f7a8b8"
--- active = "#55cdfc"
+focol  = "#f7a8b8"
+secon  = "#fbd3db"
+blue = "#55cdfc"
 -- inactive = "#55cdfc"
 -- alert  = "#f43841"
 
@@ -279,11 +280,11 @@ eveHook :: Event -> X All
 eveHook = mempty
 
 lgHook x1 = dynamicLogWithPP xmobarPP
-                  { ppOutput = hPutStrLn x1
-                  , ppCurrent = xmobarColor white focol . sp
-                  , ppVisible = xmobarColor white active
-                  , ppHidden = xmobarColor altwhite inactive . sp
-                  , ppHiddenNoWindows = xmobarColor altwhite "" . sp
+                  { ppOutput  = hPutStrLn x1
+                  , ppCurrent = xmobarColor altbg focol . sp
+                  , ppVisible = xmobarColor altbg secon
+                  , ppHidden  = xmobarColor altbg secon . sp
+                  , ppHiddenNoWindows = xmobarColor altbg blue . sp
                   , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
                   , ppWsSep = ""
