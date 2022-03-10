@@ -1,3 +1,2 @@
 lxappearance &
-nitrogen --restore &
 compton --config=/home/mcard/.config/compton/compton.conf &
