@@ -1,11 +1,12 @@
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CACHE_HOME="$HOME/.local/cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_RUNTIME_DIR="/run/user/$UID"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XRESOURCES="$XDG_CONFIG_HOME"/X11/xresources
 export LESSHISTFILE="-"
 export ZDOTDIR="$HOME/.config/zsh"
 export PATH="$HOME/.local/share/cargo/bin${PATH:+:${PATH}}"
@@ -48,6 +49,8 @@ export TEXMFHOME="$XDG_DATA_HOME"/texmf
 export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
 export TEXMFCONFIG="$XDG_CONFIG_HOME"/texlive/texmf-config
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export TERMINFO="$XDG_DATA_HOME"/terminfo
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
 
 . "/home/mcard/.local/share/cargo/env"
 
