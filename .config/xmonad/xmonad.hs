@@ -73,19 +73,19 @@ altbg    = "#282828"
 -- theme colors
 -- 'gruber' colors
 princ  = "#cc8c3c"
--- secon  = "#ffdd33"
--- focol  = "#8b3622"
+secon  = "#ffdd33"
+focol  = "#8b3622"
+blue = altbg
 active = "#7b4032"
-inactive = altbg
+inactive = bg
 alert  = "#f43841"
 cgood  = "#3774b5"
 
 -- gay gay gay colors
-focol  = "#f7a8b8"
-secon  = "#fbd3db"
-blue = "#55cdfc"
--- inactive = "#55cdfc"
--- alert  = "#f43841"
+gayfocol  = "#f7a8b8"
+gaysecon  = "#fbd3db"
+gayblue = "#55cdfc"
+gayinactive = "#55cdfc"
 
 -- Paths
 xmobarPath :: String
@@ -165,6 +165,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
+    , ((0, xK_F12), spawn "~/.bin/egg.sh")
 
       -- Scratchpads
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
@@ -279,12 +280,12 @@ manHook = composeAll $
 eveHook :: Event -> X All
 eveHook = mempty
 
-lgHook x1 = dynamicLogWithPP xmobarPP
+lgHook c1 c2 c3 c4 c5 c6 c7 x1 = dynamicLogWithPP xmobarPP
                   { ppOutput  = hPutStrLn x1
-                  , ppCurrent = xmobarColor altbg focol . sp
-                  , ppVisible = xmobarColor altbg secon
-                  , ppHidden  = xmobarColor altbg secon . sp
-                  , ppHiddenNoWindows = xmobarColor altbg blue . sp
+                  , ppCurrent = xmobarColor c1 c2 . sp
+                  , ppVisible = xmobarColor c3 c4
+                  , ppHidden  = xmobarColor c5 c6 . sp
+                  , ppHiddenNoWindows = xmobarColor c5 c7 . sp
                   , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
                   , ppWsSep = ""
@@ -304,6 +305,10 @@ lgHook x1 = dynamicLogWithPP xmobarPP
                           f Nothing (Just _)  = GT
                           f (Just x) (Just y) = compare x y
 
+regLogHook = lgHook white focol bg active altwhite active blue
+
+gayLogHook = lgHook altbg gayfocol altbg gaysecon altbg gaysecon gayblue
+
 main :: IO ()
 main = do
   xmproc <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
@@ -315,7 +320,7 @@ main = do
              , clickJustFocuses = False
              , workspaces = myWS
              , normalBorderColor = inactive
-             , focusedBorderColor = focol
+             , focusedBorderColor = if gay then gayfocol else focol
              , borderWidth = 2
 
              -- Bindings
@@ -326,8 +331,10 @@ main = do
              , layoutHook = layouts 
              , manageHook = manHook <+> (namedScratchpadManageHook scratchpads) -- <+> fullscreenEventHook
              , handleEventHook = eveHook <+> fullscreenEventHook
-             , logHook = lgHook xmproc 
+             , logHook = ifGayLogHook xmproc 
              , startupHook = startHook
          }
-
+      where gay = True
+            ifGayLogHook = if gay then gayLogHook else regLogHook
+      
 --EOF
