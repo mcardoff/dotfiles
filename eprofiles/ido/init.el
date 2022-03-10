@@ -105,6 +105,11 @@
 
 (use-package tramp :ensure t)
 
+(use-package origami
+  :config (global-origami-mode)
+  :bind (("C-:" . 'origami-open-node)
+	 ("C-;" . 'origami-close-node)))
+
 (use-package cuda-mode
   :defer
   :config
