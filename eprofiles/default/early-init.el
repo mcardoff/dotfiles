@@ -17,7 +17,14 @@
       comp-deferred-compilation t
       display-line-numbers-type t
       dired-listing-switches "-lgXGDAh --group-directories-first"
+      backup-directory-alist '(("." . "~/.config/emacs/cache/"))
+      custom-file (concat user-emacs-directory ".emacs-custom.el")
       message-log-max t)
+
+(set-face-attribute 'default nil
+ :font "Source Code Pro"
+ :foundry 'regular
+ :height 140)
 
 (menu-bar-mode                    0)
 (tool-bar-mode                    0)

@@ -1,9 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 ;;; Startup stuff
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
-(setq native-comp-deferred-compilation t)
 (setq file-name-handler-alist nil)
-(setq backup-directory-alist '(("." . "~/.config/emacs/cache/")))
 
 ;;;; BEGIN EMACSINIT.EL
 
@@ -11,74 +9,73 @@
 
 (setq package-archives '(
           ("melpa" . "https://melpa.org/packages/")
-          ("org" . "https://orgmode.org/elpa/")
+          ;; ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; requires for emacs 28
-;; (package-initialize)
+(package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
-
-;; Visual stuff
-
-(set-face-attribute 'default nil
- :font "Source Code Pro"
- :foundry 'regular
- :height 140)
 
 (cond ((not (package-installed-p 'gruber-darker-theme))
        (use-package gruber-darker-theme))
       (t (load-theme 'gruber-darker t)))
 
 ;; Speed
-(use-package rainbow-mode
-  :defer t)
+;; (use-package rainbow-mode
+;;   :defer t)
 
-(use-package recentf
-  :defer t)
+;; (use-package recentf
+;;   :defer t)
 
-(use-package saveplace
-  :defer t)
+;; (use-package saveplace
+;;   :defer t)
 
-(use-package saveplace-pdf-view
-  :defer t)
+;; (use-package saveplace-pdf-view
+;;   :defer t)
 
 ;; (use-package server
 ;;   :defer t)
 
-(use-package autorevert
-  :defer t)
+;; (use-package autorevert
+;;   :defer t)
 
 ;; Doom modeline
 (use-package doom-modeline
- :init (doom-modeline-mode 1)
- :custom
- (doom-modeline-buffer-encoding nil)
- (doom-modeline-height 40)
- (doom-modeline-icon t))
+  :hook (after-init . doom-modeline-mode)
+  ;; :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-height 40)
+  (doom-modeline-icon t))
 
 ;; dashboard
 (use-package dashboard
- :hook (after-init . dashboard-setup-startup-hook)
- :custom
- (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
- (dashboard-items '((recents   . 10)
+  :hook (after-init . dashboard-setup-startup-hook)
+  :custom
+  (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
+  (dashboard-items '((recents   . 10)
 		     (bookmarks . 10)
-                    (agenda    . 10)))
- (dashboard-set-heading-icons t)
- (dashboard-set-file-icons t)
- :config (dashboard-setup-startup-hook))
+                     (agenda    . 10)))
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
+  :config (dashboard-setup-startup-hook))
 
 ;; Completion frameworks
 
 ;; company
 (use-package company
- :diminish
- :init (global-company-mode))
+  :ensure t
+  :diminish
+  :init (global-company-mode))
 
 ;; ivy
+
 (use-package ivy
+  :ensure t
   :diminish
+  :hook (after-init . ivy-mode)
+  ;; :init (ivy-mode 1)
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
          :map ivy-minibuffer-map
@@ -91,7 +88,6 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
-  :init (ivy-mode 1)
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-wrap t)
@@ -106,14 +102,16 @@
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
 
 (use-package ivy-rich
-  :init (ivy-rich-mode 1)
+  :hook (after-init . ivy-rich-mode)
+  ;; :init (ivy-rich-mode 1)
   :after ivy
   :custom
   (ivy-format-function #'ivy-format-function-line))
 
 (use-package all-the-icons-ivy-rich
-  :after ivy-rich
-  :init (all-the-icons-ivy-rich-mode 1))
+  :hook (after-init . all-the-icons-ivy-rich-mode)
+  ;; :init (all-the-icons-ivy-rich-mode 1)
+  :after ivy-rich)
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -182,6 +180,7 @@
 
 ;; Maybe using general?
 (use-package general
+  :ensure t
   :config
   (global-unset-key (kbd "C-z"))
   (general-define-key
@@ -210,6 +209,7 @@
 
 ;; which-key because there are so many bindings
 (use-package which-key
+  :ensure t
   :config (which-key-mode)
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
@@ -427,7 +427,7 @@
   :ensure nil
   :init (auth-source-pass-enable))
 
-(use-package pass)
+;; (use-package pass)
 
 ;; spotify
 ;; (use-package counsel-spotify
@@ -480,4 +480,3 @@
 (add-hook 'emacs-startup-hook
   (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
 
-(setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
