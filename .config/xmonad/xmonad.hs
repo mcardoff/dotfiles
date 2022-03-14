@@ -83,7 +83,7 @@ cgood  = "#3774b5"
 
 -- gay gay gay colors
 gayfocol  = "#f7a8b8"
-gaysecon  = "#fbd3db"
+gaysecon  = "#f37d95"
 gayblue = "#55cdfc"
 gayinactive = "#55cdfc"
 
@@ -103,8 +103,8 @@ r = ( dec,   0)
 -- STARTUP
 --
 startHook :: X ()
-startHook = spawn "nm-applet" >>
-            spawn "~/.bin/i3init.sh"
+startHook = spawn "nm-applet"
+            -- >> spawn "~/.bin/i3init.sh"
 
 --
 -- KEYBINDS
@@ -334,7 +334,7 @@ main = do
              , logHook = ifGayLogHook xmproc 
              , startupHook = startHook
          }
-      where gay = True
+      where gay = False
             ifGayLogHook = if gay then gayLogHook else regLogHook
       
 --EOF
