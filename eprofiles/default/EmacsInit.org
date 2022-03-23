@@ -2,60 +2,72 @@
 My emacs config
 * A Note
 This config is not complete, some of it remains in the original init.el for startup reasons. There is also a bit in early-init.el in terms of visuals that improve startup time immensely, down to about a half second. This is mostly adapted from my actual init.el
-* Startup Helping
-I set some variables here that will help later
-#+begin_src emacs-lisp
-  ;; -*- lexical-binding: t; -*-
-  (defvar mpc--file-name-handler-alist file-name-handler-alist)
-  (setq file-name-handler-alist nil)
-  (setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
-  (setq native-comp-deferred-compilation t)
-  (setq backup-directory-alist '(("." . "~/.emacsenv/cache/")))
-#+end_src
 * Package
 I use the =use-package= package loading system. It works pretty well for improving startup time:
 #+begin_src emacs-lisp
   (setq package-archives '(
             ("melpa" . "https://melpa.org/packages/")
-            ("org" . "https://orgmode.org/elpa/")
+            ;; ("org" . "https://orgmode.org/elpa/")
             ("elpa" . "https://elpa.gnu.org/packages/")))
-  
-  ;; (package-initialize)
-  (require 'use-package)
-  (unless (package-installed-p 'use-package) (package-install 'use-package))
+
+  ;; requires for emacs 28
+  (package-initialize)
   (setq use-package-always-ensure t)
+  (unless (package-installed-p 'use-package) (package-install 'use-package))
 #+end_src
 I have had issues on newer versions of emacs with my config that results in an issue if I do not have a =(package-initialize)= here
 * Visuals
-** Font & Theme
+** Theme
 This is the remainder of the visual changes that could not be put in the early-init.el file, that are specific to this emacs profile, such as the default font and the theme
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil
     :font "Source Code Pro"
     :foundry 'regular
     :height 140)
-  
+
   (cond ((not (package-installed-p 'gruber-darker-theme))
          (use-package gruber-darker-theme))
         (t (load-theme 'gruber-darker t)))
 #+end_src
-** Modeline & Startup
-The other unique aspect of my config is the doom modeline and the dashboard, seen at startup:
+** Package Deferring
+Emacs often loads all the packages it has installed at startup, by ignoring some until they are needed, we can speed up our startup quite a bit
+#+begin_src emacs-lisp
+  (use-package rainbow-mode :defer t)
+
+  (use-package recentf :defer t)
+
+  (use-package saveplace :defer t)
+
+  (use-package saveplace-pdf-view :defer t)
+
+  (use-package server :defer t)
+
+  (use-package autorevert :defer t)
+#+end_src
+** Modeline
+The doom modeline is one of the most visually appealing
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :init (doom-modeline-mode 1)
+    :hook (after-init . doom-modeline-mode)
+    ;; :init (doom-modeline-mode 1)
     :custom
     (doom-modeline-buffer-encoding nil)
     (doom-modeline-height 40)
     (doom-modeline-icon t))
-  
+#+end_src
+** Dashboard
+The other unique aspect of my config is the dashboard, seen at startup:
+#+begin_src emacs-lisp
   (use-package dashboard
+    :hook (after-init . dashboard-setup-startup-hook)
     :custom
     (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
-    (dashboard-items '((recents  . 5)
-                       (agenda   . 5)))
+    (dashboard-items '((recents   . 10)
+                       (bookmarks . 10)
+                       (agenda    . 10)))
     (dashboard-set-heading-icons t)
     (dashboard-set-file-icons t)
+    (dashboard-center-content t)
     :config (dashboard-setup-startup-hook))
 #+end_src
 Dashboard is a little finnicky and does not always work with multiple profiles. By default it will not show if you pass more than one command-line arg, this means we should change the file so that the last function defined checks for at least 3 instead of 2 command line args.
@@ -64,18 +76,23 @@ Dashboard is a little finnicky and does not always work with multiple profiles. 
 I am still new to company, but it seems to be doing more good than harm, so it is staying for now
 #+begin_src emacs-lisp
   (use-package company
-    :diminish
-    :init (global-company-mode))
+    :ensure t
+    :hook (after-init . global-company-mode)
+    ;; :init (global-company-mode)
+    :diminish)
 #+end_src
 ** Ivy
 Initially I used Ido for the completion framework, and it was not the best, so now I use the Ivy framework, which seems to work a lot better despite the fact it is a lot bigger, but it has a lot more info than Ido.
 #+begin_src emacs-lisp
   (use-package ivy
+    :ensure t
     :diminish
+    :hook (after-init . ivy-mode)
+    ;; :init (ivy-mode 1)
     :bind (("C-s" . swiper)
            ("C-x b" . ivy-switch-buffer)
            :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)	
+           ("TAB" . ivy-alt-done)
            ("C-j" . ivy-next-line)
            ("C-k" . ivy-previous-line)
            :map ivy-switch-buffer-map
@@ -84,7 +101,6 @@ Initially I used Ido for the completion framework, and it was not the best, so n
            :map ivy-reverse-i-search-map
            ("C-k" . ivy-previous-line)
            ("C-d" . ivy-reverse-i-search-kill))
-    :init (ivy-mode 1)
     :custom
     (ivy-use-virtual-buffers t)
     (ivy-wrap t)
@@ -97,7 +113,25 @@ Initially I used Ido for the completion framework, and it was not the best, so n
     (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
     (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
     (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
-  
+#+end_src
+Ivy rich is a way to improve the info given, including directory info and icons that give a cleaner look:
+*** Ivy Rich
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    ;; :hook (after-init . ivy-rich-mode)
+    ;; :init (ivy-rich-mode 1)
+    :after ivy
+    :custom
+    (ivy-format-function #'ivy-format-function-line))
+
+  (use-package all-the-icons-ivy-rich
+    ;; :hook (after-init . all-the-icons-ivy-rich-mode)
+    :init (all-the-icons-ivy-rich-mode)
+    :after ivy-rich)
+#+end_src
+The one problem with Ivy is that it is super slow when combined with tramp, so I created a new profile, Ido, which still uses ido/smex for tramp purposes
+*** Counsel
+#+begin_src emacs-lisp
   (use-package counsel
     :bind (("M-x" . counsel-M-x)
            ;; ("C-x b" . counsel-ibuffer)
@@ -110,34 +144,22 @@ Initially I used Ido for the completion framework, and it was not the best, so n
     (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
     (ivy-initial-inputs-alist nil))
 #+end_src
-Ivy rich is a way to improve the info given, including directory info and icons that give a cleaner look:
-#+begin_src emacs-lisp
-  (use-package ivy-rich
-    :init (ivy-rich-mode 1)
-    :after counsel
-    :custom
-    (ivy-format-function #'ivy-format-function-line))
-  
-  (use-package all-the-icons-ivy-rich
-    :init (all-the-icons-ivy-rich-mode 1))
-#+end_src
-The one problem with Ivy is that it is super slow when combined with tramp, so I created a new profile, Ido, which still uses ido/smex for tramp purposes
 * Plain elisp
-** Custom functions
+** defuns
 I have a few functions that need to be used in the following section, so they are all compiled here:
 #+begin_src emacs-lisp
   (defun mpc/LaTeX-setup ()
     ;; (hl-line-mode 1)
     (visual-line-mode 1))
-  
+
   (defun mpc/org-mode-setup ()
     (org-indent-mode)
     ;; (hl-line-mode 1)
     (visual-line-mode 1))
-  
-  (defun mpc/doc-view-setup ()
+
+  (defun mpc/no-lines-setup ()
     (display-line-numbers-mode 0))
-  
+
   (defun mpc/TeX-view-once (doc)
     "View TeX output and clean up after `my/TeX-compile-and-view'.
     Call `TeX-view' to display TeX output, and remove this function
@@ -145,26 +167,38 @@ I have a few functions that need to be used in the following section, so they ar
     have been placed by `my/TeX-compile-and-view'."
     (TeX-view)
     (remove-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
-  
+
   (defun mpc/TeX-compile-and-view ()
     "Compile current master file using LaTeX then view output. Run the \"LaTeX\" command on the master file for active buffer. When compilation is complete, view output with default viewer (using `TeX-view')."
     (interactive)
     (TeX-command "LaTeX" 'TeX-master-file)
     (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
-  
+
+  (defun mpc/org-agenda-list ()
+    (delq nil
+          (mapcar (lambda (buffer)
+                    (buffer-file-name buffer))
+                  (org-buffer-list 'files t))))
+
   (defun dotemacs ()
     "Opens init.el"
     (interactive)
     (find-file (concat user-emacs-directory "init.el")))
-  
+
   (defun initorg ()
     "Opens EmacsInit.org"
     (interactive)
     (find-file (concat user-emacs-directory "EmacsInit.org")))
-#+end_src
-I also have a custom file that defines =find-files= for use in =general.el= down below.
-#+begin_src emacs-lisp
-  (load-file (concat user-emacs-directory "configfuns.el"))
+
+  (defun org-gimme-date ()
+    (format-time-string (car org-time-stamp-formats) (org-read-date nil t)))
+
+
+  (defvar cur-school-path "~/school/SP22/")
+  (defun make-phys-hw-file (class num)
+    (let ((hwnum (shell-command-to-string
+                  (format "~/.bin/find_next_hw.sh %s%s" class num))))
+    (format "%s%s%s/Cardiff_%s_HW_%s.tex" cur-school-path class num num hwnum)))
 #+end_src
 ** Custom keybinds
 Here I set some useful keys for navigating windows as well as my personal keymap in =C-z= for a couple things. General makes it easy to define keys with a leader key, which is usefile when you have a lot. I start by getting rid of the stupid =C-z= binding that suspends the window, useless for someone using a tiling wm.
@@ -175,43 +209,40 @@ Here I set some useful keys for navigating windows as well as my personal keymap
 #+end_src
 Now I define some bindings to =C-z= for my sanity:
 #+begin_src emacs-lisp
-    (general-define-key
+  (general-define-key
      :prefix "C-z"
+     "C-c" 'org-capture
      "a" 'org-agenda
-     "l" 'org-agenda-list
+     "d" 'org-roam-dailies-capture-today
      "i" 'dotemacs
-     "d" 'initorg)
-#+end_src  
-I also define some quick links to my configs, I could achieve this with bookmarks, which I will hopefully do at some point soon. 
-#+begin_src emacs-lisp
-    (general-define-key
-     :prefix "C-z c"
-     "a" 'alaconfig
-     "e" 'dotemacs
-     "i" 'i3config
-     "k" 'kakconfig
-     "p" 'pbconfig
-     "r" 'rngconfig)
-#+end_src  
+     "l" 'org-agenda-list
+     "m" 'counsel-imenu
+     "o" 'initorg
+     "u" 'mu4e)
+#+end_src
 Finally some useful commands for window navigations
 #+begin_src emacs-lisp
-    (general-define-key
+  (general-define-key
      "<escape>" 'keyboard-escape-quit
-     "M-1" 'delete-other-windows
+     "M-1" 'shell-command
      "M-2" 'split-window-below
      "M-3" 'split-window-right
      "M-o" 'other-window
      "M-r" 'enlarge-window
-     "M-R" 'shrink-window))
+     "M-R" 'shrink-window
+     "M-." 'enlarge-window-horizontally
+     "M-," 'shrink-window-horizontally
+     "C-<SPC>" 'set-mark-command
+     "C-x <SPC>" 'rectangle-mark-mode))
 #+end_src
 ** Which-Key
 As an added bonus I have the =which-key= mode installed, so I can see which commands I have binded above:
 #+begin_src emacs-lisp
   (use-package which-key
-    :init (which-key-mode)
+    :ensure t
+    :config (which-key-mode)
     :diminish which-key-mode
-    :defer
-    :custom (which-key-idle-delay 0.3))  
+    :custom (which-key-idle-delay 0.3))
 #+end_src
 * Text-Editing modes
 ** LaTeX
@@ -220,11 +251,11 @@ So far, I am loving AUCTeX for my LaTeX documents, and it is helping my editing,
   (use-package auctex
     :defer
     :hook
-    (TeX-mode . mpc/LaTeX-setup)
+    (TeX-mode       . mpc/LaTeX-setup)
     (plain-TeX-mode . mpc/LaTeX-setup)
-    (TeXinfo-mode . mpc/LaTeX-setup)
-    (LaTeX-mode . mpc/LaTeX-setup)
-    (docTeX-mode . mpc/LaTeX-setup)
+    (TeXinfo-mode   . mpc/LaTeX-setup)
+    (LaTeX-mode     . mpc/LaTeX-setup)
+    (docTeX-mode    . mpc/LaTeX-setup)
     :custom
     (TeX-view-program-selection
       '(((output-dvi has-no-display-manager) "dvi2tty") 
@@ -233,6 +264,9 @@ So far, I am loving AUCTeX for my LaTeX documents, and it is helping my editing,
          (output-pdf "Zathura")
          (output-html "xdg-open")))
   
+    (LaTeX-section-hook
+     '(LaTeX-section-heading LaTeX-section-title LaTeX-section-section))
+
     (LaTeX-indent-environment-list
      '(("verbatim" current-indentation)
        ("verbatim*" current-indentation)
@@ -249,8 +283,8 @@ I do not want Doc-View to have the line number(s) on the side, so I make use of 
 #+begin_src emacs-lisp
   (use-package doc-view
     :ensure nil
-    :defer 2
-    :hook (doc-view-mode . mpc/doc-view-setup))
+    :defer
+    :hook (doc-view-mode . mpc/no-lines-setup))
 #+end_src
 ** Text Manipulation
 *** Moving text
@@ -278,8 +312,8 @@ Snippets are another useful feature in emacs, especially when making literate co
 #+begin_src emacs-lisp
   (use-package yasnippet
     :defer 5
-    :init (yas-global-mode)
-    :custom (yas-snippet-dirs '("~/eprofiles/regmacs/mysnippets")))
+    :config (yas-global-mode)
+    :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
 #+end_src
 You might want to add these snippets to your directory, however I find them somewhat annoying when editing elisp
 #+begin_example
@@ -293,18 +327,17 @@ Org-Bullets makes an org document look nice and less like plain text
   (require 'org-tempo)
   (use-package org-bullets
     :defer
-    ;; :after org
     :hook (org-mode . org-bullets-mode))
 #+end_src
 *** Org-Roam
 Roam is an interesting note taking system, so far it is useful for note taking in class especially during lectures, using the zettelkasten thought process
 #+begin_src emacs-lisp
   (use-package org-roam
-    :init
-    (setq org-roam-v2-ack t)
+    :defer
+    :init (setq org-roam-v2-ack t)
     :custom
     (org-roam-graph-executable "dot")
-    (org-roam-directory "~/Roam")
+    (org-roam-directory "~/Org/Roam")
     (org-roam-completion-everywhere t)
     (org-roam-completion-system 'ivy)
     :bind (("C-z n l" . org-roam-buffer-toggle)
@@ -317,32 +350,63 @@ Roam is an interesting note taking system, so far it is useful for note taking i
 Org mode is super useful, but if you are reading this you probably know that
 #+begin_src emacs-lisp
   (use-package org
+    :defer
     :hook (org-mode . mpc/org-mode-setup)
     :bind (("<C-M-return>" . org-insert-todo-subheading))
     :custom
+    (org-tags-column 0)
     (org-ellipsis " [+]")
-    (org-directory "~/repos/org-agenda/School Schedules/")
-    (org-agenda-files (concat user-emacs-directory "org_agenda.org"))
-    (org-structure-template-alist
-     '(("s"  . "src")
-       ("e"  . "example")
-       ("q"  . "quote")
-       ("v"  . "verse")
-       ("V"  . "verbatim")
-       ("c"  . "center")
-       ("C"  . "comment")
-       ("l"  . "latex")
-       ("a"  . "ascii")
-       ("i"  . "index")
-       ("el" . "src emacs-lisp")))
+    (org-directory "~/Org/Agenda/")
+    (org-agenda-files (directory-files-recursively "~/Org/Agenda/" "\\.org$"))
     :custom-face
     (org-block    ((t :foreground "#e4e4ef")))
     (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
-    (org-level-1  ((t :inherit 'outline-1 :height 1.20)))
+    (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
     :config
-    (setq org-tempo-keywords-alist nil))
+    (setq org-tempo-keywords-alist nil)
+    (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
+    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 #+end_src
-* Coding Adjacent
+*** Capture Templates
+In order to add various agenda entries in an efficient manner, I created a number of capture templates to add homework entries for my current classes as well as with emails, note the email ones do require you have =org-mu4e= in your =mu4e= config
+#+begin_src emacs-lisp
+  (setq org-capture-templates
+        '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
+          ;; Homeworks
+          ("h"  "Homework flow")
+          ("hz" "PHYS 437" entry (id "8a056dbf-1082-47be-8c64-c3249ac5a9ae")
+           "* TODO 437 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"437\")][Associated File]]")
+          ("hx" "PHYS 440" entry (id "e6e3eb9b-91f9-4047-8ca5-e049775341b8")
+           "* TODO 440 HW %?\nDEADLINE: %(org-gimme-date)")
+          ("hc" "PHYS 518" entry (id "abc1d28d-c5a6-4f0e-bda4-44adbacb3179")
+           "* TODO 518 HW %?\nDEADLINE: %(org-gimme-date)")
+          ("hv" "PHYS 546" entry (id "fdd24cd5-2a9e-484a-bba9-be02996265a1")
+           "* TODO 546 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"546\")][Associated File]]")
+          ("hb" "PHYS 553" entry (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
+           "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"553\")][Associated File]]")
+          ("hn" "IPRO 497" entry (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
+           "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+          ("hm" "IPRO Meeting" entry (id "850a0ac3-317a-4ccc-bdbe-5b07ca95475f")
+           "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+          ;; Mail
+          ("m"  "Mail Workflow")
+          ("mf" "Follow Up" entry
+           (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")
+           "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\")) \n%i":immediate-finish t)
+          ("mr" "Read Later" entry
+           (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Read Later")
+            "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-read-date)\n\n%a\n\n%i" :immediate-finish t)))
+#+end_src
+*** Structure Templates
+Structure templates are super useful when making literate files such as this one!
+#+begin_src emacs-lisp
+  (setq org-structure-template-alist
+        '(("s" . "src"    ) ("e"  . "example" ) ("q" . "quote" )
+          ("v" . "verse"  ) ("V"  . "verbatim") ("c" . "center")
+          ("C" . "comment") ("l"  . "latex" )   ("a" . "ascii" )
+          ("i" . "index"  ) ("el" . "src emacs-lisp")))
+#+end_src
+* Coding Adjacent, Make Emacs an IDE
 ** Magit
 I love magit, it is super robust to use, and the config is drop dead simple to use, in fact it is only two lines because I made it two lines
 #+begin_src emacs-lisp
@@ -356,7 +420,7 @@ Tramp is useful for editing files on remote machines, but not on this config, so
 #+end_example
 ** Projectile
 I have not really gotten to use projectile too much, but I have a config for it, so maybe one day I will use it.
-#+begin_src emacs-lisp
+#+begin_example
   (use-package projectile
     :diminish projectile-mode
     :config (projectile-mode)
@@ -367,14 +431,14 @@ I have not really gotten to use projectile too much, but I have a config for it,
     (when (file-directory-p "~/Projects/Code")
       (setq projectile-project-search-path '("~/Projects/Code")))
     (setq projectile-switch-project-action #'projectile-dired))
-#+end_src
+#+end_example
 I am not even sure if =counsel-projectile= works, but I have it here:
-#+begin_src emacs-lisp
+#+begin_example
   (use-package counsel-projectile
     :defer
     :after 'projectile
     :config (counsel-projectile-mode))
-#+end_src
+#+end_example
 ** Cuda
 I need to edit =CUDA= files for research, so I need =CUDA-mode=:
 #+begin_src emacs-lisp
@@ -402,96 +466,145 @@ I love Haskell, every so often I will go back and use it for fun, and the haskel
     :custom
     (haskell-stylish-on-save t))
 #+end_src
-I also use a linter that helps clean up the code
-#+begin_src emacs-lisp
-  (use-package hlint-refactor
-    :defer
-    :after haskell-mode
-    :hook (haskell-mode . hlint-refactor-mode))
-#+end_src
 ** Clojure
 Oh boy here is go functional programming again
-#+begin_src emacs-lisp
+#+begin_example
   (use-package clojure-mode :defer)
-#+end_src
+#+end_example
 ** Yaml
 This is mostly to make editing my alacritty config easier
-#+begin_src emacs-lisp
+#+begin_example
   (use-package yaml-mode :defer)
+#+end_example
+** LSP
+Language Servers are super cool to play around with, for now only the python language server is supported, but there are many more which can be used:
+#+begin_src emacs-lisp
+  (defun mpc/lsp-mode-setup ()
+    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+    (lsp-headerline-breadcrumb-mode))
+
+  (use-package lsp-mode
+    :defer t
+    :commands (lsp lsp-deferred)
+    :hook ((python-mode . lsp)
+           (lsp-mode . mpc/lsp-mode-setup))
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :config
+    (lsp-enable-which-key-integration t)
+    (lsp-register-custom-settings
+     '(("pyls.plugins.pyls_mypy.enabled" t t)
+       ("pyls.plugins.pyls_mypy.live_mode" nil t)
+       ("pyls.plugins.pyls_black.enabled" t t)
+       ("pyls.plugins.pyls_isort.enabled" t t))))
+#+end_src
+*** LSP-UI
+Adds some interesting UI elements to lsp:
+#+begin_src emacs-lisp
+  (use-package lsp-ui
+    :defer t
+    :commands lsp-ui-mode
+    :hook (lsp-mode . lsp-ui-mode)
+    :custom
+    (lsp-ui-doc-position 'bottom))
+#+end_src
+*** LSP-Treemacs
+This will add some nice looking symbols kind of like =all-the-icons-ivy=
+#+begin_src emacs-lisp
+  (use-package lsp-treemacs
+    :defer t
+    :after lsp)
+#+end_src
+*** LSP-ivy
+Integrates LSP with ivy!
+#+begin_src emacs-lisp
+  (use-package lsp-ivy
+    :defer t)
 #+end_src
 * Fun Stuff!
 ** Elfeed
 elfeed is fun, I do not really use it too much
-#+begin_src emacs-lisp
+#+begin_example
   (use-package elfeed
     :defer 5
     :custom
     (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                     "http://www.reddit.com/r/Physics/.rss")))
-#+end_src
+#+end_example
 ** mu4e
-This is an email system for emacs, I still am unable to actually send mail with it but I am getting there!
+While it is currently broken, I love using =mu4e= to manage and send my mail
 #+begin_src emacs-lisp
   (use-package mu4e
     :ensure nil
     :load-path "/usr/share/emacs/site-lisp/mu4e/"
-    :defer 1 ; Wait until 1 seconds after startup
+    :defer 1
+    :hook
+    (mu4e-view-mode . mpc/no-lines-setup)
+    (mu4e-headers-mode . mpc/no-lines-setup)
+    (mu4e-main-mode . mpc/no-lines-setup)
+    (mu4e-compose-mode . mpc/no-lines-setup)
     :custom
+    ;; Mail signature
+    (mu4e-compose-signature-auto-include t)
+    (mu4e-compose-signature "Michael Cardiff\nSenior\nIIT PHYS '22")
+
     ;; This is set to 't' to avoid mail syncing issues when using mbsync
     (mu4e-change-filenames-when-moving t)
-  
+    (mu4e-mu-home "~/.cache/mu/")
+
     ;; Refresh mail using isync every 10 minutes
     (mu4e-update-interval (* 10 60))
     (mu4e-get-mail-command "mbsync -a")
     (mu4e-maildir "~/Mail")
-  
     (mu4e-drafts-folder "/[Gmail]/Drafts")
     (mu4e-sent-folder   "/[Gmail]/Sent Mail")
     (mu4e-refile-folder "/[Gmail]/All Mail")
     (mu4e-trash-folder  "/[Gmail]/Trash")
-  
+
     (mu4e-maildir-shortcuts
-     '(("/Inbox"             . ?i)
-       ("/[Gmail]/Sent Mail" . ?s)
-       ("/[Gmail]/Trash"     . ?t)
-       ("/[Gmail]/Drafts"    . ?d)
-       ("/[Gmail]/All Mail"  . ?a)
-       ("/[Gmail]/Teacher Emails/Sullivan"   . ?z)
-       ("/[Gmail]/Teacher Emails/Dr. Z"      . ?x)
-       ("/[Gmail]/Teacher Emails/Littlejohn" . ?c)
-       ("/[Gmail]/Teacher Emails/Rosenberg"  . ?v)
-       ("/[Gmail]/Teacher Emails/Hood"       . ?b)
-       ("/[Gmail]/Teacher Emails/IPRO"       . ?n))))  
-#+end_src
-Sending mail requires we use the =smtpmail= builtin package
-#+begin_src emacs-lisp
-  (use-package smtpmail
-    :ensure nil
-    :custom
-    (smtp-smtp-server "smtp.gmail.com")
+     '(("/Inbox"                   . ?i)
+       ("/[Gmail]/Sent Mail"       . ?s)
+       ("/[Gmail]/Trash"           . ?t)
+       ("/[Gmail]/Drafts"          . ?d)
+       ("/[Gmail]/All Mail"        . ?a)
+       ("/Teacher Emails/Dr. Z"    . ?z)
+       ("/Teacher Emails/Sullivan" . ?x)
+       ("/Teacher Emails/Shylnov"  . ?c)
+       ("/Teacher Emails/IPRO"     . ?v)
+       ("/Teacher Emails/Terry"    . ?b)))
+
+    ;; smtp settings
+    (message-send-mail-function 'smtpmail-send-it)
+    (smtpmail-stream-type 'starttls)
+    (user-full-name "Michael Cardiff")
+    (user-mail-address "mcardiff@hawk.iit.edu")
+    (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
+    (smtpmail-local-domain "gmail.com")
+    (smtpmail-default-smtp-server "smtp.gmail.com")
+    (smtpmail-smtp-server "smtp.gmail.com")
     (smtpmail-smtp-service 587)
-    (smtpmail-stream-type 'ssl)
-    (smtpmail-auth-credentials
-     '(("smtp.gmail.com" 587 "mcardiff0321"
-        (with-temp-buffer
-          (insert-files-contents "~/.pass")
-          (buffer-string)))))
+
+    ;; password
+    (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
+    (auth-source-pass-filename "~/.local/share/pass/mbsync/")
+
     :config
-    (setq message-send-mail-function 'smtpmail-send-it))
+    (require 'org-mu4e))
 #+end_src
 ** Homework stuff
 I made these without knowing of template expansions, so theyre kind of useless now
 #+begin_src emacs-lisp
   (defvar schoolpath "~/school/")
   (defvar templatepath "~/school/template.tex")
-    
+  
   (defun gencopy (subj code)
     (let ((fname
            (read-file-name
            (concat subj ": ")
-               (concat schoolpath (concat code "/HW/")))))
-    (copy-file templatepath fname) (find-file fname)))
-  
+           (concat schoolpath (concat code "/HW/")))))
+      (copy-file templatepath fname)
+      (find-file fname)))
+
   (defun starthw ()
     (interactive)
     (let ((x (upcase (read-string "Class Shorthand: "))))
@@ -501,7 +614,7 @@ I made these without knowing of template expansions, so theyre kind of useless n
             ((string= x "MM") (gencopy "MM" "PHYS502"))
             ((string= x "GQ") (gencopy "GQ" "PHYS510"))
             (t "failed"))))
-  
+
   (defun continuehw ()
     (interactive)
     (let ((x (upcase (read-string "Class Shorthand: "))))
@@ -515,6 +628,6 @@ I made these without knowing of template expansions, so theyre kind of useless n
 * Cleaning up what we started
 This is the last bit of what we did at the Startup Helping section
 #+begin_src emacs-lisp
-(add-hook 'emacs-startup-hook
-  (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
+  (add-hook 'emacs-startup-hook
+    (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
 #+end_src

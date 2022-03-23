@@ -53,6 +53,7 @@
                      (agenda    . 10)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
+  (dashboard-center-content t)
   :config (dashboard-setup-startup-hook))
 
 ;; Completion frameworks
@@ -65,7 +66,6 @@
   :diminish)
 
 ;; ivy
-
 (use-package ivy
   :ensure t
   :diminish
@@ -97,15 +97,15 @@
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
 
 (use-package ivy-rich
-  :hook (after-init . ivy-rich-mode)
+  ;; :hook (after-init . ivy-rich-mode)
   ;; :init (ivy-rich-mode 1)
   :after ivy
   :custom
   (ivy-format-function #'ivy-format-function-line))
 
 (use-package all-the-icons-ivy-rich
-  :hook (after-init . all-the-icons-ivy-rich-mode)
-  ;; :init (all-the-icons-ivy-rich-mode 1)
+  ;; :hook (after-init . all-the-icons-ivy-rich-mode)
+  :init (all-the-icons-ivy-rich-mode)
   :after ivy-rich)
 
 (use-package counsel
@@ -313,7 +313,7 @@
 	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
 	("hm" "IPRO Meeting" entry (id "850a0ac3-317a-4ccc-bdbe-5b07ca95475f")
 	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
-	;; Mails
+	;; Mail
 	("m"  "Mail Workflow")
 	("mf" "Follow Up" entry
 	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")
@@ -355,11 +355,11 @@
   :custom
   (haskell-stylish-on-save t))
 
+; lsp
 (defun mpc/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
 
-; lsp
 (use-package lsp-mode
   :defer t
   :commands (lsp lsp-deferred)
