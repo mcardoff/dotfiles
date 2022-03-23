@@ -22,23 +22,17 @@
       (t (load-theme 'gruber-darker t)))
 
 ;; Speed
-;; (use-package rainbow-mode
-;;   :defer t)
+(use-package rainbow-mode :defer t)
 
-;; (use-package recentf
-;;   :defer t)
+(use-package recentf :defer t)
 
-;; (use-package saveplace
-;;   :defer t)
+(use-package saveplace :defer t)
 
-;; (use-package saveplace-pdf-view
-;;   :defer t)
+(use-package saveplace-pdf-view :defer t)
 
-;; (use-package server
-;;   :defer t)
+(use-package server :defer t)
 
-;; (use-package autorevert
-;;   :defer t)
+(use-package autorevert :defer t)
 
 ;; Doom modeline
 (use-package doom-modeline
@@ -66,8 +60,9 @@
 ;; company
 (use-package company
   :ensure t
-  :diminish
-  :init (global-company-mode))
+  :hook (after-init . global-company-mode)
+  ;; :init (global-company-mode)
+  :diminish)
 
 ;; ivy
 
@@ -270,8 +265,7 @@
 
 (use-package org-roam
   :defer
-  :init
-  (setq org-roam-v2-ack t)
+  :init (setq org-roam-v2-ack t)
   :custom
   (org-roam-graph-executable "dot")
   (org-roam-directory "~/Org/Roam")
@@ -338,6 +332,8 @@
   :defer
   :hook (doc-view-mode . mpc/no-lines-setup))
 
+;; IDE 
+
 (use-package magit
   :defer 5)
 
@@ -358,6 +354,41 @@
 	 (haskell-mode . haskell-indent-mode))
   :custom
   (haskell-stylish-on-save t))
+
+(defun mpc/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+; lsp
+(use-package lsp-mode
+  :defer t
+  :commands (lsp lsp-deferred)
+  :hook ((python-mode . lsp)
+	 (lsp-mode . mpc/lsp-mode-setup))
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t)
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)))
+)
+
+(use-package lsp-ui
+  :defer t
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+
+(use-package lsp-treemacs
+  :defer t
+  :after lsp)
+
+(use-package lsp-ivy
+  :defer t)
 
 ;; (load-file mu4e-setup.el)
 
@@ -380,7 +411,6 @@
 
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
-
   (mu4e-mu-home "~/.cache/mu/")
   
   ;; Refresh mail using isync every 10 minutes
@@ -423,27 +453,13 @@
   (require 'org-mu4e))
 
 ;; password stuff
-(use-package auth-source-pass
-  :ensure nil
-  :init (auth-source-pass-enable))
+;; (use-package auth-source-pass
+  ;; :hook (after-init . auth-source-pass-enable)
+  ;; :init (auth-source-pass-enable)
+  ;; :ensure nil)
 
 ;; (use-package pass)
 
-;; spotify
-;; (use-package counsel-spotify
-;;   :bind (("C-z f"   . counsel-spotify-next)
-;; 	 ("C-z b"   . counsel-spotify-previous)
-;; 	 ("C-z s t" . counsel-spotify-toggle-play-pause)
-;; 	 ("C-z s a" . counsel-spotify-search-album)
-;; 	 ("C-z s s" . counsel-spotify-search-track)
-;; 	 ("C-z s d" . counsel-spotify-search-artist)
-;; 	 ("C-z s f" . counsel-spotify-search-playlist)
-;; 	 ("C-z s g" . counsel-spotify-search-tracks-by-album)
-;; 	 ("C-z s h" . counsel-spotify-search-tracks-by-artist)))
-
-;; (load-file (concat user-emacs-directory "spotify-cred.el"))
-
-;; -------------------- ;;
 (defvar schoolpath "~/school/")
 (defvar templatepath "~/school/template.tex")
   

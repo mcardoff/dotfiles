@@ -1,4 +1,4 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
@@ -20,8 +20,8 @@
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/SP22.org")
  (front-context-string . "*** TODO 437 HW ")
- (rear-context-string . "2022-02-07 Mon>\n")
- (position . 1046))
+ (rear-context-string . "sociated File]]\n")
+ (position . 1428))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

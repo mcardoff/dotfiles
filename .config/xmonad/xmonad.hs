@@ -82,6 +82,12 @@ alert  = "#f43841"
 cgood  = "#3774b5"
 
 -- gay gay gay colors
+gaypink1 = "#C479A2"
+gaypink2 = "#EDA5CD"
+gaypurpl = "#D6C7E8"
+gaywhite = "#FFFFFF"
+gayltblu = "#9AC7E8"
+gaydrblu = "#6D82D1"
 gayfocol  = "#f7a8b8"
 gaysecon  = "#f37d95"
 gayblue = "#55cdfc"
@@ -280,12 +286,12 @@ manHook = composeAll $
 eveHook :: Event -> X All
 eveHook = mempty
 
-lgHook c1 c2 c3 c4 c5 c6 c7 x1 = dynamicLogWithPP xmobarPP
+lgHook c1 c2 c3 c4 c5 c6 c7 c8 x1 = dynamicLogWithPP xmobarPP
                   { ppOutput  = hPutStrLn x1
                   , ppCurrent = xmobarColor c1 c2 . sp
                   , ppVisible = xmobarColor c3 c4
                   , ppHidden  = xmobarColor c5 c6 . sp
-                  , ppHiddenNoWindows = xmobarColor c5 c7 . sp
+                  , ppHiddenNoWindows = xmobarColor c7 c8 . sp
                   , ppTitle = xmobarColor white "" . shorten 25
                   , ppSep = "<fc=#666666> | </fc>"
                   , ppWsSep = ""
@@ -305,9 +311,11 @@ lgHook c1 c2 c3 c4 c5 c6 c7 x1 = dynamicLogWithPP xmobarPP
                           f Nothing (Just _)  = GT
                           f (Just x) (Just y) = compare x y
 
-regLogHook = lgHook white focol bg active altwhite active blue
+regLogHook = lgHook white focol bg active altwhite active altwhite blue
 
-gayLogHook = lgHook altbg gayfocol altbg gaysecon altbg gaysecon gayblue
+gayLogHook = lgHook altbg gayfocol altbg gaysecon altbg gaysecon altbg gayblue
+
+gaygayLogHook = lgHook altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu
 
 main :: IO ()
 main = do
@@ -335,6 +343,6 @@ main = do
              , startupHook = startHook
          }
       where gay = False
-            ifGayLogHook = if gay then gayLogHook else regLogHook
+            ifGayLogHook = if gay then gaygayLogHook else regLogHook
       
 --EOF

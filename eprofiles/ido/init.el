@@ -13,8 +13,8 @@
           ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-;; (package-initialize)
-;; (require 'package)
+(package-initialize)
+(require 'package)
 (require 'use-package)
 
 (setq use-package-always-ensure t)
@@ -62,6 +62,7 @@
 
 ;; Maybe using general?
 (use-package general
+  :ensure t
   :config
   (global-unset-key (kbd "C-z"))
   (general-define-key
@@ -83,6 +84,7 @@
 
 ;; which-key because there are so many bindings
 (use-package which-key
+  :ensure t
   :init (which-key-mode)
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
@@ -114,6 +116,23 @@
   :defer
   :config
   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
+
+(defun mpc/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+;; (use-package lsp-mode
+;;   :commands (lsp lsp-deferred)
+;;   :hook (lsp-mode . mpc/lsp-mode-setup)
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+;;   :config
+;;   (lsp-enable-which-key-integration t))
+  
+;; (use-package lsp-ui
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :custom
+;;   (lsp-ui-doc-position 'bottom))
 
 (use-package org-bullets              
   :defer                              

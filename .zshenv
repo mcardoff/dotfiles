@@ -50,7 +50,8 @@ export TEXMFVAR="$XDG_CACHE_HOME"/texlive/texmf-var
 export TEXMFCONFIG="$XDG_CONFIG_HOME"/texlive/texmf-config
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export TERMINFO="$XDG_DATA_HOME"/terminfo
-export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
+export DOOMDIR="~/.config/emacsenv/.doom.d/"
 
 . "/home/mcard/.local/share/cargo/env"
 

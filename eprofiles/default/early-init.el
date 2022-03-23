@@ -4,6 +4,8 @@
 ;;       user-init-file       "~/.config/emacs/init.el"
 ;;       auto-save-list-file-name "~/.config/emacs/cache")
 
+;;(setq-default inhibit-redisplay t
+;;              inhibit-message t)
 
 (setq package--init-file-ensured t
       gc-cons-threshold most-positive-fixnum
