@@ -12,12 +12,17 @@
 
 (setq package-archives '(
           ("melpa" . "https://melpa.org/packages/")
-          ("org" . "https://orgmode.org/elpa/")
+          ;; ("org" . "https://orgmode.org/elpa/")
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(require 'use-package)
+;; requires for emacs 28
+(package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
+
+(cond ((not (package-installed-p 'gruber-darker-theme))
+       (use-package gruber-darker-theme))
+      (t (load-theme 'gruber-darker t)))
 
 ;; Visual stuff
 
@@ -25,8 +30,6 @@
  :font "Source Code Pro"
  :foundry 'regular
  :height 140)
-
-(load-theme 'gruber-darker t)
 
 ;; Doom modeline
 (use-package doom-modeline
@@ -36,21 +39,79 @@
   (doom-modeline-height 40)
   (doom-modeline-icon t))
 
+;; Speed
+(use-package rainbow-mode :defer t)
+
+(use-package recentf :defer t)
+
+(use-package saveplace :defer t)
+
+(use-package saveplace-pdf-view :defer t)
+
+(use-package server :defer t)
+
+(use-package autorevert :defer t)
+
+;; Doom modeline
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  ;; :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-height 40)
+  (doom-modeline-icon t))
+
 ;; dashboard
 (use-package dashboard
   :hook (after-init . dashboard-setup-startup-hook)
-  :ensure t
+  :custom
+  (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
+  (dashboard-items '((recents   . 10)
+		     (bookmarks . 10)
+                     (agenda    . 10)))
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
   :config (dashboard-setup-startup-hook))
+
+;; Vim Bindings
+(use-package evil
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+  ;; allows for using cgn
+  ;; (setq evil-search-module 'evil-search)
+  (setq evil-want-keybinding nil)
+  ;; no vim insert bindings
+  (setq evil-undo-system 'undo-fu)
+  :config
+  (evil-mode 1))
+
+;;; Vim Bindings Everywhere else
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
 
 ;; Completion frameworks
 
+;; company
+(use-package company
+  :ensure t
+  :hook (after-init . global-company-mode)
+  ;; :init (global-company-mode)
+  :diminish)
+
 ;; ivy
 (use-package ivy
+  :ensure t
   :diminish
+  :hook (after-init . ivy-mode)
+  ;; :init (ivy-mode 1)
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
          :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)	
+         ("TAB" . ivy-alt-done)
          ("C-j" . ivy-next-line)
          ("C-k" . ivy-previous-line)
          :map ivy-switch-buffer-map
@@ -59,7 +120,6 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
-  :init (ivy-mode 1)
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-wrap t)
@@ -74,13 +134,16 @@
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
 
 (use-package ivy-rich
-  :init (ivy-rich-mode 1)
-  :after counsel
+  :hook (after-init . ivy-rich-mode)
+  ;; :init (ivy-rich-mode 1)
+  :after ivy
   :custom
   (ivy-format-function #'ivy-format-function-line))
 
 (use-package all-the-icons-ivy-rich
-  :init (all-the-icons-ivy-rich-mode 1))
+  :hook (after-init . all-the-icons-ivy-rich-mode)
+  ;; :init (all-the-icons-ivy-rich-mode 1)
+  :after ivy-rich)
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -94,18 +157,18 @@
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   (ivy-initial-inputs-alist nil))
 
-;; Auto mode for Octave
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-
 ;; defuns
 (defun mpc/LaTeX-setup ()
-  (visual-line-mode 1)
-  (hl-line-mode 1))
+  ;; (hl-line-mode 1)
+  (visual-line-mode 1))
 
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
-  (visual-line-mode 1)
-  (hl-line-mode 1))
+  ;; (hl-line-mode 1)
+  (visual-line-mode 1))
+
+(defun mpc/no-lines-setup ()
+  (display-line-numbers-mode 0))
 
 (defun mpc/TeX-view-once (doc)
   "View TeX output and clean up after `my/TeX-compile-and-view'.
@@ -121,49 +184,87 @@
   (TeX-command "LaTeX" 'TeX-master-file)
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
 
-(defun dotemacs () (interactive) (find-file (concat user-emacs-directory "init.el")))
+(defun mpc/org-agenda-list ()
+  (delq nil
+	(mapcar (lambda (buffer)
+		  (buffer-file-name buffer))
+		(org-buffer-list 'files t))))
 
-(defun initorg () (interactive) (find-file (concat user-emacs-directory "EmacsInit.org")))
+(defun dotemacs ()
+  "Opens init.el"
+  (interactive)
+  (find-file (concat user-emacs-directory "init.el")))
 
-;; Ease of use
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'split-window-below)
-(global-set-key (kbd "M-3") 'split-window-right)
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key (kbd "M-r") 'enlarge-window)
-(global-set-key (kbd "M-R") 'shrink-window)
+(defun initorg ()
+  "Opens EmacsInit.org"
+  (interactive)
+  (find-file (concat user-emacs-directory "EmacsInit.org")))
 
-;; Using C-z as basic map
-(define-prefix-command 'mpc-map)
-(global-set-key (kbd "C-z") 'mpc-map)
-(global-set-key (kbd "C-z a") 'org-agenda)
-(global-set-key (kbd "C-z l") 'org-agenda-list)
-(global-set-key (kbd "C-z i") 'dotemacs)
-(global-set-key (kbd "C-z d") 'initorg)
+(defun org-gimme-date ()
+  (format-time-string (car org-time-stamp-formats) (org-read-date nil t)))
 
-;; Which-key because there are so many bindings
+
+(defvar cur-school-path "~/school/SP22/")
+(defun make-phys-hw-file (class num)
+  (let ((hwnum (shell-command-to-string
+		(format "~/.bin/find_next_hw.sh %s%s" class num))))
+  (format "%s%s%s/Cardiff_%s_HW_%s.tex" cur-school-path class num num hwnum)))
+
+;; Maybe using general?
+(use-package general
+  :ensure t
+  :config
+  (global-unset-key (kbd "C-z"))
+  (general-define-key
+   :prefix "C-z"
+   "C-c" 'org-capture
+   "a" 'org-agenda
+   "d" 'org-roam-dailies-capture-today
+   "i" 'dotemacs
+   "l" 'org-agenda-list
+   "m" 'counsel-imenu
+   "o" 'initorg
+   "u" 'mu4e)
+  
+  (general-define-key
+   "<escape>" 'keyboard-escape-quit
+   "M-1" 'shell-command
+   "M-2" 'split-window-below
+   "M-3" 'split-window-right
+   "M-o" 'other-window
+   "M-r" 'enlarge-window
+   "M-R" 'shrink-window
+   "M-." 'enlarge-window-horizontally
+   "M-," 'shrink-window-horizontally
+   "C-<SPC>" 'set-mark-command
+   "C-x <SPC>" 'rectangle-mark-mode))
+
+;; which-key because there are so many bindings
 (use-package which-key
-  :init (which-key-mode)
+  :ensure t
+  :config (which-key-mode)
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
 
 (use-package auctex
-  :defer 
+  :defer
   :hook
-  (TeX-mode . mpc/LaTeX-setup)
+  (TeX-mode       . mpc/LaTeX-setup)
   (plain-TeX-mode . mpc/LaTeX-setup)
-  (TeXinfo-mode . mpc/LaTeX-setup)
-  (LaTeX-mode . mpc/LaTeX-setup)
-  (docTeX-mode . mpc/LaTeX-setup)
+  (TeXinfo-mode   . mpc/LaTeX-setup)
+  (LaTeX-mode     . mpc/LaTeX-setup)
+  (docTeX-mode    . mpc/LaTeX-setup)
   :custom
-  (TeX-view-program-selection 
+  (TeX-view-program-selection
     '(((output-dvi has-no-display-manager) "dvi2tty") 
       ((output-dvi style-pstricks)  "dvips and gv")
        (output-dvi "xdvi")
        (output-pdf "Zathura")
        (output-html "xdg-open")))
   
+  (LaTeX-section-hook
+   '(LaTeX-section-heading LaTeX-section-title LaTeX-section-section))
+
   (LaTeX-indent-environment-list
    '(("verbatim" current-indentation)
      ("verbatim*" current-indentation)
@@ -175,213 +276,259 @@
      ("picture")
      ("tabbing"))))
 
-(use-package cuda-mode
-  :defer
-  :config
-  (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
-
-(use-package projectile
-  :defer
-  :diminish projectile-mode
-  :config (projectile-mode)
-  ;; :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-z p" . projectile-command-map)
-  :init
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-;; (use-package counsel-projectile
-;;   :after 'projectile
-;;   :config (counsel-projectile-mode))
-
-(use-package multiple-cursors
-  :defer 2
-  :diminish
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-	 ("C->"         . mc/mark-next-like-this)
-	 ("C-<"         . 'mc/mark-previous-like-this)
-	 ("C-c C-<"     . 'mc/mark-all-like-this)))
-
 (use-package move-text
   :defer 2
   :diminish 
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
 
-(use-package org
-  :hook (org-mode . mpc/org-mode-setup)
-  :custom
-  (org-ellipsis " [+]")
-  (org-directory "~/repos/org-agenda/School Schedules/")
-  (org-agenda-files (concat user-emacs-directory "org_agenda.org"))
-  (org-structure-template-alist
-   '(("s" . "src")
-     ("e" . "example")
-     ("q" . "quote")
-     ("v" . "verse")
-     ("V" . "verbatim")
-     ("c" . "center")
-     ("C" . "comment")
-     ("l" . "latex")
-     ("a" . "ascii")
-     ("i" . "index")))
-  :custom-face
-  (org-block    ((t (:foreground "#e4e4ef"))))
-  (org-ellipsis ((t (:foreground "#FFFFFF" :underline nil))))
-  (outline-3    ((t (:foreground "#ffdd33" :weight bold :family "Source Code Pro" :slant normal))))
-  :config
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+(use-package multiple-cursors
+  :defer 2
+  :diminish
+  :bind (("C-S-c C-S-c" . 'mc/edit-lines)
+	 ("C->"         . 'mc/mark-next-like-this)
+	 ("C-<"         . 'mc/mark-previous-like-this)
+	 ("C-c C-<"     . 'mc/mark-all-like-this)))
 
+(use-package yasnippet
+  :defer 5
+  :config (yas-global-mode)
+  :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
+
+(require 'org-tempo)
 (use-package org-bullets
   :defer
-  :after org
   :hook (org-mode . org-bullets-mode))
 
-;; (use-package org-roam
-;;   :init
-;;   (setq org-roam-v2-ack t)
-;;   :custom
-;;   (org-roam-directory "~/school/Roam")
-;;   (org-roam-completion-everywhere t)
-;;   (org-roam-completion-system 'ivy)
-;;   :bind (("C-c n l" . org-roam-buffer-toggle)
-;;          ("C-c n f" . org-roam-node-find)
-;;          ("C-c n i" . org-roam-node-insert))
-;;   :config
-;;   (org-roam-setup))
-
-(use-package general
-  :after evil
+(use-package org-roam
+  :defer
+  :init (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-graph-executable "dot")
+  (org-roam-directory "~/Org/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :bind (("C-z n l" . org-roam-buffer-toggle)
+         ("C-z n f" . org-roam-node-find)
+         ("C-z n i" . org-roam-node-insert))
   :config
-  (general-create-definer mpc/leader-keys
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
+  (org-roam-setup))
 
-  (mpc/leader-keys
-    "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")
-    "f" 'counsel-find-file
-    "x" 'counsel-M-x
-    ))
-
-;; bindings with SPC
-
-
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
+(use-package org
+  :defer
+  :hook (org-mode . mpc/org-mode-setup)
+  :bind (("<C-M-return>" . org-insert-todo-subheading))
+  :custom
+  (org-tags-column 0)
+  (org-ellipsis " [+]")
+  (org-directory "~/Org/Agenda/")
+  (org-agenda-files (directory-files-recursively "~/Org/Agenda/" "\\.org$"))
+  :custom-face
+  (org-block    ((t :foreground "#e4e4ef")))
+  (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
+  (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
   :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  (setq org-tempo-keywords-alist nil)
+  (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+(setq org-capture-templates
+      '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
+	;; Homeworks
+	("h"  "Homework flow")
+	("hz" "PHYS 437" entry (id "8a056dbf-1082-47be-8c64-c3249ac5a9ae")
+	 "* TODO 437 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"437\")][Associated File]]")
+	("hx" "PHYS 440" entry (id "e6e3eb9b-91f9-4047-8ca5-e049775341b8")
+	 "* TODO 440 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hc" "PHYS 518" entry (id "abc1d28d-c5a6-4f0e-bda4-44adbacb3179")
+	 "* TODO 518 HW %?\nDEADLINE: %(org-gimme-date)")
+	("hv" "PHYS 546" entry (id "fdd24cd5-2a9e-484a-bba9-be02996265a1")
+	 "* TODO 546 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"546\")][Associated File]]")
+	("hb" "PHYS 553" entry (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
+	 "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"553\")][Associated File]]")
+	("hn" "IPRO 497" entry (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
+	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+	("hm" "IPRO Meeting" entry (id "850a0ac3-317a-4ccc-bdbe-5b07ca95475f")
+	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+	;; Mails
+	("m"  "Mail Workflow")
+	("mf" "Follow Up" entry
+	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")
+	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\")) \n%i":immediate-finish t)
+	("mr" "Read Later" entry
+	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Read Later")
+	  "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-read-date)\n\n%a\n\n%i" :immediate-finish t)))
 
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+(setq org-structure-template-alist
+      '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
+	("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
+	("a" . "ascii"   ) ("i" . "index"  ) ("el" . "src emacs-lisp")))
 
-(use-package evil-collection
-  :after evil
-  :config (evil-collection-init))
+(use-package doc-view
+  :ensure nil
+  :defer
+  :hook (doc-view-mode . mpc/no-lines-setup))
 
-(use-package hydra
-  :defer t)
+;; IDE 
 
 (use-package magit
   :defer 5)
 
-(use-package yasnippet
-  :defer 5
-  :init (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/eprofiles/evil/mysnippets")))
-
-(use-package elfeed
-  :defer 5
-  :custom
-  (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
-                  "http://www.reddit.com/r/Physics/.rss")))
-
-;; (use-package mu4e
-;;   :ensure nil
+;; (use-package cuda-mode
+;;   :defer
 ;;   :config
-;;     (setq mu4e-change-filenames-when-moving t)
-;;     (setq mu4e-update-interval (* 10 60))
-;;     (setq mu4e-get-mail-command "offlineimap")
-;;     (setq mu4e-maildir "~/Mail")
+;;   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 
-;;     (setq mu4e-drafts-folder "/[Gmail].Drafts")
-;;     (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-;;     (setq mu4e-refile-folder "/[Gmail].All Mail")
-;;     (setq mu4e-trash-folder  "/[Gmail].Trash")
+;; (use-package octave
+;;   :defer
+;;   :ensure nil
+;;   :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
+;; (use-package haskell-mode
+;;   :defer
+;;   :bind (("C-c C-c" . compile))
+;;   :hook ((haskell-mode . interactive-haskell-mode)
+;; 	 (haskell-mode . haskell-indent-mode))
+;;   :custom
+;;   (haskell-stylish-on-save t))
 
-;;     (setq mu4e-maildir-shortcuts
-;;     '((:maildir "/INBOX"    :key ?i)
-;;       (:maildir "/[Gmail].Sent Mail" :key ?s)
-;;       (:maildir "/[Gmail].Trash"     :key ?t)
-;;       (:maildir "/[Gmail].Drafts"    :key ?d)
-;;       (:maildir "/[Gmail].All Mail"  :key ?a))))
+; lsp
+;; (defun mpc/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
 
-(setq schoolpath "~/school/")
-(setq templatepath "~/school/template.tex")
+;; (use-package lsp-mode
+;;   :defer t
+;;   :commands (lsp lsp-deferred)
+;;   :hook ((python-mode . lsp)
+;; 	 (lsp-mode . mpc/lsp-mode-setup))
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :config
+;;   (lsp-enable-which-key-integration t)
+;;   (lsp-register-custom-settings
+;;    '(("pyls.plugins.pyls_mypy.enabled" t t)
+;;      ("pyls.plugins.pyls_mypy.live_mode" nil t)
+;;      ("pyls.plugins.pyls_black.enabled" t t)
+;;      ("pyls.plugins.pyls_isort.enabled" t t)))
+;; )
+
+;; (use-package lsp-ui
+;;   :defer t
+;;   :commands lsp-ui-mode
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :custom
+;;   (lsp-ui-doc-position 'bottom))
+
+;; (use-package lsp-treemacs
+;;   :defer t
+;;   :after lsp)
+
+;; (use-package lsp-ivy
+;;   :defer t)
+
+;; (load-file mu4e-setup.el)
+
+(setq smtpmail-default-smtp-server "smtp.gmail.com")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(require 'mu4e)
+(use-package mu4e
+  :ensure nil
+  :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  :defer 1
+  :hook
+  (mu4e-view-mode . mpc/no-lines-setup)
+  (mu4e-headers-mode . mpc/no-lines-setup)
+  (mu4e-main-mode . mpc/no-lines-setup)
+  (mu4e-compose-mode . mpc/no-lines-setup)
+  :custom
+  ;; Mail signature
+  (mu4e-compose-signature-auto-include t)
+  (mu4e-compose-signature "Michael Cardiff\nSenior\nIIT PHYS '22")
+
+  ;; This is set to 't' to avoid mail syncing issues when using mbsync
+  (mu4e-change-filenames-when-moving t)
+  (mu4e-mu-home "~/.cache/mu/")
+  
+  ;; Refresh mail using isync every 10 minutes
+  (mu4e-update-interval (* 10 60))
+  (mu4e-get-mail-command "mbsync -a")
+  (mu4e-maildir "~/Mail")
+  (mu4e-drafts-folder "/[Gmail]/Drafts")
+  (mu4e-sent-folder   "/[Gmail]/Sent Mail")
+  (mu4e-refile-folder "/[Gmail]/All Mail")
+  (mu4e-trash-folder  "/[Gmail]/Trash")
+
+  (mu4e-maildir-shortcuts
+   '(("/Inbox"                   . ?i)
+     ("/[Gmail]/Sent Mail"       . ?s)
+     ("/[Gmail]/Trash"           . ?t)
+     ("/[Gmail]/Drafts"          . ?d)
+     ("/[Gmail]/All Mail"        . ?a)
+     ("/Teacher Emails/Dr. Z"    . ?z)
+     ("/Teacher Emails/Sullivan" . ?x)
+     ("/Teacher Emails/Shylnov"  . ?c)
+     ("/Teacher Emails/IPRO"     . ?v)
+     ("/Teacher Emails/Terry"    . ?b)))
+
+  ;; smtp settings
+  (message-send-mail-function 'smtpmail-send-it)
+  (smtpmail-stream-type 'starttls)
+  (user-full-name "Michael Cardiff")
+  (user-mail-address "mcardiff@hawk.iit.edu")
+  (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
+  (smtpmail-local-domain "gmail.com")
+  (smtpmail-default-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-service 587)
+
+  ;; password
+  (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
+  (auth-source-pass-filename "~/.local/share/pass/mbsync/")
+  
+  :config
+  (require 'org-mu4e))
+
+;; password stuff
+;; (use-package auth-source-pass
+  ;; :hook (after-init . auth-source-pass-enable)
+  ;; :init (auth-source-pass-enable)
+  ;; :ensure nil)
+
+;; (use-package pass)
+
+(defvar schoolpath "~/school/")
+(defvar templatepath "~/school/template.tex")
   
 (defun gencopy (subj code)
   (let ((fname
          (read-file-name
          (concat subj ": ")
-	     (concat schoolpath (concat code "/HW/")))))
-  (copy-file templatepath fname) (find-file fname)))
+         (concat schoolpath (concat code "/HW/")))))
+    (copy-file templatepath fname)
+    (find-file fname)))
 
 (defun starthw ()
   (interactive)
   (let ((x (upcase (read-string "Class Shorthand: "))))
-    (cond ((string= x "CM") (gencopy "CM" "PHYS309")) ;; Classical
-  	  ((string= x "QM") (gencopy "QM" "PHYS406")) ;; UG Quantum
-  	  ((string= x "EM") (gencopy "EM" "PHYS414")) ;; E&M
-  	  ((string= x "MM") (gencopy "MM" "PHYS502")) ;; Grad Math Methods
-  	  ((string= x "GQ") (gencopy "GQ" "PHYS510")) ;; Grad Quantum
-  	  (t "failed"))))
+    (cond ((string= x "CM") (gencopy "CM" "PHYS309"))
+          ((string= x "QM") (gencopy "QM" "PHYS406"))
+          ((string= x "EM") (gencopy "EM" "PHYS414"))
+          ((string= x "MM") (gencopy "MM" "PHYS502"))
+          ((string= x "GQ") (gencopy "GQ" "PHYS510"))
+          (t "failed"))))
 
 (defun continuehw ()
   (interactive)
   (let ((x (upcase (read-string "Class Shorthand: "))))
-    (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/"))) ;; Classical
-  	  ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/"))) ;; UG Quantum
-  	  ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/"))) ;; E&M
-  	  ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/"))) ;; Grad Math Methods
-  	  ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/"))) ;; Grad Quantum
-  	  (t "failed"))))
+    (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/")))
+          ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/")))
+          ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/")))
+          ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/")))
+          ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/")))
+          (t "failed"))))
 
 ;;;; END OF EMACSINIT.EL
 
 (add-hook 'emacs-startup-hook
-  (lambda ()
-    (setq file-name-handler-alist mpc--file-name-handler-alist)))
-
-;;; shit set by emacs, one day when the world is good I will get rid of this
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(elfeed yasnippet which-key websocket visual-fill-column use-package request rainbow-mode projectile powerline popwin polymode pkg-info org-bullets org noflet multiple-cursors move-text magit gruber-darker-theme doom-modeline deferred dashboard cuda-mode counsel cl-libify auctex anaphora all-the-icons-ivy-rich all-the-icons-ivy ace-jump-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ivy-current-match ((t (:extend t :background "#ffdd33" :foreground "black"))))
- '(ivy-minibuffer-match-face-1 ((t (:background "#cc8c3c"))))
- '(ivy-minibuffer-match-highlight ((t (:inherit compilation-warning))))
- '(org-block ((t (:foreground "#e4e4ef"))))
- '(org-ellipsis ((t (:foreground "#FFFFFF" :underline nil))))
- '(outline-3 ((t (:foreground "#ffdd33" :weight bold :family "Source Code Pro" :slant normal)))))
+  (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
