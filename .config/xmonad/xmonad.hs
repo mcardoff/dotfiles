@@ -147,6 +147,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r (0,0))
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
+    , ((mod .|. shf, xK_p), spawn "~/.bin/truekill.sh")
     --- Change WS layout
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
