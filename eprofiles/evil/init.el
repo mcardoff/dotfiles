@@ -71,6 +71,7 @@
                      (agenda    . 10)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
+  (dashboard-center-content t)
   :config (dashboard-setup-startup-hook))
 
 ;; Vim Bindings
