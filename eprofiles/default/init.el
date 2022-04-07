@@ -180,14 +180,15 @@
   (global-unset-key (kbd "C-z"))
   (general-define-key
    :prefix "C-z"
-   "C-c" 'org-capture
-   "a" 'org-agenda
-   "d" 'org-roam-dailies-capture-today
-   "i" 'dotemacs
-   "l" 'org-agenda-list
-   "m" 'counsel-imenu
-   "o" 'initorg
-   "u" 'mu4e)
+   "" '(nil :which-key "General Prefix")
+   "C-c" '(org-capture :which-key "Capture!")
+   "a" '(org-agenda :which-key "Open Agenda")
+   "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
+   "i" '(dotemacs :which-key "Open init.el")
+   "l" '(org-agenda-list :which-key "Open Agenda List")
+   "m" '(counsel-imenu :which-key "counsel-imenu")
+   "o" '(initorg :which-key "Open Literate Config")
+   "u" '(mu4e :which-key "Check Mail!"))
   
   (general-define-key
    "<escape>" 'keyboard-escape-quit
@@ -388,7 +389,12 @@
   :after lsp)
 
 (use-package lsp-ivy
-  :defer t)
+  :defer t
+  )
+
+(use-package vterm
+  :defer  t
+  :ensure t)
 
 ;; (load-file mu4e-setup.el)
 
@@ -411,7 +417,7 @@
 
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
-  (mu4e-mu-home "~/.cache/mu/")
+  (mu4e-mu-home "~/.local/cache/mu/")
   
   ;; Refresh mail using isync every 10 minutes
   (mu4e-update-interval (* 10 60))
@@ -446,19 +452,23 @@
   (smtpmail-smtp-service 587)
 
   ;; password
-  (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
+  ;; (auth-sources '("~/.authinfo" password-store))
+  (auth-sources '(password-store))
+  (auth-source-debug t)
+  (auth-source-do-cache nil)
   (auth-source-pass-filename "~/.local/share/pass/mbsync/")
   
   :config
+  (auth-source-pass-enable)
   (require 'org-mu4e))
 
 ;; password stuff
-;; (use-package auth-source-pass
-  ;; :hook (after-init . auth-source-pass-enable)
-  ;; :init (auth-source-pass-enable)
-  ;; :ensure nil)
+(use-package auth-source-pass
+  :hook (after-init . auth-source-pass-enable)
+  :init (auth-source-pass-enable)
+  :ensure nil)
 
-;; (use-package pass)
+(use-package pass)
 
 (defvar schoolpath "~/school/")
 (defvar templatepath "~/school/template.tex")
