@@ -307,10 +307,10 @@ main = xmonad defaults
 --
 defaults = defaultConfig {
       -- simple stuff
-        terminal           = myTerminal,
+        terminal           = "st",
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
-        modMask            = myModMask,
+        modMask            = mod4mask,
         -- numlockMask deprecated in 0.9.1
         -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,

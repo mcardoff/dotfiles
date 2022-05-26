@@ -63,6 +63,9 @@ fileman = "pcmanfm"
 term :: String
 term = "st"
 
+dmenuOpts :: Bool -> String
+dmenuOpts gay = if gay then " -fc #ffdd33" else ""
+
 -- basic colors
 white    = "#ffffff"
 altwhite = "#888888"
@@ -96,6 +99,9 @@ gayinactive = "#55cdfc"
 -- Paths
 xmobarPath :: String
 xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
+
+gayxmobarPath :: String
+gayxmobarPath = "/home/mcard/.config/xmonad/gayxmobarrc.hs"
 
 dec :: Num a => a
 dec = 10
@@ -210,11 +216,11 @@ scratchpads :: [NamedScratchpad]
 -- scratchpads = []
 scratchpads = [
   -- format :: NS <name> <command> <query> <hook>
-    NS "dropterm" (term ++ " -c dropterm -t dropterm")
+    NS "dropte1rm" ("kitty --class dropterm --title dropterm")
        (className =? "dropterm")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
-  , NS "Ranger" (term ++ " -c Ranger -t Ranger -e ranger")
+  , NS "Ranger" ("kitty --class Ranger --title Ranger -e ranger")
        (className =? "Ranger")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
@@ -253,22 +259,16 @@ tabConfig = def { fontName            = "Source_Code_Pro"
                 , activeTextColor     = white
                 , inactiveTextColor   = white
                 }
-             
--- tabs = renamed [Replace "Tabs"]
---        $ tabbed shrinkText tabConfig
-         
 
 layouts =  onWorkspace "sch" simplestFloat $
            (as grid) ||| noBorders Full -- ||| noBorders tabs ||| floats
                where as = avoidStruts
 
 -- Misc.
-
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- Hooks
-
 manHook :: Query (Endo WindowSet)
 manHook = composeAll $
           [ className =? "Gimp"           --> doFloat
@@ -279,7 +279,7 @@ manHook = composeAll $
           , appName   =? browser          --> doShift (myWS !! 2)
           , appName   =? fileman          --> doShift (myWS !! 3)
           , appName   =? "discord"        --> doShift (myWS !! 4)
-          , appName   =? "vlc"            --> doShift (myWS !! 5)
+          -- , appName   =? "vlc"            --> doShift (myWS !! 5)
           , className =? "Ranger"         --> doShift "NS"
           , className =? "dropterm"       --> doShift "NS"
           ]
@@ -287,18 +287,18 @@ manHook = composeAll $
 eveHook :: Event -> X All
 eveHook = mempty
 
-lgHook c1 c2 c3 c4 c5 c6 c7 c8 x1 = dynamicLogWithPP xmobarPP
+lgHook c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 = dynamicLogWithPP xmobarPP
                   { ppOutput  = hPutStrLn x1
                   , ppCurrent = xmobarColor c1 c2 . sp
                   , ppVisible = xmobarColor c3 c4
                   , ppHidden  = xmobarColor c5 c6 . sp
                   , ppHiddenNoWindows = xmobarColor c7 c8 . sp
-                  , ppTitle = xmobarColor white "" . shorten 25
-                  , ppSep = "<fc=#666666> | </fc>"
+                  , ppTitle = xmobarColor c9 "" . shorten 25
+                  , ppSep = " | "
                   , ppWsSep = ""
                   , ppUrgent = xmobarColor white alert . sp
                   , ppExtras = [windowCount]
-                  , ppSort = fmap (.namedScratchpadFilterOutWorkspace) (mkWsSort getWsCompare')
+                  , ppSort = (mkWsSort getWsCompare')
                   , ppOrder = id
                   }
             where sp = wrap " " " "
@@ -312,15 +312,13 @@ lgHook c1 c2 c3 c4 c5 c6 c7 c8 x1 = dynamicLogWithPP xmobarPP
                           f Nothing (Just _)  = GT
                           f (Just x) (Just y) = compare x y
 
-regLogHook = lgHook white focol bg active altwhite active altwhite blue
+regLogHook = lgHook "#666666" white focol bg active altwhite active altwhite blue white 
 
-gayLogHook = lgHook altbg gayfocol altbg gaysecon altbg gaysecon altbg gayblue
-
-gaygayLogHook = lgHook altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu
+gayLogHook = lgHook "#000000" altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu bg
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
+  xmproc <- spawnPipe $ "xmobar -x 0 " ++ if gay then gayxmobarPath else xmobarPath
   xmonad $ docks def {
              -- Basics
                modMask = mod4Mask
@@ -331,19 +329,17 @@ main = do
              , normalBorderColor = inactive
              , focusedBorderColor = if gay then gayfocol else focol
              , borderWidth = 2
-
              -- Bindings
              , keys = myKeys
              , mouseBindings = myMouseBindings
-
              -- Hooks and Layouts
              , layoutHook = layouts 
-             , manageHook = manHook <+> (namedScratchpadManageHook scratchpads) -- <+> fullscreenEventHook
-             , handleEventHook = eveHook <+> fullscreenEventHook
+             , manageHook = manHook <+> (namedScratchpadManageHook scratchpads)
+             , handleEventHook = eveHook
              , logHook = ifGayLogHook xmproc 
              , startupHook = startHook
          }
       where gay = False
-            ifGayLogHook = if gay then gaygayLogHook else regLogHook
-      
+            ifGayLogHook = if gay then gayLogHook else regLogHook
+         
 --EOF
