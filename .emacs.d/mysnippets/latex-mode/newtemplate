@@ -1,7 +1,8 @@
-# -*- mode: latex -*-
-# name: temp
-# key: temp
+# -*- mode: snippet -*-
+# name: newtemplate
+# key: temp2
 # --
+
 \documentclass[12pt]{article}
 
 \title{\vspace{-3em}$1}
@@ -20,7 +21,7 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
-\usepackage[labelfont=bf]{caption}
+\usepackage[labelfont=bf]{caption} `${2:_(call interactively (if (y-or-n-p "use tikz?") "\n%% drawingfigs\n\\usepackage{tikz}" ""))}`
 
 % figures
 \graphicspath{ {./figs/} }
