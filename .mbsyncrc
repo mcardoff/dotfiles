@@ -1,7 +1,7 @@
 IMAPAccount gmail
 Host imap.gmail.com
 User mcardiff@hawk.iit.edu
-PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/share/pass/mbsync/gmail.gpg"
+PassCmd "printf %s $(grep hawk ~/.config/.authinfo | grep -Pzo 'password.(.*)' | sed -e 's/password //')"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -10,12 +10,35 @@ Account gmail
 
 MaildirStore gmail-local
 Subfolders Verbatim
-Path ~/Mail/
-Inbox ~/Mail/Inbox
+Path ~/Mail/Gmail/
+Inbox ~/Mail/Gmail/Inbox
 
 Channel gmail
 Far :gmail-remote:
 Near :gmail-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+Create Both
+Expunge Both
+SyncState *
+
+IMAPAccount brandeis
+Host imap.gmail.com
+User mcardiff@brandeis.edu
+PassCmd "printf %s $(grep brandeis ~/.config/.authinfo | grep -Pzo 'password.(.*\\n)' | sed -e 's/password //' | tr -d '\\n')"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore brandeis-remote
+Account brandeis
+
+MaildirStore brandeis-local
+Subfolders Verbatim
+Path ~/Mail/Brandeis/
+Inbox ~/Mail/Brandeis/Inbox
+
+Channel brandeis
+Far :brandeis-remote:
+Near :brandeis-local:
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
 Create Both
 Expunge Both
