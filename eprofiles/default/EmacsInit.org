@@ -521,6 +521,13 @@ Integrates LSP with ivy!
   (use-package lsp-ivy
     :defer t)
 #+end_src
+** VTerm
+This package integrates =libvterm= within emacs, and turns emacs into a proper terminal
+#+begin_src emacs-lisp
+  (use-package vterm
+    :defer  t
+    :ensure t)
+#+end_src
 * Fun Stuff!
 ** Elfeed
 elfeed is fun, I do not really use it too much
@@ -531,9 +538,12 @@ elfeed is fun, I do not really use it too much
     (elfeed-feeds '("http://www.reddit.com/r/emacs/.rss"
                     "http://www.reddit.com/r/Physics/.rss")))
 #+end_example
-** mu4e
-While it is currently broken, I love using =mu4e= to manage and send my mail
+** mu4ea
+MU 4 Emacs is the most used email client 
 #+begin_src emacs-lisp
+  (setq smtpmail-default-smtp-server "smtp.gmail.com")
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+  (require 'mu4e)
   (use-package mu4e
     :ensure nil
     :load-path "/usr/share/emacs/site-lisp/mu4e/"
@@ -546,50 +556,93 @@ While it is currently broken, I love using =mu4e= to manage and send my mail
     :custom
     ;; Mail signature
     (mu4e-compose-signature-auto-include t)
-    (mu4e-compose-signature "Michael Cardiff\nSenior\nIIT PHYS '22")
 
     ;; This is set to 't' to avoid mail syncing issues when using mbsync
     (mu4e-change-filenames-when-moving t)
-    (mu4e-mu-home "~/.cache/mu/")
+    (mu4e-mu-home "~/.local/cache/mu/")
 
     ;; Refresh mail using isync every 10 minutes
     (mu4e-update-interval (* 10 60))
     (mu4e-get-mail-command "mbsync -a")
     (mu4e-maildir "~/Mail")
-    (mu4e-drafts-folder "/[Gmail]/Drafts")
-    (mu4e-sent-folder   "/[Gmail]/Sent Mail")
-    (mu4e-refile-folder "/[Gmail]/All Mail")
-    (mu4e-trash-folder  "/[Gmail]/Trash")
+    (mu4e-drafts-folder "/Gmail/[Gmail]/Drafts")
+    (mu4e-sent-folder   "/Gmail/[Gmail]/Sent Mail")
+    (mu4e-refile-folder "/Gmail/[Gmail]/All Mail")
+    (mu4e-trash-folder  "/Gmail/[Gmail]/Trash")
 
     (mu4e-maildir-shortcuts
-     '(("/Inbox"                   . ?i)
-       ("/[Gmail]/Sent Mail"       . ?s)
-       ("/[Gmail]/Trash"           . ?t)
-       ("/[Gmail]/Drafts"          . ?d)
-       ("/[Gmail]/All Mail"        . ?a)
-       ("/Teacher Emails/Dr. Z"    . ?z)
-       ("/Teacher Emails/Sullivan" . ?x)
-       ("/Teacher Emails/Shylnov"  . ?c)
-       ("/Teacher Emails/IPRO"     . ?v)
-       ("/Teacher Emails/Terry"    . ?b)))
+     '(("/Gmail/Inbox"                . ?q)
+       ("/Brandeis/Inbox"             . ?a)
+       ("/Gmail/[Gmail]/Sent Mail"    . ?w)
+       ("/Brandeis/[Gmail]/Sent Mail" . ?s)
+       ("/Gmail/[Gmail]/Trash"        . ?e)
+       ("/Brandeis/[Gmail]/Trash"     . ?d)
+       ("/Gmail/[Gmail]/Drafts"       . ?r)
+       ("/Brandeis/[Gmail]/Drafts"    . ?f)
+       ("/Gmail/[Gmail]/All Mail"     . ?t)
+       ("/Brandeis/[Gmail]/All Mail"  . ?g)
+       ))
 
-    ;; smtp settings
+    ;; smtp stuff
     (message-send-mail-function 'smtpmail-send-it)
     (smtpmail-stream-type 'starttls)
-    (user-full-name "Michael Cardiff")
-    (user-mail-address "mcardiff@hawk.iit.edu")
-    (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
     (smtpmail-local-domain "gmail.com")
     (smtpmail-default-smtp-server "smtp.gmail.com")
     (smtpmail-smtp-server "smtp.gmail.com")
     (smtpmail-smtp-service 587)
-
     ;; password
-    (auth-sources '("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"))
+    (auth-sources '("~/.authinfo" password-store))
+    ;; (auth-sources '(password-store))
+    (auth-source-debug t)
+    (auth-source-do-cache nil)
     (auth-source-pass-filename "~/.local/share/pass/mbsync/")
 
     :config
+    (setq mu4e-contexts
+          (list
+           ;; IIT Account
+           (make-mu4e-context
+            :name "IIT"
+            :match-func
+              (lambda (msg)
+                (when msg
+                  (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
+              :vars '((user-mail-address  . "mcardiff@hawk.iit.edu")
+                      (smtpmail-smtp-user . "mcardiff@hawk.iit.edu")
+                      (user-full-name     . "Michael Cardiff")
+                      (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
+                      (mu4e-sent-folder   . "/Gmail/[Gmail]/Sent Mail")
+                      (mu4e-refile-folder . "/Gmail/[Gmail]/All Mail")
+                      (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")
+                      (mu4e-compose-signature . "Michael Cardiff\nSenior\nIIT PHYS '22")))
+           ;; Brandeis Account
+           (make-mu4e-context
+            :name "Brandeis"
+            :match-func
+              (lambda (msg)
+                (when msg
+                  (string-prefix-p "/Brandeis" (mu4e-message-field msg :maildir))))
+              :vars '((user-mail-address  . "mcardiff@brandeis.edu")
+                      (smtpmail-smtp-user . "mcardiff@brandeis.edu")
+                      (user-full-name     . "Michael Cardiff")
+                      (mu4e-drafts-folder . "/Brandeis/[Gmail]/Drafts")
+                      (mu4e-sent-folder   . "/Brandeis/[Gmail]/Sent Mail")
+                      (mu4e-refile-folder . "/Brandeis/[Gmail]/All Mail")
+                      (mu4e-trash-folder  . "/Brandeis/[Gmail]/Trash")
+                      (mu4e-compose-signature . "Michael Cardiff\nGraduate Student\nBrandeis University")))
+           ))
+    (auth-source-pass-enable)
     (require 'org-mu4e))
+#+end_src
+*** auth-source
+These packages may not be useful for what I intend to do with mu4e, since it does not search for the password I actually put into =pass= but it is still interesting
+#+begin_src emacs-lisp
+  (use-package auth-source-pass
+    :hook (after-init . auth-source-pass-enable)
+    :init (auth-source-pass-enable)
+    :ensure nil)
+
+  (use-package pass)
 #+end_src
 ** Homework stuff
 I made these without knowing of template expansions, so theyre kind of useless now

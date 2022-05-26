@@ -225,6 +225,7 @@
        (output-dvi "xdvi")
        (output-pdf "Zathura")
        (output-html "xdg-open")))
+  (TeX-engine 'luatex)
   
   (LaTeX-section-hook
    '(LaTeX-section-heading LaTeX-section-title LaTeX-section-section))
@@ -287,6 +288,7 @@
   (org-ellipsis " [+]")
   (org-directory "~/Org/Agenda/")
   (org-agenda-files (directory-files-recursively "~/Org/Agenda/" "\\.org$"))
+  (org-agenda-tags-column -80)
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
@@ -311,16 +313,19 @@
 	("hb" "PHYS 553" entry (id "76bb4c80-d5e5-4917-adc7-407be5eec2d4")
 	 "* TODO 553 HW %?\nDEADLINE: %(org-gimme-date)\n[[%(make-phys-hw-file \"PHYS\" \"553\")][Associated File]]")
 	("hn" "IPRO 497" entry (id "adb180e0-64a3-47d3-996b-91fdd416c6bf")
-	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+	 "* TODO IPRO Week %? HW\nDEADLINE: %(org-gimme-date)")
 	("hm" "IPRO Meeting" entry (id "850a0ac3-317a-4ccc-bdbe-5b07ca95475f")
-	 "* TODO IPRO Week %? Presentation\nDEADLINE: %(org-gimme-date)")
+	 "* TODO IPRO Week %? Meeting\nDEADLINE: %(org-gimme-date)")
+	("r" "Random Workflow")
+	("rd" "Daily Item" entry (file+olp "~/Org/Agenda/MISC.org" "Daily")
+	 "* TODO %?\nSCHEDULED: %t")
 	;; Mail
 	("m"  "Mail Workflow")
 	("mf" "Follow Up" entry
-	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Follow Up")
+	 (file+olp "~/Org/Agenda/Mail.org" "Follow Up")
 	 "* TODO Follow Up with %:fromname on %:subject, Received %:date\n%a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\")) \n%i":immediate-finish t)
 	("mr" "Read Later" entry
-	 (file+olp "~/Org/Agenda/Agenda Files/Mail.org" "Read Later")
+	 (file+olp "~/Org/Agenda/Mail.org" "Read Later")
 	  "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-read-date)\n\n%a\n\n%i" :immediate-finish t)))
 
 (setq org-structure-template-alist
@@ -389,14 +394,11 @@
   :after lsp)
 
 (use-package lsp-ivy
-  :defer t
-  )
+  :defer t)
 
 (use-package vterm
   :defer  t
   :ensure t)
-
-;; (load-file mu4e-setup.el)
 
 (setq smtpmail-default-smtp-server "smtp.gmail.com")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
@@ -413,7 +415,6 @@
   :custom
   ;; Mail signature
   (mu4e-compose-signature-auto-include t)
-  (mu4e-compose-signature "Michael Cardiff\nSenior\nIIT PHYS '22")
 
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (mu4e-change-filenames-when-moving t)
@@ -423,42 +424,72 @@
   (mu4e-update-interval (* 10 60))
   (mu4e-get-mail-command "mbsync -a")
   (mu4e-maildir "~/Mail")
-  (mu4e-drafts-folder "/[Gmail]/Drafts")
-  (mu4e-sent-folder   "/[Gmail]/Sent Mail")
-  (mu4e-refile-folder "/[Gmail]/All Mail")
-  (mu4e-trash-folder  "/[Gmail]/Trash")
+  (mu4e-drafts-folder "/Gmail/[Gmail]/Drafts")
+  (mu4e-sent-folder   "/Gmail/[Gmail]/Sent Mail")
+  (mu4e-refile-folder "/Gmail/[Gmail]/All Mail")
+  (mu4e-trash-folder  "/Gmail/[Gmail]/Trash")
 
   (mu4e-maildir-shortcuts
-   '(("/Inbox"                   . ?i)
-     ("/[Gmail]/Sent Mail"       . ?s)
-     ("/[Gmail]/Trash"           . ?t)
-     ("/[Gmail]/Drafts"          . ?d)
-     ("/[Gmail]/All Mail"        . ?a)
-     ("/Teacher Emails/Dr. Z"    . ?z)
-     ("/Teacher Emails/Sullivan" . ?x)
-     ("/Teacher Emails/Shylnov"  . ?c)
-     ("/Teacher Emails/IPRO"     . ?v)
-     ("/Teacher Emails/Terry"    . ?b)))
+   '(("/Gmail/Inbox"                . ?q)
+     ("/Brandeis/Inbox"             . ?a)
+     ("/Gmail/[Gmail]/Sent Mail"    . ?w)
+     ("/Brandeis/[Gmail]/Sent Mail" . ?s)
+     ("/Gmail/[Gmail]/Trash"        . ?e)
+     ("/Brandeis/[Gmail]/Trash"     . ?d)
+     ("/Gmail/[Gmail]/Drafts"       . ?r)
+     ("/Brandeis/[Gmail]/Drafts"    . ?f)
+     ("/Gmail/[Gmail]/All Mail"     . ?t)
+     ("/Brandeis/[Gmail]/All Mail"  . ?g)
+     ))
 
-  ;; smtp settings
+  ;; smtp stuff
   (message-send-mail-function 'smtpmail-send-it)
   (smtpmail-stream-type 'starttls)
-  (user-full-name "Michael Cardiff")
-  (user-mail-address "mcardiff@hawk.iit.edu")
-  (smtpmail-smtp-user "mcardiff@hawk.iit.edu")
   (smtpmail-local-domain "gmail.com")
   (smtpmail-default-smtp-server "smtp.gmail.com")
   (smtpmail-smtp-server "smtp.gmail.com")
   (smtpmail-smtp-service 587)
-
   ;; password
-  ;; (auth-sources '("~/.authinfo" password-store))
-  (auth-sources '(password-store))
+  (auth-sources '("~/.config/.authinfo" password-store))
+  ;; (auth-sources '(password-store))
   (auth-source-debug t)
   (auth-source-do-cache nil)
   (auth-source-pass-filename "~/.local/share/pass/mbsync/")
   
   :config
+  (setq mu4e-contexts
+        (list
+         ;; IIT Account
+         (make-mu4e-context
+          :name "IIT"
+          :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
+            :vars '((user-mail-address  . "mcardiff@hawk.iit.edu")
+		    (smtpmail-smtp-user . "mcardiff@hawk.iit.edu")
+                    (user-full-name     . "Michael Cardiff")
+                    (mu4e-drafts-folder . "/Gmail/[Gmail]/Drafts")
+                    (mu4e-sent-folder   . "/Gmail/[Gmail]/Sent Mail")
+                    (mu4e-refile-folder . "/Gmail/[Gmail]/All Mail")
+                    (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")
+		    (mu4e-compose-signature . "Michael Cardiff\nSenior\nIIT PHYS '22")))
+	 ;; Brandeis Account
+         (make-mu4e-context
+          :name "Brandeis"
+          :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/Brandeis" (mu4e-message-field msg :maildir))))
+            :vars '((user-mail-address  . "mcardiff@brandeis.edu")
+		    (smtpmail-smtp-user . "mcardiff@brandeis.edu")
+                    (user-full-name     . "Michael Cardiff")
+                    (mu4e-drafts-folder . "/Brandeis/[Gmail]/Drafts")
+                    (mu4e-sent-folder   . "/Brandeis/[Gmail]/Sent Mail")
+                    (mu4e-refile-folder . "/Brandeis/[Gmail]/All Mail")
+                    (mu4e-trash-folder  . "/Brandeis/[Gmail]/Trash")
+		    (mu4e-compose-signature . "Michael Cardiff\nGraduate Student\nBrandeis University")))
+	 ))
   (auth-source-pass-enable)
   (require 'org-mu4e))
 
