@@ -61,7 +61,7 @@ fileman :: String
 fileman = "pcmanfm"
 
 term :: String
-term = "st"
+term = "kitty"
 
 dmenuOpts :: Bool -> String
 dmenuOpts gay = if gay then " -fc #ffdd33" else ""
@@ -216,11 +216,11 @@ scratchpads :: [NamedScratchpad]
 -- scratchpads = []
 scratchpads = [
   -- format :: NS <name> <command> <query> <hook>
-    NS "dropte1rm" ("kitty --class dropterm --title dropterm")
+    NS "dropte1rm" (term ++ " --class dropterm --title dropterm")
        (className =? "dropterm")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
-  , NS "Ranger" ("kitty --class Ranger --title Ranger -e ranger")
+  , NS "Ranger" (term ++ " --class Ranger --title Ranger -e ranger")
        (className =? "Ranger")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
@@ -233,7 +233,7 @@ scratchpads = [
        (title =? "Schedule")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
-  , NS "vimwindow" (term ++ " -c vim -e vim")
+  , NS "vimwindow" (term ++ " --class vim -e vim")
        (className =? "vim")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
   ]
