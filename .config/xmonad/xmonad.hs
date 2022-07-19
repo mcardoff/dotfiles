@@ -147,10 +147,10 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
     , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
     --- Resize Floating Windows
-    , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow l (0,0))
-    , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d (0,0))
-    , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow u (0,0))
-    , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r (0,0))
+    , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow (-10,0) (0,0))
+    , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow (0, 10) (0,0))
+    , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow (0,-10) (0,0))
+    , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow ( 10,0) (0,0))
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
     , ((mod .|. shf, xK_p), spawn "~/.bin/truekill.sh")
@@ -216,7 +216,7 @@ scratchpads :: [NamedScratchpad]
 -- scratchpads = []
 scratchpads = [
   -- format :: NS <name> <command> <query> <hook>
-    NS "dropte1rm" (term ++ " --class dropterm --title dropterm")
+    NS "dropterm" (term ++ " --class dropterm --title dropterm")
        (className =? "dropterm")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
