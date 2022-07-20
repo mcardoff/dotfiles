@@ -63,7 +63,8 @@
   :ensure t
   :hook (after-init . global-company-mode)
   ;; :init (global-company-mode)
-  :diminish)
+  :diminish
+  :defer f)
 
 ;; ivy
 (use-package ivy
@@ -206,6 +207,7 @@
 ;; which-key because there are so many bindings
 (use-package which-key
   :ensure t
+  :defer 2
   :config (which-key-mode)
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
