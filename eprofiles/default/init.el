@@ -284,7 +284,8 @@
 (use-package org
   :defer
   :hook (org-mode . mpc/org-mode-setup)
-  :bind (("<C-M-return>" . org-insert-todo-subheading))
+  :bind (("<C-M-return>" . org-insert-todo-subheading)
+	 ("<C-return>"   . org-insert-subheading))
   :custom
   (org-tags-column 0)
   (org-ellipsis " [+]")
@@ -362,6 +363,10 @@
 	 (haskell-mode . haskell-indent-mode))
   :custom
   (haskell-stylish-on-save t))
+
+;; (use-package jupyter :defer )
+;; (use-package ein
+  ;; :defer)
 
 ; lsp
 (defun mpc/lsp-mode-setup ()
