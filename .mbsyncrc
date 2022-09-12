@@ -20,26 +20,3 @@ Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[
 Create Both
 Expunge Both
 SyncState *
-
-IMAPAccount brandeis
-Host imap.gmail.com
-User mcardiff@brandeis.edu
-PassCmd "printf %s $(grep brandeis ~/.config/.authinfo | grep -Pzo 'password.(.*\\n)' | sed -e 's/password //' | tr -d '\\n')"
-SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
-
-IMAPStore brandeis-remote
-Account brandeis
-
-MaildirStore brandeis-local
-Subfolders Verbatim
-Path ~/Mail/Brandeis/
-Inbox ~/Mail/Brandeis/Inbox
-
-Channel brandeis
-Far :brandeis-remote:
-Near :brandeis-local:
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
-Create Both
-Expunge Both
-SyncState *
