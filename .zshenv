@@ -52,6 +52,8 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
 export DOOMDIR="~/.config/emacsenv/.doom.d/"
+export MATHEMATICA_BASE="$XDG_CONFIG_HOME"/mathematica
+export MATHEMATICA_USERBASE="$XDG_CONFIG_HOME"/mathematica
 
 . "/home/mcard/.local/share/cargo/env"
 
