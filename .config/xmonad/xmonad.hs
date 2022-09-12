@@ -139,8 +139,8 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_l), windows W.focusUp)
     , ((mod, xK_h), windows W.focusDown)
     --- Resize in tiled mode
-    , ((mod, xK_h), sendMessage Shrink)
-    , ((mod, xK_l), sendMessage Expand)
+    -- , ((mod, xK_h), sendMessage Shrink)
+    -- , ((mod, xK_l), sendMessage Expand)
     --- Move floating windows
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
@@ -173,7 +173,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
     -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
-    , ((mod, xK_q), spawn "xmonad --recompile; xmonad --restart")
+    , ((mod, xK_q), spawn "~/.config/xmonad/xmonad --recompile; xmonad --restart")
     -- MISC
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")

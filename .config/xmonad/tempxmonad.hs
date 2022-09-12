@@ -310,7 +310,7 @@ defaults = defaultConfig {
         terminal           = "st",
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
-        modMask            = mod4mask,
+        modMask            = mod4Mask,
         -- numlockMask deprecated in 0.9.1
         -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
