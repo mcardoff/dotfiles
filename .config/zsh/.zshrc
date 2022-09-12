@@ -26,6 +26,7 @@ alias ls='exa -al --color=always --group-directories-first'
 alias projector='xrandr --output HDMI1 --right-of eDP1 --primary --mode 800x600'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias tlmgr='tllocalmgr'
+alias fixmymouse='xinput set-prop 12 186 0'
 
 # title
 print -Pn "\e]0;%m:%~\a"
