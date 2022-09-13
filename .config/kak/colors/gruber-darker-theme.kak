@@ -52,7 +52,7 @@ evaluate-commands %sh{
 
         # kakoune UI
         face global Default              ${white},${bg}
-        face global PrimarySelection     ${black},${yellow}
+        face global PrimarySelection     ${white},"rgb:484848"
         face global SecondarySelection   ${bg},${orange}
         face global PrimaryCursor        ${bg},${yellow}+b
         face global SecondaryCursor      ${bg},${yellow}+b
