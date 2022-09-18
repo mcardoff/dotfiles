@@ -116,7 +116,7 @@ r = ( dec,   0)
 --
 startHook :: X ()
 startHook = spawn "nm-applet"
-            -- >> spawn "~/.bin/i3init.sh"
+            >> spawn "~/.bin/xmonadinit.sh"
 
 --
 -- KEYBINDS
