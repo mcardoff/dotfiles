@@ -21,33 +21,18 @@
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
 \usepackage[labelfont=bf]{caption}
+\usepackage{tikz}
 
 % figures
 \graphicspath{ {./figs/} }
 
-\newcommand{\fig}[3]
-{
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=#1cm]{#2}
-    \caption{#3}
-  \end{figure}
-}
-
-\newcommand{\figref}[4]
-{
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=#1cm]{#2}
-    \caption{#3}
-    \label{#4}
-  \end{figure}
-}
-
 \renewcommand{\L}{\mathcal{L}}
+
 \newcommand{\D}{\partial}
 \newcommand{\munu}{{\mu\nu}}
 \newcommand{\sla}[1]{\slashed{#1}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 \begin{document}
 \maketitle
