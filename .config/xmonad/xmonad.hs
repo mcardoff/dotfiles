@@ -115,8 +115,9 @@ r = ( dec,   0)
 -- STARTUP
 --
 startHook :: X ()
-startHook = spawn "nm-applet"
-            >> spawn "~/.bin/xmonadinit.sh"
+startHook = do
+  spawn "nm-applet"
+  spawn "/home/mcard/.bin/cisbg.sh"
 
 --
 -- KEYBINDS
@@ -173,7 +174,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
     -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
-    , ((mod, xK_q), spawn "~/.config/xmonad/xmonad --recompile; xmonad --restart")
+    , ((mod, xK_q), spawn "/home/mcard/.config/xmonad/xmonad-x86_64-linux --recompile; /home/mcard/.config/xmonad/xmonad-x86_64-linux --restart")
     -- MISC
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")

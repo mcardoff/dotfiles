@@ -1,13 +1,15 @@
 #!/bin/sh
 
+exec nm-applet &
+
 gayq=$(grep "gay = " $XMONAD_CONFIG_DIR/xmonad.hs | tail -c5)
 
 if [ $gayq == "alse" ]; then
-    ~/.bin/cisbg.sh &
+    /home/mcard/.bin/cisbg.sh &
 else
-    ~/.bin/bibg.sh &
+    /home/mcard/.bin/bibg.sh &
 fi
 
-[[ -f ~/.config/X11/xresources ]] && xrdb -merge -I$HOME ~/.config/X11/xresources
+[[ -f /home/mcard/.config/X11/xresources ]] && xrdb -merge -I$HOME /home/mcard/.config/X11/xresources
 
 xinput set-prop 12 186 0
