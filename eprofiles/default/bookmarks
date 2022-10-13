@@ -18,10 +18,10 @@
  (rear-context-string . "ively together.\n")
  (position . 6461))
 ("org-capture-last-stored"
- (filename . "~/Org/Agenda/Mail.org")
- (front-context-string . "** TODO Follow U")
- (rear-context-string . "022-05-05 Thu> \n")
- (position . 1597))
+ (filename . "~/Org/Agenda/FA22.org")
+ (front-context-string . "*** TODO 163a Ex")
+ (rear-context-string . "xams [0/0] :EX:\n")
+ (position . 2416))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

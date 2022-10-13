@@ -1,0 +1,30 @@
+(defvar schoolpath "~/school/")
+(defvar templatepath "~/school/template.tex")
+  
+(defun gencopy (subj code)
+  (let ((fname
+         (read-file-name
+         (concat subj ": ")
+         (concat schoolpath (concat code "/HW/")))))
+    (copy-file templatepath fname)
+    (find-file fname)))
+
+(defun starthw ()
+  (interactive)
+  (let ((x (upcase (read-string "Class Shorthand: "))))
+    (cond ((string= x "CM") (gencopy "CM" "PHYS309"))
+          ((string= x "QM") (gencopy "QM" "PHYS406"))
+          ((string= x "EM") (gencopy "EM" "PHYS414"))
+          ((string= x "MM") (gencopy "MM" "PHYS502"))
+          ((string= x "GQ") (gencopy "GQ" "PHYS510"))
+          (t "failed"))))
+
+(defun continuehw ()
+  (interactive)
+  (let ((x (upcase (read-string "Class Shorthand: "))))
+    (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/")))
+          ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/")))
+          ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/")))
+          ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/")))
+          ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/")))
+          (t "failed"))))
