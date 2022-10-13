@@ -174,12 +174,13 @@
 (defun org-gimme-date ()
   (format-time-string (car org-time-stamp-formats) (org-read-date nil t)))
 
+(defvar script-path "~/.bin/find_next_hw.sh")
+(defun mpc/next-hw-num (class sem schoolpath)
+  (shell-command-to-string (format "/home/mcard/.bin/next_hw_num.sh %s %s" sem class)))
 
-(defvar cur-school-path "~/school/SP22/")
-(defun make-phys-hw-file (class num)
-  (let ((hwnum (shell-command-to-string
-		(format "~/.bin/find_next_hw.sh %s%s" class num))))
-  (format "%s%s%s/Cardiff_%s_HW_%s.tex" cur-school-path class num num hwnum)))
+(defun mpc/make-latest-hw-file (class sem school-path)
+  "class: Subject indicator and number, sem: [FA/SP]YY, school path: no slash at end"
+  (format "%s/%s/%s/%s" school-path sem class (shell-command-to-string (format "%s %s %s" script-path sem class))))
 
 ;; Maybe using general?
 (use-package general
@@ -313,13 +314,17 @@
 	;; Homeworks
 	("h"  "Add Homework")
 	("hz" "PHYS 161a" entry (file+olp "FA22.org" "PHYS 161a" "Homework")
-	 "* TODO 161a HW %?")
+	 "* TODO 161a HW %(mpc/next-hw-num \"PHYS161a\" \"FA22\" \"~/school\")%? \
+\n[[%(mpc/make-latest-hw-file \"PHYS161a\" \"FA22\" \"~/school\")][Associated File]]")
 	("hx" "PHYS 162a" entry (file+olp "FA22.org" "PHYS 162a" "Homework")
-	 "* TODO 162a HW %?")
+	 "* TODO 162a HW %(mpc/next-hw-num \"PHYS162a\" \"FA22\" \"~/school\")%? \
+\n[[%(mpc/make-latest-hw-file \"PHYS162a\" \"FA22\" \"~/school\")][Associated File]]")
 	("hc" "PHYS 163a" entry (file+olp "FA22.org" "PHYS 163a" "Homework")
-	 "* TODO 163a HW %?")
+	 "* TODO 163a HW %(mpc/next-hw-num \"PHYS163a\" \"FA22\" \"~/school\")%? \
+\n[[%(mpc/make-latest-hw-file \"PHYS163a\" \"FA22\" \"~/school\")][Associated File]]")
 	("hv" "PHYS 164a" entry (file+olp "FA22.org" "PHYS 164a" "Homework")
-	 "* TODO 164a HW %?")
+	 "* TODO 164a HW %(mpc/next-hw-num \"PHYS164a\" \"FA22\" \"~/school\")%? \
+\n[[%(mpc/make-latest-hw-file \"PHYS164a\" \"FA22\" \"~/school\")][Associated File]]")
 	("e"  "Add Exam")
 	("ez" "PHYS 161a" entry (file+olp "FA22.org" "PHYS 161a" "Exams")
 	 "* TODO 161a Exam %?")
@@ -514,37 +519,6 @@
   :ensure nil)
 
 (use-package pass)
-
-(defvar schoolpath "~/school/")
-(defvar templatepath "~/school/template.tex")
-  
-(defun gencopy (subj code)
-  (let ((fname
-         (read-file-name
-         (concat subj ": ")
-         (concat schoolpath (concat code "/HW/")))))
-    (copy-file templatepath fname)
-    (find-file fname)))
-
-(defun starthw ()
-  (interactive)
-  (let ((x (upcase (read-string "Class Shorthand: "))))
-    (cond ((string= x "CM") (gencopy "CM" "PHYS309"))
-          ((string= x "QM") (gencopy "QM" "PHYS406"))
-          ((string= x "EM") (gencopy "EM" "PHYS414"))
-          ((string= x "MM") (gencopy "MM" "PHYS502"))
-          ((string= x "GQ") (gencopy "GQ" "PHYS510"))
-          (t "failed"))))
-
-(defun continuehw ()
-  (interactive)
-  (let ((x (upcase (read-string "Class Shorthand: "))))
-    (cond ((string= x "CM") (find-file (concat schoolpath "/PHYS309/HW/")))
-          ((string= x "QM") (find-file (concat schoolpath "/PHYS406/HW/")))
-          ((string= x "EM") (find-file (concat schoolpath "/PHYS414/HW/")))
-          ((string= x "MM") (find-file (concat schoolpath "/PHYS502/HW/")))
-          ((string= x "GQ") (find-file (concat schoolpath "/PHYS510/HW/")))
-          (t "failed"))))
 
 ;;;; END OF EMACSINIT.EL
 

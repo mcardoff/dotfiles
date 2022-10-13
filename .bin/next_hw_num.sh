@@ -14,8 +14,4 @@ FINAL="$NEXTNUM"
 
 [[ $NEXTNUM -lt 9 ]] && FINAL="0$NEXTNUM"
 
-COURSE=$(printf $2 | sed 's/[A-Z]//g')
-# echo $COURSE
-
-# Print next file name
-printf "Cardiff_${COURSE}_HW_$FINAL.tex"
+printf "$FINAL"
