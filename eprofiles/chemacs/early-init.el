@@ -1,12 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 ;; (setq package-enable-at-startup nil)
-;; (setq user-emacs-directory "~/.config/emacs/"
-;;       user-init-file       "~/.config/emacs/init.el"
-;;       auto-save-list-file-name "~/.config/emacs/cache")
-
-;;(setq-default inhibit-redisplay t
-;;              inhibit-message t)
-
 (setq package--init-file-ensured t
       gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6
@@ -19,14 +12,7 @@
       comp-deferred-compilation t
       display-line-numbers-type t
       dired-listing-switches "-lgXGDAh --group-directories-first"
-      backup-directory-alist '(("." . "~/.config/emacs/cache/"))
-      custom-file (concat user-emacs-directory ".emacs-custom.el")
       message-log-max t)
-
-(set-face-attribute 'default nil
- :font "Source Code Pro"
- :foundry 'regular
- :height 140)
 
 (menu-bar-mode                    0)
 (tool-bar-mode                    0)
@@ -61,3 +47,10 @@
 (add-hook 'emacs-startup-hook #'mpc/display-startup-time)
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
 					       gc-cons-percentage 0.1)))
+
+(require 'chemacs
+         (expand-file-name "chemacs.el"
+                           (file-name-directory
+                            (file-truename load-file-name))))
+
+(chemacs-load-user-early-init)
