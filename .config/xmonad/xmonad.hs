@@ -261,9 +261,8 @@ tabConfig = def { fontName            = "Source_Code_Pro"
                 , inactiveTextColor   = white
                 }
 
-layouts =  onWorkspace "sch" simplestFloat $
-           (as grid) ||| noBorders Full -- ||| noBorders tabs ||| floats
-               where as = avoidStruts
+layouts = (as (grid ||| tiled) )||| noBorders Full  -- ||| noBorders tabs ||| floats
+    where as = avoidStruts
 
 -- Misc.
 windowCount :: X (Maybe String)

@@ -20,8 +20,8 @@
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/FA22.org")
  (front-context-string . "*** TODO 164a HW")
- (rear-context-string . "sociated File]]\n")
- (position . 12030))
+ (rear-context-string . "ssociated File]\n")
+ (position . 13408))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
