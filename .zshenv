@@ -56,6 +56,9 @@ export MATHEMATICA_BASE="$XDG_CONFIG_HOME"/mathematica
 export MATHEMATICA_USERBASE="$XDG_CONFIG_HOME"/mathematica
 export EDITOR=kak
 export VISUAL=kak
+export PATH="/home/mcard/.config/anaconda3/bin:$PATH"
+export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 . "/home/mcard/.local/share/cargo/env"
 
