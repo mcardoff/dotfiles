@@ -35,8 +35,8 @@
 (window-divider-mode              1)
 (column-number-mode               1)
 (show-paren-mode                  1)
-(fringe-mode                      1)
 (global-display-line-numbers-mode 1)
+(fringe-mode                      8)
 
 (set-face-attribute 'window-divider nil
  :foreground "#282828")
@@ -45,8 +45,8 @@
 (set-face-attribute 'window-divider-last-pixel nil
  :foreground "#282828")
 (set-face-attribute 'fringe nil
- :foreground "#282828"
- :background "#282828")
+ :foreground "#181818"
+ :background "#181818")
 
 
 (defun mpc/display-startup-time ()

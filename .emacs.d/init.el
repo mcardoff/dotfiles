@@ -290,7 +290,9 @@
 
 (use-package org
   :defer
-  :hook (org-mode . mpc/org-mode-setup)
+  :hook ((org-mode . mpc/org-mode-setup)
+	 (org-mode . (lambda () (display-line-numbers-mode 0))))
+
   :bind (:map org-mode-map
 	      ("<C-M-return>" . org-insert-todo-subheading)
 	      ("<C-return>"   . org-insert-subheading))
@@ -412,15 +414,17 @@
   :defer  t
   :ensure t)
 
-;; password stuff
-(use-package auth-source-pass
-  :hook (after-init . auth-source-pass-enable)
-  :init (auth-source-pass-enable)
-  :ensure nil)
-
-(use-package pass)
-
 ;;;; END OF EMACSINIT.EL
+
+(set-face-attribute 'window-divider nil
+ :foreground "#282828")
+(set-face-attribute 'window-divider-first-pixel nil
+ :foreground "#282828")
+(set-face-attribute 'window-divider-last-pixel nil
+ :foreground "#282828")
+(set-face-attribute 'fringe nil
+ :foreground "#181818"
+ :background "#181818")
 
 (add-hook 'emacs-startup-hook
   (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
