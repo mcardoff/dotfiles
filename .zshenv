@@ -63,3 +63,4 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 . "/home/mcard/.local/share/cargo/env"
 
 setxkbmap -option ctrl:nocaps
+[[ -f ~/.config/X11/xresources ]] && xrdb -merge ~/.config/X11/xresources
