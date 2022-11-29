@@ -1,4 +1,4 @@
-#+TITLE: Notes for Installing This
+#+TITLE: Notes for Installing =xmonad=
 * Note
 This is adapted for my own personal use from the following tutorial on [[https://brianbuccola.com/how-to-install-xmonad-and-xmobar-via-stack/][installing xmonad via stack]]
 * Getting Stack
