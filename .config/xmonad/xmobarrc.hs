@@ -20,7 +20,7 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <icon=haskell.xpm/> <fc=#ffffff>%StdinReader%</fc>\
+       , template = " <icon=haskell.xpm/> <fc=#FFFFFF>%StdinReader%</fc>\
                     \ <fc=#666666>|</fc> %math% <fc=#666666>|</fc> }\
                     \{ <fc=#666666>|</fc> %eqn% <fc=#666666>|</fc> \
                     \<fc=#73c936>%sound%</fc> <fc=#666666>|</fc> \

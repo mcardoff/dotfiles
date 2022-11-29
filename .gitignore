@@ -45,3 +45,8 @@ smex-items
 *.hi
 /eprofiles/default/spotify-cred.el
 *.pyc
+/.config/xmonad/xmobar-git/
+/.config/xmonad/xmonad-contrib-git/
+/.config/xmonad/xmonad-git/
+*.lock
+/.config/xmonad/.stack-work/

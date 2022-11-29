@@ -40,7 +40,7 @@ import           XMonad.Util.WorkspaceCompare
 -- Local vars
 --
 myWS :: [String]
-myWS = tots ++ rest ++ ["NSP"]
+myWS = tots ++ rest 
     where tots = ["trm","edt","www","sch","dsc","vid"]
           rest = map show $ [(length tots)+1..9]
 
@@ -63,9 +63,6 @@ fileman = "pcmanfm"
 term :: String
 term = "kitty"
 
-dmenuOpts :: Bool -> String
-dmenuOpts gay = if gay then " -fc #ffdd33" else ""
-
 -- basic colors
 white    = "#ffffff"
 altwhite = "#888888"
@@ -84,7 +81,7 @@ inactive = bg
 alert  = "#f43841"
 cgood  = "#3774b5"
 
--- gay gay gay colors
+-- gay colors
 gaypink1 = "#C479A2"
 gaypink2 = "#EDA5CD"
 gaypurpl = "#D6C7E8"
@@ -162,24 +159,24 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- execs
     --- apps
     , ((mod, xK_o), spawn "emacs")
-    , ((mod, xK_v), spawn "st -e vim")
+    -- , ((mod, xK_v), spawn "st -e vim")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod .|. shf, xK_f), spawn $ fileman)
     , ((mod, xK_Return), spawn term)
     , ((mod, xK_b), spawn $ browser)
     , ((mod, xK_Print), spawn "scrot -s")
     --- scripts
-    , ((mod .|. shf, xK_o), spawn "~/.bin/emacs.sh")
+    -- , ((mod .|. shf, xK_o), spawn "~/.bin/emacs.sh")
     , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
     , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
     -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
-    , ((mod, xK_q), spawn "/home/mcard/.config/xmonad/xmonad-x86_64-linux --recompile; /home/mcard/.config/xmonad/xmonad-x86_64-linux --restart")
+    , ((mod, xK_q), spawn "xmonad --recompile && xmonad --restart")
     -- MISC
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
-    , ((0, xK_F12), spawn "~/.bin/egg.sh")
+    -- , ((0, xK_F12), spawn "~/.bin/egg.sh")
 
       -- Scratchpads
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
@@ -287,38 +284,39 @@ manHook = composeAll $
 eveHook :: Event -> X All
 eveHook = mempty
 
-lgHook c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 = dynamicLogWithPP xmobarPP
-                  { ppOutput  = hPutStrLn x1
-                  , ppCurrent = xmobarColor c1 c2 . sp
-                  , ppVisible = xmobarColor c3 c4
-                  , ppHidden  = xmobarColor c5 c6 . sp
-                  , ppHiddenNoWindows = xmobarColor c7 c8 . sp
-                  , ppTitle = xmobarColor c9 "" . shorten 25
-                  , ppSep = " | "
-                  , ppWsSep = ""
-                  , ppUrgent = xmobarColor white alert . sp
-                  , ppExtras = [windowCount]
-                  , ppSort = (mkWsSort getWsCompare')
-                  , ppOrder = id
-                  }
-            where sp = wrap " " " "
-                  getWsCompare' :: X WorkspaceCompare
-                  getWsCompare' = do
-                    wsIndex <- getWsIndex
-                    return $ \a b -> f (wsIndex a) (wsIndex b) `mappend` compare a b
-                        where
-                          f Nothing Nothing   = EQ
-                          f (Just _) Nothing  = LT
-                          f Nothing (Just _)  = GT
-                          f (Just x) (Just y) = compare x y
+lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1
+    = dynamicLogWithPP xmobarPP
+      { ppOutput  = hPutStrLn x1
+      , ppCurrent = xmobarColor c1 c2 . sp
+      , ppVisible = xmobarColor c3 c4 . sp
+      , ppHidden  = xmobarColor c5 c6 . sp
+      , ppHiddenNoWindows = xmobarColor c7 c8 . sp
+      , ppTitle = xmobarColor c9 "" . shorten 25
+      , ppSep = "<fc=#666666> | </fc>"
+      , ppWsSep = ""
+      , ppUrgent = xmobarColor white alert . sp
+      , ppExtras = [windowCount]
+      , ppSort = (mkWsSort getWsCompare')
+      , ppOrder = id
+      }
+    where sp = wrap " " " "
+          getWsCompare' :: X WorkspaceCompare
+          getWsCompare' = do
+            wsIndex <- getWsIndex
+            return $ \a b -> f (wsIndex a) (wsIndex b) `mappend` compare a b
+                where
+                  f Nothing Nothing   = EQ
+                  f (Just _) Nothing  = LT
+                  f Nothing (Just _)  = GT
+                  f (Just x) (Just y) = compare x y
 
-regLogHook = lgHook "#666666" white focol bg active altwhite active altwhite blue white 
+regLogHook = lgHook white focol bg active altwhite active altwhite blue white 
 
-gayLogHook = lgHook "#000000" altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu bg
+gayLogHook = lgHook altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu bg
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe $ "xmobar -x 0 " ++ if gay then gayxmobarPath else xmobarPath
+  xmproc <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
   xmonad $ docks def {
              -- Basics
                modMask = mod4Mask
@@ -327,7 +325,7 @@ main = do
              , clickJustFocuses = False
              , workspaces = myWS
              , normalBorderColor = inactive
-             , focusedBorderColor = if gay then gayfocol else focol
+             , focusedBorderColor = focol
              , borderWidth = 2
              -- Bindings
              , keys = myKeys
@@ -336,10 +334,8 @@ main = do
              , layoutHook = layouts 
              , manageHook = manHook <+> (namedScratchpadManageHook scratchpads)
              , handleEventHook = eveHook
-             , logHook = ifGayLogHook xmproc 
+             , logHook = regLogHook xmproc 
              , startupHook = startHook
          }
-      where gay = False
-            ifGayLogHook = if gay then gayLogHook else regLogHook
          
 --EOF
