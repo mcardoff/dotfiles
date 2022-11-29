@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #INPUT FORMAT:
 # $1 = SEMESTER
