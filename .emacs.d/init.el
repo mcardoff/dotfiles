@@ -170,8 +170,10 @@
   (interactive)
   (find-file (concat user-emacs-directory "EmacsInit.org")))
 
-(defun org-gimme-date ()
-  (format-time-string (car org-time-stamp-formats) (org-read-date nil t)))
+(defun agendafile ()
+  "open the latest modified org-agenda file"
+  (interactive)
+  (find-file (shell-command-to-string "/home/mcard/.bin/latestorg.sh")))
 
 (defvar script-path "~/.bin/find_next_hw.sh")
 (defun mpc/next-hw-num (class sem schoolpath)
@@ -192,6 +194,7 @@
    "C-c" '(org-capture :which-key "Capture!")
    "a" '(org-agenda :which-key "Open Agenda")
    "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
+   "g" '(agendafile :which-key "Open Latest Org Agenda")
    "i" '(dotemacs :which-key "Open init.el")
    "l" '(org-agenda-list :which-key "Open Agenda List")
    "m" '(counsel-imenu :which-key "counsel-imenu")
@@ -248,7 +251,11 @@
      ("tabular*" LaTeX-indent-tabular)
      ("array" LaTeX-indent-tabular)
      ("picture")
-     ("tabbing"))))
+     ("tabbing")))
+  :config
+  (add-hook 'LaTeX-mode-hook
+	    (lambda () (LaTeX-add-environments
+			(("align*" "aligned" "gather*" "gathered" "frame"))))))
 
 (use-package move-text
   :defer 2
