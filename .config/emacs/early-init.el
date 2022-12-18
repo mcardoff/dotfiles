@@ -19,8 +19,14 @@
       comp-deferred-compilation t
       display-line-numbers-type t
       dired-listing-switches "-lgXGDAh --group-directories-first"
-      backup-directory-alist '(("." . "~/.config/emacs/cache/"))
+      backup-directory-alist '(("." . "~/.config/emacs/cache/backup"))
       custom-file (concat user-emacs-directory "old_files/.emacs-custom.el")
+      recentf-save-file (format "%scache/recentf" user-emacs-directory)
+      ;; bookmark-file (format "%scache/bookmarks" user-emacs-directory)
+      bookmark-default-file (format "%scache/bookmarks" user-emacs-directory)
+      mc/list-file (format "%scache/mc-lists.el" user-emacs-directory)
+      lsp-session-file (format "%scache/.lsp-session-v1" user-emacs-directory)
+      nsm-settings-file (format "%scache/network-security.data" user-emacs-directory)
       message-log-max t)
 
 (set-face-attribute 'default nil

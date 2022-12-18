@@ -20,8 +20,9 @@
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/FA22.org")
  (front-context-string . "*** TODO 163a PR")
- (rear-context-string . "8.tex][Slides]]\n")
- (position . 13199))
+ (rear-context-string . "2022-12-02 Fri>\n")
+ (position . 14833)
+ (last-modified 25487 29670 924052 334000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

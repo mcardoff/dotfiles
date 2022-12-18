@@ -13,7 +13,7 @@
           ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; requires for emacs 28
-(package-initialize)
+;; (package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
@@ -43,9 +43,11 @@
   (doom-modeline-height 40)
   (doom-modeline-icon t))
 
+;; Doesnt work with emacs 29
 ;; dashboard
 (use-package dashboard
-  :hook (after-init . dashboard-setup-startup-hook)
+  :hook ((after-init . dashboard-setup-startup-hook)
+	 (after-init . dashboard-insert-startupify-lists))
   :custom
   (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
   (dashboard-items '((recents   . 10)
@@ -54,7 +56,8 @@
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
   (dashboard-center-content t)
-  :config (dashboard-setup-startup-hook))
+  ;; :config (dashboard-setup-startup-hook)
+  )
 
 ;; Completion frameworks
 
@@ -212,7 +215,11 @@
    "M-." 'enlarge-window-horizontally
    "M-," 'shrink-window-horizontally
    "C-<SPC>" 'set-mark-command
-   "C-x <SPC>" 'rectangle-mark-mode))
+   "C-x <SPC>" 'rectangle-mark-mode)
+
+  (general-define-key
+   :keymaps 'c++-mode-map
+   "C-z C-z" 'compile))
 
 ;; which-key because there are so many bindings
 (use-package which-key
@@ -323,23 +330,19 @@
       '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
 	;; Homeworks
 	("h"  "Add Homework")
-	("hz" "PHYS 161a" entry (file+olp "FA22.org" "PHYS 161a" "Homework")
-	 "* TODO 161a HW %(mpc/next-hw-num \"PHYS161a\" \"FA22\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS161a\" \"FA22\" \"~/school\")][Associated File]]")
-	("hx" "PHYS 162a" entry (file+olp "FA22.org" "PHYS 162a" "Homework")
-	 "* TODO 162a HW %(mpc/next-hw-num \"PHYS162a\" \"FA22\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS162a\" \"FA22\" \"~/school\")][Associated File]]")
-	("hc" "PHYS 163a" entry (file+olp "FA22.org" "PHYS 163a" "Homework")
-	 "* TODO 163a HW %(mpc/next-hw-num \"PHYS163a\" \"FA22\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS163a\" \"FA22\" \"~/school\")][Associated File]]")
-	("hv" "PHYS 164a" entry (file+olp "FA22.org" "PHYS 164a" "Homework")
-	 "* TODO 164a HW %(mpc/next-hw-num \"PHYS164a\" \"FA22\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS164a\" \"FA22\" \"~/school\")][Associated File]]")
+	("hz" "PHYS 162b" entry (file+olp "SP23.org" "PHYS 162b" "Homework")
+	 "* TODO 162b HW %(mpc/next-hw-num \"PHYS162b\" \"SP23\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS162b\" \"SP23\" \"~/school\")][Associated File]]")
+	("hx" "PHYS 202a" entry (file+olp "SP23.org" "PHYS 202a" "Homework")
+	 "* TODO 202a HW %(mpc/next-hw-num \"PHYS202a\" \"SP23\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS202a\" \"SP23\" \"~/school\")][Associated File]]")
+	("hc" "PHYS 204a" entry (file+olp "SP23.org" "PHYS 204a" "Homework")
+	 "* TODO 204a HW %(mpc/next-hw-num \"PHYS204a\" \"SP23\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS204a\" \"SP23\" \"~/school\")][Associated File]]")
 	("e"  "Add Exam")
-	("ez" "PHYS 161a" entry (file+olp "FA22.org" "PHYS 161a" "Exams")
-	 "* TODO 161a Exam %?")
-	("ex" "PHYS 162a" entry (file+olp "FA22.org" "PHYS 162a" "Exams")
-	 "* TODO 162a Exam %?")
-	("ec" "PHYS 163a" entry (file+olp "FA22.org" "PHYS 163a" "Exams")
-	 "* TODO 163a Exam %?")
-	("ev" "PHYS 164a" entry (file+olp "FA22.org" "PHYS 164a" "Exams")
-	 "* TODO 164a Exam %?")
+	("ez" "PHYS 162b" entry (file+olp "SP23.org" "PHYS 162b" "Exams")
+	 "* TODO 162b Exam %?")
+	("ex" "PHYS 202a" entry (file+olp "SP23.org" "PHYS 202a" "Exams")
+	 "* TODO 202a Exam %?")
+	("ec" "PHYS 204a" entry (file+olp "SP23.org" "PHYS 204a" "Exams")
+	 "* TODO 204a Exam %?")
 	("p"  "Add Preclass Prep")
 	("pz" "PHYS 162a" entry (file+olp "FA22.org" "PHYS 162a" "Preclass Prep")
 	 "* TODO 162a Reading Question %?")
@@ -391,6 +394,8 @@
   :defer t
   :commands (lsp lsp-deferred)
   :hook ((python-mode . lsp)
+	 (c-mode . lsp)
+	 (c++-mode . lsp)
 	 (lsp-mode . mpc/lsp-mode-setup))
   :init
   (setq lsp-keymap-prefix "C-c l")
