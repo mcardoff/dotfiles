@@ -3,6 +3,7 @@
 Here is a list of what I have to do for the deploy script
 - [X] Move =.emacs.d= to =.config/emacs=
 - [X] Delete Old Profiles
+- [ ] Fix Deploy script to just do =.config/emacs=
 
 * Notes
 For my git config, if you do not already have one, it will simply copy mine, you will need to change it
