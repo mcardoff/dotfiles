@@ -114,7 +114,9 @@ r = ( dec,   0)
 startHook :: X ()
 startHook = do
   spawn "nm-applet"
-  spawn "/home/mcard/.bin/cisbg.sh"
+  spawn "picom"
+  -- spawn "/home/mcard/.bin/cisbg.sh"
+  
 
 --
 -- KEYBINDS
@@ -158,7 +160,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_t), withFocused $ windows . W.sink) -- set window to non-floating
     -- execs
     --- apps
-    , ((mod, xK_o), spawn "emacs")
+    , ((mod, xK_o), spawn "emacs-29.0.60")
     -- , ((mod, xK_v), spawn "st -e vim")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod .|. shf, xK_f), spawn $ fileman)
@@ -166,7 +168,6 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_b), spawn $ browser)
     , ((mod, xK_Print), spawn "scrot -s")
     --- scripts
-    -- , ((mod .|. shf, xK_o), spawn "~/.bin/emacs.sh")
     , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
     , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
     -- Exit, recompule, etc
@@ -284,9 +285,10 @@ manHook = composeAll $
 eveHook :: Event -> X All
 eveHook = mempty
 
-lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1
+lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
     = dynamicLogWithPP xmobarPP
-      { ppOutput  = hPutStrLn x1
+      { ppOutput  = \x -> hPutStrLn x1 x
+                       >> hPutStrLn x2 x
       , ppCurrent = xmobarColor c1 c2 . sp
       , ppVisible = xmobarColor c3 c4 . sp
       , ppHidden  = xmobarColor c5 c6 . sp
@@ -316,7 +318,8 @@ gayLogHook = lgHook altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu 
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
+  xmproc0 <- spawnPipe $ "xmobar -x 0 " ++ xmobarPath
+  xmproc1 <- spawnPipe $ "xmobar -x 1 " ++ xmobarPath
   xmonad $ docks def {
              -- Basics
                modMask = mod4Mask
@@ -326,7 +329,7 @@ main = do
              , workspaces = myWS
              , normalBorderColor = inactive
              , focusedBorderColor = focol
-             , borderWidth = 2
+             , borderWidth = 4
              -- Bindings
              , keys = myKeys
              , mouseBindings = myMouseBindings
@@ -334,7 +337,7 @@ main = do
              , layoutHook = layouts 
              , manageHook = manHook <+> (namedScratchpadManageHook scratchpads)
              , handleEventHook = eveHook
-             , logHook = regLogHook xmproc 
+             , logHook = regLogHook xmproc0 xmproc1
              , startupHook = startHook
          }
          
