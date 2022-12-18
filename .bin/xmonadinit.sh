@@ -2,13 +2,7 @@
 
 exec nm-applet &
 
-gayq=$(grep "gay = " $XMONAD_CONFIG_DIR/xmonad.hs | tail -c5)
-
-if [ $gayq == "alse" ]; then
-    /home/mcard/.bin/cisbg.sh &
-else
-    /home/mcard/.bin/bibg.sh &
-fi
+/home/mcard/.bin/cisbg.sh &
 
 [[ -f /home/mcard/.config/X11/xresources ]] && xrdb -merge -I$HOME /home/mcard/.config/X11/xresources
 
