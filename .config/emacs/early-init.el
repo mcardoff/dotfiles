@@ -8,6 +8,7 @@
 ;;              inhibit-message t)
 
 (setq package--init-file-ensured t
+      package-native-compile t
       gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6
       load-prefer-newer noninteractive
