@@ -50,3 +50,4 @@ smex-items
 /.config/xmonad/xmonad-git/
 *.lock
 /.config/xmonad/.stack-work/
+/.config/emacs/eln-cache/
