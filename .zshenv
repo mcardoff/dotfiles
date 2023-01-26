@@ -59,6 +59,8 @@ export VISUAL=kak
 export PATH="/home/mcard/.config/anaconda3/bin:$PATH"
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+export GOPATH="$XDG_DATA_HOME"/go
+export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 
 . "/home/mcard/.local/share/cargo/env"
 
