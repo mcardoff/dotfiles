@@ -381,6 +381,7 @@
   :hook ((haskell-mode . interactive-haskell-mode)
 	 (haskell-mode . haskell-indent-mode))
   :custom
+  (haskell-process-type 'stack-ghci) ; use stack ghci instead of global ghc
   (haskell-stylish-on-save t))
 
 ; lsp
