@@ -55,7 +55,7 @@ myFont = "Source Code Pro:size=13"
 
 -- apps
 browser :: String
-browser = "firefox"
+browser = "chromium"
 
 fileman :: String
 fileman = "pcmanfm"
@@ -117,17 +117,16 @@ startHook = do
   spawn "picom"
   -- spawn "/home/mcard/.bin/cisbg.sh"
   
-
 --
 -- KEYBINDS
 --
-
 myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     [
     -- Movement & General WM stuff 
     --- Workspace movement
       ((alt, xK_Tab), nextWS)
     , ((alt .|. shf, xK_Tab), prevWS)
+    
     --- Focus movement
     , ((mod, xK_j), windows W.focusDown)
     , ((mod .|. shf, xK_j), windows W.swapDown)
@@ -138,37 +137,36 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
     , ((mod, xK_l), windows W.focusUp)
     , ((mod, xK_h), windows W.focusDown)
-    --- Resize in tiled mode
-    -- , ((mod, xK_h), sendMessage Shrink)
-    -- , ((mod, xK_l), sendMessage Expand)
+      
     --- Move floating windows
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
     , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
     , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
+    
     --- Resize Floating Windows
     , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow (-10,0) (0,0))
     , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow (0, 10) (0,0))
     , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow (0,-10) (0,0))
     , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow ( 10,0) (0,0))
+      
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
     , ((mod .|. shf, xK_p), spawn "~/.bin/truekill.sh")
+      
     --- Change WS layout
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
     , ((mod, xK_t), withFocused $ windows . W.sink) -- set window to non-floating
     -- execs
-    --- apps
-    , ((mod, xK_o), spawn "emacs-29.0.60")
-    -- , ((mod, xK_v), spawn "st -e vim")
-    , ((mod, xK_p), spawn "dmenu_run")
-    , ((mod .|. shf, xK_f), spawn $ fileman)
-    , ((mod, xK_Return), spawn term)
     , ((mod, xK_b), spawn $ browser)
-    , ((mod, xK_Print), spawn "scrot -s")
-    --- scripts
+    , ((mod, xK_o), spawn "emacs-29.0.60")
+    , ((mod, xK_p), spawn "dmenu_run")
+    , ((mod, xK_v), spawn "discord-canary")
     , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
+    , ((mod, xK_Print), spawn "scrot -s")
+    , ((mod, xK_Return), spawn term)
+    , ((mod .|. shf, xK_f), spawn $ fileman)
     , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
     -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
@@ -177,7 +175,6 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
-    -- , ((0, xK_F12), spawn "~/.bin/egg.sh")
 
       -- Scratchpads
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
@@ -200,7 +197,6 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
                  else (W.float w (W.RationalRect (1/3) (1/4) (1/2) (4/5)) s))
 
 
-
 myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
     [ ((modm, button1),
       \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)
@@ -212,7 +208,6 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 
 -- Scratchpads
 scratchpads :: [NamedScratchpad]
--- scratchpads = []
 scratchpads = [
   -- format :: NS <name> <command> <query> <hook>
     NS "dropterm" (term ++ " --class dropterm --title dropterm")
@@ -237,31 +232,27 @@ scratchpads = [
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
   ]
 
-
-
 -- Layouts
-
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
-tiled = Tall 1 (3/100) (1/2)
-
---floats = renamed [Replace "Float"] $ limitWindows 20 simplestFloat
+tiled = renamed [Replace "Tile"] $ Tall 1 (3/100) (1/2)
 
 grid = renamed [Replace "Grid"] $ limitWindows 12 $
        mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
 
-tabConfig = def { fontName            = "Source_Code_Pro"
+tabConfig = def { fontName            = "xft:Source Code Pro"
                 , activeColor         = focol
                 , inactiveColor       = inactive
                 , activeBorderColor   = focol
                 , inactiveBorderColor = inactive
                 , activeTextColor     = white
                 , inactiveTextColor   = white
+                , activeBorderWidth = 10
+                , inactiveBorderWidth = 10
                 }
 
-layouts = (as (grid ||| tiled) )||| noBorders Full  -- ||| noBorders tabs ||| floats
+layouts = as (grid ||| tiled) ||| noBorders Full
     where as = avoidStruts
-
 -- Misc.
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -272,11 +263,14 @@ manHook = composeAll $
           [ className =? "Gimp"           --> doFloat
           , className =? "Test Window"    --> doFloat
           , className =? "Matplotlib"     --> doFloat
+          , className =? "tk"             --> doFloat
+          , className =? "Tk"             --> doFloat
           , resource  =? "desktop_window" --> doIgnore
           , resource  =? "kdesktop"       --> doIgnore
           , appName   =? browser          --> doShift (myWS !! 2)
           , appName   =? fileman          --> doShift (myWS !! 3)
           , appName   =? "discord"        --> doShift (myWS !! 4)
+          , appName   =? "slack"          --> doShift (myWS !! 4)
           -- , appName   =? "vlc"            --> doShift (myWS !! 5)
           , className =? "Ranger"         --> doShift "NS"
           , className =? "dropterm"       --> doShift "NS"

@@ -18,6 +18,8 @@
 	kill-region
 	lsp-signature-stop
 	magit-stage
+	move-text-down
+	move-text-up
 	org-beginning-of-line
 	org-cycle
 	org-deadline
