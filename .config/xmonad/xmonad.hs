@@ -158,11 +158,12 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
     , ((mod, xK_t), withFocused $ windows . W.sink) -- set window to non-floating
+
     -- execs
     , ((mod, xK_b), spawn $ browser)
+    , ((mod, xK_i), spawn "thunderbird")
     , ((mod, xK_o), spawn "emacs-29.0.60")
     , ((mod, xK_p), spawn "dmenu_run")
-    , ((mod, xK_v), spawn "discord-canary")
     , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
     , ((mod, xK_Print), spawn "scrot -s")
     , ((mod, xK_Return), spawn term)
@@ -179,9 +180,10 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
       -- Scratchpads
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
-    , ((0, xK_F2), namedScratchpadAction scratchpads "Notepad")
-    , ((0, xK_F4), namedScratchpadAction scratchpads "Schedule")
-    , ((0, xK_F5), namedScratchpadAction scratchpads "vimwindow")
+    , ((mod, xK_v), namedScratchpadAction scratchpads "Discord")
+    , ((mod, xK_c), namedScratchpadAction scratchpads "Slack")
+    -- , ((0, xK_F4), namedScratchpadAction scratchpads "Schedule")
+    -- , ((0, xK_F5), namedScratchpadAction scratchpads "vimwindow")
     ] 
     ++
     [((mo .|. mod, k), windows $ f i)
@@ -222,13 +224,12 @@ scratchpads = [
                  \ --eval='(unless (boundp 'server-process) (server-start))'"
        (title =? "notepad")
        (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
-
-  , NS "Schedule" "feh ~/Pictures/schedule.png --title 'Schedule'"
-       (title =? "Schedule")
+  , NS "Discord" "discord-canary"
+       (className =? "Discord")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
-  , NS "vimwindow" (term ++ " --class vim -e vim")
-       (className =? "vim")
+  , NS "Slack" "slack"
+       (className =? "Slack")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
   ]
 
@@ -269,8 +270,8 @@ manHook = composeAll $
           , resource  =? "kdesktop"       --> doIgnore
           , appName   =? browser          --> doShift (myWS !! 2)
           , appName   =? fileman          --> doShift (myWS !! 3)
-          , appName   =? "discord"        --> doShift (myWS !! 4)
-          , appName   =? "slack"          --> doShift (myWS !! 4)
+          , appName   =? "discord"        --> doFloat
+          , appName   =? "slack"          --> doFloat
           -- , appName   =? "vlc"            --> doShift (myWS !! 5)
           , className =? "Ranger"         --> doShift "NS"
           , className =? "dropterm"       --> doShift "NS"
