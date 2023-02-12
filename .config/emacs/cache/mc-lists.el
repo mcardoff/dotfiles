@@ -14,6 +14,7 @@
 	beginning-of-visual-line
 	end-of-visual-line
 	ignore
+	ignore-preserving-kill-region
 	indent-for-tab-command
 	kill-region
 	lsp-signature-stop
@@ -39,6 +40,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+	counsel-M-x
 	kill-visual-line
 	lsp-ui-doc--handle-mouse-movement
 	org-delete-char

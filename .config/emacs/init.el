@@ -34,6 +34,10 @@
 
 (use-package autorevert :defer t)
 
+(use-package auth-source
+  :custom (auth-sources
+	   ("~/.config/emacs/authinfo.gpg" "~/.authinfo" "~/.authinfo.gpg")))
+
 ;; Doom modeline
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
@@ -360,6 +364,9 @@
   :defer
   :hook (doc-view-mode . mpc/no-lines-setup))
 
+;; Mail
+
+
 ;; IDE 
 
 (use-package magit
@@ -405,7 +412,7 @@
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
      ("pyls.plugins.pyls_black.enabled" t t)
      ("pyls.plugins.pyls_isort.enabled" t t)))
-)
+  )
 
 (use-package lsp-ui
   :defer t
