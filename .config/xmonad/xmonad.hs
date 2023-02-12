@@ -168,7 +168,6 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_Print), spawn "scrot -s")
     , ((mod, xK_Return), spawn term)
     , ((mod .|. shf, xK_f), spawn $ fileman)
-    , ((mod .|. shf, xK_b), spawn "~/.bin/books.sh")
     -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile && xmonad --restart")
@@ -178,6 +177,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
 
       -- Scratchpads
+    , ((mod .|. shf, xK_b), namedScratchpadAction scratchpads "Books")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((mod, xK_v), namedScratchpadAction scratchpads "Discord")
@@ -220,12 +220,17 @@ scratchpads = [
        (className =? "Ranger")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
+  , NS "Books" (term ++ " --class Books --title Books -e ranger --cmd 'set column_ratios 0' ~/school/.misc/Books")
+       (className =? "Books")
+       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+
   , NS "Notepad" "emacs -T notepad \
                  \ --eval='(unless (boundp 'server-process) (server-start))'"
        (title =? "notepad")
        (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
+       
   , NS "Discord" "discord-canary"
-       (className =? "Discord")
+       (className =? "discord")
        (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
 
   , NS "Slack" "slack"
@@ -270,11 +275,12 @@ manHook = composeAll $
           , resource  =? "kdesktop"       --> doIgnore
           , appName   =? browser          --> doShift (myWS !! 2)
           , appName   =? fileman          --> doShift (myWS !! 3)
-          , appName   =? "discord"        --> doFloat
-          , appName   =? "slack"          --> doFloat
-          -- , appName   =? "vlc"            --> doShift (myWS !! 5)
+          , className =? "discord"        --> doFloat
+          , className =? "slack"          --> doFloat
           , className =? "Ranger"         --> doShift "NS"
           , className =? "dropterm"       --> doShift "NS"
+          , className =? "discord"        --> doShift "NS"
+          , className =? "slack"          --> doShift "NS"
           ]
 
 eveHook :: Event -> X All
