@@ -62,6 +62,7 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 export W3M_DIR="$XDG_STATE_HOME/w3m"
+export PYTHONHISTFILE="$XDG_CACHE_HOME"/python/python_history
 
 . "/home/mcard/.local/share/cargo/env"
 
