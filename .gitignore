@@ -51,3 +51,4 @@ smex-items
 *.lock
 /.config/xmonad/.stack-work/
 /.config/emacs/eln-cache/
+mc-lists.el
