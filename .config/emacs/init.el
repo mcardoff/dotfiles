@@ -53,7 +53,7 @@
   :hook ((after-init . dashboard-setup-startup-hook)
 	 (after-init . dashboard-insert-startupify-lists))
   :custom
-  (dashboard-startup-banner "~/repos/mcardoff/Profile.png")
+  (dashboard-startup-banner 'logo)
   (dashboard-items '((recents   . 10)
 		     (bookmarks . 10)
                      (agenda    . 10)))
@@ -166,6 +166,11 @@
   (let (n)
     (setq n (read-number "Type a number: "))
     (message "Number is %s" n)))
+
+(defun mpc/create-todo-entry (num subj semester)
+  (format
+   "* TODO %s HW %%(mpc/next-hw-num \"%s%s\" \"%s\" \"~/school\") [[%%(mpc/make-latest-hw-file \"%s%s\" \"%s\" \"~/school\")][LaTeX File]]"
+   num subj num semester subj num semester))
 
 (defun dotemacs ()
   "Opens init.el"
@@ -335,11 +340,12 @@
 	;; Homeworks
 	("h"  "Add Homework")
 	("hz" "PHYS 162b" entry (file+olp "SP23.org" "PHYS 162b" "Homework")
-	 "* TODO 162b HW %(mpc/next-hw-num \"PHYS162b\" \"SP23\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS162b\" \"SP23\" \"~/school\")][Associated File]]")
+	 (function (lambda () (mpc/create-todo-entry "162b" "PHYS" "SP23"))))
 	("hx" "PHYS 202a" entry (file+olp "SP23.org" "PHYS 202a" "Homework")
-	 "* TODO 202a HW %(mpc/next-hw-num \"PHYS202a\" \"SP23\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS202a\" \"SP23\" \"~/school\")][Associated File]]")
+	 (function (lambda () (mpc/create-todo-entry "202a" "PHYS" "SP23"))))
 	("hc" "PHYS 204a" entry (file+olp "SP23.org" "PHYS 204a" "Homework")
-	 "* TODO 204a HW %(mpc/next-hw-num \"PHYS204a\" \"SP23\" \"~/school\")%?\n[[%(mpc/make-latest-hw-file \"PHYS204a\" \"SP23\" \"~/school\")][Associated File]]")
+	 (function (lambda () (mpc/create-todo-entry "204a" "PHYS" "SP23"))))
+	;; exams 
 	("e"  "Add Exam")
 	("ez" "PHYS 162b" entry (file+olp "SP23.org" "PHYS 162b" "Exams")
 	 "* TODO 162b Exam %?")
@@ -347,9 +353,11 @@
 	 "* TODO 202a Exam %?")
 	("ec" "PHYS 204a" entry (file+olp "SP23.org" "PHYS 204a" "Exams")
 	 "* TODO 204a Exam %?")
+	;; Other misc prep
 	("p"  "Add Preclass Prep")
 	("pz" "PHYS 202a" entry (file+olp "SP23.org" "PHYS 202a" "TQ")
 	 "* TODO 202a Thought/Question %?")
+	;; Everything else
       	("r" "Random Workflow")
 	("rd" "Daily Item" entry (file+olp "~/Org/Agenda/MISC.org" "Daily")
 	 "* TODO %?\nSCHEDULED: %t")))
