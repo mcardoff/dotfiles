@@ -4,31 +4,30 @@ import           Data.Char
 import qualified Data.Map as M
 import           Data.Monoid
 import           Data.Tuple
+import           GHC.IO.Handle.Types
 import           System.Exit
 import           XMonad
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.FloatKeys
 import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.ManageDocks
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.Circle
 import           XMonad.Layout.GridVariants (Grid (Grid))
 import           XMonad.Layout.LayoutModifier
-import           XMonad.Layout.LimitWindows          (decreaseLimit,
-                                                      increaseLimit,
-                                                      limitWindows)
-import           XMonad.Layout.MultiToggle           (EOT (EOT), mkToggle,
-                                                      single, (??))
-import           XMonad.Layout.MultiToggle.Instances (StdTransformers (MIRROR, NBFULL, NOBORDERS))
+import           XMonad.Layout.LimitWindows
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
+    (StdTransformers (MIRROR, NBFULL, NOBORDERS))
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
 import           XMonad.Layout.Renamed (Rename (Replace), renamed)
 import           XMonad.Layout.SimplestFloat
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
-import qualified XMonad.Layout.ToggleLayouts         as T (ToggleLayout (Toggle),
-                                                           toggleLayouts)
+import qualified XMonad.Layout.ToggleLayouts as T (ToggleLayout (Toggle),
+                                                                toggleLayouts)
 import           XMonad.Prompt
 import           XMonad.Prompt.Input
 import qualified XMonad.StackSet as W
@@ -36,6 +35,7 @@ import           XMonad.Util.EZConfig
 import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.Run
 import           XMonad.Util.WorkspaceCompare
+
 --
 -- Local vars
 --
@@ -52,6 +52,8 @@ mod = mod4Mask
 
 myFont :: String
 myFont = "Source Code Pro:size=13"
+
+type GridType = ModifiedLayout Rename (ModifiedLayout LimitWindows (ModifiedLayout Spacing (MultiToggle (HCons StdTransformers EOT) Grid)))
 
 -- apps
 browser :: String
@@ -76,37 +78,33 @@ princ  = "#cc8c3c"
 secon  = "#ffdd33"
 focol  = "#8b3622"
 blue = altbg
+vis    = "#ff56cb"
 active = "#7b4032"
 inactive = bg
 alert  = "#f43841"
 cgood  = "#3774b5"
 
--- gay colors
-gaypink1 = "#C479A2"
-gaypink2 = "#EDA5CD"
-gaypurpl = "#D6C7E8"
-gaywhite = "#FFFFFF"
-gayltblu = "#9AC7E8"
-gaydrblu = "#6D82D1"
-gayfocol  = "#f7a8b8"
-gaysecon  = "#f37d95"
-gayblue = "#55cdfc"
-gayinactive = "#55cdfc"
-
 -- Paths
 xmobarPath :: String
 xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 
-gayxmobarPath :: String
-gayxmobarPath = "/home/mcard/.config/xmonad/gayxmobarrc.hs"
-
 dec :: Num a => a
 dec = 10
 
-l = (-dec,   0)
-d = (   0, dec)
-u = (   0,-dec)
-r = ( dec,   0)
+inc :: Num a => a
+inc = -10
+
+l :: ChangeDim
+l = (inc,   0)
+d :: ChangeDim
+d = (  0, dec)
+u :: ChangeDim
+u = (  0, inc)
+r :: ChangeDim
+r = (dec,   0)
+
+non :: G
+non = (0,0)
 
 --
 -- STARTUP
@@ -145,10 +143,10 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
     
     --- Resize Floating Windows
-    , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow (-10,0) (0,0))
-    , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow (0, 10) (0,0))
-    , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow (0,-10) (0,0))
-    , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow ( 10,0) (0,0))
+    , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow l non)
+    , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d non)
+    , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow u non)
+    , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r non)
       
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
@@ -182,8 +180,6 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((mod, xK_v), namedScratchpadAction scratchpads "Discord")
     , ((mod, xK_c), namedScratchpadAction scratchpads "Slack")
-    -- , ((0, xK_F4), namedScratchpadAction scratchpads "Schedule")
-    -- , ((0, xK_F5), namedScratchpadAction scratchpads "vimwindow")
     ] 
     ++
     [((mo .|. mod, k), windows $ f i)
@@ -199,6 +195,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
                  else (W.float w (W.RationalRect (1/3) (1/4) (1/2) (4/5)) s))
 
 
+myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
     [ ((modm, button1),
       \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)
@@ -241,11 +238,14 @@ scratchpads = [
 -- Layouts
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
+tiled :: ModifiedLayout Rename Tall a
 tiled = renamed [Replace "Tile"] $ Tall 1 (3/100) (1/2)
 
+grid :: GridType a
 grid = renamed [Replace "Grid"] $ limitWindows 12 $
        mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
 
+tabConfig :: Theme
 tabConfig = def { fontName            = "xft:Source Code Pro"
                 , activeColor         = focol
                 , inactiveColor       = inactive
@@ -259,6 +259,7 @@ tabConfig = def { fontName            = "xft:Source Code Pro"
 
 layouts = as (grid ||| tiled) ||| noBorders Full
     where as = avoidStruts
+
 -- Misc.
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -286,6 +287,8 @@ manHook = composeAll $
 eveHook :: Event -> X All
 eveHook = mempty
 
+lgHook :: String -> String -> String -> String -> String -> String
+       -> String -> String -> String -> Handle -> Handle -> X()
 lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
     = dynamicLogWithPP xmobarPP
       { ppOutput  = \x -> hPutStrLn x1 x
@@ -313,9 +316,8 @@ lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
                   f Nothing (Just _)  = GT
                   f (Just x) (Just y) = compare x y
 
-regLogHook = lgHook white focol bg active altwhite active altwhite blue white 
-
-gayLogHook = lgHook altbg gaypink2 altbg gaypink1 altbg gaypurpl altbg gayltblu bg
+regLogHook :: Handle -> Handle -> X()
+regLogHook = lgHook white focol altwhite vis altwhite active altwhite blue white 
 
 main :: IO ()
 main = do
