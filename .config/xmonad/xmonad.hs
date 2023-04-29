@@ -1,9 +1,9 @@
 -- IMPORTS
-import           Control.Arrow (first)
-import           Data.Char
+-- import           Control.Arrow (first)
+-- import           Data.Char
 import qualified Data.Map as M
 import           Data.Monoid
-import           Data.Tuple
+-- import           Data.Tuple
 import           GHC.IO.Handle.Types
 import           System.Exit
 import           XMonad
@@ -78,7 +78,7 @@ princ  = "#cc8c3c"
 secon  = "#ffdd33"
 focol  = "#8b3622"
 blue = altbg
-vis    = "#ff56cb"
+vis    = "#8b2222"
 active = "#7b4032"
 inactive = bg
 alert  = "#f43841"
@@ -165,7 +165,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
     , ((mod, xK_Print), spawn "scrot -s")
     , ((mod, xK_Return), spawn term)
-    , ((mod .|. shf, xK_f), spawn $ fileman)
+    -- , ((mod .|. shf, xK_f), spawn $ fileman)
     -- Exit, recompule, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile && xmonad --restart")
@@ -175,9 +175,10 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
 
       -- Scratchpads
-    , ((mod .|. shf, xK_b), namedScratchpadAction scratchpads "Books")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
+    , ((mod, xK_s), namedScratchpadAction scratchpads "Books")
+    , ((mod, xK_x), namedScratchpadAction scratchpads "Mattermost")
     , ((mod, xK_v), namedScratchpadAction scratchpads "Discord")
     , ((mod, xK_c), namedScratchpadAction scratchpads "Slack")
     ] 
@@ -205,34 +206,43 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
       \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
     ]
 
+
+easyrr :: Rational -> Rational -> W.RationalRect
+easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
+
 -- Scratchpads
 scratchpads :: [NamedScratchpad]
 scratchpads = [
   -- format :: NS <name> <command> <query> <hook>
+  -- format for W.RationalRect ((1-w) / 2) ((1-h)/2) w h
     NS "dropterm" (term ++ " --class dropterm --title dropterm")
        (className =? "dropterm")
-       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+       (customFloating $ easyrr (1/2) (2/3))
 
   , NS "Ranger" (term ++ " --class Ranger --title Ranger -e ranger")
        (className =? "Ranger")
-       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+       (customFloating $ easyrr (2/3) (2/3))
 
   , NS "Books" (term ++ " --class Books --title Books -e ranger --cmd 'set column_ratios 0' ~/school/.misc/Books")
        (className =? "Books")
-       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+       (customFloating $ easyrr (5/6) (2/3))
 
   , NS "Notepad" "emacs -T notepad \
                  \ --eval='(unless (boundp 'server-process) (server-start))'"
        (title =? "notepad")
-       (customFloating $ W.RationalRect (1/12) (1/6) (5/6) (2/3))
+       (customFloating $ easyrr (5/6) (2/3))
        
   , NS "Discord" "discord-canary"
        (className =? "discord")
-       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+       (customFloating $ easyrr (1/2) (2/3))
 
   , NS "Slack" "slack"
        (className =? "Slack")
-       (customFloating $ W.RationalRect (1/4) (1/6) (1/2) (2/3))
+       (customFloating $ easyrr (5/6) (2/3))
+       
+  , NS "Mattermost" "mattermost-desktop"
+       (className =? "Mattermost" )
+       (customFloating $ easyrr (5/6) (2/3))
   ]
 
 -- Layouts
@@ -272,16 +282,15 @@ manHook = composeAll $
           , className =? "Matplotlib"     --> doFloat
           , className =? "tk"             --> doFloat
           , className =? "Tk"             --> doFloat
-          , resource  =? "desktop_window" --> doIgnore
-          , resource  =? "kdesktop"       --> doIgnore
-          , appName   =? browser          --> doShift (myWS !! 2)
-          , appName   =? fileman          --> doShift (myWS !! 3)
-          , className =? "discord"        --> doFloat
-          , className =? "slack"          --> doFloat
+          , className =? "slack"          --> doFloat <+> (doShift "NS")
+          , className =? "Mattermost"     --> doFloat <+> (doShift "NS")
+          , className =? "discord"        --> doFloat <+> (doShift "NS")
           , className =? "Ranger"         --> doShift "NS"
           , className =? "dropterm"       --> doShift "NS"
-          , className =? "discord"        --> doShift "NS"
-          , className =? "slack"          --> doShift "NS"
+          , appName   =? fileman          --> doShift (myWS !! 3)
+          , appName   =? browser          --> doShift (myWS !! 2)
+          , resource  =? "desktop_window" --> doIgnore
+          , resource  =? "kdesktop"       --> doIgnore
           ]
 
 eveHook :: Event -> X All
@@ -291,8 +300,7 @@ lgHook :: String -> String -> String -> String -> String -> String
        -> String -> String -> String -> Handle -> Handle -> X()
 lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
     = dynamicLogWithPP xmobarPP
-      { ppOutput  = \x -> hPutStrLn x1 x
-                       >> hPutStrLn x2 x
+      { ppOutput  = \x -> hPutStrLn x1 x >> hPutStrLn x2 x
       , ppCurrent = xmobarColor c1 c2 . sp
       , ppVisible = xmobarColor c3 c4 . sp
       , ppHidden  = xmobarColor c5 c6 . sp

@@ -63,6 +63,8 @@ export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 export W3M_DIR="$XDG_STATE_HOME/w3m"
 export PYTHONHISTFILE="$XDG_CACHE_HOME"/python/python_history
+export LD_PRELOAD=/usr/lib/libstdc++.so.6
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 . "/home/mcard/.local/share/cargo/env"
 
