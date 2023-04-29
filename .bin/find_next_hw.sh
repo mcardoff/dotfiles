@@ -4,7 +4,7 @@
 # $1 = SEMESTER
 # $2 = CLASS
 
-BIGGEST=$(dir -1 /home/mcard/school/$1/$2/*.tex 2> /dev/null|
+BIGGEST=$(dir -1 /home/mcard/school/$1/$2/*.tex 2> /dev/null |
 	      awk -F'\n' '{print $1 $2 $3 $4}' |
 	      awk -F'[_.tex]' '{print $5}' | tail -1)
 
