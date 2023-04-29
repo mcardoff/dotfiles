@@ -14,7 +14,6 @@
 \pagenumbering{gobble}
 
 \begin{document}
-
 \Large
 
 \noindent{\bf PHYS 19b Lab $1 Quiz  \hfill \today }
@@ -29,5 +28,4 @@
 \item Question 3
   
 \end{enumerate}
-
 \end{document}

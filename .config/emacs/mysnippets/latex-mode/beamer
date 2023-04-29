@@ -1,4 +1,4 @@
-# -*- mode: snippet -*-
+# -*- mode: latex -*-
 # name: beamer
 # key: beamer
 # --
@@ -8,26 +8,28 @@
 \author{Michael Cardiff}
 \subtitle{$2}
 
+\usepackage[italicdiff]{physics}
+\usepackage{hyperref}
+\usepackage{url}
+
 % Changes style of actual slides
-\usetheme{Madrid}
+\usetheme{Dresden}
 % Changes color of slides
-\usecolortheme{beaver}
+\usecolortheme{spruce}
 % removes controls at bottom right side
 \usenavigationsymbolstemplate{}
+
+% for figures
+\graphicspath{ {./figs/} }
+
 \begin{document}
-\frame {
+
+\begin{frame}
   \titlepage
-}
-\frame {$0
-  \frametitle{Sample Page 1}
-  \[\frac{-b \pm \sqrt{b^2 - c}}{2a}\]
-}
-\frame{
-  \frametitle{Sample Page 2}
-  \framesubtitle{An Example of Lists}
-}
-\frame{
-  \frametitle{Paragraph Content}
-  This is a paragraph.
-}
+\end{frame}
+
+\begin{frame}
+  $0
+\end{frame}
+	
 \end{document}

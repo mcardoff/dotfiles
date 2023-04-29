@@ -1,0 +1,6 @@
+# -*- mode: latex -*-
+# name: codetemp
+# key: codetemp
+# type: command
+# --
+(LaTeX-environment)

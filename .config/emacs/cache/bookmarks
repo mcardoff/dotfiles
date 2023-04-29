@@ -19,10 +19,10 @@
  (position . 6461))
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/SP23.org")
- (front-context-string . "*** TODO 202a Th")
- (rear-context-string . "2023-02-09 Thu>\n")
- (position . 3004)
- (last-modified 25574 31904 835347 413000))
+ (front-context-string . "*** TODO 202a Fi")
+ (rear-context-string . "xams [0/0] :EX:\n")
+ (position . 3433)
+ (last-modified 25676 11700 369311 868000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

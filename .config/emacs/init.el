@@ -246,6 +246,7 @@
   (TeXinfo-mode   . mpc/LaTeX-setup)
   (LaTeX-mode     . mpc/LaTeX-setup)
   (docTeX-mode    . mpc/LaTeX-setup)
+  (LaTeX-mode     . flymake-mode)
   :custom
   (TeX-view-program-selection
     '(((output-dvi has-no-display-manager) "dvi2tty") 
@@ -268,10 +269,10 @@
      ("array" LaTeX-indent-tabular)
      ("picture")
      ("tabbing")))
-  :config
-  (add-hook 'LaTeX-mode-hook
-	    (lambda () (LaTeX-add-environments
-			(("align*" "aligned" "gather*" "gathered" "frame"))))))
+
+  (LaTeX-electric-left-right-brace t)
+  (LaTeX-float "H")
+  (TeX-output-dir "./build"))
 
 (use-package move-text
   :defer 2
@@ -333,6 +334,7 @@
   :config
   (setq org-tempo-keywords-alist nil)
   (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (setq org-capture-templates
