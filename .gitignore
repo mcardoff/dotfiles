@@ -52,3 +52,5 @@ smex-items
 /.config/xmonad/.stack-work/
 /.config/emacs/eln-cache/
 mc-lists.el
+/.config/emacs/elfeed/
+/.config/emacs/url/

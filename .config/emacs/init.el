@@ -206,6 +206,7 @@
    "C-c" '(org-capture :which-key "Capture!")
    "a" '(org-agenda :which-key "Open Agenda")
    "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
+   "e" '(elfeed :which-key "Check RSS Feeds")
    "g" '(agendafile :which-key "Open Latest Org Agenda")
    "i" '(dotemacs :which-key "Open init.el")
    "l" '(org-agenda-list :which-key "Open Agenda List")
@@ -255,7 +256,7 @@
        (output-pdf "Zathura")
        (output-html "xdg-open")))
   (TeX-engine 'luatex)
-  
+  (TeX-parse-self t)
   (LaTeX-section-hook
    '(LaTeX-section-heading LaTeX-section-title LaTeX-section-section))
 
@@ -374,6 +375,15 @@
   :defer
   :hook (doc-view-mode . mpc/no-lines-setup))
 
+;; elfeed
+(use-package elfeed
+  :ensure t
+  :defer t
+  :custom
+  (elfeed-db-directory (concat user-emacs-directory "elfeed"))
+  (elfeed-feeds '("https://atlas.cern/updates/briefing/feed.xml" physics))
+  :commands (elfeed))
+
 ;; Mail
 
 
@@ -421,8 +431,7 @@
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
      ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t)))
-  )
+     ("pyls.plugins.pyls_isort.enabled" t t))))
 
 (use-package lsp-ui
   :defer t
