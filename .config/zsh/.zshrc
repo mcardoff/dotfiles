@@ -6,9 +6,10 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 autoload -U colors && colors
 
 # history
+HISTFILE=~/.cache/zsh/history
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+setopt appendhistory
 
 # autocomplete
 autoload -U compinit

@@ -4,20 +4,26 @@ Here is a list of what I have to do for the deploy script
 - [X] Move =.emacs.d= to =.config/emacs=
 - [X] Delete Old Profiles
 - [ ] Fix Deploy script to just do =.config/emacs=
-
+* Setup
+There are a few things that need to be done besides what is done in the deploy script
+- Create =~/.authinfo.gpg= and necessary gpg keys
+- Installing the =Source Code Pro= Font 
 * Notes
 For my git config, if you do not already have one, it will simply copy mine, you will need to change it
-* Necessary Programs
-- =alacritty= terminal
-- =isync= for mail
-- =ranger= for a terminal based FM
-- =firefox= browser
-- =xmonad= and =xmonad-contrib= or =i3=
+* Programs I Use
+- =alacritty= terminal, but I also toy with =xterm= and =kitty=
 - =bashtop= for process monitoring
-- =zsh= shell
+- =dmenu= my build of it recommended
+- =emacs= for my main text editor
+- =firefox= or =chromium= for a web browser
 - =git= duh?
-- =kakoune= for a terminal based text editor
-- =emacs= for a non-terminal based editor
-- =polybar= but my config is not used in it anywhere
-- =dmenu= my build of it reccomended
+- =kakoune= for a terminal based text editor, I am working on a vim config however
+- =pcmanfm= if a more modern FM is more your style
+- =ranger= for a terminal based FM
+- =thunderbird= for desktop email
+- =xmonad= with =xmonad-contrib= and =xmobar= or =i3= for a WM
+  - Part of my scripts uses the =i3lock= program, as well as =scrot= and =imagemagick=
+- =zsh= shell
+- =discord=, specifically =discord-canary= is used in my config
+- =slack= and =mattermost= for professional communications
  
