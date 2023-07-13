@@ -18,11 +18,11 @@
  (rear-context-string . "ively together.\n")
  (position . 6461))
 ("org-capture-last-stored"
- (filename . "~/Org/Agenda/SP23.org")
- (front-context-string . "*** TODO 204a Fi")
- (rear-context-string . "-5.pdf][Paper]]\n")
- (position . 5849)
- (last-modified 25681 26765 710092 309000))
+ (filename . "~/Org/Agenda/SU23.org")
+ (front-context-string . "*** TODO ATTEND ")
+ (rear-context-string . "IL\n** Follow Up\n")
+ (position . 6247)
+ (last-modified 25776 3460 601570 780000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

@@ -360,6 +360,12 @@
 	("p"  "Add Preclass Prep")
 	("pz" "PHYS 202a" entry (file+olp "SP23.org" "PHYS 202a" "TQ")
 	 "* TODO 202a Thought/Question %?")
+	;; Mail Workflow
+	("m" "Mail Workflow")
+	("mf" "Follow Up" entry (file+olp "SU23.org" "MAIL" "Follow Up")
+         "* TODO Follow up with %:fromname on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
+	("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
+         "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i")
 	;; Everything else
       	("r" "Random Workflow")
 	("rd" "Daily Item" entry (file+olp "~/Org/Agenda/MISC.org" "Daily")
@@ -385,7 +391,41 @@
   :commands (elfeed))
 
 ;; Mail
+(use-package mu4e
+  :ensure nil
+  :hook ((mu4e-headers-mode . (lambda () (display-line-numbers-mode 0)))
+	 (mu4e-main-mode . (lambda () (display-line-numbers-mode 0))))
+  :load-path "/usr/share/emacs/site-lisp/mu4e"
+  :config
+  ;; Load org-mode integration
+  (require 'mu4e-org)
 
+  ;; Refresh mail using isync every 10 minutes
+  (setq mu4e-update-interval (* 10 60))
+  (setq mu4e-get-mail-command "mbsync -a -c ~/.config/isync/mbsyncrc")
+  (setq mu4e-maildir "~/Mail")
+
+  ;; Use Ivy for mu4e completions (maildir folders, etc)
+  (setq mu4e-completing-read-function #'ivy-completing-read)
+
+  ;; Make sure that moving a message (like to Trash) causes the
+  ;; message to get a new file name.  This helps to avoid the
+  ;; dreaded "UID is N beyond highest assigned" error.
+  ;; See this link for more info: https://stackoverflow.com/a/43461973
+  (setq mu4e-change-filenames-when-moving t)
+  
+  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
+  (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
+  (setq mu4e-refile-folder "/[Gmail]/All Mail")
+  (setq mu4e-trash-folder  "/[Gmail]/Trash")
+
+  (setq mu4e-maildir-shortcuts
+    '((:maildir "/INBOX"             :key ?i)
+      (:maildir "/BRANDEIS"          :key ?b)
+      (:maildir "/[Gmail]/Sent Mail" :key ?s)
+      (:maildir "/[Gmail]/Trash"     :key ?t)
+      (:maildir "/[Gmail]/Drafts"    :key ?d)
+      (:maildir "/[Gmail]/All Mail"  :key ?a))))
 
 ;; IDE 
 
