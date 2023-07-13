@@ -54,3 +54,4 @@ smex-items
 mc-lists.el
 /.config/emacs/elfeed/
 /.config/emacs/url/
+/.bin/secret.sh
