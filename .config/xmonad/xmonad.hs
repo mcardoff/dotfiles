@@ -163,7 +163,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_o), spawn "emacs-29.0.60")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
-    , ((mod, xK_a), spawn "~/.bin/secret.sh")
+    , ((mod, xK_Insert), spawn "~/.bin/secret.sh")
     , ((mod, xK_Print), spawn "scrot -s")
     , ((mod, xK_Return), spawn term)
     -- , ((mod .|. shf, xK_f), spawn $ fileman)
