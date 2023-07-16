@@ -3,10 +3,11 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("xmonad.hs"
- (filename . "~/dotfiles/.config/xmonad/xmonad.hs")
+ (filename . "~/repos/dotfiles/.config/xmonad/xmonad.hs")
  (front-context-string . "-- IMPORTS\nimpor")
  (rear-context-string)
- (position . 1))
+ (position . 1)
+ (last-modified 25776 21701 995795 508000))
 ("org-capture-last-stored-marker"
  (filename . "~/Org/Agenda/Agenda Files/GradSchool.org")
  (front-context-string . "** TODO Brandeis")
@@ -18,11 +19,11 @@
  (rear-context-string . "ively together.\n")
  (position . 6461))
 ("org-capture-last-stored"
- (filename . "~/Org/Agenda/SU23.org")
- (front-context-string . "*** TODO ATTEND ")
- (rear-context-string . "IL\n** Follow Up\n")
- (position . 6247)
- (last-modified 25776 3460 601570 780000))
+ (filename . "~/Org/Roam/20230714120456-main.org")
+ (front-context-string . "* This Org Roam ")
+ (rear-context-string . ":\n#+title: Main\n")
+ (position . 82)
+ (last-modified 25777 29283 642132 595000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
