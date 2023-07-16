@@ -9,7 +9,7 @@ autoload -U colors && colors
 HISTFILE=~/.cache/zsh/history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt appendhistory
+setopt SHARE_HISTORY
 
 # autocomplete
 autoload -U compinit
@@ -23,12 +23,14 @@ DISABLE_AUTO_TITLE="false"
 # Set up the prompt
 PROMPT='%B%F{3}[%F{1}%n%F{3}@%F{4}%m %F{2}%~%F{3}]%F{1}$%f%b '
 
+# aliases
 alias ls='exa -al --color=always --group-directories-first'
 alias projector='xrandr --output DP-2 --right-of eDP1 --mode 800x600'
 alias screen='xrandr --output HDMI-1 --right-of eDP-1 '
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias tlmgr='tllocalmgr'
 alias fixmymouse='xinput set-prop "PS/2 Generic Mouse" 186 0'
+alias noscreenoff='xset s noblank; xset s off; xset -dpms'
 
 # title
 print -Pn "\e]0;%m:%~\a"
