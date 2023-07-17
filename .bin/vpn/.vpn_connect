@@ -1,3 +1,0 @@
-stty -echo;
-sudo openconnect --user=mcardiff@hawk.iit.edu --authgroup=IIT-VPN-USERS --passwd-on-stdin https://vpn.iit.edu;
-stty echo
