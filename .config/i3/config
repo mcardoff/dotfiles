@@ -59,9 +59,9 @@ set $cgood  #3774b5
 #
 
 exec --no-startup-id nm-applet
-exec_always (~/.bin/openers/ranger.sh)
-exec_always (~/.bin/i3init.sh)
-exec_always (~/.bin/openers/scratchpad_check.sh)
+exec_always (~/.local/scripts/i3init.sh)
+exec_always (~/.local/scripts/openers/ranger.sh)
+exec_always (~/.local/scripts/openers/scratchpad_check.sh)
 
 #
 # KEYBINDS
@@ -121,13 +121,13 @@ bindsym $mod+Shift+Tab focus left
 
 # execs
 bindsym $mod+o exec emacs
-bindsym $mod+Shift+o exec ~/.bin/emacs.sh
+bindsym $mod+Shift+o exec ~/.local/scripts/emacs.sh
 bindsym $mod+p exec dmenu_run
 bindsym $mod+Shift+f exec pcmanfm
 bindsym $mod+Return exec $term
-bindsym $mod+z exec (~/.bin/i3lock.sh)
+bindsym $mod+z exec (~/.local/scripts/i3lock.sh)
 bindsym $mod+b exec $browser
-bindsym $mod+Shift+b exec (~/.bin/books.sh)
+bindsym $mod+Shift+b exec (~/.local/scripts/books.sh)
 bindcode $mod+107 exec (scrot -s) # printscreen
 
 # change window
