@@ -1,13 +1,12 @@
 /* XPM */
 static char *_4fb197984f34a31bc0788f989e1959f3qURzh0p7tmlUqsp[] = {
 /* columns rows colors chars-per-pixel */
-"23 21 3 1 ",
+"23 19 3 1 ",
 "  c None",
 ". c white",
 "x c #cc8c3c",
 /* pixels */
 "                       ",
-"         ..            ",
 "        ...            ",
 "       ....            ",
 "      .....            ",
@@ -25,6 +24,5 @@ static char *_4fb197984f34a31bc0788f989e1959f3qURzh0p7tmlUqsp[] = {
 "      .....            ",
 "       ....            ",
 "        ...            ",
-"         ..            ",
 "                       "
 };
