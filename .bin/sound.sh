@@ -2,17 +2,17 @@
 
 
 SINK=$( pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1 )
-NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
+NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 num=$(( NOW / 10 ))
 
 [ "$(pactl list sinks | grep Mute | awk '{$1=$1};1')" = "Mute: yes" ] &&
-    echo '<box type=Bottom width=2 mb=2 color=#cc8c3c><icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc></box>" &&
+    echo '<box type=Bottom width=2 mb=2 color=#cc8c3c> <icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc> </box>" &&
     exit 0
 
 
 case $num in
-  0)  bar='${bar}<icon=vol0.xpm/>' ;;
-  1)  bar='${bar}<icon=vol1.xpm/>' ;;
+  0)  icon='<icon=vol0.xpm/>' ;;
+  1)  icon='<icon=vol1.xpm/>' ;;
   2)  icon='<icon=vol1.xpm/>' ;;
   3)  icon='<icon=vol1.xpm/>' ;;
   4)  icon='<icon=vol2.xpm/>' ;;
@@ -25,8 +25,8 @@ case $num in
   *)  icon='<icon=vol.xpm/>'  ;;
 esac
 
-bar="<box type=Bottom width=2 mb=2 color=#73c936><fc=#73c936>$icon"
+bar=" <box type=Bottom width=2 mb=2 color=#73c936><fc=#73c936>$icon"
 
-echo $bar "$NOW%" "</fc></box>"
+echo "$bar" "$NOW%" "</fc></box> "
 
 exit 0

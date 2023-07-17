@@ -5,7 +5,7 @@ iwconfig wlp2s0 2>&1 | grep -q no\ wireless\ extensions\. && {
   exit 0
 }
 
-essid=$(~/.bin/essid.sh)
+essid=$(iwconfig wlp2s0 | awk -F '"' '/ESSID/ {print $2}')
 stngth=$(iwconfig wlp2s0 | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1)
 
 [ -z "$stngth" ] && echo "Disconnected!" && exit 0
@@ -27,8 +27,8 @@ case $bars in
   *)  color='#ffffff' && icon='----!!----' ;;
 esac
 
-bar="<box type=Bottom width=2 mb=2 color=$color>$icon<fc=$color>"
+bar="<box type=Bottom width=2 mb=2 color=$color> $icon<fc=$color>"
 
-echo $bar "$stngth%" $essid "</fc></box>"
+echo $bar "$stngth%" $essid "</fc></box> "
 
 exit 0
