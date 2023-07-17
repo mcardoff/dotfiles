@@ -45,10 +45,11 @@
  (rear-context-string)
  (position . 1))
 ("i3 config"
- (filename . "~/dotfiles/.config/i3/config")
+ (filename . "~/repos/dotfiles/.config/i3/config")
  (front-context-string . "################")
  (rear-context-string)
- (position . 1))
+ (position . 1)
+ (last-modified 25781 30109 56955 978000))
 ("SP22Plan.org"
  (filename . "~/school/SP22Plan.org")
  (front-context-string . "Plan for SP22\n* ")
