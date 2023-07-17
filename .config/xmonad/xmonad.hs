@@ -113,7 +113,7 @@ startHook :: X ()
 startHook = do
   spawn "nm-applet"
   spawn "picom"
-  -- spawn "/home/mcard/.bin/cisbg.sh"
+  -- spawn "/home/mcard/.local/scripts/cisbg.sh"
   
 --
 -- KEYBINDS
@@ -150,7 +150,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
       
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
-    , ((mod .|. shf, xK_p), spawn "~/.bin/truekill.sh")
+    , ((mod .|. shf, xK_p), spawn "~/.local/scripts/truekill.sh")
       
     --- Change WS layout
     , ((mod, xK_space), sendMessage NextLayout)
@@ -162,8 +162,8 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_i), spawn "thunderbird")
     , ((mod, xK_o), spawn "emacs-29.0.60")
     , ((mod, xK_p), spawn "dmenu_run")
-    , ((mod, xK_z), spawn "~/.bin/i3lock.sh")
-    , ((mod, xK_Insert), spawn "~/.bin/secret.sh")
+    , ((mod, xK_z), spawn "~/.local/scripts/i3lock.sh")
+    , ((mod, xK_Insert), spawn "~/.local/scripts/secret.sh")
     , ((mod, xK_Print), spawn "scrot -s")
     , ((mod, xK_Return), spawn term)
     -- , ((mod .|. shf, xK_f), spawn $ fileman)

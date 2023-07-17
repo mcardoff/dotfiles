@@ -10,12 +10,14 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
        , overrideRedirect = True
        , commands = [ Run Date "<icon=calendar.xpm/> %d %b \
                                \<icon=clock.xpm/> %H:%M:%S" "date" 10
-                    , Run Com "/home/mcard/.bin/sound.sh" [] "sound" 10
-                    , Run Com "/home/mcard/.bin/essid.sh" [] "netName" 10
-                    , Run Com "/home/mcard/.bin/wireless.sh" [] "wifi" 10
-                    , Run Com "/home/mcard/.bin/battery.sh" [] "batt" 10
-                    , Run Com "/home/mcard/.bin/mathematicians.sh" [] "math" 300
-                    , Run Com "/home/mcard/.bin/eqns.sh" [] "eqn" 300
+                    , Run Com "/home/mcard/.local/scripts/sound.sh" [] "sound" 10
+                    , Run Com "/home/mcard/.local/scripts/essid.sh" [] "netName" 10
+                    , Run Com "/home/mcard/.local/scripts/wireless.sh" [] "wifi" 10
+                    , Run Com "/home/mcard/.local/scripts/battery.sh" [] "batt" 10
+                    , Run Com "/home/mcard/.local/scripts/mathematicians.sh" [] "math" 300
+                    , Run Com "/home/mcard/.local/scripts/eqns.sh" [] "eqn" 300
+                       -- Check for pacman updates (script found in .local/bin)
+                    , Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
                     , Run StdinReader
                     ]
        , sepChar = "%"

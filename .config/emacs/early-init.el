@@ -11,6 +11,7 @@
       package-native-compile t
       gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6
+      auth-sources '("~/.config/emacs/authinfo.gpg" "~/.authinfo" "~/.authinfo.gpg")
       load-prefer-newer noninteractive
       byte-compile-warnings '(cl-functions)
       inhibit-startup-screen 0

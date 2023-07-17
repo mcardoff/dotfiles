@@ -35,7 +35,7 @@ alias noscreenoff='xset s noblank; xset s off; xset -dpms'
 # title
 print -Pn "\e]0;%m:%~\a"
 # memescript
-~/.bin/ascii.sh
+~/.local/scripts/ascii.sh
 
 # zsh-syntax-highlighting
 source ~/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null

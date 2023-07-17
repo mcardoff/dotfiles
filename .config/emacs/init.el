@@ -35,8 +35,7 @@
 (use-package autorevert :defer t)
 
 (use-package auth-source
-  :custom (auth-sources
-	   ("~/.config/emacs/authinfo.gpg" "~/.authinfo" "~/.authinfo.gpg")))
+  :custom (auth-sources ("~/.config/emacs/authinfo.gpg")))
 
 ;; Doom modeline
 (use-package doom-modeline
@@ -185,11 +184,11 @@
 (defun agendafile ()
   "open the latest modified org-agenda file"
   (interactive)
-  (find-file (shell-command-to-string "/home/mcard/.bin/latestorg.sh")))
+  (find-file (shell-command-to-string "/home/mcard/.local/scripts/latestorg.sh")))
 
-(defvar script-path "~/.bin/find_next_hw.sh")
+(defvar script-path "~/.local/scripts/find_next_hw.sh")
 (defun mpc/next-hw-num (class sem schoolpath)
-  (shell-command-to-string (format "/home/mcard/.bin/next_hw_num.sh %s %s" sem class)))
+  (shell-command-to-string (format "/home/mcard/.local/scripts/next_hw_num.sh %s %s" sem class)))
 
 (defun mpc/make-latest-hw-file (class sem school-path)
   "class: Subject indicator and number, sem: [FA/SP]YY, school path: no slash at end"
@@ -403,7 +402,7 @@
   ;; Refresh mail using isync every 10 minutes
   (setq mu4e-update-interval (* 10 60))
   (setq mu4e-get-mail-command "mbsync -a -c ~/.config/isync/mbsyncrc")
-  (setq mu4e-maildir "~/Mail")
+  (setq mu4e-maildir "~/repos/Mail")
 
   ;; Use Ivy for mu4e completions (maildir folders, etc)
   (setq mu4e-completing-read-function #'ivy-completing-read)
