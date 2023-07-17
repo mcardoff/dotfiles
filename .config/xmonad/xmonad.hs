@@ -44,16 +44,8 @@ myWS = tots ++ rest
     where tots = ["trm","edt","www","sch","dsc","vid"]
           rest = map show $ [(length tots)+1..9]
 
-alt :: KeyMask
-alt = mod1Mask
-
-mod :: KeyMask
-mod = mod4Mask
-
-myFont :: String
-myFont = "Source Code Pro:size=13"
-
-type GridType = ModifiedLayout Rename (ModifiedLayout LimitWindows (ModifiedLayout Spacing (MultiToggle (HCons StdTransformers EOT) Grid)))
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . (xmobarColor white gruberBrown) . wrap " " " " . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- apps
 browser :: String
@@ -69,48 +61,33 @@ term = "kitty"
 white    = "#ffffff"
 altwhite = "#888888"
 black    = "#000000"
-bg       = "#181818"
-altbg    = "#282828"
 
 -- theme colors
 -- 'gruber' colors
-princ  = "#cc8c3c"
-secon  = "#ffdd33"
-focol  = "#8b3622"
-blue = altbg
-vis    = "#8b2222"
-active = "#7b4032"
-inactive = bg
-alert  = "#f43841"
-cgood  = "#3774b5"
+gruberBg = "#181818"
+gruberBg1 = "#282828"
+gruberFg = "#ffffff"
+gruberFg1 = "#888888"
+gruberGreen = "#73c936"
+gruberYellow = "#ffdd33"
+gruberBrown = "#cc8c3c"
+gruberQuartz = "#95a99f"
+gruberNiagara = "#96a6c8"
+gruberWisteria = "#9e95c7"
+gruberDarkRed = "#7b4032"
+gruberDarkRed1 = "#8b3622"
+gruberDarkRed2 = "#8b2222"
+gruberRed  = "#f43841"
 
 -- Paths
 xmobarPath :: String
 xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 
-dec :: Num a => a
-dec = 10
-
-inc :: Num a => a
-inc = -10
-
-l :: ChangeDim
-l = (inc,   0)
-d :: ChangeDim
-d = (  0, dec)
-u :: ChangeDim
-u = (  0, inc)
-r :: ChangeDim
-r = (dec,   0)
-
-non :: G
-non = (0,0)
-
 --
--- STARTUP
+-- STARTUP 
 --
-startHook :: X ()
-startHook = do
+startup :: X ()
+startup = do
   spawn "nm-applet"
   spawn "picom"
   -- spawn "/home/mcard/.local/scripts/cisbg.sh"
@@ -118,6 +95,7 @@ startHook = do
 --
 -- KEYBINDS
 --
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     [
     -- Movement & General WM stuff 
@@ -192,9 +170,17 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, mo) <- [(W.view, 0), (W.shift, shiftMask)]]
     where shf = shiftMask
+          alt = mod1Mask
           toggleFloat w = windows (\s -> if M.member w (W.floating s)
                  then W.sink w s
                  else (W.float w (W.RationalRect (1/3) (1/4) (1/2) (4/5)) s))
+          dec = 10
+          inc = -dec
+          l = (inc,   0)
+          d = (  0, dec)
+          u = (  0, inc)
+          r = (dec,   0)
+          non = (0,0)
 
 
 myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
@@ -207,9 +193,6 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
       \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
     ]
 
-
-easyrr :: Rational -> Rational -> W.RationalRect
-easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
 
 -- Scratchpads
 scratchpads :: [NamedScratchpad]
@@ -245,39 +228,37 @@ scratchpads = [
        (className =? "Mattermost" )
        (customFloating $ easyrr (5/6) (2/3))
   ]
+    where easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
+
 
 -- Layouts
-mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
-
 tiled :: ModifiedLayout Rename Tall a
 tiled = renamed [Replace "Tile"] $ Tall 1 (3/100) (1/2)
 
+type GridType = ModifiedLayout Rename (ModifiedLayout LimitWindows (ModifiedLayout Spacing (MultiToggle (HCons StdTransformers EOT) Grid)))
 grid :: GridType a
 grid = renamed [Replace "Grid"] $ limitWindows 12 $
        mySpacing 5 $ mkToggle (single MIRROR) $ Grid (16/10)
+           where mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
-tabConfig :: Theme
-tabConfig = def { fontName            = "xft:Source Code Pro"
-                , activeColor         = focol
-                , inactiveColor       = inactive
-                , activeBorderColor   = focol
-                , inactiveBorderColor = inactive
-                , activeTextColor     = white
-                , inactiveTextColor   = white
-                , activeBorderWidth = 10
-                , inactiveBorderWidth = 10
-                }
+-- tabConfig :: Theme
+-- tabConfig = def { fontName            = "xft:Source Code Pro"
+--                 , activeColor         = gruberDarkRed1
+--                 , inactiveColor       = gruberBg
+--                 , activeBorderColor   = gruberDarkRed1
+--                 , inactiveBorderColor = gruberBg
+--                 , activeTextColor     = white
+--                 , inactiveTextColor   = white
+--                 , activeBorderWidth = 10
+--                 , inactiveBorderWidth = 10
+--                 }
 
 layouts = as (grid ||| tiled) ||| noBorders Full
     where as = avoidStruts
 
--- Misc.
-windowCount :: X (Maybe String)
-windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
-
 -- Hooks
-manHook :: Query (Endo WindowSet)
-manHook = composeAll $
+manageHook' :: Query (Endo WindowSet)
+manageHook' = composeAll $
           [ className =? "Gimp"           --> doFloat
           , className =? "Test Window"    --> doFloat
           , className =? "Matplotlib"     --> doFloat
@@ -294,25 +275,25 @@ manHook = composeAll $
           , resource  =? "kdesktop"       --> doIgnore
           ]
 
-eveHook :: Event -> X All
-eveHook = mempty
+scratchpadManageHook :: ManageHook
+scratchpadManageHook = namedScratchpadManageHook scratchpads
 
-lgHook :: String -> String -> String -> String -> String -> String
-       -> String -> String -> String -> Handle -> Handle -> X()
-lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
-    = dynamicLogWithPP xmobarPP
+logHookDef :: String -> String -> String -> String -> String -> String
+           -> String -> String -> String -> Handle -> Handle -> X()
+logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
+    = dynamicLogWithPP $ filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
       { ppOutput  = \x -> hPutStrLn x1 x >> hPutStrLn x2 x
       , ppCurrent = xmobarColor c1 c2 . sp
       , ppVisible = xmobarColor c3 c4 . sp
       , ppHidden  = xmobarColor c5 c6 . sp
       , ppHiddenNoWindows = xmobarColor c7 c8 . sp
-      , ppTitle = xmobarColor c9 "" . shorten 25
-      , ppSep = "<fc=#666666> | </fc>"
+      , ppTitle = xmobarColor c9 "" . (wrap "<box type=Bottom width=2 mb=2 color=#666666>" "</box>") . shorten 25
+      , ppSep = " "
       , ppWsSep = ""
-      , ppUrgent = xmobarColor white alert . sp
+      , ppUrgent = xmobarColor white gruberRed . sp
       , ppExtras = [windowCount]
       , ppSort = (mkWsSort getWsCompare')
-      , ppOrder = id
+      , ppOrder = \(ws:_:t:wc:_) -> [ws,wc,t]
       }
     where sp = wrap " " " "
           getWsCompare' :: X WorkspaceCompare
@@ -326,7 +307,7 @@ lgHook c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
                   f (Just x) (Just y) = compare x y
 
 regLogHook :: Handle -> Handle -> X()
-regLogHook = lgHook white focol altwhite vis altwhite active altwhite blue white 
+regLogHook = logHookDef white gruberDarkRed1 gruberFg1 gruberDarkRed2 gruberFg1 gruberDarkRed gruberFg1 gruberBg1 white 
 
 main :: IO ()
 main = do
@@ -339,18 +320,18 @@ main = do
              , focusFollowsMouse = True
              , clickJustFocuses = False
              , workspaces = myWS
-             , normalBorderColor = inactive
-             , focusedBorderColor = focol
+             , normalBorderColor = gruberBg
+             , focusedBorderColor = gruberDarkRed
              , borderWidth = 4
              -- Bindings
              , keys = myKeys
              , mouseBindings = myMouseBindings
              -- Hooks and Layouts
              , layoutHook = layouts 
-             , manageHook = manHook <+> (namedScratchpadManageHook scratchpads)
-             , handleEventHook = eveHook
+             , manageHook = manageHook' <+> scratchpadManageHook
+             , handleEventHook = mempty
              , logHook = regLogHook xmproc0 xmproc1
-             , startupHook = startHook
+             , startupHook = startup
          }
          
 --EOF
