@@ -287,7 +287,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
       , ppVisible = xmobarColor c3 c4 . sp
       , ppHidden  = xmobarColor c5 c6 . sp
       , ppHiddenNoWindows = xmobarColor c7 c8 . sp
-      , ppTitle = xmobarColor c9 "" . (wrap "<box type=Bottom width=2 mb=2 color=#666666>" "</box>") . shorten 25
+      , ppTitle = xmobarColor white c9 . sp . shorten 25 
       , ppSep = " "
       , ppWsSep = ""
       , ppUrgent = xmobarColor white gruberRed . sp
@@ -307,7 +307,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
                   f (Just x) (Just y) = compare x y
 
 regLogHook :: Handle -> Handle -> X()
-regLogHook = logHookDef white gruberDarkRed1 gruberFg1 gruberDarkRed2 gruberFg1 gruberDarkRed gruberFg1 gruberBg1 white 
+regLogHook = logHookDef white gruberDarkRed1 gruberFg1 gruberDarkRed2 gruberFg1 gruberDarkRed gruberFg1 gruberBg1 gruberGreen
 
 main :: IO ()
 main = do
