@@ -9,22 +9,23 @@ num=$(( NOW / 10 ))
     echo '<box type=Bottom width=2 mb=2 color=#cc8c3c><icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc></box>" &&
     exit 0
 
-bar='<box type=Bottom width=2 mb=2 color=#73c936><fc=#73c936>'
 
 case $num in
   0)  bar='${bar}<icon=vol0.xpm/>' ;;
   1)  bar='${bar}<icon=vol1.xpm/>' ;;
-  2)  bar='${bar}<icon=vol1.xpm/>' ;;
-  3)  bar='${bar}<icon=vol1.xpm/>' ;;
-  4)  bar='${bar}<icon=vol2.xpm/>' ;;
-  5)  bar='${bar}<icon=vol2.xpm/>' ;;
-  6)  bar='${bar}<icon=vol2.xpm/>' ;;
-  7)  bar='${bar}<icon=vol3.xpm/>' ;;
-  8)  bar='${bar}<icon=vol3.xpm/>' ;;
-  9)  bar='${bar}<icon=vol3.xpm/>' ;;
-  10) bar='${bar}<icon=vol.xpm/>'  ;;
-  *)  bar='${bar}<icon=vol.xpm/>'  ;;
+  2)  icon='<icon=vol1.xpm/>' ;;
+  3)  icon='<icon=vol1.xpm/>' ;;
+  4)  icon='<icon=vol2.xpm/>' ;;
+  5)  icon='<icon=vol2.xpm/>' ;;
+  6)  icon='<icon=vol2.xpm/>' ;;
+  7)  icon='<icon=vol3.xpm/>' ;;
+  8)  icon='<icon=vol3.xpm/>' ;;
+  9)  icon='<icon=vol3.xpm/>' ;;
+  10) icon='<icon=vol.xpm/>'  ;;
+  *)  icon='<icon=vol.xpm/>'  ;;
 esac
+
+bar="<box type=Bottom width=2 mb=2 color=#73c936><fc=#73c936>$icon"
 
 echo $bar "$NOW%" "</fc></box>"
 
