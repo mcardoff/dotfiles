@@ -365,6 +365,8 @@
          "* TODO Follow up with %:fromname on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
 	("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
          "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i")
+	("mm" "Attend Included Event" entry (file+olp "SU23.org" "MAIL" "Meetings")
+         "* TODO Attend %:subject %a\nSCHEDULED:%t\n%i")
 	;; Everything else
       	("r" "Random Workflow")
 	("rd" "Daily Item" entry (file+olp "~/Org/Agenda/MISC.org" "Daily")
