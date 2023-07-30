@@ -1,5 +1,5 @@
 # start x if it isnt running
-[[ -z "$(pgrep X)" ]] && startx
+[[ -z "$(pgrep X)" ]] && (xinit -- :1)
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -30,7 +30,7 @@ alias projector='xrandr --output DP-2 --right-of eDP1 --mode 800x600'
 alias screen='xrandr --output HDMI-1 --right-of eDP-1 '
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias tlmgr='tllocalmgr'
-alias fixmymouse='xinput set-prop "PS/2 Generic Mouse" 186 0'
+alias fixmymouse='xinput set-prop "PS/2 Generic Mouse" "Device Enabled" 0'
 alias noscreenoff='xset s noblank; xset s off; xset -dpms'
 
 # binds
