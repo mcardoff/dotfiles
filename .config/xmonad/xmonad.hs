@@ -154,6 +154,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
 
       -- Scratchpads
+    , ((mod .|. shf, xK_o), namedScratchpadAction scratchpads "Notepad")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((mod, xK_s), namedScratchpadAction scratchpads "Books")
@@ -211,8 +212,7 @@ scratchpads = [
        (className =? "Books")
        (customFloating $ easyrr (5/6) (2/3))
 
-  , NS "Notepad" "emacs -T notepad \
-                 \ --eval='(unless (boundp 'server-process) (server-start))'"
+  , NS "Notepad" "emacs-29.0.60 -T notepad --eval=\"(unless (boundp 'server-process) (server-start))\""
        (title =? "notepad")
        (customFloating $ easyrr (5/6) (2/3))
        
@@ -225,7 +225,7 @@ scratchpads = [
        (customFloating $ easyrr (5/6) (2/3))
        
   , NS "Mattermost" "mattermost-desktop"
-       (className =? "Mattermost" )
+       (className =? "Mattermost")
        (customFloating $ easyrr (5/6) (2/3))
   ]
     where easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
