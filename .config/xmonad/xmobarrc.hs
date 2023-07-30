@@ -9,8 +9,8 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
        , allDesktops = True
        , overrideRedirect = True
        , commands =
-           [ Run Date "<icon=calendar.xpm/> <box type=Bottom width=2 mb=2 color=#73c936><fc=#73c936> %d %b </fc></box> \
-                      \<icon=clock.xpm/> <box type=Bottom width=2 mb=2 color=#ffdd33><fc=#ffdd33> %H:%M:%S </fc></box>" "date" 10
+           [ Run Date "<icon=calendar.xpm/> <fc=#181818,#96a6c8> %d %b </fc> \
+                      \<icon=clock.xpm/> <fc=#181818,#9e95c7> %H:%M:%S </fc>" "date" 10
            , Run Com "/home/mcard/.local/scripts/sound.sh" [] "sound" 10
            , Run Com "/home/mcard/.local/scripts/essid.sh" [] "netName" 10
            , Run Com "/home/mcard/.local/scripts/wireless.sh" [] "wifi" 10
@@ -22,10 +22,6 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
            ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <icon=haskell.xpm/> <fc=#FFFFFF>%StdinReader%</fc> }\
-                    \{%pacupdate% \
-                    \%sound% \
-                    \%wifi% \
-                    \%batt% \
-                    \%date% "
+       , template = " <icon=haskell.xpm/> <fc=#FFFFFF>%StdinReader%</fc> } \
+                     \ {%pacupdate% %sound% %wifi% %batt% %date% "
        }

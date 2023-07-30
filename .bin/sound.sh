@@ -6,7 +6,7 @@ NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( SINK + 1 )) |
 num=$(( NOW / 10 ))
 
 [ "$(pactl list sinks | grep Mute | awk '{$1=$1};1')" = "Mute: yes" ] &&
-    echo '<box type=Bottom width=2 mb=2 color=#cc8c3c> <icon=mutedspeaker.xpm/><fc=#cc8c3c>' "$NOW%</fc> </box>" &&
+    echo ' <icon=mutedspeaker.xpm/> <fc=#181818,#cc8c3c>' "$NOW% </fc> " &&
     exit 0
 
 
@@ -25,8 +25,8 @@ case $num in
   *)  icon='<icon=vol.xpm/>'  ;;
 esac
 
-bar=" <box type=Bottom width=2 mb=2 color=#73c936><fc=#73c936>$icon"
+bar=" <fc=#181818,#73c936>$icon"
 
-echo "$bar" "$NOW%" "</fc></box> "
+echo "$bar" "$NOW%" "</fc> "
 
 exit 0

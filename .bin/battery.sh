@@ -12,5 +12,5 @@ pat='/home/mcard/.config/xmonad/xpm/batt/'
 
 color=$(grep -m 1 "\". c #" $pat$bolt$num.xpm | sed 's/\"//g' | sed 's/. c //' | sed 's/,//')
 
-echo "<box type=Bottom width=2 mb=2 color=$color> <icon=batt/$bolt$num.xpm/><fc=$color>" "$PER%</fc></box> " 
+echo "<icon=batt/$bolt$num.xpm/> <fc=#181818,$color>" "$PER% </fc>" 
 
