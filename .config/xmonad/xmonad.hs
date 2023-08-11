@@ -45,7 +45,7 @@ myWS = tots ++ rest
           rest = map show $ [(length tots)+1..9]
 
 windowCount :: X (Maybe String)
-windowCount = gets $ Just . (xmobarColor white gruberBrown) . wrap " " " " . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+windowCount = gets $ Just . (xmobarColor black gruberBrown) . wrap " " " " . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- apps
 browser :: String
@@ -66,6 +66,7 @@ black    = "#000000"
 -- 'gruber' colors
 gruberBg = "#181818"
 gruberBg1 = "#282828"
+gruberBg2 = "#585858"
 gruberFg = "#ffffff"
 gruberFg1 = "#888888"
 gruberGreen = "#73c936"
@@ -287,10 +288,10 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
       , ppVisible = xmobarColor c3 c4 . sp
       , ppHidden  = xmobarColor c5 c6 . sp
       , ppHiddenNoWindows = xmobarColor c7 c8 . sp
-      , ppTitle = xmobarColor white c9 . sp . shorten 25 
+      , ppTitle = xmobarColor black c9 . sp . shorten 25 
       , ppSep = " "
       , ppWsSep = ""
-      , ppUrgent = xmobarColor white gruberRed . sp
+      , ppUrgent = xmobarColor black gruberRed . sp
       , ppExtras = [windowCount]
       , ppSort = (mkWsSort getWsCompare')
       , ppOrder = \(ws:_:t:wc:_) -> [ws,wc,t]
@@ -307,7 +308,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
                   f (Just x) (Just y) = compare x y
 
 regLogHook :: Handle -> Handle -> X()
-regLogHook = logHookDef white gruberDarkRed1 gruberFg1 gruberDarkRed2 gruberFg1 gruberDarkRed gruberFg1 gruberBg1 gruberGreen
+regLogHook = logHookDef gruberBg gruberDarkRed1 gruberFg1 gruberDarkRed2 gruberBg gruberDarkRed gruberBg2 gruberBg1 gruberGreen
 
 main :: IO ()
 main = do
