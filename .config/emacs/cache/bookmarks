@@ -19,11 +19,11 @@
  (rear-context-string . "ively together.\n")
  (position . 6461))
 ("org-capture-last-stored"
- (filename . "~/Org/Roam/daily/2023-08-03.org")
- (front-context-string . "* Research Meeti")
- (rear-context-string . "tle: 2023-08-03\n")
- (position . 88)
- (last-modified 25803 52703 713565 903000))
+ (filename . "~/Org/Agenda/SU23.org")
+ (front-context-string . "*** TODO Create ")
+ (rear-context-string . " UT July 5th?]]\n")
+ (position . 10311)
+ (last-modified 25813 38672 723567 488000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
