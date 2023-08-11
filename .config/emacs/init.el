@@ -307,7 +307,11 @@
   (org-roam-directory "~/Org/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
-
+  :bind (("C-z n l" . org-roam-buffer-toggle)
+         ("C-z n f" . org-roam-node-find)
+         ("C-z n i" . org-roam-node-insert)
+	 ("C-z n d" . org-roam-dailies-capture-today)
+	 ("C-z n t" . org-roam-dailies-goto-today))
   :config
   (general-define-key
    :prefix "C-z n"
@@ -439,6 +443,9 @@
 
 (use-package magit
   :defer 5)
+
+(use-package tramp
+  :custom (shell-prompt-pattern '"^[^#$%>\n]*~?[#$%>] *"))
 
 (use-package cuda-mode
   :defer
