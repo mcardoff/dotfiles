@@ -91,7 +91,7 @@ startup :: X ()
 startup = do
   spawn "nm-applet"
   spawn "picom"
-  -- spawn "/home/mcard/.local/scripts/cisbg.sh"
+  spawn "/home/mcard/.local/scripts/cisbg.sh"
   
 --
 -- KEYBINDS
@@ -322,7 +322,7 @@ main = do
              , clickJustFocuses = False
              , workspaces = myWS
              , normalBorderColor = gruberBg
-             , focusedBorderColor = gruberDarkRed
+             , focusedBorderColor = gruberDarkRed1
              , borderWidth = 4
              -- Bindings
              , keys = myKeys
