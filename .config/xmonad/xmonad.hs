@@ -309,7 +309,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
                   f (Just x) (Just y) = compare x y
 
 regLogHook :: Handle -> Handle -> X()
-regLogHook = logHookDef gruberBg gruberDarkRed1 gruberFg1 gruberDarkRed2 gruberBg gruberDarkRed gruberBg2 gruberBg1 gruberGreen
+regLogHook = logHookDef gruberFg1 gruberDarkRed2 gruberBg gruberDarkRed1 gruberBg gruberDarkRed gruberBg2 gruberBg1 gruberGreen
 
 main :: IO ()
 main = do
