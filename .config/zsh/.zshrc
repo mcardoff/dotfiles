@@ -44,4 +44,4 @@ print -Pn "\e]0;%m:%~\a"
 ~/.local/scripts/ascii.sh
 
 # zsh-syntax-highlighting
-source ~/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null
+source $XDG_CONFIG_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null
