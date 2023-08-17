@@ -19,11 +19,11 @@
  (rear-context-string . "ively together.\n")
  (position . 6461))
 ("org-capture-last-stored"
- (filename . "~/Org/Agenda/SU23.org")
- (front-context-string . "*** TODO Follow ")
- (rear-context-string . "2023-08-12 Sat>\n")
- (position . 10497)
- (last-modified 25818 9658 587968 717000))
+ (filename . "~/Org/Agenda/Mail.org")
+ (front-context-string . "** TODO Follow u")
+ (rear-context-string . "2023-08-16 Wed>\n")
+ (position . 1666)
+ (last-modified 25820 59960 675525 754000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
