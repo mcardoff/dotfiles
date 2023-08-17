@@ -40,7 +40,6 @@
 ;; Doom modeline
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
-  ;; :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-buffer-encoding nil)
   (doom-modeline-height 40)
@@ -194,7 +193,7 @@
   "class: Subject indicator and number, sem: [FA/SP]YY, school path: no slash at end"
   (format "%s/%s/%s/%s" school-path sem class (shell-command-to-string (format "%s %s %s" script-path sem class))))
 
-;; Maybe using general?
+;; Keybinds
 (use-package general
   :ensure t
   :config
@@ -238,6 +237,7 @@
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
 
+;; Document writing/editing
 (use-package auctex
   :defer
   :hook
@@ -293,6 +293,12 @@
   :config (yas-global-mode)
   :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
 
+(use-package doc-view
+  :ensure nil
+  :defer
+  :hook (doc-view-mode . mpc/no-lines-setup))
+
+;; Org-mode
 (require 'org-tempo)
 (use-package org-bullets
   :defer
@@ -380,12 +386,7 @@
 	("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
 	("a" . "ascii"   ) ("i" . "index"  ) ("el" . "src emacs-lisp")))
 
-(use-package doc-view
-  :ensure nil
-  :defer
-  :hook (doc-view-mode . mpc/no-lines-setup))
-
-;; elfeed
+;; Socials
 (use-package elfeed
   :ensure t
   :defer t
@@ -393,6 +394,9 @@
   (elfeed-db-directory (concat user-emacs-directory "elfeed"))
   (elfeed-feeds '("https://atlas.cern/updates/briefing/feed.xml" physics))
   :commands (elfeed))
+
+;; TODO: Setup slack for emacs
+;; (use-package slack)
 
 ;; Mail
 (use-package mu4e
