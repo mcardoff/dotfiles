@@ -89,9 +89,10 @@ xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 --
 startup :: X ()
 startup = do
-  spawn "nm-applet"
-  spawn "picom"
-  spawn "/home/mcard/.local/scripts/cisbg.sh"
+  spawn "nm-applet" -- Network Manager
+  spawn "picom" -- compositor
+  spawn "twmnd" -- notification daemon
+  spawn "/home/mcard/.local/scripts/cisbg.sh" -- background
   
 --
 -- KEYBINDS
