@@ -305,7 +305,7 @@
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
-  :defer
+  :defer 0.2
   :init (setq org-roam-v2-ack t)
   :custom
   (org-roam-graph-executable "dot")
@@ -313,20 +313,16 @@
   (org-roam-directory "~/Org/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
-  :bind (("C-z n l" . org-roam-buffer-toggle)
-         ("C-z n f" . org-roam-node-find)
-         ("C-z n i" . org-roam-node-insert)
-	 ("C-z n d" . org-roam-dailies-capture-today)
-	 ("C-z n t" . org-roam-dailies-goto-today))
   :config
+  ;; (global-unset-key (kbd "C-z n"))
   (general-define-key
-   :prefix "C-z n"
-   "" '(nil :which-key "Roam Prefix")
-   "l" '(org-roam-buffer-toggle :which-key "Toggle Roam Buffer")
-   "f" '(org-roam-node-find :which-key "Find Node")
-   "i" '(org-roam-node-insert :which-key "Insert Node")
-   "d" '(org-roam-dailies-capture-today :which-key "Capture Daily")
-   "t" '(org-roam-dailies-goto-today :which-key "Goto Daily"))
+   :prefix "C-z"
+   "n" '(nil :which-key "Roam Prefix")
+   "n l" '(org-roam-buffer-toggle :which-key "Toggle Roam Buffer")
+   "n f" '(org-roam-node-find :which-key "Find Node")
+   "n i" '(org-roam-node-insert :which-key "Insert Node")
+   "n d" '(org-roam-dailies-capture-today :which-key "Capture Daily")
+   "n t" '(org-roam-dailies-goto-today :which-key "Goto Daily"))
   (org-roam-setup))
 
 (use-package org
