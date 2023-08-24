@@ -158,6 +158,9 @@
 		  (buffer-file-name buffer))
 		(org-buffer-list 'files t))))
 
+; temporary solution, hopefully can be replaced by something more dynamic
+(defvar mpc/latest-org-file "~/Org/Agenda/SU23.org")
+
 (defun mpc/prompt-num ()
   "Prompt user to enter a number, with input history support."
   (interactive)
@@ -351,15 +354,23 @@
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (setq org-capture-templates
-      '(("t"  "TODO Item" entry (file "FA21.org") "** TODO %?\n\n")
+      '(("t"  "TODO Item" entry (file "FA23.org") "** TODO %?\n\n")
+	;; 19a Stuff
+	("z" "TA Duties")
+	("zm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
+	 "* TODO TA Meeting on %?\nSCHEDULED: %t")
+	("zl" "19a Lab" entry (file+olp "FA23.org" "PHYS 19a" "Labs")
+	 "* TODO 19a Lab %?")
+	("zm" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
+	 "* TODO Grade 19a Lab %?")
 	;; Homeworks
 	("h"  "Add Homework")
-	("hz" "PHYS 162b" entry (file+olp "SP23.org" "PHYS 162b" "Homework")
-	 (function (lambda () (mpc/create-todo-entry "162b" "PHYS" "SP23"))))
+	("hz" "MIT Particle" entry (file+olp "FA23.org" "Particles" "Homework")
+	 (function (lambda () (mpc/create-todo-entry "701" "PHYS" "FA23"))))
 	;; exams 
 	("e"  "Add Exam")
-	("ez" "PHYS 162b" entry (file+olp "SP23.org" "PHYS 162b" "Exams")
-	 "* TODO 162b Exam %?")
+	("ez" "MIT Particle" entry (file+olp "FA23.org" "Particles" "Exams")
+	 "* TODO MIT Particles Exam %?")
 	;; Other misc prep
 	("p"  "Add Preclass Prep")
 	;; Mail Workflow
