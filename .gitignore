@@ -56,3 +56,4 @@ mc-lists.el
 /.config/emacs/url/
 /.bin/secret.sh
 *.gpg
+/.config/zsh/zsh-syntax-highlighting/
