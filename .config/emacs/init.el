@@ -469,6 +469,13 @@
   (haskell-process-type 'stack-ghci) ; use stack ghci instead of global ghc
   (haskell-stylish-on-save t))
 
+; automatically detect virtual environment to use with default python-mode repl
+(use-package pyvenv-auto
+  :hook ((python-mode . pyvenv-auto-run)))
+
+(use-package ein
+  :defer 0.2)
+
 ; lsp
 (defun mpc/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
