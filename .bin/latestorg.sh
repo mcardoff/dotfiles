@@ -1,5 +1,5 @@
 #!/bin/bash
 
-OUTPUT=$(dir -1 -t /home/mcard/Org/Agenda/*.org | head -n 1)
+OUTPUT=$(find ~/Org/Agenda/*.org -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" ")
 
 printf "$OUTPUT"
