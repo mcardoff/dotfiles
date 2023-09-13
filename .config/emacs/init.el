@@ -405,7 +405,10 @@
   :defer t
   :custom
   (elfeed-db-directory (concat user-emacs-directory "elfeed"))
-  (elfeed-feeds '("https://atlas.cern/updates/briefing/feed.xml" physics))
+  (elfeed-feeds '(("https://atlas.cern/updates/briefing/feed.xml" physics)
+		  ("http://feeds.aps.org/rss/recent/physics.xml" physics)
+		  ("https://export.arxiv.org/rss/hep-ex" phyics article)
+		  ("https://export.arxiv.org/rss/hep-ph" physics article)))
   :commands (elfeed))
 
 ;; TODO: Setup slack for emacs
