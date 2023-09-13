@@ -158,6 +158,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
       -- Scratchpads
     , ((mod .|. shf, xK_o), namedScratchpadAction scratchpads "Notepad")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
+    , ((mod .|. shf, xK_x), namedScratchpadAction scratchpads "Skype")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((mod, xK_s), namedScratchpadAction scratchpads "Books")
     , ((mod, xK_x), namedScratchpadAction scratchpads "Mattermost")
@@ -228,6 +229,9 @@ scratchpads = [
        
   , NS "Mattermost" "mattermost-desktop"
        (className =? "Mattermost")
+       (customFloating $ easyrr (5/6) (2/3))
+  , NS "Skype" "skypeforlinux"
+       (className =? "Skype")
        (customFloating $ easyrr (5/6) (2/3))
   ]
     where easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
