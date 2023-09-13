@@ -331,7 +331,7 @@
 (use-package org
   :defer
   :hook ((org-mode . mpc/org-mode-setup)
-	 (org-mode . (lambda () (display-line-numbers-mode 0))))
+	 (org-agenda-mode . mpc/no-lines-setup))
 
   :bind (:map org-mode-map
 	      ("<C-M-return>" . org-insert-todo-subheading)
@@ -354,39 +354,45 @@
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (setq org-capture-templates
-      '(("t"  "TODO Item" entry (file "FA23.org") "** TODO %?\n\n")
-	;; 19a Stuff
-	("z" "TA Duties")
-	("zm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
+      '(;; 19a Stuff
+	("t" "TA Duties")
+	("tm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
 	 "* TODO TA Meeting on %?\nSCHEDULED: %t")
-	("zl" "19a Lab" entry (file+olp "FA23.org" "PHYS 19a" "Labs")
+	("tl" "19a Lab" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Sections")
 	 "* TODO 19a Lab %?")
-	("zm" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
+	("tm" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
 	 "* TODO Grade 19a Lab %?")
+	("tt" "19a TODO" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Prep")
+	 "* TODO %?\nSCHEDULED: %t")
 	;; Homeworks
 	("h"  "Add Homework")
-	("hz" "MIT Particle" entry (file+olp "FA23.org" "Particles" "Homework")
-	 (function (lambda () (mpc/create-todo-entry "701" "PHYS" "FA23"))))
+	("hz" "Self Study" entry (file+olp "FA23.org" "Particles" "Homework")
+	 (function (lambda () (mpc/create-todo-entry "280a" "PHYS" "FA23"))))
 	;; exams 
 	("e"  "Add Exam")
-	("ez" "MIT Particle" entry (file+olp "FA23.org" "Particles" "Exams")
-	 "* TODO MIT Particles Exam %?")
+	("ez" "Self Study" entry (file+olp "FA23.org" "Particles" "Exams")
+	 "* TODO Self Study Exam %?")
+	;; Research
+	("r"  "Research")
+	("ra" "ATLAS TODO" entry (file+olp "FA23.org" "Research" "ATLAS")
+	 "* TODO %?")
 	;; Other misc prep
-	("p"  "Add Preclass Prep")
+	;; ("p"  "Add Preclass Prep")
 	;; Mail Workflow
 	("m" "Mail Workflow")
 	("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
          "* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
 	("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
-         "* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i")
+         "* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i")
 	("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
-         "* TODO Attend %:subject %a\nSCHEDULED:%t\n%i")
+         "* TODO Attend %:subject %a\nSCHEDULED: %t\n%i")
 	("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
-	 "* TODO Send Email to %? about \n SCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))")
-	;; Everything else
-      	("r" "Random Workflow")
-	("rd" "Daily Item" entry (file+olp "~/Org/Agenda/MISC.org" "Daily")
-	 "* TODO %?\nSCHEDULED: %t")))
+	 "* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))")))
+
+(setq org-agenda-custom-commands
+      '(("z" "View Current Semester"
+	 ((agenda)
+	  (tags-todo "FA23")))))
 
 (setq org-structure-template-alist
       '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
