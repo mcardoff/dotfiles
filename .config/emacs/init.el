@@ -132,7 +132,7 @@
 
 (defun mpc/org-mode-setup ()
   (org-indent-mode)
-  ;; (hl-line-mode 1)
+  (display-line-numbers-mode 0)
   (visual-line-mode 1))
 
 (defun mpc/no-lines-setup ()
@@ -259,6 +259,7 @@
        (output-html "xdg-open")))
   (TeX-engine 'luatex)
   (TeX-parse-self t)
+  (LaTeX-beamer-item-overlay-flag nil)
   (LaTeX-section-hook
    '(LaTeX-section-heading LaTeX-section-title LaTeX-section-section))
 
@@ -317,7 +318,6 @@
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
   :config
-  ;; (global-unset-key (kbd "C-z n"))
   (general-define-key
    :prefix "C-z"
    "n" '(nil :which-key "Roam Prefix")
