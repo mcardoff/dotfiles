@@ -9,21 +9,23 @@
  (position . 1)
  (last-modified 25776 21701 995795 508000))
 ("org-capture-last-stored-marker"
- (filename . "~/Org/Agenda/Agenda Files/GradSchool.org")
- (front-context-string . "** TODO Brandeis")
- (rear-context-string . "ively together.\n")
- (position . 6461))
-("org-refile-last-stored"
- (filename . "~/Org/Agenda/Agenda Files/GradSchool.org")
- (front-context-string . "** TODO Brandeis")
- (rear-context-string . "ively together.\n")
- (position . 6461))
-("org-capture-last-stored"
  (filename . "~/Org/Agenda/FA23.org")
- (front-context-string . "*** Invalid capt")
- (rear-context-string . " Meetings [0/0]\n")
- (position . 147)
- (last-modified 25831 36682 198489 242000))
+ (front-context-string . "** TODO Do Analy")
+ (rear-context-string . "* Grading [0/0]\n")
+ (position . 1560)
+ (last-modified 25856 44574 546360 332000))
+("org-refile-last-stored"
+ (filename . "~/Org/Agenda/FA23.org")
+ (front-context-string . "** TODO Do Analy")
+ (rear-context-string . "* Grading [0/0]\n")
+ (position . 1560)
+ (last-modified 25856 44574 543715 909000))
+("org-capture-last-stored"
+ (filename . "~/Org/Agenda/Mail.org")
+ (front-context-string . "** TODO Do Analy")
+ (rear-context-string . "2023-09-09 Sat>\n")
+ (position . 2897)
+ (last-modified 25856 44560 76285 817000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
