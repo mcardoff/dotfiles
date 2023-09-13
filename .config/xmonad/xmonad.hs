@@ -127,6 +127,10 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d non)
     , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow u non)
     , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r non)
+    , ((mod, xK_Left),  withFocused $ keysResizeWindow l non)
+    , ((mod, xK_Down),  withFocused $ keysResizeWindow d non)
+    , ((mod, xK_Up),    withFocused $ keysResizeWindow u non)
+    , ((mod, xK_Right), withFocused $ keysResizeWindow r non)
       
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
