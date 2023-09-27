@@ -168,10 +168,26 @@
     (setq n (read-number "Type a number: "))
     (message "Number is %s" n)))
 
+(defvar script-path "~/.local/scripts/find_next_hw.sh")
+(defun mpc/next-hw-num (class sem schoolpath)
+  (shell-command-to-string (format "/home/mcard/.local/scripts/next_hw_num.sh %s %s" sem class)))
+
+(defun mpc/make-latest-hw-file (class sem school-path)
+  "class: Subject indicator and number, sem: [FA/SP]YY, school path: no slash at end"
+  (format "%s/%s/%s/%s" school-path sem class (shell-command-to-string (format "%s %s %s" script-path sem class))))
+
 (defun mpc/create-todo-entry (num subj semester)
   (format
    "* TODO %s HW %%(mpc/next-hw-num \"%s%s\" \"%s\" \"~/school\") [[%%(mpc/make-latest-hw-file \"%s%s\" \"%s\" \"~/school\")][LaTeX File]]"
    num subj num semester subj num semester))
+
+(defun mpc/create-next-lecture-todo (classnum subj semester)
+  (format
+   "* TODO 19a Lab %%? Lecture [[%s][Slides]]"
+   (shell-command-to-string
+    (format
+     "/home/mcard/.local/scripts/find_next_lec.sh %s %s%s"
+     semester subj classnum))))
 
 (defun dotemacs ()
   "Opens init.el"
@@ -187,14 +203,6 @@
   "open the latest modified org-agenda file"
   (interactive)
   (find-file (shell-command-to-string "/home/mcard/.local/scripts/latestorg.sh")))
-
-(defvar script-path "~/.local/scripts/find_next_hw.sh")
-(defun mpc/next-hw-num (class sem schoolpath)
-  (shell-command-to-string (format "/home/mcard/.local/scripts/next_hw_num.sh %s %s" sem class)))
-
-(defun mpc/make-latest-hw-file (class sem school-path)
-  "class: Subject indicator and number, sem: [FA/SP]YY, school path: no slash at end"
-  (format "%s/%s/%s/%s" school-path sem class (shell-command-to-string (format "%s %s %s" script-path sem class))))
 
 ;; Keybinds
 (use-package general
@@ -347,23 +355,26 @@
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
   (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
+  (org-verbatim ((t :foreground "#888888")))
   :config
   (setq org-tempo-keywords-alist nil)
-  (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 2)))
+  (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 3)))
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (setq org-capture-templates
       '(;; 19a Stuff
 	("t" "TA Duties")
-	("tm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
-	 "* TODO TA Meeting on %?\nSCHEDULED: %t")
-	("tl" "19a Lab" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Sections")
-	 "* TODO 19a Lab %?")
-	("tm" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
-	 "* TODO Grade 19a Lab %?")
-	("tt" "19a TODO" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Prep")
+	("ts" "19a Section" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Sections")
+	 "* TODO 19a Lab %? Section @ ")
+	("tl" "19a Lecture" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Lectures")
+	 "%(mpc/create-next-lecture-todo \"019a\" \"PHYS\" \"FA23\")")
+	("tt" "19a Prep" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Prep")
 	 "* TODO %?\nSCHEDULED: %t")
+	("tm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
+	 "* TODO TA Meeting for Lab %?\nSCHEDULED: %t")
+	("tg" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
+	 "* TODO Grade 19a Lab %? Section ")
 	;; Homeworks
 	("h"  "Add Homework")
 	("hz" "Self Study" entry (file+olp "FA23.org" "Particles" "Homework")
@@ -375,6 +386,8 @@
 	;; Research
 	("r"  "Research")
 	("ra" "ATLAS TODO" entry (file+olp "FA23.org" "Research" "ATLAS")
+	 "* TODO %?")
+	("rm" "ML Tracking TODO" entry (file+olp "FA23.org" "Research" "ML Tracking")
 	 "* TODO %?")
 	;; Other misc prep
 	;; ("p"  "Add Preclass Prep")
@@ -523,6 +536,7 @@
 
 (use-package vterm
   :defer  t
+  :hook (vterm-mode . mpc/no-lines-setup)
   :ensure t)
 
 ;;;; END OF EMACSINIT.EL
