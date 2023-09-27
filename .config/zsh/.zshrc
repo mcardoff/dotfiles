@@ -24,13 +24,12 @@ DISABLE_AUTO_TITLE="false"
 PROMPT='%B%F{3}[%F{1}%n%F{3}@%F{4}%m %F{2}%~%F{3}]%F{1}$%f%b '
 
 # aliases
-alias ls='exa -al --color=always --group-directories-first'
+alias ls='eza -al --color=always --group-directories-first'
 alias kssh='kitty +kitten ssh'
 alias projector='xrandr --output DP-2 --right-of eDP1 --mode 800x600'
-alias screen='xrandr --output HDMI-1 --right-of eDP-1 '
+alias screen='xrandr --output HDMI-1 --right-of eDP-1 --mode 1920x1080'
 alias office='xrandr --output DP-1-3 --right-of eDP-1 --mode 1920x1080 && source ~/.local/scripts/cisbg.sh'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
-alias tlmgr='tllocalmgr'
 alias fixmymouse='xinput set-prop "PS/2 Generic Mouse" "Device Enabled" 0'
 alias noscreenoff='xset s noblank; xset s off; xset -dpms'
 
