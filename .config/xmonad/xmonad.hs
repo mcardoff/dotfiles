@@ -110,13 +110,13 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_j), windows W.swapDown)
     , ((mod, xK_k), windows W.focusUp)
     , ((mod .|. shf, xK_k), windows W.swapUp)
-    , ((mod, xK_d), withFocused toggleFloat)
     , ((mod, xK_Tab), windows W.focusDown)
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
     , ((mod, xK_l), windows W.focusUp)
     , ((mod, xK_h), windows W.focusDown)
       
     --- Move floating windows
+    , ((mod, xK_d), withFocused toggleFloat) -- toggle floating
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
     , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
@@ -139,11 +139,9 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     --- Change WS layout
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
-    , ((mod, xK_t), withFocused $ windows . W.sink) -- set window to non-floating
 
     -- execs
     , ((mod, xK_b), spawn $ browser)
-    , ((mod, xK_i), spawn "thunderbird")
     , ((mod, xK_o), spawn "emacs-29.0.60")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod, xK_z), spawn "~/.local/scripts/i3lock.sh")
@@ -162,12 +160,12 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
       -- Scratchpads
     , ((mod .|. shf, xK_o), namedScratchpadAction scratchpads "Notepad")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
-    , ((mod .|. shf, xK_x), namedScratchpadAction scratchpads "Skype")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((mod, xK_s), namedScratchpadAction scratchpads "Books")
-    , ((mod, xK_x), namedScratchpadAction scratchpads "Mattermost")
-    , ((mod, xK_v), namedScratchpadAction scratchpads "Discord")
-    , ((mod, xK_c), namedScratchpadAction scratchpads "Slack")
+    , ((mod, xK_t), namedScratchpadAction scratchpads "Mattermost")
+    , ((mod, xK_y), namedScratchpadAction scratchpads "Discord")
+    , ((mod, xK_u), namedScratchpadAction scratchpads "Slack")
+    , ((mod, xK_i), namedScratchpadAction scratchpads "Skype")
     ] 
     ++
     [((mo .|. mod, k), windows $ f i)
