@@ -46,3 +46,82 @@ and then run =xmonad --recompile= to get it to function properly
 Running =stack install= will properly upgrade everything.
 
 Running =stack clean= after adding new dependencies in =stack.yaml= may help 
+* Keybinds
+| Row 1       | Action                 |
+|-------------+------------------------|
+| sup+`       |                        |
+| sup+~       |                        |
+| sup+1..9    | Shift WS 1..9          |
+| sup+sh+1..9 | Move window to WS 1..9 |
+| sup+-       |                        |
+| sup+_       |                        |
+| sup+=       |                        |
+| sup++       |                        |
+
+| Row 2      | Action                              |
+|------------+-------------------------------------|
+| sup+q      | Reload config                       |
+| sup+Q      | Quit                                |
+| sup+w      | Focus screen 1                      |
+| sup+W      | Move window to screen 1             |
+| sup+e      | Focus screen 2                      |
+| sup+E      | Move window to screen 2             |
+| sup+r      | Focus screen 2                      |
+| sup+R      | Move window to screen 2             |
+| sup+t      | Ns Mattermost                       |
+| sup+T      |                                     |
+| sup+y      | Ns Discord                          |
+| sup+Y      |                                     |
+| sup+u      | Ns Slack                            |
+| sup+U      |                                     |
+| sup+i      | Ns Skype                            |
+| sup+I      |                                     |
+| sup+o      | Spawn Emacs                         |
+| sup+O      | Spawn Notepad Scratchpad            |
+| sup+p      | Spawn dmenu                         |
+| sup+P      | Spawn big kill script (dead script) |
+| sup+<TAB>  |                                     |
+| sup+[      |                                     |
+| sup+]      |                                     |
+| sup+{      |                                     |
+| sup+}      |                                     |
+| sup+\      |                                     |
+| sup+<pipe> |                                     |
+
+| Row 3 | Action                  |
+|-------+-------------------------|
+| sup+a |                         |
+| sup+A |                         |
+| sup+s | NS Books                |
+| sup+S |                         |
+| sup+d | Toggle float for window |
+| sup+D |                         |
+| sup+f | NS Ranger               |
+| sup+F |                         |
+| sup+g |                         |
+| sup+G |                         |
+| sup+h | Focus down              |
+| sup+H |                         |
+| sup+j | Focus down              |
+| sup+J | Swap down               |
+| sup+k | Focus up                |
+| sup+K | Swap up                 |
+| sup+l | Focus up                |
+| sup+L |                         |
+
+| Row 4 | Action            |
+|-------+-------------------|
+| sup+z | Lock screen       |
+| sup+Z |                   |
+| sup+x |                   |
+| sup+X |                   |
+| sup+c |                   |
+| sup+C | Kill window       |
+| sup+v |                   |
+| sup+V |                   |
+| sup+b | Spawn browser     |
+| sup+B |                   |
+| sup+n | Move float left   |
+| sup+N | Resize float left |
+| sup+m | Move float down   |
+| sup+M | Resize float down |
