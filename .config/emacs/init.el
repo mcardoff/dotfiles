@@ -76,7 +76,6 @@
   :ensure t
   :diminish
   :hook (after-init . ivy-mode)
-  ;; :init (ivy-mode 1)
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
          :map ivy-minibuffer-map
@@ -103,16 +102,15 @@
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
 
 (use-package ivy-rich
-  ;; :hook (after-init . ivy-rich-mode)
-  ;; :init (ivy-rich-mode 1)
+  :hook (after-init . ivy-rich-mode)
+  :init (ivy-rich-mode)
   :after ivy
   :custom
   (ivy-format-function #'ivy-format-function-line))
 
 (use-package all-the-icons-ivy-rich
-  ;; :hook (after-init . all-the-icons-ivy-rich-mode)
-  :init (all-the-icons-ivy-rich-mode)
-  :after ivy-rich)
+  :after ivy-rich
+  :init (all-the-icons-ivy-rich-mode))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
