@@ -2,7 +2,7 @@
 # name: beamer
 # key: beamer
 # --
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 
 \title{$1}
 \author{Michael Cardiff}
