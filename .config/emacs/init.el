@@ -34,11 +34,15 @@
 
 (use-package autorevert :defer t)
 
+(use-package saveplace-pdf-view :defer t)
+
 (use-package auth-source
+  :defer 1
   :custom (auth-sources ("~/.config/emacs/authinfo.gpg")))
 
 ;; Doom modeline
 (use-package doom-modeline
+  :defer 1
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-buffer-encoding nil)
@@ -66,10 +70,10 @@
 ;; company
 (use-package company
   :ensure t
+  :defer 1
   :hook (after-init . global-company-mode)
   ;; :init (global-company-mode)
-  :diminish
-  :defer f)
+  :diminish)
 
 ;; ivy
 (use-package ivy
@@ -100,17 +104,6 @@
   (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
   (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
-
-(use-package ivy-rich
-  :hook (after-init . ivy-rich-mode)
-  :init (ivy-rich-mode)
-  :after ivy
-  :custom
-  (ivy-format-function #'ivy-format-function-line))
-
-(use-package all-the-icons-ivy-rich
-  :after ivy-rich
-  :init (all-the-icons-ivy-rich-mode))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -231,6 +224,10 @@
    "M-R" 'shrink-window
    "M-." 'enlarge-window-horizontally
    "M-," 'shrink-window-horizontally
+   "M-<left>" 'windmove-left
+   "M-<up>" 'windmove-up
+   "M-<down>" 'windmove-down
+   "M-<right>" 'windmove-right
    "C-<SPC>" 'set-mark-command
    "C-x <SPC>" 'rectangle-mark-mode)
 
@@ -248,7 +245,7 @@
 
 ;; Document writing/editing
 (use-package auctex
-  :defer
+  :defer t
   :hook
   (TeX-mode       . mpc/LaTeX-setup)
   (plain-TeX-mode . mpc/LaTeX-setup)
@@ -305,17 +302,16 @@
 
 (use-package doc-view
   :ensure nil
-  :defer
+  :defer t
   :hook (doc-view-mode . mpc/no-lines-setup))
 
 ;; Org-mode
-(require 'org-tempo)
 (use-package org-bullets
-  :defer
+  :defer t
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
-  :defer 0.2
+  :defer 1
   :init (setq org-roam-v2-ack t)
   :custom
   (org-roam-graph-executable "dot")
@@ -335,7 +331,7 @@
   (org-roam-setup))
 
 (use-package org
-  :defer
+  :defer 1
   :hook ((org-mode . mpc/org-mode-setup)
 	 (org-agenda-mode . mpc/no-lines-setup))
 
@@ -348,6 +344,7 @@
   (org-directory "~/Org/Agenda/")
   (org-agenda-files (directory-files "~/Org/Agenda/" t "\\.org$"))
   (org-agenda-tags-column -80)
+  (org-hide-block-startup t)
   (org-clock-sound "~/Downloads/bell.wav")
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
@@ -355,6 +352,7 @@
   (org-level-1  ((t :inherit 'outline-1 :height 1.15)))
   (org-verbatim ((t :foreground "#888888")))
   :config
+  (require 'org-tempo)
   (setq org-tempo-keywords-alist nil)
   (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 3)))
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
@@ -462,16 +460,52 @@
       (:maildir "/[Gmail]/Drafts"    :key ?d)
       (:maildir "/[Gmail]/All Mail"  :key ?a))))
 
-;; IDE 
+;; Development Improvement
+;;; Tools
+(use-package projectile
+  :defer 1
+  :bind (:map projectile-mode-map ("C-z p" . projectile-command-map))
+  :custom
+  (projectile-completion-system 'ivy)
+  (projectile-project-search-path
+   '(("~/repos/" . 1) ("~/repos/Programming" . 1)))
+  :config
+  (projectile-mode +1))
 
-(use-package magit
-  :defer 5)
+(use-package magit :defer 1)
 
+(use-package highlight-indent-guides
+  :ensure nil
+  :defer 1
+  :hook ((prog-mode . highlight-indent-guides-mode))
+  :custom
+  (highlight-indent-guides-auto-enabled nil)
+  :custom-face
+  (highlight-indent-guides-odd-face ((t :background "#303030")))
+  (highlight-indent-guides-even-face ((t :background "#252525")))
+  )
+
+(use-package hideshow
+  :ensure nil
+  :hook ((prog-mode . hs-minor-mode))
+  :config
+  (general-define-key
+   :prefix "C-z"
+   "C-<tab>" '(hs-toggle-hiding :which-key "Hide/Show Block"))
+  )
+
+(use-package treemacs
+  :defer 1
+  :ensure nil
+  :hook (treemacs-mode . mpc/no-lines-setup))
+
+;;; Modes
 (use-package tramp
+  :defer 1
   :custom (shell-prompt-pattern '"^[^#$%>\n]*~?[#$%>] *"))
 
 (use-package cuda-mode
-  :defer
+  :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 
@@ -491,10 +525,12 @@
 
 ; automatically detect virtual environment to use with default python-mode repl
 (use-package pyvenv-auto
+  :defer 1
   :hook ((python-mode . pyvenv-auto-run)))
 
-(use-package ein
-  :defer 0.2)
+;; (use-package ein
+;;   :ensure nil
+;;   :defer t)
 
 ; lsp
 (defun mpc/lsp-mode-setup ()
@@ -530,10 +566,11 @@
   :after lsp)
 
 (use-package lsp-ivy
-  :defer t)
+  :defer t
+  :after lsp)
 
 (use-package vterm
-  :defer  t
+  :defer t
   :hook (vterm-mode . mpc/no-lines-setup)
   :ensure t)
 
