@@ -44,8 +44,8 @@ myWS = tots ++ rest
     where tots = ["trm","edt","www","sch","dsc","vid"]
           rest = map show $ [(length tots)+1..9]
 
-windowCount :: X (Maybe String)
-windowCount = gets $ Just . (xmobarColor black gruberBrown) . wrap " " " " . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+windowCount :: String -> X (Maybe String)
+windowCount str = gets $ Just . (xmobarColor black str) . wrap " " " " . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- apps
 browser :: String
@@ -69,6 +69,7 @@ gruberBg1 = "#282828"
 gruberBg2 = "#585858"
 gruberFg = "#ffffff"
 gruberFg1 = "#888888"
+gruberCyan = "#70c0b1"
 gruberGreen = "#73c936"
 gruberYellow = "#ffdd33"
 gruberBrown = "#cc8c3c"
@@ -131,15 +132,12 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_Down),  withFocused $ keysResizeWindow d non)
     , ((mod, xK_Up),    withFocused $ keysResizeWindow u non)
     , ((mod, xK_Right), withFocused $ keysResizeWindow r non)
-      
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
-    , ((mod .|. shf, xK_p), spawn "~/.local/scripts/truekill.sh")
-      
+    , ((mod .|. shf, xK_p), spawn "~/.local/scripts/truekill.sh")      
     --- Change WS layout
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
-
     -- execs
     , ((mod, xK_b), spawn $ browser)
     , ((mod, xK_o), spawn "emacs-29.0.60")
@@ -156,8 +154,8 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
-
-      -- Scratchpads
+    , ((mod, 0xff50), spawn "xrandr --auto")
+    -- Scratchpads
     , ((mod .|. shf, xK_o), namedScratchpadAction scratchpads "Notepad")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
@@ -208,27 +206,21 @@ scratchpads = [
     NS "dropterm" (term ++ " --class dropterm --title dropterm")
        (className =? "dropterm")
        (customFloating $ easyrr (1/2) (2/3))
-
   , NS "Ranger" (term ++ " --class Ranger --title Ranger -e ranger")
        (className =? "Ranger")
        (customFloating $ easyrr (2/3) (2/3))
-
   , NS "Books" (term ++ " --class Books --title Books -e ranger --cmd 'set column_ratios 0' ~/school/.misc/Books")
        (className =? "Books")
        (customFloating $ easyrr (5/6) (2/3))
-
   , NS "Notepad" "emacs-29.0.60 -T notepad --eval=\"(unless (boundp 'server-process) (server-start))\""
        (title =? "notepad")
        (customFloating $ easyrr (5/6) (2/3))
-       
   , NS "Discord" "discord-canary"
        (className =? "discord")
        (customFloating $ easyrr (1/2) (2/3))
-
   , NS "Slack" "slack"
        (className =? "Slack")
-       (customFloating $ easyrr (5/6) (2/3))
-       
+       (customFloating $ easyrr (5/6) (2/3))       
   , NS "Mattermost" "mattermost-desktop"
        (className =? "Mattermost")
        (customFloating $ easyrr (5/6) (2/3))
@@ -286,9 +278,9 @@ manageHook' = composeAll $
 scratchpadManageHook :: ManageHook
 scratchpadManageHook = namedScratchpadManageHook scratchpads
 
-logHookDef :: String -> String -> String -> String -> String -> String
-           -> String -> String -> String -> Handle -> Handle -> X()
-logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
+logHookDef :: String -> String -> String -> String -> String -> String 
+           -> String -> String -> String -> String -> Handle -> Handle -> X()
+logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 x1 x2
     = dynamicLogWithPP $ filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
       { ppOutput  = \x -> hPutStrLn x1 x >> hPutStrLn x2 x
       , ppCurrent = xmobarColor c1 c2 . sp
@@ -299,7 +291,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
       , ppSep = " "
       , ppWsSep = ""
       , ppUrgent = xmobarColor black gruberRed . sp
-      , ppExtras = [windowCount]
+      , ppExtras = [windowCount c10]
       , ppSort = (mkWsSort getWsCompare')
       , ppOrder = \(ws:_:t:wc:_) -> [ws,wc,t]
       }
@@ -315,7 +307,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 x1 x2
                   f (Just x) (Just y) = compare x y
 
 regLogHook :: Handle -> Handle -> X()
-regLogHook = logHookDef gruberFg1 gruberDarkRed2 gruberBg gruberDarkRed1 gruberBg gruberDarkRed gruberBg2 gruberBg1 gruberGreen
+regLogHook = logHookDef gruberBg gruberDarkRed1 gruberBg gruberYellow gruberBg gruberBrown gruberBg2 gruberBg1 gruberNiagara gruberCyan
 
 main :: IO ()
 main = do
