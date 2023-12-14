@@ -1,14 +1,13 @@
 -- IMPORTS
--- import           Control.Arrow (first)
--- import           Data.Char
 import qualified Data.Map as M
 import           Data.Monoid
--- import           Data.Tuple
 import           GHC.IO.Handle.Types
 import           System.Exit
 import           XMonad
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.FloatKeys
+import           XMonad.Actions.GridSelect
+
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
@@ -104,8 +103,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- Movement & General WM stuff 
     --- Workspace movement
       ((alt, xK_Tab), nextWS)
-    , ((alt .|. shf, xK_Tab), prevWS)
-    
+    , ((alt .|. shf, xK_Tab), prevWS)    
     --- Focus movement
     , ((mod, xK_j), windows W.focusDown)
     , ((mod .|. shf, xK_j), windows W.swapDown)
@@ -115,14 +113,12 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
     , ((mod, xK_l), windows W.focusUp)
     , ((mod, xK_h), windows W.focusDown)
-      
     --- Move floating windows
     , ((mod, xK_d), withFocused toggleFloat) -- toggle floating
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
     , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
     , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
-    
     --- Resize Floating Windows
     , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow l non)
     , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d non)
@@ -155,15 +151,17 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
     , ((mod, 0xff50), spawn "xrandr --auto")
+    -- gridselect
+    ,  ((mod, xK_c), runSelectedAction gridConfig chatAppsGrid)
     -- Scratchpads
     , ((mod .|. shf, xK_o), namedScratchpadAction scratchpads "Notepad")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
     , ((mod, xK_f), namedScratchpadAction scratchpads "Ranger")
     , ((mod, xK_s), namedScratchpadAction scratchpads "Books")
-    , ((mod, xK_t), namedScratchpadAction scratchpads "Mattermost")
-    , ((mod, xK_y), namedScratchpadAction scratchpads "Discord")
-    , ((mod, xK_u), namedScratchpadAction scratchpads "Slack")
-    , ((mod, xK_i), namedScratchpadAction scratchpads "Skype")
+    -- , ((mod, xK_t), namedScratchpadAction scratchpads "Mattermost")
+    -- , ((mod, xK_y), namedScratchpadAction scratchpads "Discord")
+    -- , ((mod, xK_u), namedScratchpadAction scratchpads "Slack")
+    -- , ((mod, xK_i), namedScratchpadAction scratchpads "Skype")
     ] 
     ++
     [((mo .|. mod, k), windows $ f i)
@@ -205,7 +203,7 @@ scratchpads = [
   -- format for W.RationalRect ((1-w) / 2) ((1-h)/2) w h
     NS "dropterm" (term ++ " --class dropterm --title dropterm")
        (className =? "dropterm")
-       (customFloating $ easyrr (1/2) (2/3))
+       (customFloating $ easyrr (2/3) (2/3))
   , NS "Ranger" (term ++ " --class Ranger --title Ranger -e ranger")
        (className =? "Ranger")
        (customFloating $ easyrr (2/3) (2/3))
@@ -229,6 +227,48 @@ scratchpads = [
        (customFloating $ easyrr (5/6) (2/3))
   ]
     where easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
+
+-- GridSelect
+gridNav :: TwoD a (Maybe a)
+gridNav = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
+ where navKeyMap = M.fromList [
+          ((0,xK_Escape), cancel)
+         ,((0,xK_Return), select)
+         ,((0,xK_slash) , substringSearch gridNav)
+         ,((0,xK_Left)  , move (-1,0)  >> gridNav)
+         ,((0,xK_h)     , move (-1,0)  >> gridNav)
+         ,((0,xK_Right) , move (1,0)   >> gridNav)
+         ,((0,xK_l)     , move (1,0)   >> gridNav)
+         ,((0,xK_Down)  , move (0,1)   >> gridNav)
+         ,((0,xK_j)     , move (0,1)   >> gridNav)
+         ,((0,xK_Up)    , move (0,-1)  >> gridNav)
+         ,((0,xK_k)     , move (0,-1)  >> gridNav)
+         ,((0,xK_y)     , move (-1,-1) >> gridNav)
+         ,((0,xK_i)     , move (1,-1)  >> gridNav)
+         ,((0,xK_n)     , move (-1,1)  >> gridNav)
+         ,((0,xK_m)     , move (1,-1)  >> gridNav)
+         ,((0,xK_space) , setPos (0,0) >> gridNav)
+         ]
+       -- The navigation handler ignores unknown key symbols
+       navDefaultHandler = const gridNav
+
+-- gridSelect menu layout
+gridConfig :: GSConfig (X())
+gridConfig = def
+    { gs_cellheight   = 40
+    , gs_cellwidth    = 200
+    , gs_cellpadding  = 6
+    , gs_navigate    = gridNav
+    , gs_originFractX = 0.5
+    , gs_originFractY = 0.5
+    , gs_font         = "xft:Source Code Pro"
+    }
+
+-- list of chat apps to open in grid:
+chatAppsGrid :: [(String, X ())]
+chatAppsGrid = map (\ s-> (s, namedScratchpadAction scratchpads s)) $
+               ["Slack", "Discord", "Skype", "Mattermost"]
+
 
 
 -- Layouts
@@ -293,7 +333,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 x1 x2
       , ppUrgent = xmobarColor black gruberRed . sp
       , ppExtras = [windowCount c10]
       , ppSort = (mkWsSort getWsCompare')
-      , ppOrder = \(ws:_:t:wc:_) -> [ws,wc,t]
+      , ppOrder = \(ws:_:t:wc:_) -> [ws,t,wc]
       }
     where sp = wrap " " " "
           getWsCompare' :: X WorkspaceCompare
@@ -307,7 +347,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 x1 x2
                   f (Just x) (Just y) = compare x y
 
 regLogHook :: Handle -> Handle -> X()
-regLogHook = logHookDef gruberBg gruberDarkRed1 gruberBg gruberYellow gruberBg gruberBrown gruberBg2 gruberBg1 gruberNiagara gruberCyan
+regLogHook = logHookDef gruberBg gruberDarkRed1 gruberBg gruberYellow gruberBg gruberBrown gruberBg2 gruberBg1 gruberGreen gruberCyan
 
 main :: IO ()
 main = do
@@ -320,7 +360,7 @@ main = do
              , focusFollowsMouse = True
              , clickJustFocuses = False
              , workspaces = myWS
-             , normalBorderColor = gruberBg
+             , normalBorderColor = gruberDarkRed2
              , focusedBorderColor = gruberDarkRed1
              , borderWidth = 4
              -- Bindings
