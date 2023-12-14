@@ -18,10 +18,11 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
            , Run Com "/home/mcard/.local/scripts/mathematicians.sh" [] "math" 300
            , Run Com "/home/mcard/.local/scripts/eqns.sh" [] "eqn" 300
            , Run Com "/home/mcard/.local/scripts/pacupdate.sh" [] "pacupdate" 300
+           , Run DiskU [("/", "<icon=disk.xpm/> <fc=#181818,#cc8c3c> <free> free </fc>")] [] 60
            , Run StdinReader
            ]
        , sepChar = "%"
        , alignSep = "}{"
        , template = " <icon=haskell.xpm/> <fc=#FFFFFF>%StdinReader%</fc> } \
-                     \ {%pacupdate% %sound% %wifi% %batt% %date% "
+                     \ {%pacupdate% %disku% %sound% %wifi% %batt% %date% "
        }
