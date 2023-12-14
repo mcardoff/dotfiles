@@ -66,6 +66,8 @@ export PYTHONHISTFILE="$XDG_CACHE_HOME"/python/python_history
 export LD_PRELOAD=/usr/lib/libstdc++.so.6
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+export JUPYTER_CONFIG_PATH="$XDG_CONFIG_HOME"/jupyter
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
 
 . "/home/mcard/.local/share/cargo/env"
 
