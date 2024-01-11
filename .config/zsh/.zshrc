@@ -45,3 +45,5 @@ print -Pn "\e]0;%m:%~\a"
 
 # zsh-syntax-highlighting
 source $XDG_CONFIG_HOME/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2 > /dev/null
+
+[ -f "/home/mcard/.ghcup/env" ] && source "/home/mcard/.ghcup/env" # ghcup-env
