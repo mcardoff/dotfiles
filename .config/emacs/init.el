@@ -371,14 +371,22 @@
 	 "* TODO TA Meeting for Lab %?\nSCHEDULED: %t")
 	("tg" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
 	 "* TODO Grade 19a Lab %? Section ")
+	;; Classes, SP24
+	("p" "PHYS 167b")
+	("pr" "167b Reading" entry (file+olp "SP24.org" "PHYS 167b" "Readings")
+	 "* TODO 167b Chapter %?")
+	("pe" "167b Exam" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
+	 "* TODO 167b Exam %?")
+	("ph" "167b Homework" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
+	 (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))
 	;; Homeworks
-	("h"  "Add Homework")
-	("hz" "Self Study" entry (file+olp "FA23.org" "Particles" "Homework")
-	 (function (lambda () (mpc/create-todo-entry "280a" "PHYS" "FA23"))))
-	;; exams 
-	("e"  "Add Exam")
-	("ez" "Self Study" entry (file+olp "FA23.org" "Particles" "Exams")
-	 "* TODO Self Study Exam %?")
+	;; ("h"  "Add Homework")
+	;; ("hz" "Self Study" entry (file+olp "FA23.org" "Particles" "Homework")
+	;;  (function (lambda () (mpc/create-todo-entry "280a" "PHYS" "FA23"))))
+	;; ;; exams 
+	;; ("e"  "Add Exam")
+	;; ("ez" "Self Study" entry (file+olp "FA23.org" "Particles" "Exams")
+	;;  "* TODO Self Study Exam %?")
 	;; Research
 	("r"  "Research")
 	("ra" "ATLAS TODO" entry (file+olp "FA23.org" "Research" "ATLAS")
@@ -401,7 +409,7 @@
 (setq org-agenda-custom-commands
       '(("z" "View Current Semester"
 	 ((agenda)
-	  (tags-todo "FA23")))))
+	  (tags-todo "SP24")))))
 
 (setq org-structure-template-alist
       '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
