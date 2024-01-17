@@ -21,11 +21,11 @@
  (position . 6060)
  (last-modified 25958 78 41137 858000))
 ("org-capture-last-stored"
- (filename . "~/Org/Roam/20231211095911-new_cutlevel.org")
- (front-context-string . "* Adding a new c")
- (rear-context-string . "e: new cutlevel\n")
- (position . 90)
- (last-modified 25975 12773 23652 734000))
+ (filename . "~/Org/Agenda/SP24.org")
+ (front-context-string . "*** TODO 167b HW")
+ (rear-context-string . "** Exams [0/0] \n")
+ (position . 136)
+ (last-modified 26020 14934 566157 521000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

@@ -360,17 +360,17 @@
 
 (setq org-capture-templates
       '(;; 19a Stuff
-	("t" "TA Duties")
-	("ts" "19a Section" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Sections")
-	 "* TODO 19a Lab %? Section @ ")
-	("tl" "19a Lecture" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Lectures")
-	 "%(mpc/create-next-lecture-todo \"019a\" \"PHYS\" \"FA23\")")
-	("tt" "19a Prep" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Prep")
-	 "* TODO %?\nSCHEDULED: %t")
-	("tm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
-	 "* TODO TA Meeting for Lab %?\nSCHEDULED: %t")
-	("tg" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
-	 "* TODO Grade 19a Lab %? Section ")
+	;; ("t" "TA Duties")
+	;; ("ts" "19a Section" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Sections")
+	;;  "* TODO 19a Lab %? Section @ ")
+	;; ("tl" "19a Lecture" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Lectures")
+	;;  "%(mpc/create-next-lecture-todo \"019a\" \"PHYS\" \"FA23\")")
+	;; ("tt" "19a Prep" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Prep")
+	;;  "* TODO %?\nSCHEDULED: %t")
+	;; ("tm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
+	;;  "* TODO TA Meeting for Lab %?\nSCHEDULED: %t")
+	;; ("tg" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
+	;;  "* TODO Grade 19a Lab %? Section ")
 	;; Classes, SP24
 	("p" "PHYS 167b")
 	("pr" "167b Reading" entry (file+olp "SP24.org" "PHYS 167b" "Readings")
