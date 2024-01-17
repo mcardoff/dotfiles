@@ -68,6 +68,7 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export JUPYTER_CONFIG_PATH="$XDG_CONFIG_HOME"/jupyter
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
+export GHCUP_USE_XDG_DIRS="YES"
 
 . "/home/mcard/.local/share/cargo/env"
 
