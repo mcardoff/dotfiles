@@ -143,6 +143,17 @@
   (TeX-command "LaTeX" 'TeX-master-file)
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
 
+(defun mpc/hide-latex-preamble ()
+  "Hide just the LaTeX preamble."
+  (interactive)
+  (save-restriction
+    (save-excursion
+      (save-match-data
+        (widen)
+        (goto-char (point-min))
+        (when (re-search-forward "\\documentclass" nil t)
+          (hide-subtree))))))
+
 (defun mpc/org-agenda-list ()
   (delq nil
 	(mapcar (lambda (buffer)
@@ -246,6 +257,8 @@
 ;; Document writing/editing
 (use-package auctex
   :defer t
+  ;; do NOT like this solution
+  :bind (("C-z TAB" . 'mpc/hide-latex-preamble))
   :hook
   (TeX-mode       . mpc/LaTeX-setup)
   (plain-TeX-mode . mpc/LaTeX-setup)
