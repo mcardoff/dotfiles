@@ -359,25 +359,13 @@
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
 (setq org-capture-templates
-      '(;; 19a Stuff
-	;; ("t" "TA Duties")
-	;; ("ts" "19a Section" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Sections")
-	;;  "* TODO 19a Lab %? Section @ ")
-	;; ("tl" "19a Lecture" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Lectures")
-	;;  "%(mpc/create-next-lecture-todo \"019a\" \"PHYS\" \"FA23\")")
-	;; ("tt" "19a Prep" entry (file+olp "FA23.org" "PHYS 19a" "Labs" "Prep")
-	;;  "* TODO %?\nSCHEDULED: %t")
-	;; ("tm" "19a Meeting" entry (file+olp "FA23.org" "PHYS 19a" "Meetings")
-	;;  "* TODO TA Meeting for Lab %?\nSCHEDULED: %t")
-	;; ("tg" "19a Grading" entry (file+olp "FA23.org" "PHYS 19a" "Grading")
-	;;  "* TODO Grade 19a Lab %? Section ")
-	;; Classes, SP24
+      '(;; Classes, SP24
 	("p" "PHYS 167b")
 	("pr" "167b Reading" entry (file+olp "SP24.org" "PHYS 167b" "Readings")
 	 "* TODO 167b Chapter %?")
 	("pe" "167b Exam" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
 	 "* TODO 167b Exam %?")
-	("ph" "167b Homework" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
+	("ph" "167b HW" entry (file+olp "SP24.org" "PHYS 167b" "Homework")
 	 (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))
 	;; Homeworks
 	;; ("h"  "Add Homework")
@@ -389,20 +377,46 @@
 	;;  "* TODO Self Study Exam %?")
 	;; Research
 	("r"  "Research")
-	("ra" "ATLAS TODO" entry (file+olp "FA23.org" "Research" "ATLAS")
+	("ra" "ATLAS TODO" entry (file+olp "SP24.org" "Research" "ATLAS QT")
 	 "* TODO %?")
-	("rm" "ML Tracking TODO" entry (file+olp "FA23.org" "Research" "ML Tracking")
+	("rm" "ML TODO" entry (file+olp "SP24.org" "Research" "ML Tracking")
 	 "* TODO %?")
-	;; Other misc prep
-	;; ("p"  "Add Preclass Prep")
+	("rn" "Analysis TODO" entry (file+olp "SP24.org" "Research" "VBS VVH")
+	 "* TODO %?")
+	("ro" "Other" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	 "* TODO %?")
+	("w" "Weekly Meetings")
+	;; ATLAS/QT Related
+	("wa" "QT Meeting" entry (file+olp "SP24.org" "Research" "ATLAS QT")
+	 "* TODO QT related meeting @")
+	;; ML Tracking
+	("wm" "ML Meeting" entry (file+olp "SP24.org" "Research" "ML Tracking")
+	 "* TODO ML Tracking Meeting @ %?")
+	;; Analysis meeting
+	("wn" "Analysis Meeting" entry (file+olp "SP24.org" "Research" "VBS VVH")
+	 "* TODO Weekly VBS VVH Meeting @ 12:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Thu\"))"
+	 :immediate-finish t)
+	;; Aram Group meeting
+	("ww" "Aram Group Meeting" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	 "* TODO Aram Group Meeting @ 09:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
+	 :immediate-finish t)
+	;; Brandeis-ATLAS meeting
+	("wb" "Brandeis-ATLAS Meeting" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	 "* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
+	 :immediate-finish t)
 	;; Mail Workflow
 	("m" "Mail Workflow")
+	;; Follow up on Email
 	("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
          "* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
+	;; Read Email later
 	("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
-         "* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i")
+         "* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"
+	 :immediate-finish t)
+	;; Attend Event in Email
 	("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
          "* TODO Attend %:subject %a\nSCHEDULED: %t\n%i")
+	;; Send email to someone
 	("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
 	 "* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))")))
 
