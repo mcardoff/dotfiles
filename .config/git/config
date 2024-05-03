@@ -5,3 +5,5 @@
 	defaultBranch = main
 [core]
 	pager = bat --style=grid
+[credential]
+	helper = store --file ~/.config/git/git_credentials
