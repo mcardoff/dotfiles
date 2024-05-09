@@ -69,6 +69,7 @@ export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export JUPYTER_CONFIG_PATH="$XDG_CONFIG_HOME"/jupyter
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
 export GHCUP_USE_XDG_DIRS="YES"
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 
 . "/home/mcard/.local/share/cargo/env"
 
