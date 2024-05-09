@@ -375,7 +375,7 @@
       '(;; Classes, SP24
 	("p" "PHYS 167b")
 	("pr" "167b Reading" entry (file+olp "SP24.org" "PHYS 167b" "Readings")
-	 "* TODO 167b Chapter %?")
+	 "* TODO 167b %?")
 	("pe" "167b Exam" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
 	 "* TODO 167b Exam %?")
 	("ph" "167b HW" entry (file+olp "SP24.org" "PHYS 167b" "Homework")
@@ -399,16 +399,23 @@
 	("ro" "Other" entry (file+olp "SP24.org" "Research" "Other Meetings")
 	 "* TODO %?")
 	("w" "Weekly Meetings")
+	("i" "Action Items")
 	;; ATLAS/QT Related
 	("wa" "QT Meeting" entry (file+olp "SP24.org" "Research" "ATLAS QT")
 	 "* TODO QT related meeting @")
+	("ia" "QT Action Item" entry (file+olp "SP24.org" "Research" "ATLAS QT")
+	 "* TODO QT ")
 	;; ML Tracking
 	("wm" "ML Meeting" entry (file+olp "SP24.org" "Research" "ML Tracking")
 	 "* TODO ML Tracking Meeting @ %?")
+	("im" "ML Action Item" entry (file+olp "SP24.org" "Research" "ML Tracking")
+	 "* TODO ML Tracking ")
 	;; Analysis meeting
-	("wn" "Analysis Meeting" entry (file+olp "SP24.org" "Research" "VBS VVH")
-	 "* TODO Weekly VBS VVH Meeting @ 12:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Thu\"))"
+	("wn" "Analysis Meeting" entry (file+olp "SP24.org" "Research" "VBS Higgs")
+	 "* TODO VBS Higgs Weekly Meeting @ 10:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
 	 :immediate-finish t)
+	("in" "Analysis Action Item" entry (file+olp "SP24.org" "Research" "VBS Higgs")
+	 "* TODO VBS Higgs \nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
 	;; Aram Group meeting
 	("ww" "Aram Group Meeting" entry (file+olp "SP24.org" "Research" "Other Meetings")
 	 "* TODO Aram Group Meeting @ 09:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
@@ -417,6 +424,9 @@
 	("wb" "Brandeis-ATLAS Meeting" entry (file+olp "SP24.org" "Research" "Other Meetings")
 	 "* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
 	 :immediate-finish t)
+	;; Misc Action item
+	("ii" "Misc TODO" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	 "* TODO %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
 	;; Mail Workflow
 	("m" "Mail Workflow")
 	;; Follow up on Email
