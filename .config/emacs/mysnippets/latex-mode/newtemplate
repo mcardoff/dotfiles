@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: newtemplate
-# key: temp2
+# key: temp
 # --
 
 \documentclass[12pt]{article}
@@ -9,46 +9,58 @@
 \author{Michael Cardiff}
 \date{\today}
 
-%% science symbols 
+%% science symbols
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{cancel}
 \usepackage{physics}
+\usepackage{siunitx}
 \usepackage{slashed}
 
 %% general pretty stuff
-\usepackage{bm}
-\usepackage{enumitem}
+\usepackage{caption}
 \usepackage{float}
 \usepackage{graphicx}
-\usepackage[margin=1in]{geometry}
-\usepackage[labelfont=bf]{caption} `${2:_(call interactively (if (y-or-n-p "use tikz?") "\n%% drawingfigs\n\\usepackage{tikz}" ""))}`
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{tikz-feynhand}
 
-% figures
+% setup options
+\captionsetup{labelfont=bf}
 \graphicspath{ {./figs/} }
 
-\newcommand{\fig}[3]
-{
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=#1cm]{#2}
-    \caption{#3}
-  \end{figure}
-}
-
-\newcommand{\figref}[4]
-{
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=#1cm]{#2}
-    \caption{#3}
-    \label{#4}
-  \end{figure}
-}
-
+% macros
 \renewcommand{\L}{\mathcal{L}}
+\renewcommand{\H}{\mathcal{H}}
+\renewcommand{\l}{\ell}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\mcV}{\mathcal{V}}
 \newcommand{\D}{\partial}
-\newcommand{\munu}{{\mu\nu}}
-\newcommand{\sla}[1]{\slashed{#1}}
+\newcommand{\veps}{\varepsilon}
+\newcommand{\circled}[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt](char){#1};}}
+
+% mdframed environments
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\mdfdefinestyle{defstyle}{%
+  linewidth=1pt,
+  frametitlerule=true,
+  frametitlebackgroundcolor=gray!40,
+  backgroundcolor=gray!20,
+  innertopmargin=\topskip
+}
+
+\mdtheorem[style=defstyle]{definition}{Definition}
+\mdtheorem[style=defstyle]{theorem}{Theorem}
+\mdtheorem[style=defstyle]{problem}{Problem}
+
+\newenvironment{thebook}
+{\begin{mdframed}[style=defstyle,frametitle={From the Book}]}{\end{mdframed}}
 
 \begin{document}
 \maketitle
