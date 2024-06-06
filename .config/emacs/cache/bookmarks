@@ -22,10 +22,10 @@
  (last-modified 26025 23016 259949 511000))
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/SP24.org")
- (front-context-string . "*** TODO SCGSR D")
- (rear-context-string . "2024-03-18 Mon>\n")
- (position . 4154)
- (last-modified 26162 31730 143649 964000))
+ (front-context-string . "*** TODO VBS Hig")
+ (rear-context-string . "2024-06-10 Mon>\n")
+ (position . 7123)
+ (last-modified 26209 65086 974284 736000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
