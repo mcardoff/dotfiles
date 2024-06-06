@@ -380,52 +380,35 @@
 	 "* TODO 167b Exam %?")
 	("ph" "167b HW" entry (file+olp "SP24.org" "PHYS 167b" "Homework")
 	 (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))
-	;; Homeworks
-	;; ("h"  "Add Homework")
-	;; ("hz" "Self Study" entry (file+olp "FA23.org" "Particles" "Homework")
-	;;  (function (lambda () (mpc/create-todo-entry "280a" "PHYS" "FA23"))))
-	;; ;; exams 
-	;; ("e"  "Add Exam")
-	;; ("ez" "Self Study" entry (file+olp "FA23.org" "Particles" "Exams")
-	;;  "* TODO Self Study Exam %?")
 	;; Research
-	("r"  "Research")
-	("ra" "ATLAS TODO" entry (file+olp "SP24.org" "Research" "ATLAS QT")
-	 "* TODO %?")
-	("rm" "ML TODO" entry (file+olp "SP24.org" "Research" "ML Tracking")
-	 "* TODO %?")
-	("rn" "Analysis TODO" entry (file+olp "SP24.org" "Research" "VBS VVH")
-	 "* TODO %?")
-	("ro" "Other" entry (file+olp "SP24.org" "Research" "Other Meetings")
-	 "* TODO %?")
 	("w" "Weekly Meetings")
 	("i" "Action Items")
 	;; ATLAS/QT Related
-	("wa" "QT Meeting" entry (file+olp "SP24.org" "Research" "ATLAS QT")
+	("wa" "QT Meeting" entry (file+olp "Research.org" "ATLAS QT")
 	 "* TODO QT related meeting @")
-	("ia" "QT Action Item" entry (file+olp "SP24.org" "Research" "ATLAS QT")
-	 "* TODO QT ")
+	("ia" "QT Action Item" entry (file+olp "Research.org" "ATLAS QT")
+	 "* TODO QT %?")
 	;; ML Tracking
-	("wm" "ML Meeting" entry (file+olp "SP24.org" "Research" "ML Tracking")
+	("wm" "ML Meeting" entry (file+olp "Research.org" "ML Tracking")
 	 "* TODO ML Tracking Meeting @ %?")
-	("im" "ML Action Item" entry (file+olp "SP24.org" "Research" "ML Tracking")
-	 "* TODO ML Tracking ")
+	("im" "ML Action Item" entry (file+olp "Research.org" "ML Tracking")
+	 "* TODO ML Tracking %?")
 	;; Analysis meeting
-	("wn" "Analysis Meeting" entry (file+olp "SP24.org" "Research" "VBS Higgs")
+	("wn" "Analysis Meeting" entry (file+olp "Research.org" "VBS Higgs")
 	 "* TODO VBS Higgs Weekly Meeting @ 10:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
 	 :immediate-finish t)
-	("in" "Analysis Action Item" entry (file+olp "SP24.org" "Research" "VBS Higgs")
-	 "* TODO VBS Higgs \nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
+	("in" "Analysis Action Item" entry (file+olp "Research.org" "VBS Higgs")
+	 "* TODO VBS Higgs %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
 	;; Aram Group meeting
-	("ww" "Aram Group Meeting" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	("ww" "Aram Group Meeting" entry (file+olp "Research.org" "Other Meetings")
 	 "* TODO Aram Group Meeting @ 09:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
 	 :immediate-finish t)
 	;; Brandeis-ATLAS meeting
-	("wb" "Brandeis-ATLAS Meeting" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	("wb" "Brandeis-ATLAS Meeting" entry (file+olp "Research.org" "Other Meetings")
 	 "* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
 	 :immediate-finish t)
 	;; Misc Action item
-	("ii" "Misc TODO" entry (file+olp "SP24.org" "Research" "Other Meetings")
+	("ii" "Misc TODO" entry (file+olp "Research.org" "Other Meetings")
 	 "* TODO %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
 	;; Mail Workflow
 	("m" "Mail Workflow")
