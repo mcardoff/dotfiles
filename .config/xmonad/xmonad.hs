@@ -7,6 +7,7 @@ import           XMonad
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.FloatKeys
 import           XMonad.Actions.GridSelect
+import           XMonad.Actions.WindowBringer
 
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
@@ -143,6 +144,9 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_Print), spawn "scrot -s")
     , ((mod, xK_Return), spawn term)
     -- , ((mod .|. shf, xK_f), spawn $ fileman)
+    -- WindowBringer
+    , ((mod .|. shiftMask, xK_v), gotoMenu)
+    , ((mod .|. shiftMask, xK_b), bringMenu)
     -- Exit, recompile, etc
     , ((mod .|. shf, xK_q), io exitSuccess)
     , ((mod, xK_q), spawn "xmonad --recompile && xmonad --restart")
