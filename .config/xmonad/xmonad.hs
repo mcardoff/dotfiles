@@ -91,7 +91,8 @@ xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 startup :: X ()
 startup = do
   spawn "nm-applet" -- Network Manager
-  spawn "picom" -- compositor
+  spawn "xautolock -time 10 -locker ~/.local/scripts/i3lock.sh" -- autolocking
+  spawn "picom --config /home/mcard/.config/picom/picom.conf" -- compositor
   spawn "twmnd" -- notification daemon
   spawn "/home/mcard/.local/scripts/cisbg.sh" -- background
   
@@ -115,20 +116,25 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod, xK_l), windows W.focusUp)
     , ((mod, xK_h), windows W.focusDown)
     --- Move floating windows
-    , ((mod, xK_d), withFocused toggleFloat) -- toggle floating
+    , ((mod .|. shf, xK_d), withFocused $ keysMoveWindowTo (960, 540) (1/2, 1/2))
+    , ((mod, xK_d),      withFocused toggleFloat) -- toggle floating
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down
     , ((mod, xK_comma),  withFocused $ keysMoveWindow u) -- up
     , ((mod, xK_period), withFocused $ keysMoveWindow r) -- right
+    , ((mod, xK_Left),   withFocused $ keysMoveWindow l)
+    , ((mod, xK_Down),   withFocused $ keysMoveWindow d)
+    , ((mod, xK_Up),     withFocused $ keysMoveWindow u)
+    , ((mod, xK_Right),  withFocused $ keysMoveWindow r)
     --- Resize Floating Windows
     , ((mod .|. shf, xK_n),      withFocused $ keysResizeWindow l non)
     , ((mod .|. shf, xK_m),      withFocused $ keysResizeWindow d non)
     , ((mod .|. shf, xK_comma),  withFocused $ keysResizeWindow u non)
     , ((mod .|. shf, xK_period), withFocused $ keysResizeWindow r non)
-    , ((mod, xK_Left),  withFocused $ keysResizeWindow l non)
-    , ((mod, xK_Down),  withFocused $ keysResizeWindow d non)
-    , ((mod, xK_Up),    withFocused $ keysResizeWindow u non)
-    , ((mod, xK_Right), withFocused $ keysResizeWindow r non)
+    , ((mod .|. shf, xK_Left),   withFocused $ keysResizeWindow l non)
+    , ((mod .|. shf, xK_Down),   withFocused $ keysResizeWindow d non)
+    , ((mod .|. shf, xK_Up),     withFocused $ keysResizeWindow u non)
+    , ((mod .|. shf, xK_Right),  withFocused $ keysResizeWindow r non)
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
     , ((mod .|. shf, xK_p), spawn "~/.local/scripts/truekill.sh")      
