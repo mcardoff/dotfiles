@@ -17,22 +17,27 @@
        (use-package gruber-darker-theme))
       (t (load-theme 'gruber-darker t)))
 
-(use-package rainbow-mode :defer t)
+(use-package rainbow-mode :ensure nil :defer t)
 
-(use-package recentf :defer t)
+(use-package recentf :ensure nil :defer t)
 
-(use-package saveplace :defer t)
+(use-package saveplace :ensure nil :defer t)
 
-(use-package saveplace-pdf-view :defer t)
+(use-package saveplace-pdf-view :ensure nil :defer t)
 
-(use-package server :defer t)
+(use-package server :ensure nil :defer t)
 
-(use-package autorevert :defer t)
+(use-package autorevert :ensure nil :defer t)
 
-(use-package saveplace-pdf-view :defer t)
+(use-package saveplace-pdf-view :ensure nil :defer t)
+
+(use-package tab-bar :ensure nil :defer t)
+
+(use-package pass :ensure nil :defer t)
 
 (use-package auth-source
   :defer 1
+  :ensure nil
   :custom (auth-sources ("~/.config/emacs/authinfo.gpg")))
 
 (use-package doom-modeline
@@ -317,33 +322,10 @@
   :config (yas-global-mode)
   :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
 
-(use-package org-bullets
-  :defer
-  :hook (org-mode . org-bullets-mode))
-
-(use-package org-roam
-  :defer 1
-  :init (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-graph-executable "dot")
-  (org-roam-graph-viewer "chromium")
-  (org-roam-directory "~/Org/Roam")
-  (org-roam-completion-everywhere t)
-  (org-roam-completion-system 'ivy)
-  :config
-  (general-define-key
-   :prefix "C-z"
-   "n" '(nil :which-key "Roam Prefix")
-   "n l" '(org-roam-buffer-toggle :which-key "Toggle Roam Buffer")
-   "n f" '(org-roam-node-find :which-key "Find Node")
-   "n i" '(org-roam-node-insert :which-key "Insert Node")
-   "n d" '(org-roam-dailies-capture-today :which-key "Capture Daily")
-   "n t" '(org-roam-dailies-goto-today :which-key "Goto Daily"))
-  (org-roam-setup))
-
 (use-package org
   :defer 1
   :hook ((org-mode . mpc/org-mode-setup)
+         (org-mode . rainbow-delimiters-mode)
          (org-agenda-mode . mpc/no-lines-setup))
 
   :bind (:map org-mode-map
@@ -368,6 +350,30 @@
   (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 3)))
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
+
+(use-package org-roam
+  :defer 1
+  :init (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-graph-executable "dot")
+  (org-roam-graph-viewer "chromium")
+  (org-roam-directory "~/Org/Roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-completion-system 'ivy)
+  :config
+  (general-define-key
+   :prefix "C-z"
+   "n" '(nil :which-key "Roam Prefix")
+   "n l" '(org-roam-buffer-toggle :which-key "Toggle Roam Buffer")
+   "n f" '(org-roam-node-find :which-key "Find Node")
+   "n i" '(org-roam-node-insert :which-key "Insert Node")
+   "n d" '(org-roam-dailies-capture-today :which-key "Capture Daily")
+   "n t" '(org-roam-dailies-goto-today :which-key "Goto Daily"))
+  (org-roam-setup))
+
+(use-package org-bullets
+  :defer
+  :hook (org-mode . org-bullets-mode))
 
 (setq org-capture-templates
       '(("p" "PHYS 167b")
@@ -535,6 +541,21 @@
   (highlight-indent-guides-even-face ((t :background "#252525")))
   )
 
+(use-package rainbow-delimiters
+  :defer 1
+  :hook ((prog-mode . rainbow-delimiters-mode)
+         (emacs-lisp-mode . rainbow-delimiters-mode))
+  :custom-face
+    (rainbow-delimiters-depth-1-face ((t :foreground "#f43841")))
+    (rainbow-delimiters-depth-2-face ((t :foreground "#cc8c3c")))
+    (rainbow-delimiters-depth-3-face ((t :foreground "#ffdd33")))
+    (rainbow-delimiters-depth-4-face ((t :foreground "#73c936")))
+    (rainbow-delimiters-depth-5-face ((t :foreground "#96a6c8")))
+    (rainbow-delimiters-depth-6-face ((t :foreground "#565f73")))
+    (rainbow-delimiters-depth-7-face ((t :foreground "#f43841")))
+    (rainbow-delimiters-depth-8-face ((t :foreground "#cc8c3c")))
+    (rainbow-delimiters-depth-9-face ((t :foreground "#ffdd33"))))
+
 (use-package hideshow
   :ensure nil
   :hook ((prog-mode . hs-minor-mode))
@@ -628,3 +649,13 @@
 
 (add-hook 'emacs-startup-hook
   (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))
+
+(setq safe-local-variables
+      '((eval add-hook 'after-save-hook
+              (lambda nil
+                (if (y-or-n-p "Tangle?")
+                    (org-babel-tangle))) nil t)
+        (eval add-hook 'after-save-hook
+              (lambda nil
+                (if (y-or-n-p "Reload?")
+                    (load-file user-init-file))) nil t)))

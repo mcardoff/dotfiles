@@ -31,7 +31,7 @@
       nsm-settings-file (format "%scache/network-security.data" user-emacs-directory)
       message-log-max t)
 
-(set-face-attribute 'default nil
+(set-face-attribute 'default t
  :font "Source Code Pro"
  :foundry 'regular
  :height 140)
@@ -46,15 +46,16 @@
 (global-display-line-numbers-mode 1)
 (fringe-mode                      8)
 
-(set-face-attribute 'window-divider nil
+(set-face-attribute 'window-divider t
  :foreground "#282828")
-(set-face-attribute 'window-divider-first-pixel nil
+(set-face-attribute 'window-divider-first-pixel t
  :foreground "#282828")
-(set-face-attribute 'window-divider-last-pixel nil
+(set-face-attribute 'window-divider-last-pixel t
  :foreground "#282828")
-(set-face-attribute 'fringe nil
+(set-face-attribute 'fringe t
  :foreground "#181818"
  :background "#181818")
+
 
 
 (defun mpc/display-startup-time ()
