@@ -3,10 +3,6 @@
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
-;;;; BEGIN EMACSINIT.EL
-
-;; package stuff
-
 (setq package-archives '(
           ("melpa" . "https://melpa.org/packages/")
           ;; ("org" . "https://orgmode.org/elpa/")
@@ -21,7 +17,6 @@
        (use-package gruber-darker-theme))
       (t (load-theme 'gruber-darker t)))
 
-;; Speed
 (use-package rainbow-mode :defer t)
 
 (use-package recentf :defer t)
@@ -40,7 +35,6 @@
   :defer 1
   :custom (auth-sources ("~/.config/emacs/authinfo.gpg")))
 
-;; Doom modeline
 (use-package doom-modeline
   :defer 1
   :hook (after-init . doom-modeline-mode)
@@ -50,14 +44,13 @@
   (doom-modeline-icon t))
 
 ;; Doesnt work with emacs 29
-;; dashboard
 (use-package dashboard
   :hook ((after-init . dashboard-setup-startup-hook)
-	 (after-init . dashboard-insert-startupify-lists))
+         (after-init . dashboard-insert-startupify-lists))
   :custom
   (dashboard-startup-banner 'logo)
   (dashboard-items '((recents   . 10)
-		     (bookmarks . 10)
+                     (bookmarks . 10)
                      (agenda    . 10)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
@@ -65,17 +58,12 @@
   ;; :config (dashboard-setup-startup-hook)
   )
 
-;; Completion frameworks
-
-;; company
 (use-package company
   :ensure t
-  :defer 1
   :hook (after-init . global-company-mode)
   ;; :init (global-company-mode)
   :diminish)
 
-;; ivy
 (use-package ivy
   :ensure t
   :diminish
@@ -116,7 +104,6 @@
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   (ivy-initial-inputs-alist nil))
 
-;; defuns
 (defun mpc/LaTeX-setup ()
   ;; (hl-line-mode 1)
   (visual-line-mode 1))
@@ -156,9 +143,9 @@
 
 (defun mpc/org-agenda-list ()
   (delq nil
-	(mapcar (lambda (buffer)
-		  (buffer-file-name buffer))
-		(org-buffer-list 'files t))))
+        (mapcar (lambda (buffer)
+                  (buffer-file-name buffer))
+                (org-buffer-list 'files t))))
 
 ; temporary solution, hopefully can be replaced by something more dynamic
 (defvar mpc/latest-org-file "~/Org/Agenda/SU23.org")
@@ -191,6 +178,21 @@
      "/home/mcard/.local/scripts/find_next_lec.sh %s %s%s"
      semester subj classnum))))
 
+(defun mpc/capture-template-skeleton (prefix titleprompt deadlinetext)
+  (format
+   "* TODO %s%%^{%s} @ %%^{Start Time} \nDEADLINE: %s"
+   prefix titleprompt deadlinetext))
+
+(defun mpc/meeting-custom-dl (prefix) (mpc/capture-template-skeleton prefix "Meeting" "%^{DEADLINE}t"))
+
+(defun mpc/meeting-fixed-dl (prefix dow)
+  (mpc/capture-template-skeleton
+   prefix "Meeting" (format "%%(org-insert-time-stamp (org-read-date nil t \"+%s\"))" dow)))
+
+(defun mpc/action-item (prefix days-ahead)
+  (mpc/capture-template-skeleton
+   prefix "Action Item" (format "%%(org-insert-time-stamp (org-read-date nil t \"+%sd\"))" days-ahead)))
+
 (defun dotemacs ()
   "Opens init.el"
   (interactive)
@@ -206,55 +208,52 @@
   (interactive)
   (find-file (shell-command-to-string "/home/mcard/.local/scripts/latestorg.sh")))
 
-;; Keybinds
 (use-package general
   :ensure t
   :config
   (global-unset-key (kbd "C-z"))
-  (general-define-key
-   :prefix "C-z"
-   "" '(nil :which-key "General Prefix")
-   "C-c" '(org-capture :which-key "Capture!")
-   "a" '(org-agenda :which-key "Open Agenda")
-   "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
-   "e" '(elfeed :which-key "Check RSS Feeds")
-   "g" '(agendafile :which-key "Open Latest Org Agenda")
-   "i" '(dotemacs :which-key "Open init.el")
-   "l" '(org-agenda-list :which-key "Open Agenda List")
-   "m" '(counsel-imenu :which-key "counsel-imenu")
-   "o" '(initorg :which-key "Open Literate Config")
-   "u" '(mu4e :which-key "Check Mail!"))
-  
-  (general-define-key
-   "<escape>" 'keyboard-escape-quit
-   "M-1" 'shell-command
-   "M-2" 'split-window-below
-   "M-3" 'split-window-right
-   "M-o" 'other-window
-   "M-r" 'enlarge-window
-   "M-R" 'shrink-window
-   "M-." 'enlarge-window-horizontally
-   "M-," 'shrink-window-horizontally
-   "M-<left>" 'windmove-left
-   "M-<up>" 'windmove-up
-   "M-<down>" 'windmove-down
-   "M-<right>" 'windmove-right
-   "C-<SPC>" 'set-mark-command
-   "C-x <SPC>" 'rectangle-mark-mode)
 
-  (general-define-key
-   :keymaps 'c++-mode-map
-   "C-z C-z" 'compile))
+(general-define-key
+ :prefix "C-z"
+ "" '(nil :which-key "General Prefix")
+ "C-c" '(org-capture :which-key "Capture!")
+ "a" '(org-agenda :which-key "Open Agenda")
+ "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
+ "e" '(elfeed :which-key "Check RSS Feeds")
+ "g" '(agendafile :which-key "Open Latest Org Agenda")
+ "i" '(dotemacs :which-key "Open init.el")
+ "l" '(org-agenda-list :which-key "Open Agenda List")
+ "m" '(counsel-imenu :which-key "counsel-imenu")
+ "o" '(initorg :which-key "Open Literate Config")
+ "u" '(mu4e :which-key "Check Mail!"))
 
-;; which-key because there are so many bindings
+(general-define-key
+ "<escape>" 'keyboard-escape-quit
+ "M-1" 'shell-command
+ "M-2" 'split-window-below
+ "M-3" 'split-window-right
+ "M-o" 'other-window
+ "M-r" 'enlarge-window
+ "M-R" 'shrink-window
+ "M-." 'enlarge-window-horizontally
+ "M-," 'shrink-window-horizontally
+ "M-<left>" 'windmove-left
+ "M-<up>" 'windmove-up
+ "M-<down>" 'windmove-down
+ "M-<right>" 'windmove-right
+ "C-<SPC>" 'set-mark-command
+ "C-x <SPC>" 'rectangle-mark-mode)
+
+(general-define-key
+ :keymaps 'c++-mode-map
+ "C-z C-z" 'compile))
+
 (use-package which-key
   :ensure t
-  :defer 2
   :config (which-key-mode)
   :diminish which-key-mode
   :custom (which-key-idle-delay 0.3))
 
-;; Document writing/editing
 (use-package auctex
   :defer t
   ;; do NOT like this solution
@@ -294,6 +293,11 @@
   (LaTeX-float "H")
   (TeX-output-dir "./build"))
 
+(use-package doc-view
+  :ensure nil
+  :defer
+  :hook (doc-view-mode . mpc/no-lines-setup))
+
 (use-package move-text
   :defer 2
   :diminish 
@@ -303,24 +307,18 @@
 (use-package multiple-cursors
   :defer 2
   :diminish
-  :bind (("C-S-c C-S-c" . 'mc/edit-lines)
-	 ("C->"         . 'mc/mark-next-like-this)
-	 ("C-<"         . 'mc/mark-previous-like-this)
-	 ("C-c C-<"     . 'mc/mark-all-like-this)))
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->"         . mc/mark-next-like-this)
+         ("C-<"         . 'mc/mark-previous-like-this)
+         ("C-c C-<"     . 'mc/mark-all-like-this)))
 
 (use-package yasnippet
   :defer 5
   :config (yas-global-mode)
   :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
 
-(use-package doc-view
-  :ensure nil
-  :defer t
-  :hook (doc-view-mode . mpc/no-lines-setup))
-
-;; Org-mode
 (use-package org-bullets
-  :defer t
+  :defer
   :hook (org-mode . org-bullets-mode))
 
 (use-package org-roam
@@ -346,11 +344,11 @@
 (use-package org
   :defer 1
   :hook ((org-mode . mpc/org-mode-setup)
-	 (org-agenda-mode . mpc/no-lines-setup))
+         (org-agenda-mode . mpc/no-lines-setup))
 
   :bind (:map org-mode-map
-	      ("<C-M-return>" . org-insert-todo-subheading)
-	      ("<C-return>"   . org-insert-subheading))
+              ("<C-M-return>" . org-insert-todo-subheading)
+              ("<C-return>"   . org-insert-subheading))
   :custom
   (org-tags-column 0)
   (org-ellipsis " [+]")
@@ -371,93 +369,117 @@
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
-;; Classes, SP24
 (setq org-capture-templates
       '(("p" "PHYS 167b")
-	("pr" "167b Reading" entry (file+olp "SP24.org" "PHYS 167b" "Readings")
-	 "* TODO 167b %?")
-	("pe" "167b Exam" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
-	 "* TODO 167b Exam %?")
-	("ph" "167b HW" entry (file+olp "SP24.org" "PHYS 167b" "Homework")
-	 (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
+        ("w" "Weekly Meetings")
+        ("i" "Action Items")
+        ("m" "Mail Workflow")))
 
-;; Research
 (add-to-list 'org-capture-templates
-	     '(("w" "Weekly Meetings")
-	       ("i" "Action Items")
-	       ;; ATLAS/QT Related
-	       ("wa" "QT Meeting" entry (file+olp "Research.org" "ATLAS QT")
-		"* TODO QT related meeting @")
-	       ("ia" "QT Action Item" entry (file+olp "Research.org" "ATLAS QT")
-		"* TODO QT %?")
-	       ;; Analysis meeting
-	       ("wn" "Analysis Meeting" entry (file+olp "Research.org" "VBS Higgs")
-		"* TODO VBS Higgs Weekly Meeting @ 10:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
-		:immediate-finish t)
-	       ("in" "Analysis Action Item" entry (file+olp "Research.org" "VBS Higgs")
-		"* TODO VBS Higgs %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
-	       ;; Aram Group meeting
-	       ("ww" "Aram Group Meeting" entry (file+olp "Research.org" "Other Meetings")
-		"* TODO Aram Group Meeting @ 09:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
-		:immediate-finish t)
-	       ;; Brandeis-ATLAS meeting
-	       ("wb" "Brandeis-ATLAS Meeting" entry (file+olp "Research.org" "Other Meetings")
-		"* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
-		:immediate-finish t)
-	       ;; MISC Meeting // template 
-	       ("ws" "Other Meeting" entry (file+olp "Research.org" "Other Meetings")
-		"* TODO %^{Title} @ %^{Start Time} \nDEADLINE: %^{DEADLINE}t"
-		:immediate-finish t)
-	       ;; Misc Action item
-	       ("ii" "Misc TODO" entry (file+olp "Research.org" "Other Meetings")
-		"* TODO %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")))
-;; Mail Workflow
+             '(("pr" "167b Reading"
+                entry (file+olp "SP24.org" "PHYS 167b" "Readings")
+                "* TODO 167b %?")
+               ("pe" "167b Exam"
+                entry (file+olp "SP24.org" "PHYS 167b" "Exams")
+                "* TODO 167b Exam %?")
+               ("ph" "167b HW"
+                entry (file+olp "SP24.org" "PHYS 167b" "Homework")
+                (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
+
+;; Meetings
 (add-to-list 'org-capture-templates
-	     '(("m" "Mail Workflow")
-	       ;; Follow up on Email
-	       ("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
-		"* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
-	       ;; Read Email later
-	       ("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
-		"* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"
-		:immediate-finish t)
-	       ;; Attend Event in Email
-	       ("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
-		"* TODO Attend %:subject %a\nSCHEDULED: %t\n%i")
-	       ;; Send email to someone
-	       ("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
-		"* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))")))
+             '("wa" "QT Meeting"
+               entry (file+olp "Research.org" "ATLAS QT")
+               (function (lambda () (mpc/meeting-custom-dl "QT ")))
+               :immediate-finish t))
+
+(add-to-list 'org-capture-templates
+             '("wn" "VBS VVH Meeting"
+               entry (file+olp "Research.org" "VBS VVH")
+               (function (lambda () (mpc/meeting-fixed-dl "VBS Higgs " "Mon")))
+               :immediate-finish t))
+
+(add-to-list 'org-capture-templates
+             '("ww" "Aram Meeting"
+               entry (file+olp "Research.org" "Other")
+               (function (lambda () (mpc/meeting-fixed-dl "Aram Group " "Mon")))
+               :immediate-finish t))
+
+(add-to-list 'org-capture-templates
+             '("wb" "Brandeis Meeting"
+               entry (file+olp "Research.org" "Other")
+               (function (lambda () (mpc/meeting-fixed-dl "Brandeis-ATLAS " "Wed")))
+               :immediate-finish t))
+
+(add-to-list 'org-capture-templates
+             '("ws" "Other Meeting"
+               entry (file+olp "Research.org" "Other")
+               (function (lambda () (mpc/meeting-custom-dl "")))
+               :immediate-finish t))
+
+;; Action Items
+(add-to-list 'org-capture-templates
+             '("ia" "QT Action Item"
+               entry (file+olp "Research.org" "ATLAS QT")
+               (function (lambda () (mpc/action-item "QT " "3")))
+               :immediate-finish t))
+
+(add-to-list 'org-capture-templates
+             '("in" "VBS VVH Action Item"
+               entry (file+olp "Research.org" "VBS VVH")
+               (function (lambda () (mpc/action-item "VBS Higgs " "3")))
+               :immediate-finish t))
+
+(add-to-list 'org-capture-templates
+             '("ii" "Misc TODO"
+               entry (file+olp "Research.org" "Other")
+               (function (lambda () (mpc/action-item "" "3")))
+               ))
+
+;; Follow up on Email
+(add-to-list 'org-capture-templates
+             '("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
+                "* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"))
+;; Read Email later
+(add-to-list 'org-capture-templates
+             '("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
+                "* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"
+                :immediate-finish t))
+;; Attend Event in Email
+(add-to-list 'org-capture-templates
+             '("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
+               "* TODO Attend %:subject %a\nSCHEDULED: %t\n%i"))
+;; Send email to someone
+(add-to-list 'org-capture-templates
+             '("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
+               "* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))"))
 
 (setq org-agenda-custom-commands
       '(("z" "View Current Semester"
-	 ((agenda)
-	  (tags-todo "SP24")))))
+         ((agenda)
+          (tags-todo "SP24")))))
 
 (setq org-structure-template-alist
       '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
-	("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
-	("a" . "ascii"   ) ("i" . "index"  ) ("el" . "src emacs-lisp")))
+        ("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
+        ("a" . "ascii"   ) ("i" . "index"  )
+        ("el" . "src emacs-lisp") ("sb" . "src bash")))
 
-;; Socials
 (use-package elfeed
   :ensure t
   :defer t
   :custom
   (elfeed-db-directory (concat user-emacs-directory "elfeed"))
   (elfeed-feeds '(("https://atlas.cern/updates/briefing/feed.xml" physics)
-		  ("http://feeds.aps.org/rss/recent/physics.xml" physics)
-		  ("https://export.arxiv.org/rss/hep-ex" phyics article)
-		  ("https://export.arxiv.org/rss/hep-ph" physics article)))
+                  ("http://feeds.aps.org/rss/recent/physics.xml" physics)
+                  ("https://export.arxiv.org/rss/hep-ex" phyics article)
+                  ("https://export.arxiv.org/rss/hep-ph" physics article)))
   :commands (elfeed))
 
-;; TODO: Setup slack for emacs
-;; (use-package slack)
-
-;; Mail
 (use-package mu4e
   :ensure nil
   :hook ((mu4e-headers-mode . (lambda () (display-line-numbers-mode 0)))
-	 (mu4e-main-mode . (lambda () (display-line-numbers-mode 0))))
+         (mu4e-main-mode . (lambda () (display-line-numbers-mode 0))))
   :load-path "/usr/share/emacs/site-lisp/mu4e"
   :config
   ;; Load org-mode integration
@@ -476,7 +498,7 @@
   ;; dreaded "UID is N beyond highest assigned" error.
   ;; See this link for more info: https://stackoverflow.com/a/43461973
   (setq mu4e-change-filenames-when-moving t)
-  
+
   (setq mu4e-drafts-folder "/[Gmail]/Drafts")
   (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
   (setq mu4e-refile-folder "/[Gmail]/All Mail")
@@ -490,8 +512,6 @@
       (:maildir "/[Gmail]/Drafts"    :key ?d)
       (:maildir "/[Gmail]/All Mail"  :key ?a))))
 
-;; Development Improvement
-;;; Tools
 (use-package projectile
   :defer 1
   :bind (:map projectile-mode-map ("C-z p" . projectile-command-map))
@@ -521,15 +541,13 @@
   :config
   (general-define-key
    :prefix "C-z"
-   "C-<tab>" '(hs-toggle-hiding :which-key "Hide/Show Block"))
-  )
+   "C-<tab>" '(hs-toggle-hiding :which-key "Hide/Show Block")))
 
 (use-package treemacs
   :defer 1
   :ensure nil
   :hook (treemacs-mode . mpc/no-lines-setup))
 
-;;; Modes
 (use-package tramp
   :defer 1
   :custom (shell-prompt-pattern '"^[^#$%>\n]*~?[#$%>] *"))
@@ -548,22 +566,16 @@
   :defer
   :bind (("C-c C-c" . compile))
   :hook ((haskell-mode . interactive-haskell-mode)
-	 (haskell-mode . haskell-indent-mode)
-	 (haskell-mode . lsp))
+         (haskell-mode . haskell-indent-mode)
+         (haskell-mode . lsp))
   :custom
   (haskell-process-type 'stack-ghci) ; use stack ghci instead of global ghc
   (haskell-stylish-on-save t))
 
-; automatically detect virtual environment to use with default python-mode repl
 (use-package pyvenv-auto
   :defer 1
   :hook ((python-mode . pyvenv-auto-run)))
 
-;; (use-package ein
-;;   :ensure nil
-;;   :defer t)
-
-; lsp
 (defun mpc/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -572,10 +584,10 @@
   :defer t
   :commands (lsp lsp-deferred)
   :hook ((python-mode . lsp)
-	 (haskell-mode . lsp)
-	 (c-mode . lsp)
-	 (c++-mode . lsp)
-	 (lsp-mode . mpc/lsp-mode-setup))
+         (haskell-mode . lsp)
+         (c-mode . lsp)
+         (c++-mode . lsp)
+         (lsp-mode . mpc/lsp-mode-setup))
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
@@ -613,18 +625,6 @@
   :defer t
   :hook (vterm-mode . mpc/no-lines-setup)
   :ensure t)
-
-;;;; END OF EMACSINIT.EL
-
-(set-face-attribute 'window-divider nil
- :foreground "#282828")
-(set-face-attribute 'window-divider-first-pixel nil
- :foreground "#282828")
-(set-face-attribute 'window-divider-last-pixel nil
- :foreground "#282828")
-(set-face-attribute 'fringe nil
- :foreground "#181818"
- :background "#181818")
 
 (add-hook 'emacs-startup-hook
   (lambda () (setq file-name-handler-alist mpc--file-name-handler-alist)))

@@ -22,10 +22,10 @@
  (last-modified 26025 23016 259949 511000))
 ("org-capture-last-stored"
  (filename . "~/Org/Agenda/Research.org")
- (front-context-string . "** TODO VBS Higg")
- (rear-context-string . "2024-06-22 Sat>\n")
- (position . 4353)
- (last-modified 26258 40608 888599 460000))
+ (front-context-string . "** TODO Meeting ")
+ (rear-context-string . "2024-07-22 Mon>\n")
+ (position . 5078)
+ (last-modified 26262 38334 656976 858000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")
