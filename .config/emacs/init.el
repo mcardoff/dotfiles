@@ -371,64 +371,62 @@
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
+;; Classes, SP24
 (setq org-capture-templates
-      '(;; Classes, SP24
-	("p" "PHYS 167b")
+      '(("p" "PHYS 167b")
 	("pr" "167b Reading" entry (file+olp "SP24.org" "PHYS 167b" "Readings")
 	 "* TODO 167b %?")
 	("pe" "167b Exam" entry (file+olp "SP24.org" "PHYS 167b" "Exams")
 	 "* TODO 167b Exam %?")
 	("ph" "167b HW" entry (file+olp "SP24.org" "PHYS 167b" "Homework")
-	 (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))
-	;; Research
-	("w" "Weekly Meetings")
-	("i" "Action Items")
-	;; ATLAS/QT Related
-	("wa" "QT Meeting" entry (file+olp "Research.org" "ATLAS QT")
-	 "* TODO QT related meeting @")
-	("ia" "QT Action Item" entry (file+olp "Research.org" "ATLAS QT")
-	 "* TODO QT %?")
-	;; ML Tracking
-	("wm" "ML Meeting" entry (file+olp "Research.org" "ML Tracking")
-	 "* TODO ML Tracking Meeting @ %?")
-	("im" "ML Action Item" entry (file+olp "Research.org" "ML Tracking")
-	 "* TODO ML Tracking %?")
-	;; Analysis meeting
-	("wn" "Analysis Meeting" entry (file+olp "Research.org" "VBS Higgs")
-	 "* TODO VBS Higgs Weekly Meeting @ 10:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
-	 :immediate-finish t)
-	("in" "Analysis Action Item" entry (file+olp "Research.org" "VBS Higgs")
-	 "* TODO VBS Higgs %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
-	;; Aram Group meeting
-	("ww" "Aram Group Meeting" entry (file+olp "Research.org" "Other Meetings")
-	 "* TODO Aram Group Meeting @ 09:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
-	 :immediate-finish t)
-	;; Brandeis-ATLAS meeting
-	("wb" "Brandeis-ATLAS Meeting" entry (file+olp "Research.org" "Other Meetings")
-	 "* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
-	 :immediate-finish t)
-	;; MISC Meeting // template 
-	("ws" "Other Meeting" entry (file+olp "Research.org" "Other Meetings")
-	 "* TODO %^{Title} @ %^{Start Time} \nDEADLINE: %^{DEADLINE}t"
-	 :immediate-finish t)
-	;; Misc Action item
-	("ii" "Misc TODO" entry (file+olp "Research.org" "Other Meetings")
-	 "* TODO %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
-	;; Mail Workflow
-	("m" "Mail Workflow")
-	;; Follow up on Email
-	("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
-         "* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
-	;; Read Email later
-	("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
-         "* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"
-	 :immediate-finish t)
-	;; Attend Event in Email
-	("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
-         "* TODO Attend %:subject %a\nSCHEDULED: %t\n%i")
-	;; Send email to someone
-	("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
-	 "* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))")))
+	 (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
+
+;; Research
+(add-to-list 'org-capture-templates
+	     '(("w" "Weekly Meetings")
+	       ("i" "Action Items")
+	       ;; ATLAS/QT Related
+	       ("wa" "QT Meeting" entry (file+olp "Research.org" "ATLAS QT")
+		"* TODO QT related meeting @")
+	       ("ia" "QT Action Item" entry (file+olp "Research.org" "ATLAS QT")
+		"* TODO QT %?")
+	       ;; Analysis meeting
+	       ("wn" "Analysis Meeting" entry (file+olp "Research.org" "VBS Higgs")
+		"* TODO VBS Higgs Weekly Meeting @ 10:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
+		:immediate-finish t)
+	       ("in" "Analysis Action Item" entry (file+olp "Research.org" "VBS Higgs")
+		"* TODO VBS Higgs %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
+	       ;; Aram Group meeting
+	       ("ww" "Aram Group Meeting" entry (file+olp "Research.org" "Other Meetings")
+		"* TODO Aram Group Meeting @ 09:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))"
+		:immediate-finish t)
+	       ;; Brandeis-ATLAS meeting
+	       ("wb" "Brandeis-ATLAS Meeting" entry (file+olp "Research.org" "Other Meetings")
+		"* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
+		:immediate-finish t)
+	       ;; MISC Meeting // template 
+	       ("ws" "Other Meeting" entry (file+olp "Research.org" "Other Meetings")
+		"* TODO %^{Title} @ %^{Start Time} \nDEADLINE: %^{DEADLINE}t"
+		:immediate-finish t)
+	       ;; Misc Action item
+	       ("ii" "Misc TODO" entry (file+olp "Research.org" "Other Meetings")
+		"* TODO %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")))
+;; Mail Workflow
+(add-to-list 'org-capture-templates
+	     '(("m" "Mail Workflow")
+	       ;; Follow up on Email
+	       ("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
+		"* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i")
+	       ;; Read Email later
+	       ("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
+		"* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"
+		:immediate-finish t)
+	       ;; Attend Event in Email
+	       ("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
+		"* TODO Attend %:subject %a\nSCHEDULED: %t\n%i")
+	       ;; Send email to someone
+	       ("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
+		"* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))")))
 
 (setq org-agenda-custom-commands
       '(("z" "View Current Semester"
