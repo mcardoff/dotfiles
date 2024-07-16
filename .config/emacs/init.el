@@ -121,6 +121,10 @@
 (defun mpc/no-lines-setup ()
   (display-line-numbers-mode 0))
 
+(defun mpc/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
 (defun mpc/TeX-view-once (doc)
   "View TeX output and clean up after `my/TeX-compile-and-view'.
   Call `TeX-view' to display TeX output, and remove this function
@@ -135,16 +139,20 @@
   (TeX-command "LaTeX" 'TeX-master-file)
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
 
-(defun mpc/hide-latex-preamble ()
-  "Hide just the LaTeX preamble."
+(defun mpc/toggle-latex-preamble ()
+  "Toggle visibility of the LaTeX preamble in the current buffer."
   (interactive)
-  (save-restriction
-    (save-excursion
-      (save-match-data
-        (widen)
-        (goto-char (point-min))
-        (when (re-search-forward "\\documentclass" nil t)
-          (hide-subtree))))))
+  (save-excursion
+    (goto-char (point-min))
+    (if (re-search-forward "\\\\begin{document}" nil t)
+        (let ((start (point-min))
+              (end (match-beginning 0)))
+          (if (invisible-p start)
+              (remove-overlays start end 'invisible t)
+            (let ((overlay (make-overlay start end)))
+              (overlay-put overlay 'invisible t)
+              (overlay-put overlay 'isearch-open-invisible 'delete-overlay))))
+      (message "No LaTeX preamble found."))))
 
 (defun mpc/org-agenda-list ()
   (delq nil
@@ -154,13 +162,6 @@
 
 ; temporary solution, hopefully can be replaced by something more dynamic
 (defvar mpc/latest-org-file "~/Org/Agenda/SU23.org")
-
-(defun mpc/prompt-num ()
-  "Prompt user to enter a number, with input history support."
-  (interactive)
-  (let (n)
-    (setq n (read-number "Type a number: "))
-    (message "Number is %s" n)))
 
 (defvar script-path "~/.local/scripts/find_next_hw.sh")
 (defun mpc/next-hw-num (class sem schoolpath)
@@ -201,12 +202,12 @@
 (defun dotemacs ()
   "Opens init.el"
   (interactive)
-  (find-file (concat user-emacs-directory "init.el")))
+  (find-file (user-init-file)))
 
 (defun initorg ()
   "Opens EmacsInit.org"
   (interactive)
-  (find-file (concat user-emacs-directory "EmacsInit.org")))
+  (find-file (format "%s%s" user-emacs-directory "EmacsInit.org")))
 
 (defun agendafile ()
   "open the latest modified org-agenda file"
@@ -227,7 +228,7 @@
  "e" '(elfeed :which-key "Check RSS Feeds")
  "g" '(agendafile :which-key "Open Latest Org Agenda")
  "i" '(dotemacs :which-key "Open init.el")
- "l" '(org-agenda-list :which-key "Open Agenda List")
+ "k" '(org-agenda-list :which-key "Open Agenda List")
  "m" '(counsel-imenu :which-key "counsel-imenu")
  "o" '(initorg :which-key "Open Literate Config")
  "u" '(mu4e :which-key "Check Mail!"))
@@ -261,8 +262,8 @@
 
 (use-package auctex
   :defer t
-  ;; do NOT like this solution
-  :bind (("C-z TAB" . 'mpc/hide-latex-preamble))
+  :bind (:map LaTeX-mode-map
+              ("C-z TAB" . 'mpc/toggle-latex-preamble))
   :hook
   (TeX-mode       . mpc/LaTeX-setup)
   (plain-TeX-mode . mpc/LaTeX-setup)
@@ -308,6 +309,14 @@
   :diminish 
   :bind (("M-p" . 'move-text-up)
          ("M-n" . 'move-text-down)))
+
+(use-package avy
+  :defer 1
+  :config
+  (general-define-key
+   :prefix "C-z"
+   "c" '(avy-goto-char :which-key "Go to char")
+   "l" '(avy-goto-line :which-key "Go to line")))
 
 (use-package multiple-cursors
   :defer 2
@@ -596,10 +605,6 @@
 (use-package pyvenv-auto
   :defer 1
   :hook ((python-mode . pyvenv-auto-run)))
-
-(defun mpc/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
 
 (use-package lsp-mode
   :defer t
