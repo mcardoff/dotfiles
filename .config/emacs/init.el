@@ -407,6 +407,10 @@
 	("wb" "Brandeis-ATLAS Meeting" entry (file+olp "Research.org" "Other Meetings")
 	 "* TODO Brandeis-ATLAS Meeting @ 08:00\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Wed\"))"
 	 :immediate-finish t)
+	;; MISC Meeting // template 
+	("ws" "Other Meeting" entry (file+olp "Research.org" "Other Meetings")
+	 "* TODO %^{Title} @ %^{Start Time} \nDEADLINE: %^{DEADLINE}t"
+	 :immediate-finish t)
 	;; Misc Action item
 	("ii" "Misc TODO" entry (file+olp "Research.org" "Other Meetings")
 	 "* TODO %?\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+Mon\"))")
@@ -546,7 +550,8 @@
   :defer
   :bind (("C-c C-c" . compile))
   :hook ((haskell-mode . interactive-haskell-mode)
-	 (haskell-mode . haskell-indent-mode))
+	 (haskell-mode . haskell-indent-mode)
+	 (haskell-mode . lsp))
   :custom
   (haskell-process-type 'stack-ghci) ; use stack ghci instead of global ghc
   (haskell-stylish-on-save t))
@@ -569,18 +574,27 @@
   :defer t
   :commands (lsp lsp-deferred)
   :hook ((python-mode . lsp)
+	 (haskell-mode . lsp)
 	 (c-mode . lsp)
 	 (c++-mode . lsp)
 	 (lsp-mode . mpc/lsp-mode-setup))
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
+  (setq lsp-log-io nil)
+  (setq lsp-haskell-server-path "haskell-language-server-wrapper")
+  (setq lsp-haskell-server-args nil)
   (lsp-enable-which-key-integration t)
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
      ("pyls.plugins.pyls_black.enabled" t t)
      ("pyls.plugins.pyls_isort.enabled" t t))))
+
+(use-package lsp-haskell
+  :ensure t
+  :config
+  (setq lsp-haskell-formatting-provider "ormolu"))
 
 (use-package lsp-ui
   :defer t
