@@ -115,8 +115,11 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_Tab), windows W.focusUp)
     , ((mod, xK_l), windows W.focusUp)
     , ((mod, xK_h), windows W.focusDown)
+    --- Adjust floating window position
+    , ((mod .|. shf, xK_d), withFocused $ keysMoveWindowTo ( 960, 520) (1/2, 1/2)) -- center
+    , ((mod .|. shf, xK_s), withFocused $ keysMoveWindowTo ( 480, 520) (1/2, 1/2)) -- left side
+    , ((mod .|. shf, xK_f), withFocused $ keysMoveWindowTo (1440, 520) (1/2, 1/2)) -- right side
     --- Move floating windows
-    , ((mod .|. shf, xK_d), withFocused $ keysMoveWindowTo (960, 540) (1/2, 1/2))
     , ((mod, xK_d),      withFocused toggleFloat) -- toggle floating
     , ((mod, xK_n),      withFocused $ keysMoveWindow l) -- left
     , ((mod, xK_m),      withFocused $ keysMoveWindow d) -- down

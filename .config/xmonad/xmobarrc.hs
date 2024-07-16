@@ -2,8 +2,8 @@ Config { font = "xft:Source Code Pro:pixelsize=14:antialias=true:hinting=true"
        , additionalFonts = []
        , bgColor = "#181818"
        , fgColor = "#FFFFFF"
-       , position = TopW R 100
-       , lowerOnStart = True
+       , position = TopW C 99
+       , lowerOnStart = False
        , hideOnStart = False
        , iconRoot = "/home/mcard/.config/xmonad/xpm/"
        , allDesktops = True
