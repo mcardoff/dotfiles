@@ -184,30 +184,49 @@
      "/home/mcard/.local/scripts/find_next_lec.sh %s %s%s"
      semester subj classnum))))
 
-(defun mpc/capture-template-skeleton (prefix titleprompt deadlinetext)
+(defvar fixed-timestamp
+  "%%(org-insert-time-stamp (org-read-date nil t \"+%s\"))")
+
+(defun mpc/capture-template-skeleton (prefix title time deadlinetext)
   (format
-   "* TODO %s%%^{%s} @ %%^{Start Time} \nDEADLINE: %s"
-   prefix titleprompt deadlinetext))
+   "* TODO %s%s @ %s \nDEADLINE: %s"
+   prefix title time deadlinetext))
 
-(defun mpc/meeting-custom-dl (prefix) (mpc/capture-template-skeleton prefix "Meeting" "%^{DEADLINE}t"))
+(defun mpc/action-item-skeleton (prefix item-name deadlinetext)
+  (format "* TODO %s %s\nDEADLINE: %s"
+   prefix item-name deadlinetext))
 
-(defun mpc/meeting-fixed-dl (prefix dow)
+(defun mpc/meeting-custom-title-dl (prefix)
   (mpc/capture-template-skeleton
-   prefix "Meeting" (format "%%(org-insert-time-stamp (org-read-date nil t \"+%s\"))" dow)))
+   prefix "%^{Meeting}" "%^{Start Time}" "%^{DEADLINE}t"))
 
-(defun mpc/action-item (prefix days-ahead)
+(defun mpc/meeting-fixed-dl (prefix time dow)
   (mpc/capture-template-skeleton
-   prefix "Action Item" (format "%%(org-insert-time-stamp (org-read-date nil t \"+%sd\"))" days-ahead)))
+   (format "%s Meeting" prefix) "" time
+   (format fixed-timestamp dow)))
+
+(defun mpc/action-item-dl (prefix)
+  (mpc/action-item-skeleton
+   prefix "Action Item: %^{}" "%^{DEADLINE}t"))
+
+(defun mpc/action-item-title ()
+  (mpc/action-item-skeleton
+   "%^{CATEGORY}" "Action Item: %^{}" "%^{DEADLINE}t"))
 
 (defun dotemacs ()
   "Opens init.el"
   (interactive)
-  (find-file (user-init-file)))
+  (find-file user-init-file))
 
 (defun initorg ()
   "Opens EmacsInit.org"
   (interactive)
   (find-file (format "%s%s" user-emacs-directory "EmacsInit.org")))
+
+(defun projectorg ()
+  "Opens Current_Projects.org"
+  (interactive)
+  (find-file "~/Org/Agenda/Current_Projects.org"))
 
 (defun agendafile ()
   "open the latest modified org-agenda file"
@@ -223,12 +242,13 @@
  :prefix "C-z"
  "" '(nil :which-key "General Prefix")
  "C-c" '(org-capture :which-key "Capture!")
- "a" '(org-agenda :which-key "Open Agenda")
+ "a" '(org-agenda-list :which-key "Open Agenda List")
+ "A" '(org-agenda :which-key "Open Agenda")
  "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
  "e" '(elfeed :which-key "Check RSS Feeds")
  "g" '(agendafile :which-key "Open Latest Org Agenda")
  "i" '(dotemacs :which-key "Open init.el")
- "k" '(org-agenda-list :which-key "Open Agenda List")
+ "j" '(projectorg :which-key "Open Current Projects Org")
  "m" '(counsel-imenu :which-key "counsel-imenu")
  "o" '(initorg :which-key "Open Literate Config")
  "u" '(mu4e :which-key "Check Mail!"))
@@ -388,68 +408,71 @@
       '(("p" "PHYS 167b")
         ("w" "Weekly Meetings")
         ("i" "Action Items")
-        ("m" "Mail Workflow")))
-
-(add-to-list 'org-capture-templates
-             '(("pr" "167b Reading"
-                entry (file+olp "SP24.org" "PHYS 167b" "Readings")
-                "* TODO 167b %?")
-               ("pe" "167b Exam"
-                entry (file+olp "SP24.org" "PHYS 167b" "Exams")
-                "* TODO 167b Exam %?")
-               ("ph" "167b HW"
-                entry (file+olp "SP24.org" "PHYS 167b" "Homework")
-                (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
+        ("m" "Mail Workflow")
+        ("pr" "167b Reading"
+         entry (file+olp "SP24.org" "PHYS 167b" "Readings")
+         "* TODO 167b %?")
+        ("pe" "167b Exam"
+         entry (file+olp "SP24.org" "PHYS 167b" "Exams")
+         "* TODO 167b Exam %?")
+        ("ph" "167b HW"
+         entry (file+olp "SP24.org" "PHYS 167b" "Homework")
+         (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
 
 ;; Meetings
 (add-to-list 'org-capture-templates
              '("wa" "QT Meeting"
                entry (file+olp "Research.org" "ATLAS QT")
-               (function (lambda () (mpc/meeting-custom-dl "QT ")))
+               (function
+                (lambda () (mpc/meeting-custom-title-dl "QT ")))
                :immediate-finish t))
 
 (add-to-list 'org-capture-templates
              '("wn" "VBS VVH Meeting"
                entry (file+olp "Research.org" "VBS VVH")
-               (function (lambda () (mpc/meeting-fixed-dl "VBS Higgs " "Mon")))
+               (function
+                (lambda () (mpc/meeting-fixed-dl "VBS Higgs" "10:00" "Mon")))
                :immediate-finish t))
 
 (add-to-list 'org-capture-templates
              '("ww" "Aram Meeting"
                entry (file+olp "Research.org" "Other")
-               (function (lambda () (mpc/meeting-fixed-dl "Aram Group " "Mon")))
+               (function
+                (lambda () (mpc/meeting-fixed-dl "Aram Group" "09:00" "Mon")))
                :immediate-finish t))
 
 (add-to-list 'org-capture-templates
              '("wb" "Brandeis Meeting"
                entry (file+olp "Research.org" "Other")
-               (function (lambda () (mpc/meeting-fixed-dl "Brandeis-ATLAS " "Wed")))
+               (function
+                (lambda () (mpc/meeting-fixed-dl "Brandeis-ATLAS" "08:00" "Wed")))
                :immediate-finish t))
 
 (add-to-list 'org-capture-templates
              '("ws" "Other Meeting"
                entry (file+olp "Research.org" "Other")
-               (function (lambda () (mpc/meeting-custom-dl "")))
+               (function
+                (lambda () (mpc/meeting-custom-title-dl "")))
                :immediate-finish t))
 
 ;; Action Items
 (add-to-list 'org-capture-templates
              '("ia" "QT Action Item"
                entry (file+olp "Research.org" "ATLAS QT")
-               (function (lambda () (mpc/action-item "QT " "3")))
+               (function (lambda () (mpc/action-item-dl "QT")))
                :immediate-finish t))
 
 (add-to-list 'org-capture-templates
              '("in" "VBS VVH Action Item"
                entry (file+olp "Research.org" "VBS VVH")
-               (function (lambda () (mpc/action-item "VBS Higgs " "3")))
+               (function (lambda () (mpc/action-item-dl "VBS Higgs")))
                :immediate-finish t))
 
 (add-to-list 'org-capture-templates
              '("ii" "Misc TODO"
                entry (file+olp "Research.org" "Other")
-               (function (lambda () (mpc/action-item "" "3")))
-               ))
+               (function (lambda () (mpc/action-item-title)))
+               :immediate-finish t))
 
 ;; Follow up on Email
 (add-to-list 'org-capture-templates
@@ -475,9 +498,9 @@
           (tags-todo "SP24")))))
 
 (setq org-structure-template-alist
-      '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
-        ("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
-        ("a" . "ascii"   ) ("i" . "index"  )
+      '(("s" . "src") ("e" . "example") ("q" . "quote") ("v" . "verse")
+        ("V" . "verbatim") ("c" . "center") ("C" . "comment") ("l" . "latex")
+        ("a" . "ascii") ("i" . "index")
         ("el" . "src emacs-lisp") ("sb" . "src bash")))
 
 (use-package elfeed
@@ -549,6 +572,13 @@
   (highlight-indent-guides-odd-face ((t :background "#303030")))
   (highlight-indent-guides-even-face ((t :background "#252525")))
   )
+
+(use-package smartparens
+  :ensure nil
+  :hook (prog-mode LaTeX-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config))
 
 (use-package rainbow-delimiters
   :defer 1

@@ -41,8 +41,8 @@
 \newcommand{\mcV}{\mathcal{V}}
 \newcommand{\D}{\partial}
 \newcommand{\veps}{\varepsilon}
-\newcommand{\circled}[1]{\tikz[baseline=(char.base)]{
-    \node[shape=circle,draw,inner sep=2pt](char){#1};}}
+\newcommand{\circled}[1]{\tikz[baseline = (char.base)]{
+    \node[shape=circle,draw,inner sep=2pt] (char){#1};}}
 
 % mdframed environments
 \usepackage[framemethod=TikZ]{mdframed}
@@ -52,8 +52,7 @@
   frametitlerule=true,
   frametitlebackgroundcolor=gray!40,
   backgroundcolor=gray!20,
-  innertopmargin=\topskip
-}
+  innertopmargin=\topskip}
 
 \mdtheorem[style=defstyle]{definition}{Definition}
 \mdtheorem[style=defstyle]{theorem}{Theorem}

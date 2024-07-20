@@ -232,32 +232,51 @@ The next few are TA and Class related
 #+end_src
 These are created for use in org capture templates
 #+begin_src emacs-lisp
-  (defun mpc/capture-template-skeleton (prefix titleprompt deadlinetext)
+  (defvar fixed-timestamp
+    "%%(org-insert-time-stamp (org-read-date nil t \"+%s\"))")
+
+  (defun mpc/capture-template-skeleton (prefix title time deadlinetext)
     (format
-     "* TODO %s%%^{%s} @ %%^{Start Time} \nDEADLINE: %s"
-     prefix titleprompt deadlinetext))
+     "* TODO %s%s @ %s \nDEADLINE: %s"
+     prefix title time deadlinetext))
 
-  (defun mpc/meeting-custom-dl (prefix) (mpc/capture-template-skeleton prefix "Meeting" "%^{DEADLINE}t"))
+  (defun mpc/action-item-skeleton (prefix item-name deadlinetext)
+    (format "* TODO %s %s\nDEADLINE: %s"
+     prefix item-name deadlinetext))
 
-  (defun mpc/meeting-fixed-dl (prefix dow)
+  (defun mpc/meeting-custom-title-dl (prefix)
     (mpc/capture-template-skeleton
-     prefix "Meeting" (format "%%(org-insert-time-stamp (org-read-date nil t \"+%s\"))" dow)))
+     prefix "%^{Meeting}" "%^{Start Time}" "%^{DEADLINE}t"))
 
-  (defun mpc/action-item (prefix days-ahead)
+  (defun mpc/meeting-fixed-dl (prefix time dow)
     (mpc/capture-template-skeleton
-     prefix "Action Item" (format "%%(org-insert-time-stamp (org-read-date nil t \"+%sd\"))" days-ahead)))
+     (format "%s Meeting" prefix) "" time
+     (format fixed-timestamp dow)))
+
+  (defun mpc/action-item-dl (prefix)
+    (mpc/action-item-skeleton
+     prefix "Action Item: %^{}" "%^{DEADLINE}t"))
+
+  (defun mpc/action-item-title ()
+    (mpc/action-item-skeleton
+     "%^{CATEGORY}" "Action Item: %^{}" "%^{DEADLINE}t"))
 #+end_src
 The following are general-use functions which are made to be used in the keybinds section
 #+begin_src emacs-lisp
   (defun dotemacs ()
     "Opens init.el"
     (interactive)
-    (find-file (user-init-file)))
+    (find-file user-init-file))
 
   (defun initorg ()
     "Opens EmacsInit.org"
     (interactive)
     (find-file (format "%s%s" user-emacs-directory "EmacsInit.org")))
+
+  (defun projectorg ()
+    "Opens Current_Projects.org"
+    (interactive)
+    (find-file "~/Org/Agenda/Current_Projects.org"))
 
   (defun agendafile ()
     "open the latest modified org-agenda file"
@@ -279,12 +298,13 @@ Now I define some bindings to =C-z= for my sanity:
    :prefix "C-z"
    "" '(nil :which-key "General Prefix")
    "C-c" '(org-capture :which-key "Capture!")
-   "a" '(org-agenda :which-key "Open Agenda")
+   "a" '(org-agenda-list :which-key "Open Agenda List")
+   "A" '(org-agenda :which-key "Open Agenda")
    "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
    "e" '(elfeed :which-key "Check RSS Feeds")
    "g" '(agendafile :which-key "Open Latest Org Agenda")
    "i" '(dotemacs :which-key "Open init.el")
-   "k" '(org-agenda-list :which-key "Open Agenda List")
+   "j" '(projectorg :which-key "Open Current Projects Org")
    "m" '(counsel-imenu :which-key "counsel-imenu")
    "o" '(initorg :which-key "Open Literate Config")
    "u" '(mu4e :which-key "Check Mail!"))
@@ -489,72 +509,73 @@ In order to add various agenda entries in an efficient manner, I created a numbe
         '(("p" "PHYS 167b")
           ("w" "Weekly Meetings")
           ("i" "Action Items")
-          ("m" "Mail Workflow")))
-#+end_src
-I won't really be taking classes much anymore, but this is good just to have as a template for what I used to do
-#+begin_src emacs-lisp
-  (add-to-list 'org-capture-templates
-               '(("pr" "167b Reading"
-                  entry (file+olp "SP24.org" "PHYS 167b" "Readings")
-                  "* TODO 167b %?")
-                 ("pe" "167b Exam"
-                  entry (file+olp "SP24.org" "PHYS 167b" "Exams")
-                  "* TODO 167b Exam %?")
-                 ("ph" "167b HW"
-                  entry (file+olp "SP24.org" "PHYS 167b" "Homework")
-                  (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
+          ("m" "Mail Workflow")
+          ("pr" "167b Reading"
+           entry (file+olp "SP24.org" "PHYS 167b" "Readings")
+           "* TODO 167b %?")
+          ("pe" "167b Exam"
+           entry (file+olp "SP24.org" "PHYS 167b" "Exams")
+           "* TODO 167b Exam %?")
+          ("ph" "167b HW"
+           entry (file+olp "SP24.org" "PHYS 167b" "Homework")
+           (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
 #+end_src
 This is the bulk of the improvements which I have done so far, meetings and action items are highly structured now, prompting for the required headings and such, finishing instantly
 #+begin_src emacs-lisp
-  ;; Meetings
-  (add-to-list 'org-capture-templates
-               '("wa" "QT Meeting"
-                 entry (file+olp "Research.org" "ATLAS QT")
-                 (function (lambda () (mpc/meeting-custom-dl "QT ")))
-                 :immediate-finish t))
+    ;; Meetings
+    (add-to-list 'org-capture-templates
+                 '("wa" "QT Meeting"
+                   entry (file+olp "Research.org" "ATLAS QT")
+                   (function
+                    (lambda () (mpc/meeting-custom-title-dl "QT ")))
+                   :immediate-finish t))
 
-  (add-to-list 'org-capture-templates
-               '("wn" "VBS VVH Meeting"
-                 entry (file+olp "Research.org" "VBS VVH")
-                 (function (lambda () (mpc/meeting-fixed-dl "VBS Higgs " "Mon")))
-                 :immediate-finish t))
+    (add-to-list 'org-capture-templates
+                 '("wn" "VBS VVH Meeting"
+                   entry (file+olp "Research.org" "VBS VVH")
+                   (function
+                    (lambda () (mpc/meeting-fixed-dl "VBS Higgs" "10:00" "Mon")))
+                   :immediate-finish t))
 
-  (add-to-list 'org-capture-templates
-               '("ww" "Aram Meeting"
-                 entry (file+olp "Research.org" "Other")
-                 (function (lambda () (mpc/meeting-fixed-dl "Aram Group " "Mon")))
-                 :immediate-finish t))
+    (add-to-list 'org-capture-templates
+                 '("ww" "Aram Meeting"
+                   entry (file+olp "Research.org" "Other")
+                   (function
+                    (lambda () (mpc/meeting-fixed-dl "Aram Group" "09:00" "Mon")))
+                   :immediate-finish t))
 
-  (add-to-list 'org-capture-templates
-               '("wb" "Brandeis Meeting"
-                 entry (file+olp "Research.org" "Other")
-                 (function (lambda () (mpc/meeting-fixed-dl "Brandeis-ATLAS " "Wed")))
-                 :immediate-finish t))
+    (add-to-list 'org-capture-templates
+                 '("wb" "Brandeis Meeting"
+                   entry (file+olp "Research.org" "Other")
+                   (function
+                    (lambda () (mpc/meeting-fixed-dl "Brandeis-ATLAS" "08:00" "Wed")))
+                   :immediate-finish t))
 
-  (add-to-list 'org-capture-templates
-               '("ws" "Other Meeting"
-                 entry (file+olp "Research.org" "Other")
-                 (function (lambda () (mpc/meeting-custom-dl "")))
-                 :immediate-finish t))
+    (add-to-list 'org-capture-templates
+                 '("ws" "Other Meeting"
+                   entry (file+olp "Research.org" "Other")
+                   (function
+                    (lambda () (mpc/meeting-custom-title-dl "")))
+                   :immediate-finish t))
 
-  ;; Action Items
-  (add-to-list 'org-capture-templates
-               '("ia" "QT Action Item"
-                 entry (file+olp "Research.org" "ATLAS QT")
-                 (function (lambda () (mpc/action-item "QT " "3")))
-                 :immediate-finish t))
+    ;; Action Items
+    (add-to-list 'org-capture-templates
+                 '("ia" "QT Action Item"
+                   entry (file+olp "Research.org" "ATLAS QT")
+                   (function (lambda () (mpc/action-item-dl "QT")))
+                   :immediate-finish t))
 
-  (add-to-list 'org-capture-templates
-               '("in" "VBS VVH Action Item"
-                 entry (file+olp "Research.org" "VBS VVH")
-                 (function (lambda () (mpc/action-item "VBS Higgs " "3")))
-                 :immediate-finish t))
+    (add-to-list 'org-capture-templates
+                 '("in" "VBS VVH Action Item"
+                   entry (file+olp "Research.org" "VBS VVH")
+                   (function (lambda () (mpc/action-item-dl "VBS Higgs")))
+                   :immediate-finish t))
 
-  (add-to-list 'org-capture-templates
-               '("ii" "Misc TODO"
-                 entry (file+olp "Research.org" "Other")
-                 (function (lambda () (mpc/action-item "" "3")))
-                 ))
+    (add-to-list 'org-capture-templates
+                 '("ii" "Misc TODO"
+                   entry (file+olp "Research.org" "Other")
+                   (function (lambda () (mpc/action-item-title)))
+                   :immediate-finish t))
 #+end_src
 I also have my mail workflow, even if it is outdated and not really useful anymore
 #+begin_src emacs-lisp
@@ -587,9 +608,9 @@ There is also a number of custom agenda commands, but I do not take very much ad
 Structure templates are super useful when making literate files such as this one!
 #+begin_src emacs-lisp
   (setq org-structure-template-alist
-        '(("s" . "src"     ) ("e" . "example") ("q" . "quote"  ) ("v" . "verse" )
-          ("V" . "verbatim") ("c" . "center" ) ("C" . "comment") ("l"  . "latex")
-          ("a" . "ascii"   ) ("i" . "index"  )
+        '(("s" . "src") ("e" . "example") ("q" . "quote") ("v" . "verse")
+          ("V" . "verbatim") ("c" . "center") ("C" . "comment") ("l" . "latex")
+          ("a" . "ascii") ("i" . "index")
           ("el" . "src emacs-lisp") ("sb" . "src bash")))
 #+end_src
 * Fun Stuff!
@@ -685,6 +706,15 @@ They're hot
       (highlight-indent-guides-odd-face ((t :background "#303030")))
       (highlight-indent-guides-even-face ((t :background "#252525")))
       )
+#+end_src
+** Smart parens
+#+begin_src emacs-lisp
+  (use-package smartparens
+    :ensure nil
+    :hook (prog-mode LaTeX-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+    :config
+    ;; load default config
+    (require 'smartparens-config))
 #+end_src
 ** Rainbow Delimiters
 Color the parentheses all nice
