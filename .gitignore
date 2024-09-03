@@ -58,3 +58,4 @@ mc-lists.el
 *.gpg
 /.config/zsh/zsh-syntax-highlighting/
 /.config/git/git_credentials
+/.config/xmonad/xmobarrc
