@@ -237,7 +237,7 @@ These are created for use in org capture templates
 
   (defun mpc/capture-template-skeleton (prefix title time deadlinetext)
     (format
-     "* TODO %s%s @ %s \nDEADLINE: %s"
+     "* TODO %s%s @ %s\nDEADLINE: %s"
      prefix title time deadlinetext))
 
   (defun mpc/action-item-skeleton (prefix item-name deadlinetext)
@@ -522,60 +522,61 @@ In order to add various agenda entries in an efficient manner, I created a numbe
 #+end_src
 This is the bulk of the improvements which I have done so far, meetings and action items are highly structured now, prompting for the required headings and such, finishing instantly
 #+begin_src emacs-lisp
-    ;; Meetings
-    (add-to-list 'org-capture-templates
-                 '("wa" "QT Meeting"
-                   entry (file+olp "Research.org" "ATLAS QT")
-                   (function
-                    (lambda () (mpc/meeting-custom-title-dl "QT ")))
-                   :immediate-finish t))
+  ;; Meetings
+  (add-to-list 'org-capture-templates
+               '("wa" "QT Meeting"
+                 entry (file+olp "Research.org" "ATLAS QT")
+                 (function
+                  (lambda () (mpc/meeting-custom-title-dl "QT ")))
+                 :immediate-finish t))
 
-    (add-to-list 'org-capture-templates
-                 '("wn" "VBS VVH Meeting"
-                   entry (file+olp "Research.org" "VBS VVH")
-                   (function
-                    (lambda () (mpc/meeting-fixed-dl "VBS Higgs" "10:00" "Mon")))
-                   :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("wn" "VBS VVH Meeting"
+                 entry (file+olp "Research.org" "VBS VVH")
+                 (function
+                  (lambda () (mpc/meeting-fixed-dl "VBS Higgs" "10:00" "Mon")))
+                 :immediate-finish t))
 
-    (add-to-list 'org-capture-templates
-                 '("ww" "Aram Meeting"
-                   entry (file+olp "Research.org" "Other")
-                   (function
-                    (lambda () (mpc/meeting-fixed-dl "Aram Group" "09:00" "Mon")))
-                   :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("ww" "Aram Meeting"
+                 entry (file+olp "Research.org" "Other")
+                 (function
+                  (lambda () (mpc/meeting-fixed-dl "Aram Group" "11:30" "Mon")))
+                 :immediate-finish t))
 
-    (add-to-list 'org-capture-templates
-                 '("wb" "Brandeis Meeting"
-                   entry (file+olp "Research.org" "Other")
-                   (function
-                    (lambda () (mpc/meeting-fixed-dl "Brandeis-ATLAS" "08:00" "Wed")))
-                   :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("wb" "Brandeis Meeting"
+                 entry (file+olp "Research.org" "Other")
+                 (function
+                  (lambda () (mpc/meeting-fixed-dl "Brandeis" "11:00" "Wed")))
+                 :immediate-finish t))
 
-    (add-to-list 'org-capture-templates
-                 '("ws" "Other Meeting"
-                   entry (file+olp "Research.org" "Other")
-                   (function
-                    (lambda () (mpc/meeting-custom-title-dl "")))
-                   :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("ws" "Other Meeting"
+                 entry (file+olp "Research.org" "Other")
+                 (function
+                  (lambda () (mpc/meeting-custom-title-dl "")))
+                 :immediate-finish t))
 
-    ;; Action Items
-    (add-to-list 'org-capture-templates
-                 '("ia" "QT Action Item"
-                   entry (file+olp "Research.org" "ATLAS QT")
-                   (function (lambda () (mpc/action-item-dl "QT")))
-                   :immediate-finish t))
+  ;; Action Items
+  (add-to-list 'org-capture-templates
+               '("ia" "QT Action Item"
+                 entry (file+olp "Research.org" "ATLAS QT")
+                 (function (lambda () (mpc/action-item-dl "QT")))
+                 :immediate-finish t))
 
-    (add-to-list 'org-capture-templates
-                 '("in" "VBS VVH Action Item"
-                   entry (file+olp "Research.org" "VBS VVH")
-                   (function (lambda () (mpc/action-item-dl "VBS Higgs")))
-                   :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("in" "VBS VVH Action Item"
+                 entry (file+olp "Research.org" "VBS VVH")
+                 (function (lambda () (mpc/action-item-dl "VBS Higgs")))
+                 :immediate-finish t))
 
-    (add-to-list 'org-capture-templates
-                 '("ii" "Misc TODO"
-                   entry (file+olp "Research.org" "Other")
-                   (function (lambda () (mpc/action-item-title)))
-                   :immediate-finish t))
+  (add-to-list 'org-capture-templates
+               '("ii" "Misc TODO"
+                 entry (file+headline "Research.org" "Other")
+                 (function (lambda () (mpc/action-item-title)))
+                 :refile-targets ((nil :maxlevel . 2))
+                 :immediate-finish t))
 #+end_src
 I also have my mail workflow, even if it is outdated and not really useful anymore
 #+begin_src emacs-lisp
