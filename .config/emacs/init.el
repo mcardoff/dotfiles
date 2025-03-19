@@ -396,10 +396,7 @@
 
 (use-package magit
   :defer 1
-  :custom (magit-refresh-status-buffer nil)
-  :config
-  (remove-hook 'server-switch-hook 'magit-commit-diff)
-  (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff))
+  :custom (magit-refresh-status-buffer nil))
 
 (use-package smerge-mode
   :ensure nil
@@ -444,10 +441,7 @@
   (haskell-stylish-on-save t))
 
 (use-package python
-  :defer t
-  :custom
-  (python-interpreter "/usr/bin/python3")
-  (python-shell-interpreter "/usr/bin/python3"))
+  :defer t)
 
 (use-package pyvenv-auto
   :defer t
