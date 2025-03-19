@@ -7,21 +7,49 @@
 ;;(setq-default inhibit-redisplay t
 ;;              inhibit-message t)
 
+(add-to-list 'custom-theme-load-path
+             "/Users/mcardiff/.emacs.d/elpa/gruber-darker-theme-20231026.2031/")
+
+(setq ffap-machine-p-known 'reject)
+(setq ad-redefinition-action 'accept)
+(setq warning-suppress-types '((lexical-binding)))
+(setq idle-update-delay 1.0)
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add #'yes-or-no-p :override #'y-or-n-p))
+(defalias #'view-hello-file #'ignore)  ; Never show the hello file
+(setq read-process-output-max (* 512 1024))
+(setq create-lockfiles nil)
+(setq make-backup-files nil)
+(setq backup-by-copying-when-linked t)
+(setq backup-by-copying t)  ; Backup by copying rather renaming
+(setq delete-old-versions t)  ; Delete excess backup versions silently
+(setq version-control t)  ; Use version numbers for backup files
+(setq kept-new-versions 5)
+(setq kept-old-versions 5)
+(setq vc-make-backup-files nil)  ; Do not backup version controlled files
+(setq auto-save-list-file-prefix
+      (expand-file-name "autosave/" user-emacs-directory))
+
 (setq package--init-file-ensured t
+      native-comp-async-report-warnings-errors nil
       package-native-compile t
+      load-prefer-newer t
+      native-comp-jit-compilation t
       gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6
-      auth-sources '("~/.config/emacs/authinfo.gpg" "~/.authinfo" "~/.authinfo.gpg")
-      load-prefer-newer noninteractive
       byte-compile-warnings '(cl-functions)
       inhibit-startup-screen 0
       visible-bell 1
+      compile-angel-enable-byte-compile t
+      compile-angel-enable-native-compile t
+      native-comp-async-query-on-exit t
+      confirm-kill-processes t
       comp-deferred-compilation t
       warning-suppress-types '((comp))
       comp-deferred-compilation t
       display-line-numbers-type t
-      dired-listing-switches "-lgXGDAh --group-directories-first"
-      backup-directory-alist '(("." . "~/.config/emacs/cache/backup"))
+      backup-directory-alist '(("." . "~/.emacs.d/cache/backup"))
       custom-file (concat user-emacs-directory "old_files/.emacs-custom.el")
       recentf-save-file (format "%scache/recentf" user-emacs-directory)
       ;; bookmark-file (format "%scache/bookmarks" user-emacs-directory)
@@ -35,6 +63,8 @@
  :font "Source Code Pro"
  :foundry 'regular
  :height 140)
+
+;; (set-frame-font "Source Code Pro 15" nil t)
 
 (menu-bar-mode                    0)
 (tool-bar-mode                    0)
@@ -56,7 +86,15 @@
  :foreground "#181818"
  :background "#181818")
 
+(defun my-append-env-var (var-name value)
+  "Append VALUE to the beginning of current value of env variable VAR-NAME."
+  (setenv var-name (if (getenv var-name)
+                       (format "%s:%s" value (getenv var-name))
+                     value)))
 
+(let ((gccjitpath "/opt/homebrew/lib/gcc/11:/opt/homebrew/lib"))
+  (mapc (lambda (var-name) (my-append-env-var var-name gccjitpath))
+        '("LIBRARY_PATH" "LD_LIBRARY_PATH" "PATH")))
 
 (defun mpc/display-startup-time ()
   (interactive)

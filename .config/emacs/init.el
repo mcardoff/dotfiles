@@ -1,12 +1,20 @@
 ;; -*- lexical-binding: t; -*-
 ;;; Startup stuff
+(menu-bar-mode t)
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
-(setq package-archives '(
-          ("melpa" . "https://melpa.org/packages/")
-          ;; ("org" . "https://orgmode.org/elpa/")
-          ("elpa" . "https://elpa.gnu.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(use-package compile-angel
+  :ensure t
+  :demand t
+  :custom
+  (compile-angel-verbose nil)
+  :config
+  (compile-angel-on-load-mode)
+  (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
 
 ;; requires for emacs 28
 ;; (package-initialize)
@@ -17,29 +25,36 @@
        (use-package gruber-darker-theme))
       (t (load-theme 'gruber-darker t)))
 
-(use-package rainbow-mode :ensure nil :defer t)
+(use-package rainbow-mode :defer t)
 
-(use-package recentf :ensure nil :defer t)
+(use-package saveplace :defer t)
 
-(use-package saveplace :ensure nil :defer t)
-
-(use-package saveplace-pdf-view :ensure nil :defer t)
+(use-package saveplace-pdf-view :defer t)
 
 (use-package server :ensure nil :defer t)
-
-(use-package autorevert :ensure nil :defer t)
-
-(use-package saveplace-pdf-view :ensure nil :defer t)
 
 (use-package tab-bar :ensure nil :defer t)
 
 (use-package pass :ensure nil :defer t)
 
-(use-package auth-source
-  :defer 1
-  :ensure nil
-  :custom (auth-sources ("~/.config/emacs/authinfo.gpg")))
+(use-package recentf :ensure nil :defer t
+  :config
+  (setq recentf-max-saved-items 300) ; default is 20
+  (setq recentf-auto-cleanup 'mode))
 
+(use-package autorevert :ensure nil :defer t
+  :config
+  (setq revert-without-query (list ".")  ; Do not prompt
+	auto-revert-stop-on-user-input nil
+	auto-revert-verbose t)
+  (setq global-auto-revert-non-file-buffers t))
+
+(use-package auth-source
+  :ensure nil
+  :defer 1
+  :custom (auth-sources '("~/.emacs.d/.authinfo")))
+
+;; baseline visuals
 (use-package doom-modeline
   :defer 1
   :hook (after-init . doom-modeline-mode)
@@ -48,7 +63,6 @@
   (doom-modeline-height 40)
   (doom-modeline-icon t))
 
-;; Doesnt work with emacs 29
 (use-package dashboard
   :hook ((after-init . dashboard-setup-startup-hook)
          (after-init . dashboard-insert-startupify-lists))
@@ -59,32 +73,31 @@
                      (agenda    . 10)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
-  (dashboard-center-content t)
-  ;; :config (dashboard-setup-startup-hook)
-  )
+  (dashboard-center-content t))
 
+;; completion framework(s)
 (use-package company
   :ensure t
   :hook (after-init . global-company-mode)
-  ;; :init (global-company-mode)
   :diminish)
 
 (use-package ivy
   :ensure t
   :diminish
   :hook (after-init . ivy-mode)
-  :bind (("C-s" . swiper)
-         ("C-x b" . ivy-switch-buffer)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
+  :bind
+  (("C-s" . swiper)
+   ("C-x b" . ivy-switch-buffer)
+   :map ivy-minibuffer-map
+   ("TAB" . ivy-alt-done)
+   ("C-j" . ivy-next-line)
+   ("C-k" . ivy-previous-line)
+   :map ivy-switch-buffer-map
+   ("C-k" . ivy-previous-line)
+   ("C-d" . ivy-switch-buffer-kill)
+   :map ivy-reverse-i-search-map
+   ("C-k" . ivy-previous-line)
+   ("C-d" . ivy-reverse-i-search-kill))
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-wrap t)
@@ -99,180 +112,61 @@
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
 
 (use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         ("C-x b" . counsel-switch-buffer)
-         ("C-M-l" . counsel-imenu)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history))
+  :bind
+  (("M-x" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file)
+   ("C-x b" . counsel-switch-buffer)
+   ("C-M-l" . counsel-imenu)
+   :map minibuffer-local-map
+   ("C-r" . 'counsel-minibuffer-history))
   :custom
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   (ivy-initial-inputs-alist nil))
 
-(defun mpc/LaTeX-setup ()
-  ;; (hl-line-mode 1)
-  (visual-line-mode 1))
+(load-file (format "%s/org-defuns.el" user-emacs-directory))
 
-(defun mpc/org-mode-setup ()
-  (org-indent-mode)
-  (display-line-numbers-mode 0)
-  (visual-line-mode 1))
+(load-file (format "%s/latex-defuns.el" user-emacs-directory))
 
-(defun mpc/no-lines-setup ()
-  (display-line-numbers-mode 0))
-
-(defun mpc/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
-
-(defun mpc/TeX-view-once (doc)
-  "View TeX output and clean up after `my/TeX-compile-and-view'.
-  Call `TeX-view' to display TeX output, and remove this function
-  from `TeX-after-TeX-LaTeX-command-finished-hook', where it may
-  have been placed by `my/TeX-compile-and-view'."
-  (TeX-view)
-  (remove-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
-
-(defun mpc/TeX-compile-and-view ()
-  "Compile current master file using LaTeX then view output. Run the \"LaTeX\" command on the master file for active buffer. When compilation is complete, view output with default viewer (using `TeX-view')."
-  (interactive)
-  (TeX-command "LaTeX" 'TeX-master-file)
-  (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook #'mpc/TeX-view-once))
-
-(defun mpc/toggle-latex-preamble ()
-  "Toggle visibility of the LaTeX preamble in the current buffer."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (if (re-search-forward "\\\\begin{document}" nil t)
-        (let ((start (point-min))
-              (end (match-beginning 0)))
-          (if (invisible-p start)
-              (remove-overlays start end 'invisible t)
-            (let ((overlay (make-overlay start end)))
-              (overlay-put overlay 'invisible t)
-              (overlay-put overlay 'isearch-open-invisible 'delete-overlay))))
-      (message "No LaTeX preamble found."))))
-
-(defun mpc/org-agenda-list ()
-  (delq nil
-        (mapcar (lambda (buffer)
-                  (buffer-file-name buffer))
-                (org-buffer-list 'files t))))
-
-; temporary solution, hopefully can be replaced by something more dynamic
-(defvar mpc/latest-org-file "~/Org/Agenda/SU23.org")
-
-(defvar script-path "~/.local/scripts/find_next_hw.sh")
-(defun mpc/next-hw-num (class sem schoolpath)
-  (shell-command-to-string (format "/home/mcard/.local/scripts/next_hw_num.sh %s %s" sem class)))
-
-(defun mpc/make-latest-hw-file (class sem school-path)
-  "class: Subject indicator and number, sem: [FA/SP]YY, school path: no slash at end"
-  (format "%s/%s/%s/%s" school-path sem class (shell-command-to-string (format "%s %s %s" script-path sem class))))
-
-(defun mpc/create-todo-entry (num subj semester)
-  (format
-   "* TODO %s HW %%(mpc/next-hw-num \"%s%s\" \"%s\" \"~/school\") [[%%(mpc/make-latest-hw-file \"%s%s\" \"%s\" \"~/school\")][LaTeX File]]"
-   num subj num semester subj num semester))
-
-(defun mpc/create-next-lecture-todo (classnum subj semester)
-  (format
-   "* TODO 19a Lab %%? Lecture [[%s][Slides]]"
-   (shell-command-to-string
-    (format
-     "/home/mcard/.local/scripts/find_next_lec.sh %s %s%s"
-     semester subj classnum))))
-
-(defvar fixed-timestamp
-  "%%(org-insert-time-stamp (org-read-date nil t \"+%s\"))")
-
-(defun mpc/capture-template-skeleton (prefix title time deadlinetext)
-  (format
-   "* TODO %s%s @ %s\nDEADLINE: %s"
-   prefix title time deadlinetext))
-
-(defun mpc/action-item-skeleton (prefix item-name deadlinetext)
-  (format "* TODO %s %s\nDEADLINE: %s"
-   prefix item-name deadlinetext))
-
-(defun mpc/meeting-custom-title-dl (prefix)
-  (mpc/capture-template-skeleton
-   prefix "%^{Meeting}" "%^{Start Time}" "%^{DEADLINE}t"))
-
-(defun mpc/meeting-fixed-dl (prefix time dow)
-  (mpc/capture-template-skeleton
-   (format "%s Meeting" prefix) "" time
-   (format fixed-timestamp dow)))
-
-(defun mpc/action-item-dl (prefix)
-  (mpc/action-item-skeleton
-   prefix "Action Item: %^{}" "%^{DEADLINE}t"))
-
-(defun mpc/action-item-title ()
-  (mpc/action-item-skeleton
-   "%^{CATEGORY}" "Action Item: %^{}" "%^{DEADLINE}t"))
-
-(defun dotemacs ()
-  "Opens init.el"
-  (interactive)
-  (find-file user-init-file))
-
-(defun initorg ()
-  "Opens EmacsInit.org"
-  (interactive)
-  (find-file (format "%s%s" user-emacs-directory "EmacsInit.org")))
-
-(defun projectorg ()
-  "Opens Current_Projects.org"
-  (interactive)
-  (find-file "~/Org/Agenda/Current_Projects.org"))
-
-(defun agendafile ()
-  "open the latest modified org-agenda file"
-  (interactive)
-  (find-file (shell-command-to-string "/home/mcard/.local/scripts/latestorg.sh")))
+(load-file (format "%s/convenient-defuns.el" user-emacs-directory))
 
 (use-package general
   :ensure t
-  :config
-  (global-unset-key (kbd "C-z"))
+  :config (global-unset-key (kbd "C-z"))
 
-(general-define-key
- :prefix "C-z"
- "" '(nil :which-key "General Prefix")
- "C-c" '(org-capture :which-key "Capture!")
- "a" '(org-agenda-list :which-key "Open Agenda List")
- "A" '(org-agenda :which-key "Open Agenda")
- "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
- "e" '(elfeed :which-key "Check RSS Feeds")
- "g" '(agendafile :which-key "Open Latest Org Agenda")
- "i" '(dotemacs :which-key "Open init.el")
- "j" '(projectorg :which-key "Open Current Projects Org")
- "m" '(counsel-imenu :which-key "counsel-imenu")
- "o" '(initorg :which-key "Open Literate Config")
- "u" '(mu4e :which-key "Check Mail!"))
+  (general-define-key
+   :prefix "C-z"
+   "" '(nil :which-key "General Prefix")
+   "C-c" '(org-capture :which-key "Capture!")
+   "a" '(org-agenda-list :which-key "Open Agenda List")
+   "A" '(org-agenda :which-key "Open Agenda")
+   "d" '(org-roam-dailies-capture-today :which-key "Note of the Day")
+   "e" '(elfeed :which-key "Check RSS Feeds")
+   "g" '(agendafile :which-key "Open Latest Org Agenda")
+   "i" '(dotemacs :which-key "Open init.el")
+   "j" '(projectorg :which-key "Open Current Projects Org")
+   "m" '(counsel-imenu :which-key "counsel-imenu")
+   "o" '(initorg :which-key "Open Literate Config")
+   "u" '(mu4e :which-key "Check Mail!"))
 
-(general-define-key
- "<escape>" 'keyboard-escape-quit
- "M-1" 'shell-command
- "M-2" 'split-window-below
- "M-3" 'split-window-right
- "M-o" 'other-window
- "M-r" 'enlarge-window
- "M-R" 'shrink-window
- "M-." 'enlarge-window-horizontally
- "M-," 'shrink-window-horizontally
- "M-<left>" 'windmove-left
- "M-<up>" 'windmove-up
- "M-<down>" 'windmove-down
- "M-<right>" 'windmove-right
- "C-<SPC>" 'set-mark-command
- "C-x <SPC>" 'rectangle-mark-mode)
+  (general-define-key
+   "<escape>" 'keyboard-escape-quit
+   "M-1" 'shell-command
+   "M-2" 'split-window-below
+   "M-3" 'split-window-right
+   "M-o" 'other-window
+   "M-r" 'enlarge-window
+   "M-R" 'shrink-window
+   "M-." 'enlarge-window-horizontally
+   "M-," 'shrink-window-horizontally
+   "M-<left>" 'windmove-left
+   "M-<up>" 'windmove-up
+   "M-<down>" 'windmove-down
+   "M-<right>" 'windmove-right
+   "C-<SPC>" 'set-mark-command
+   "C-x <SPC>" 'rectangle-mark-mode)
 
-(general-define-key
- :keymaps 'c++-mode-map
- "C-z C-z" 'compile))
+  (general-define-key
+   :keymaps 'prog-mode-map "C-z C-z" 'compile))
 
 (use-package which-key
   :ensure t
@@ -281,7 +175,11 @@
   :custom (which-key-idle-delay 0.3))
 
 (use-package auctex
+  :ensure t
   :defer t
+  :config
+  (require 'latex)
+  (require 'auctex)
   :bind (:map LaTeX-mode-map
               ("C-z TAB" . 'mpc/toggle-latex-preamble))
   :hook
@@ -296,7 +194,7 @@
     '(((output-dvi has-no-display-manager) "dvi2tty") 
       ((output-dvi style-pstricks)  "dvips and gv")
        (output-dvi "xdvi")
-       (output-pdf "Zathura")
+       (output-pdf "open")
        (output-html "xdg-open")))
   (TeX-engine 'luatex)
   (TeX-parse-self t)
@@ -318,6 +216,12 @@
   (LaTeX-electric-left-right-brace t)
   (LaTeX-float "H")
   (TeX-output-dir "./build"))
+
+(use-package reftex
+  :ensure nil
+  :custom (reftex-plug-into-AUCTeX t)
+  :hook ((LaTeX-mode . turn-on-reftex)
+	 (latex-mode . turn-on-reftex)))
 
 (use-package doc-view
   :ensure nil
@@ -349,7 +253,37 @@
 (use-package yasnippet
   :defer 5
   :config (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
+  :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
+
+(use-package highlight-indent-guides
+  :defer 1
+  :hook ((prog-mode . highlight-indent-guides-mode))
+  :custom
+  (highlight-indent-guides-auto-enabled nil)
+  :custom-face
+  (highlight-indent-guides-odd-face ((t :background "#303030")))
+  (highlight-indent-guides-even-face ((t :background "#252525"))))
+
+(use-package rainbow-delimiters
+  :defer 1
+  :hook ((prog-mode . rainbow-delimiters-mode)
+         (emacs-lisp-mode . rainbow-delimiters-mode))
+  :custom
+  (rainbow-delimiters-max-face-count 6)
+  :custom-face
+  (rainbow-delimiters-depth-1-face ((t :foreground "#f43841")))
+  (rainbow-delimiters-depth-2-face ((t :foreground "#cc8c3c")))
+  (rainbow-delimiters-depth-3-face ((t :foreground "#ffdd33")))
+  (rainbow-delimiters-depth-4-face ((t :foreground "#73c936")))
+  (rainbow-delimiters-depth-5-face ((t :foreground "#96a6c8")))
+  (rainbow-delimiters-depth-6-face ((t :foreground "#565f73"))))
+
+(use-package smartparens
+  :ensure nil
+  :hook (prog-mode LaTeX-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config))
 
 (use-package org
   :defer 1
@@ -367,7 +301,6 @@
   (org-agenda-files (directory-files "~/Org/Agenda/" t "\\.org$"))
   (org-agenda-tags-column -80)
   (org-hide-block-startup t)
-  (org-clock-sound "~/Downloads/bell.wav")
   :custom-face
   (org-block    ((t :foreground "#e4e4ef")))
   (org-ellipsis ((t :foreground "#FFFFFF" :underline nil)))
@@ -384,8 +317,6 @@
   :defer 1
   :init (setq org-roam-v2-ack t)
   :custom
-  (org-roam-graph-executable "dot")
-  (org-roam-graph-viewer "chromium")
   (org-roam-directory "~/Org/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
@@ -404,279 +335,91 @@
   :defer
   :hook (org-mode . org-bullets-mode))
 
-(setq org-capture-templates
-      '(("p" "PHYS 167b")
-        ("w" "Weekly Meetings")
-        ("i" "Action Items")
-        ("m" "Mail Workflow")
-        ("pr" "167b Reading"
-         entry (file+olp "SP24.org" "PHYS 167b" "Readings")
-         "* TODO 167b %?")
-        ("pe" "167b Exam"
-         entry (file+olp "SP24.org" "PHYS 167b" "Exams")
-         "* TODO 167b Exam %?")
-        ("ph" "167b HW"
-         entry (file+olp "SP24.org" "PHYS 167b" "Homework")
-         (function (lambda () (mpc/create-todo-entry "167b" "PHYS" "SP24"))))))
-
-;; Meetings
-(add-to-list 'org-capture-templates
-             '("wa" "QT Meeting"
-               entry (file+olp "Research.org" "ATLAS QT")
-               (function
-                (lambda () (mpc/meeting-custom-title-dl "QT ")))
-               :immediate-finish t))
-
-(add-to-list 'org-capture-templates
-             '("wn" "VBS VVH Meeting"
-               entry (file+olp "Research.org" "VBS VVH")
-               (function
-                (lambda () (mpc/meeting-fixed-dl "VBS Higgs" "10:00" "Mon")))
-               :immediate-finish t))
-
-(add-to-list 'org-capture-templates
-             '("ww" "Aram Meeting"
-               entry (file+olp "Research.org" "Other")
-               (function
-                (lambda () (mpc/meeting-fixed-dl "Aram Group" "11:30" "Mon")))
-               :immediate-finish t))
-
-(add-to-list 'org-capture-templates
-             '("wb" "Brandeis Meeting"
-               entry (file+olp "Research.org" "Other")
-               (function
-                (lambda () (mpc/meeting-fixed-dl "Brandeis" "11:00" "Wed")))
-               :immediate-finish t))
-
-(add-to-list 'org-capture-templates
-             '("ws" "Other Meeting"
-               entry (file+olp "Research.org" "Other")
-               (function
-                (lambda () (mpc/meeting-custom-title-dl "")))
-               :immediate-finish t))
-
-;; Action Items
-(add-to-list 'org-capture-templates
-             '("ia" "QT Action Item"
-               entry (file+olp "Research.org" "ATLAS QT")
-               (function (lambda () (mpc/action-item-dl "QT")))
-               :immediate-finish t))
-
-(add-to-list 'org-capture-templates
-             '("in" "VBS VVH Action Item"
-               entry (file+olp "Research.org" "VBS VVH")
-               (function (lambda () (mpc/action-item-dl "VBS Higgs")))
-               :immediate-finish t))
-
-(add-to-list 'org-capture-templates
-             '("ii" "Misc TODO"
-               entry (file+headline "Research.org" "Other")
-               (function (lambda () (mpc/action-item-title)))
-               :refile-targets ((nil :maxlevel . 2))
-               :immediate-finish t))
-
-;; Follow up on Email
-(add-to-list 'org-capture-templates
-             '("mf" "Follow Up" entry (file+olp "Mail.org" "Follow Up")
-                "* TODO Follow up with %:fromname on %a\nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"))
-;; Read Email later
-(add-to-list 'org-capture-templates
-             '("mr" "Read Later" entry (file+olp "SU23.org" "MAIL" "Read Later")
-                "* TODO Read %:subject\nSCHEDULED: %t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"
-                :immediate-finish t))
-;; Attend Event in Email
-(add-to-list 'org-capture-templates
-             '("mm" "Attend Included Event" entry (file+olp "Mail.org" "Meetings")
-               "* TODO Attend %:subject %a\nSCHEDULED: %t\n%i"))
-;; Send email to someone
-(add-to-list 'org-capture-templates
-             '("ms" "Send Email" entry (file+olp "Mail.org" "Send Email")
-               "* TODO Send Email to %? about \nSCHEDULED: %t DEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))"))
-
-(setq org-agenda-custom-commands
-      '(("z" "View Current Semester"
-         ((agenda)
-          (tags-todo "SP24")))))
-
-(setq org-structure-template-alist
-      '(("s" . "src") ("e" . "example") ("q" . "quote") ("v" . "verse")
-        ("V" . "verbatim") ("c" . "center") ("C" . "comment") ("l" . "latex")
-        ("a" . "ascii") ("i" . "index")
-        ("el" . "src emacs-lisp") ("sb" . "src bash")))
+;; load capture template skeletons
+(load-file (format "%s/org-capture.el" user-emacs-directory))
 
 (use-package elfeed
   :ensure t
   :defer t
   :custom
   (elfeed-db-directory (concat user-emacs-directory "elfeed"))
-  (elfeed-feeds '(("https://atlas.cern/updates/briefing/feed.xml" physics)
-                  ("http://feeds.aps.org/rss/recent/physics.xml" physics)
-                  ("https://export.arxiv.org/rss/hep-ex" phyics article)
-                  ("https://export.arxiv.org/rss/hep-ph" physics article)))
+  (elfeed-feeds '(("https://atlas.cern/updates/briefing/feed.xml" physics cern)
+		  ("http://feeds.aps.org/rss/recent/physics.xml" physics)
+		  ("https://export.arxiv.org/rss/hep-ex" physics article)
+		  ("https://export.arxiv.org/rss/hep-ph" physics article)))
   :commands (elfeed))
-
-(use-package mu4e
-  :ensure nil
-  :hook ((mu4e-headers-mode . (lambda () (display-line-numbers-mode 0)))
-         (mu4e-main-mode . (lambda () (display-line-numbers-mode 0))))
-  :load-path "/usr/share/emacs/site-lisp/mu4e"
-  :config
-  ;; Load org-mode integration
-  (require 'mu4e-org)
-
-  ;; Refresh mail using isync every 10 minutes
-  (setq mu4e-update-interval (* 10 60))
-  (setq mu4e-get-mail-command "mbsync -a -c ~/.config/isync/mbsyncrc")
-  (setq mu4e-maildir "~/repos/Mail")
-
-  ;; Use Ivy for mu4e completions (maildir folders, etc)
-  (setq mu4e-completing-read-function #'ivy-completing-read)
-
-  ;; Make sure that moving a message (like to Trash) causes the
-  ;; message to get a new file name.  This helps to avoid the
-  ;; dreaded "UID is N beyond highest assigned" error.
-  ;; See this link for more info: https://stackoverflow.com/a/43461973
-  (setq mu4e-change-filenames-when-moving t)
-
-  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
-  (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
-  (setq mu4e-refile-folder "/[Gmail]/All Mail")
-  (setq mu4e-trash-folder  "/[Gmail]/Trash")
-
-  (setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"             :key ?i)
-      (:maildir "/BRANDEIS"          :key ?b)
-      (:maildir "/[Gmail]/Sent Mail" :key ?s)
-      (:maildir "/[Gmail]/Trash"     :key ?t)
-      (:maildir "/[Gmail]/Drafts"    :key ?d)
-      (:maildir "/[Gmail]/All Mail"  :key ?a))))
 
 (use-package projectile
   :defer 1
   :bind (:map projectile-mode-map ("C-z p" . projectile-command-map))
   :custom
+  (projectile-indexing-method 'native)
   (projectile-completion-system 'ivy)
   (projectile-project-search-path
-   '(("~/repos/" . 1) ("~/repos/Programming" . 1)))
+   '(("~/Public/SLAC" . 1)))
+  (projectile-git-submodule-command "true")
   :config
   (projectile-mode +1))
 
-(use-package magit :defer 1)
-
-(use-package highlight-indent-guides
-  :ensure nil
+(use-package magit
   :defer 1
-  :hook ((prog-mode . highlight-indent-guides-mode))
-  :custom
-  (highlight-indent-guides-auto-enabled nil)
-  :custom-face
-  (highlight-indent-guides-odd-face ((t :background "#303030")))
-  (highlight-indent-guides-even-face ((t :background "#252525")))
-  )
-
-(use-package smartparens
-  :ensure nil
-  :hook (prog-mode LaTeX-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :custom (magit-refresh-status-buffer nil)
   :config
-  ;; load default config
-  (require 'smartparens-config))
+  (remove-hook 'server-switch-hook 'magit-commit-diff)
+  (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff))
 
-(use-package rainbow-delimiters
+(use-package smerge-mode
+  :ensure nil
+  :custom (smerge-command-prefix "\C-cm"))
+
+(use-package tramp
   :defer 1
-  :hook ((prog-mode . rainbow-delimiters-mode)
-         (emacs-lisp-mode . rainbow-delimiters-mode))
-  :custom-face
-    (rainbow-delimiters-depth-1-face ((t :foreground "#f43841")))
-    (rainbow-delimiters-depth-2-face ((t :foreground "#cc8c3c")))
-    (rainbow-delimiters-depth-3-face ((t :foreground "#ffdd33")))
-    (rainbow-delimiters-depth-4-face ((t :foreground "#73c936")))
-    (rainbow-delimiters-depth-5-face ((t :foreground "#96a6c8")))
-    (rainbow-delimiters-depth-6-face ((t :foreground "#565f73")))
-    (rainbow-delimiters-depth-7-face ((t :foreground "#f43841")))
-    (rainbow-delimiters-depth-8-face ((t :foreground "#cc8c3c")))
-    (rainbow-delimiters-depth-9-face ((t :foreground "#ffdd33"))))
+  :custom (shell-prompt-pattern '"^[^#$%>\n]*~?[#$%>] *")
+  :config
+  (setq tramp-backup-directory-alist backup-directory-alist)
+  (setq tramp-auto-save-directory
+	(expand-file-name "tramp-autosave/" user-emacs-directory)))
 
 (use-package hideshow
-  :ensure nil
   :hook ((prog-mode . hs-minor-mode))
   :config
   (general-define-key
    :prefix "C-z"
    "C-<tab>" '(hs-toggle-hiding :which-key "Hide/Show Block")))
 
-(use-package treemacs
-  :defer 1
-  :ensure nil
-  :hook (treemacs-mode . mpc/no-lines-setup))
-
-(use-package tramp
-  :defer 1
-  :custom (shell-prompt-pattern '"^[^#$%>\n]*~?[#$%>] *"))
-
 (use-package cuda-mode
   :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode)))
 
+(use-package nxml-mode
+  :defer t
+  :ensure nil
+  :config (add-to-list 'auto-mode-alist '("\\.gmx$" . nxml-mode)))
+
 (use-package octave
-  :defer
+  :defer t
   :ensure nil
   :config (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
 (use-package haskell-mode
-  :defer
+  :defer t
   :bind (("C-c C-c" . compile))
   :hook ((haskell-mode . interactive-haskell-mode)
-         (haskell-mode . haskell-indent-mode)
-         (haskell-mode . lsp))
+         (haskell-mode . haskell-indent-mode))
   :custom
   (haskell-process-type 'stack-ghci) ; use stack ghci instead of global ghc
   (haskell-stylish-on-save t))
 
-(use-package pyvenv-auto
-  :defer 1
-  :hook ((python-mode . pyvenv-auto-run)))
-
-(use-package lsp-mode
+(use-package python
   :defer t
-  :commands (lsp lsp-deferred)
-  :hook ((python-mode . lsp)
-         (haskell-mode . lsp)
-         (c-mode . lsp)
-         (c++-mode . lsp)
-         (lsp-mode . mpc/lsp-mode-setup))
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :config
-  (setq lsp-log-io nil)
-  (setq lsp-haskell-server-path "haskell-language-server-wrapper")
-  (setq lsp-haskell-server-args nil)
-  (lsp-enable-which-key-integration t)
-  (lsp-register-custom-settings
-   '(("pyls.plugins.pyls_mypy.enabled" t t)
-     ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t))))
-
-(use-package lsp-haskell
-  :ensure t
-  :config
-  (setq lsp-haskell-formatting-provider "ormolu"))
-
-(use-package lsp-ui
-  :defer t
-  :commands lsp-ui-mode
-  :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-doc-position 'bottom))
+  (python-interpreter "/usr/bin/python3")
+  (python-shell-interpreter "/usr/bin/python3"))
 
-(use-package lsp-treemacs
+(use-package pyvenv-auto
   :defer t
-  :after lsp)
-
-(use-package lsp-ivy
-  :defer t
-  :after lsp)
+  :hook ((python-mode . pyvenv-auto-run)))
 
 (use-package vterm
   :defer t
@@ -695,3 +438,4 @@
               (lambda nil
                 (if (y-or-n-p "Reload?")
                     (load-file user-init-file))) nil t)))
+(put 'list-timers 'disabled nil)
