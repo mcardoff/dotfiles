@@ -7,3 +7,8 @@
 	pager = bat --style=grid
 [credential]
 	helper = store --file ~/.config/git/git_credentials
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

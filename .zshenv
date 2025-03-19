@@ -70,6 +70,9 @@ export JUPYTER_CONFIG_PATH="$XDG_CONFIG_HOME"/jupyter
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME"/jupyter
 export GHCUP_USE_XDG_DIRS="YES"
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export PYTHON_HISTORY=$XDG_STATE_HOME/python_history
+export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
+export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
 . "/home/mcard/.local/share/cargo/env"
 

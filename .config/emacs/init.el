@@ -1,6 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 ;;; Startup stuff
-(menu-bar-mode t)
 (defvar mpc--file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
@@ -52,7 +51,7 @@
 (use-package auth-source
   :ensure nil
   :defer 1
-  :custom (auth-sources '("~/.emacs.d/.authinfo")))
+  :custom (auth-sources '("~/.config/emacs/authinfo.gpg")))
 
 ;; baseline visuals
 (use-package doom-modeline
@@ -85,19 +84,6 @@
   :ensure t
   :diminish
   :hook (after-init . ivy-mode)
-  :bind
-  (("C-s" . swiper)
-   ("C-x b" . ivy-switch-buffer)
-   :map ivy-minibuffer-map
-   ("TAB" . ivy-alt-done)
-   ("C-j" . ivy-next-line)
-   ("C-k" . ivy-previous-line)
-   :map ivy-switch-buffer-map
-   ("C-k" . ivy-previous-line)
-   ("C-d" . ivy-switch-buffer-kill)
-   :map ivy-reverse-i-search-map
-   ("C-k" . ivy-previous-line)
-   ("C-d" . ivy-reverse-i-search-kill))
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-wrap t)
@@ -107,21 +93,41 @@
   (ivy-minibuffer-match-highlight ((t (:inherit compilation-warning))))
   (ivy-minibuffer-match-face-1 ((t (:background "#cc8c3c"))))
   :config
+  (general-define-key
+   "C-s"    'swiper
+   "C-x b"  'ivy-switch-buffer)
+  (general-define-key
+   :keymaps 'ivy-minibuffer-map
+   "TAB"  'ivy-alt-done
+   "C-j"  'ivy-next-line
+   "C-k"  'ivy-previous-line)
+  (general-define-key
+   :keymaps 'ivy-switch-buffer-map
+   "C-k"  'ivy-previous-line
+   "C-d"  'ivy-switch-buffer-kill)
+  (general-define-key
+   :keymaps 'ivy-reverse-i-search-map
+   "C-k"  'ivy-previous-line
+   "C-d"  'ivy-reverse-i-search-kill)
   (push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist)
   (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
   (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist))
 
 (use-package counsel
   :bind
-  (("M-x" . counsel-M-x)
-   ("C-x C-f" . counsel-find-file)
-   ("C-x b" . counsel-switch-buffer)
-   ("C-M-l" . counsel-imenu)
-   :map minibuffer-local-map
-   ("C-r" . 'counsel-minibuffer-history))
   :custom
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
-  (ivy-initial-inputs-alist nil))
+  (ivy-initial-inputs-alist nil)
+  :config
+  (general-define-key
+   "M-x"  'counsel-M-x
+   "C-x C-f"  'counsel-find-file
+   "C-x b"  'counsel-switch-buffer
+   "C-M-l"  'counsel-imenu)
+  (general-define-key
+   :keymaps 'minibuffer-local-map
+   "C-r" 'counsel-minibuffer-history)
+  )
 
 (load-file (format "%s/org-defuns.el" user-emacs-directory))
 
@@ -231,8 +237,10 @@
 (use-package move-text
   :defer 2
   :diminish 
-  :bind (("M-p" . 'move-text-up)
-         ("M-n" . 'move-text-down)))
+  :config
+  (general-define-key
+   "M-p" 'move-text-up
+   "M-n" 'move-text-down))
 
 (use-package avy
   :defer 1
@@ -245,10 +253,12 @@
 (use-package multiple-cursors
   :defer 2
   :diminish
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->"         . mc/mark-next-like-this)
-         ("C-<"         . 'mc/mark-previous-like-this)
-         ("C-c C-<"     . 'mc/mark-all-like-this)))
+  :config
+  (general-define-key
+   "C-S-c C-S-c" 'mc/edit-lines
+   "C->"         'mc/mark-next-like-this
+   "C-<"         'mc/mark-previous-like-this
+   "C-c C-<"     'mc/mark-all-like-this))
 
 (use-package yasnippet
   :defer 5
@@ -291,9 +301,7 @@
          (org-mode . rainbow-delimiters-mode)
          (org-agenda-mode . mpc/no-lines-setup))
 
-  :bind (:map org-mode-map
-              ("<C-M-return>" . org-insert-todo-subheading)
-              ("<C-return>"   . org-insert-subheading))
+  :bind 
   :custom
   (org-tags-column 0)
   (org-ellipsis " [+]")
@@ -310,6 +318,10 @@
   (require 'org-tempo)
   (setq org-tempo-keywords-alist nil)
   (setq org-refile-targets '((mpc/org-agenda-list :maxlevel . 3)))
+  (general-define-key
+   :keymaps 'org-mode-map
+   "<C-M-return>" 'org-insert-todo-subheading
+   "<C-return>"   'org-insert-subheading)
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)))
 
@@ -351,15 +363,36 @@
 
 (use-package projectile
   :defer 1
-  :bind (:map projectile-mode-map ("C-z p" . projectile-command-map))
+  :bind 
   :custom
   (projectile-indexing-method 'native)
   (projectile-completion-system 'ivy)
   (projectile-project-search-path
-   '(("~/Public/SLAC" . 1)))
+   '(("~/Projects" . 1) ("~/Org/Agenda" . 1) ("~/Org/Roam" . 1)))
   (projectile-git-submodule-command "true")
   :config
-  (projectile-mode +1))
+  (projectile-mode +1)
+  (general-define-key
+   :keymaps 'projectile-mode-map
+   "C-z p"  'projectile-command-map))
+
+(use-package lsp-mode
+  :defer t
+  :commands (lsp lsp-deferred)
+  :hook ((python-mode . lsp)
+         (c-mode . lsp)
+         (c++-mode . lsp)
+         (lsp-mode . mpc/lsp-mode-setup))
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (setq lsp-log-io nil)
+  (lsp-enable-which-key-integration t)
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t))))
 
 (use-package magit
   :defer 1
@@ -404,7 +437,6 @@
 
 (use-package haskell-mode
   :defer t
-  :bind (("C-c C-c" . compile))
   :hook ((haskell-mode . interactive-haskell-mode)
          (haskell-mode . haskell-indent-mode))
   :custom

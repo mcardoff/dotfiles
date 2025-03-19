@@ -1,5 +1,5 @@
 -- IMPORTS
-import qualified Data.Map as M
+import qualified Data.Map                            as M
 import           Data.Monoid
 import           GHC.IO.Handle.Types
 import           System.Exit
@@ -14,23 +14,22 @@ import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.Circle
-import           XMonad.Layout.GridVariants (Grid (Grid))
+import           XMonad.Layout.GridVariants          (Grid (Grid))
 import           XMonad.Layout.LayoutModifier
 import           XMonad.Layout.LimitWindows
 import           XMonad.Layout.MultiToggle
-import           XMonad.Layout.MultiToggle.Instances
-    (StdTransformers (MIRROR, NBFULL, NOBORDERS))
+import           XMonad.Layout.MultiToggle.Instances (StdTransformers (MIRROR, NBFULL, NOBORDERS))
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
-import           XMonad.Layout.Renamed (Rename (Replace), renamed)
+import           XMonad.Layout.Renamed               (Rename (Replace), renamed)
 import           XMonad.Layout.SimplestFloat
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
-import qualified XMonad.Layout.ToggleLayouts as T (ToggleLayout (Toggle),
-                                                                toggleLayouts)
+import qualified XMonad.Layout.ToggleLayouts         as T (ToggleLayout (Toggle),
+                                                           toggleLayouts)
 import           XMonad.Prompt
 import           XMonad.Prompt.Input
-import qualified XMonad.StackSet as W
+import qualified XMonad.StackSet                     as W
 import           XMonad.Util.EZConfig
 import           XMonad.Util.NamedScratchpad
 import           XMonad.Util.Run
@@ -40,7 +39,7 @@ import           XMonad.Util.WorkspaceCompare
 -- Local vars
 --
 myWS :: [String]
-myWS = tots ++ rest 
+myWS = tots ++ rest
     where tots = ["trm","edt","www","sch","dsc","vid"]
           rest = map show $ [(length tots)+1..9]
 
@@ -49,7 +48,7 @@ windowCount str = gets $ Just . (xmobarColor black str) . wrap " " " " . show . 
 
 -- apps
 browser :: String
-browser = "chromium"
+browser = "firefox"
 
 fileman :: String
 fileman = "pcmanfm"
@@ -86,7 +85,7 @@ xmobarPath :: String
 xmobarPath = "/home/mcard/.config/xmonad/xmobarrc.hs"
 
 --
--- STARTUP 
+-- STARTUP
 --
 startup :: X ()
 startup = do
@@ -95,17 +94,17 @@ startup = do
   spawn "picom --config /home/mcard/.config/picom/picom.conf" -- compositor
   spawn "twmnd" -- notification daemon
   spawn "/home/mcard/.local/scripts/cisbg.sh" -- background
-  
+
 --
 -- KEYBINDS
 --
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     [
-    -- Movement & General WM stuff 
+    -- Movement & General WM stuff
     --- Workspace movement
       ((alt, xK_Tab), nextWS)
-    , ((alt .|. shf, xK_Tab), prevWS)    
+    , ((alt .|. shf, xK_Tab), prevWS)
     --- Focus movement
     , ((mod, xK_j), windows W.focusDown)
     , ((mod .|. shf, xK_j), windows W.swapDown)
@@ -140,7 +139,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_Right),  withFocused $ keysResizeWindow r non)
     --- Kill window
     , ((mod .|. shf, xK_c), kill)
-    , ((mod .|. shf, xK_p), spawn "~/.local/scripts/truekill.sh")      
+    , ((mod .|. shf, xK_p), spawn "~/.local/scripts/truekill.sh")
     --- Change WS layout
     , ((mod, xK_space), sendMessage NextLayout)
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
@@ -175,7 +174,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- , ((mod, xK_y), namedScratchpadAction scratchpads "Discord")
     -- , ((mod, xK_u), namedScratchpadAction scratchpads "Slack")
     -- , ((mod, xK_i), namedScratchpadAction scratchpads "Skype")
-    ] 
+    ]
     ++
     [((mo .|. mod, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
@@ -231,7 +230,7 @@ scratchpads = [
        (customFloating $ easyrr (1/2) (2/3))
   , NS "Slack" "slack"
        (className =? "Slack")
-       (customFloating $ easyrr (5/6) (2/3))       
+       (customFloating $ easyrr (5/6) (2/3))
   , NS "Mattermost" "mattermost-desktop"
        (className =? "Mattermost")
        (customFloating $ easyrr (5/6) (2/3))
@@ -331,7 +330,7 @@ manageHook' = composeAll $
 scratchpadManageHook :: ManageHook
 scratchpadManageHook = namedScratchpadManageHook scratchpads
 
-logHookDef :: String -> String -> String -> String -> String -> String 
+logHookDef :: String -> String -> String -> String -> String -> String
            -> String -> String -> String -> String -> Handle -> Handle -> X()
 logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 x1 x2
     = dynamicLogWithPP $ filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
@@ -340,7 +339,7 @@ logHookDef c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 x1 x2
       , ppVisible = xmobarColor c3 c4 . sp
       , ppHidden  = xmobarColor c5 c6 . sp
       , ppHiddenNoWindows = xmobarColor c7 c8 . sp
-      , ppTitle = xmobarColor black c9 . sp . shorten 25 
+      , ppTitle = xmobarColor black c9 . sp . shorten 25
       , ppSep = " "
       , ppWsSep = ""
       , ppUrgent = xmobarColor black gruberRed . sp
@@ -380,11 +379,11 @@ main = do
              , keys = myKeys
              , mouseBindings = myMouseBindings
              -- Hooks and Layouts
-             , layoutHook = layouts 
+             , layoutHook = layouts
              , manageHook = manageHook' <+> scratchpadManageHook
              , handleEventHook = mempty
              , logHook = regLogHook xmproc0 xmproc1
              , startupHook = startup
          }
-         
+
 --EOF

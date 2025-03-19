@@ -17,3 +17,7 @@
   "open the latest modified org-agenda file"
   (interactive)
   (find-file (shell-command-to-string "/home/mcard/.local/scripts/latestorg.sh")))
+
+(defun mpc/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
