@@ -150,7 +150,7 @@
    "g" '(agendafile :which-key "Open Latest Org Agenda")
    "i" '(dotemacs :which-key "Open init.el")
    "j" '(projectorg :which-key "Open Current Projects Org")
-   "m" '(counsel-imenu :which-key "counsel-imenu")
+   ;; "m" '(counsel-imenu :which-key "counsel-imenu")
    "o" '(initorg :which-key "Open Literate Config")
    "u" '(mu4e :which-key "Check Mail!"))
 
