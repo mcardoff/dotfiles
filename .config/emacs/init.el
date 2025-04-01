@@ -400,7 +400,7 @@
 
 (use-package smerge-mode
   :ensure nil
-  :custom (smerge-command-prefix "\C-cm"))
+  :custom (smerge-command-prefix "\C-zm"))
 
 (use-package tramp
   :defer 1

@@ -176,7 +176,7 @@ deadlinetext: formatted timestamp"
 ;; Action Items
 (add-to-list 'org-capture-templates
              '("in" "VBS VVH Action Item"
-               entry (file+olp "Research.org" "VBS VVH")
+               entry (file+olp "Research.org" "ATLAS" "VBS VVH")
                (function (lambda () (mpc/action-item-dl "VBS Higgs")))
                :immediate-finish t))
 
