@@ -21,11 +21,11 @@
  (position . 6365)
  (last-modified 26274 39364 821643 433000))
 ("org-capture-last-stored"
- (filename . "~/Org/Agenda/Research.org")
- (front-context-string . "*** TODO VBS Hig")
- (rear-context-string . "2025-03-24 Mon>\n")
- (position . 24354)
- (last-modified 26602 56388 530402 193000))
+ (filename . "~/Org/Roam/20250612141937-ml_tutorial_notes.org")
+ (front-context-string . "* Questions to M")
+ (rear-context-string . " Tutorial Notes\n")
+ (position . 95)
+ (last-modified 26698 50742 308674 333000))
 ("ranger config "
  (filename . "~/dotfiles/.config/ranger/rc.conf")
  (front-context-string . "# ==============")

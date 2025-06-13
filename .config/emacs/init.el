@@ -6,23 +6,24 @@
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(use-package compile-angel
-  :ensure t
-  :demand t
-  :custom
-  (compile-angel-verbose nil)
-  :config
-  (compile-angel-on-load-mode)
-  (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
+;; (use-package compile-angel
+;;   :ensure t
+;;   :demand t
+;;   :custom
+;;   (compile-angel-verbose nil)
+;;   :config
+;;   (compile-angel-on-load-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
 
 ;; requires for emacs 28
 ;; (package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
-(cond ((not (package-installed-p 'gruber-darker-theme))
-       (use-package gruber-darker-theme))
-      (t (load-theme 'gruber-darker t)))
+(load-theme 'sexy t)
+;; (cond ((not (package-installed-p 'gruber-darker-theme))
+;;        (use-package gruber-darker-theme))
+;;       (t (load-theme 'gruber-darker t)))
 
 (use-package rainbow-mode :defer t)
 
@@ -54,9 +55,12 @@
   :custom (auth-sources '("~/.config/emacs/authinfo.gpg")))
 
 ;; baseline visuals
+(use-package dash
+  :ensure t)
+
 (use-package doom-modeline
-  :defer 1
-  :hook (after-init . doom-modeline-mode)
+  :ensure t
+  :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-buffer-encoding nil)
   (doom-modeline-height 40)
@@ -263,7 +267,7 @@
 (use-package yasnippet
   :defer 5
   :config (yas-global-mode)
-  :custom (yas-snippet-dirs '("~/.emacs.d/mysnippets")))
+  :custom (yas-snippet-dirs '("~/.config/emacs/mysnippets")))
 
 (use-package highlight-indent-guides
   :defer 1
@@ -289,8 +293,8 @@
   (rainbow-delimiters-depth-6-face ((t :foreground "#565f73"))))
 
 (use-package smartparens
-  :ensure nil
-  :hook (prog-mode LaTeX-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :ensure
+  :hook (prog-mode LaTeX-mode text-mode) ;; add `smartparens-mode` to these hooks
   :config
   ;; load default config
   (require 'smartparens-config))
@@ -305,8 +309,8 @@
   :custom
   (org-tags-column 0)
   (org-ellipsis " [+]")
-  (org-directory "~/Org/Agenda/")
-  (org-agenda-files (directory-files "~/Org/Agenda/" t "\\.org$"))
+  (org-directory "~/repos/Org/Agenda/")
+  (org-agenda-files (directory-files "~/repos/Org/Agenda/" t "\\.org$"))
   (org-agenda-tags-column -80)
   (org-hide-block-startup t)
   :custom-face
@@ -329,7 +333,7 @@
   :defer 1
   :init (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/Org/Roam")
+  (org-roam-directory "~/repos/Org/Roam")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'ivy)
   :config
@@ -368,7 +372,7 @@
   (projectile-indexing-method 'native)
   (projectile-completion-system 'ivy)
   (projectile-project-search-path
-   '(("~/Projects" . 1) ("~/Org/Agenda" . 1) ("~/Org/Roam" . 1)))
+   '(("~/project" . 1) ("~/repos" . 1) ("~/repos/Org/Agenda" . 1) ("~/repos/Org/Roam" . 1)))
   (projectile-git-submodule-command "true")
   :config
   (projectile-mode +1)
