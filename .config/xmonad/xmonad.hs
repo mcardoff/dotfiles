@@ -145,7 +145,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((mod .|. shf, xK_space), setLayout $ XMonad.layoutHook conf)
     -- execs
     , ((mod, xK_b), spawn $ browser)
-    , ((mod, xK_o), spawn "emacs-29.0.60")
+    , ((mod, xK_o), spawn "emacs")
     , ((mod, xK_p), spawn "dmenu_run")
     , ((mod, xK_z), spawn "~/.local/scripts/i3lock.sh")
     , ((mod, xK_Insert), spawn "~/.local/scripts/secret.sh")
@@ -164,7 +164,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute   @DEFAULT_SINK@ toggle")
     , ((mod, 0xff50), spawn "xrandr --auto")
     -- gridselect
-    ,  ((mod, xK_c), runSelectedAction gridConfig chatAppsGrid)
+    , ((mod, xK_c), runSelectedAction gridConfig chatAppsGrid)
     -- Scratchpads
     , ((mod .|. shf, xK_o), namedScratchpadAction scratchpads "Notepad")
     , ((mod .|. shf, xK_Return), namedScratchpadAction scratchpads "dropterm")
@@ -173,7 +173,7 @@ myKeys conf@XConfig {XMonad.modMask = mod} = M.fromList $
     -- , ((mod, xK_t), namedScratchpadAction scratchpads "Mattermost")
     -- , ((mod, xK_y), namedScratchpadAction scratchpads "Discord")
     -- , ((mod, xK_u), namedScratchpadAction scratchpads "Slack")
-    -- , ((mod, xK_i), namedScratchpadAction scratchpads "Skype")
+    -- , ((mod, xK_i), namedScratchpadAction scratchpads "Teams")
     ]
     ++
     [((mo .|. mod, k), windows $ f i)
@@ -222,7 +222,7 @@ scratchpads = [
   , NS "Books" (term ++ " --class Books --title Books -e ranger --cmd 'set column_ratios 0' ~/school/.misc/Books")
        (className =? "Books")
        (customFloating $ easyrr (5/6) (2/3))
-  , NS "Notepad" "emacs-29.0.60 -T notepad --eval=\"(unless (boundp 'server-process) (server-start))\""
+  , NS "Notepad" "emacs -T notepad --eval=\"(unless (boundp 'server-process) (server-start))\""
        (title =? "notepad")
        (customFloating $ easyrr (5/6) (2/3))
   , NS "Discord" "discord-canary"
@@ -234,8 +234,8 @@ scratchpads = [
   , NS "Mattermost" "mattermost-desktop"
        (className =? "Mattermost")
        (customFloating $ easyrr (5/6) (2/3))
-  , NS "Skype" "skypeforlinux"
-       (className =? "Skype")
+  , NS "Teams" "teams-for-linux"
+       (className =? "teams-for-linux")
        (customFloating $ easyrr (5/6) (2/3))
   ]
     where easyrr w h = W.RationalRect ((1-w)/2) ((1-h)/2) w h
@@ -279,7 +279,7 @@ gridConfig = def
 -- list of chat apps to open in grid:
 chatAppsGrid :: [(String, X ())]
 chatAppsGrid = map (\ s-> (s, namedScratchpadAction scratchpads s)) $
-               ["Slack", "Discord", "Skype", "Mattermost"]
+               ["Slack", "Discord", "Teams", "Mattermost"]
 
 
 
@@ -305,7 +305,7 @@ grid = renamed [Replace "Grid"] $ limitWindows 12 $
 --                 , inactiveBorderWidth = 10
 --                 }
 
-layouts = as (grid ||| tiled) ||| noBorders Full
+layouts = (as (grid ||| tiled)) ||| noBorders Full
     where as = avoidStruts
 
 -- Hooks
