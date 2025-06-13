@@ -1,0 +1,49 @@
+[colors.bright]
+black = "#181818"
+blue = "#6e92b3"
+cyan = "#8abeb7"
+green = "#60af34"
+magenta = "#c767b4"
+red = "#db3737"
+white = "#fdfdfd"
+yellow = "#ccc129"
+
+[colors.cursor]
+cursor = "#FFDD33"
+text = "#FFFFFF"
+
+[colors.normal]
+black = "#000000"
+blue = "#7aa6da"
+cyan = "#70c0b1"
+green = "#73c936"
+magenta = "#e075cb"
+red = "#f43841"
+white = "#FFFFFF"
+yellow = "#ffdd33"
+
+[colors.primary]
+background = "#181818"
+foreground = "#FFFFFF"
+
+[cursor]
+style = "Block"
+
+[font]
+size = 8.0
+
+[font.bold]
+family = "Source Code Pro"
+style = "Bold"
+
+[font.italic]
+family = "Source Code Pro"
+style = "Italic"
+
+[font.normal]
+family = "Source Code Pro"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
