@@ -6,24 +6,19 @@
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
-;; (use-package compile-angel
-;;   :ensure t
-;;   :demand t
-;;   :custom
-;;   (compile-angel-verbose nil)
-;;   :config
-;;   (compile-angel-on-load-mode)
-;;   (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
+(use-package compile-angel
+  :ensure t
+  :demand t
+  :hook (emacs-lisp-mode-hook . compile-angel-on-save-local-mode)
+  :custom
+  (compile-angel-verbose nil)
+  :config
+  (compile-angel-on-load-mode))
 
-;; requires for emacs 28
-;; (package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
 (load-theme 'sexy t)
-;; (cond ((not (package-installed-p 'gruber-darker-theme))
-;;        (use-package gruber-darker-theme))
-;;       (t (load-theme 'gruber-darker t)))
 
 (use-package rainbow-mode :defer t)
 
@@ -34,8 +29,6 @@
 (use-package server :ensure nil :defer t)
 
 (use-package tab-bar :ensure nil :defer t)
-
-(use-package pass :ensure nil :defer t)
 
 (use-package recentf :ensure nil :defer t
   :config
@@ -81,8 +74,16 @@
 ;; completion framework(s)
 (use-package company
   :ensure t
-  :hook (after-init . global-company-mode)
-  :diminish)
+  :hook (prog-mode . company-mode)
+  :bind (:map company-mode-map
+         ([remap completion-at-point] . company-complete))
+  :custom
+  (company-idle-delay 0)
+  (company-echo-delay 0)
+  (company-show-numbers t)
+  (company-require-match nil)
+  (company-tooltip-align-annotations t)
+  (company-backends '(company-capf)))
 
 (use-package ivy
   :ensure t
@@ -204,7 +205,7 @@
     '(((output-dvi has-no-display-manager) "dvi2tty") 
       ((output-dvi style-pstricks)  "dvips and gv")
        (output-dvi "xdvi")
-       (output-pdf "open")
+       (output-pdf "Zathura")
        (output-html "xdg-open")))
   (TeX-engine 'luatex)
   (TeX-parse-self t)
@@ -251,8 +252,7 @@
   :config
   (general-define-key
    :prefix "C-z"
-   "c" '(avy-goto-char :which-key "Go to char")
-   "l" '(avy-goto-line :which-key "Go to line")))
+   "c" '(avy-goto-char :which-key "Go to char")))
 
 (use-package multiple-cursors
   :defer 2
@@ -383,36 +383,79 @@
 (use-package lsp-mode
   :defer t
   :commands (lsp lsp-deferred)
-  :hook ((python-mode . lsp)
-         (c-mode . lsp)
-         (c++-mode . lsp)
-         (lsp-mode . mpc/lsp-mode-setup))
-  :init
-  (setq lsp-keymap-prefix "C-c l")
   :config
+  ;; 1. Define a wrapper function to check for remote files
+  (defun mpc/lsp-start-if-local ()
+    "Start LSP only if the current buffer is not remote."
+    (unless (file-remote-p default-directory) (lsp)))
+
+  (general-define-key
+   :keymaps 'lsp-mode-map
+   "C-z l" lsp-command-map)
   (setq lsp-log-io nil)
   (lsp-enable-which-key-integration t)
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
      ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t))))
+     ("pyls.plugins.pyls_isort.enabled" t t)))
+
+  ;; 2. Update your conditional activator to also respect remote checks
+  (defun mpc/lsp-conditional-activate ()
+    "Activate LSP only if not remote and there is a matching client."
+    (unless (file-remote-p default-directory)
+      (when (lsp--find-clients) 
+        (lsp-deferred))))
+  (add-hook 'prog-mode-hook #'mpc/lsp-conditional-activate)
+
+  ;; 3. Update hooks to use the wrapper function instead of raw 'lsp
+  :hook ((lsp-mode . mpc/lsp-mode-setup)
+         (python-mode . mpc/lsp-start-if-local)
+         (c-mode . mpc/lsp-start-if-local)
+         (c++-mode . mpc/lsp-start-if-local))
+
+  :custom
+  (lsp-auto-register-remote-clients nil) ;; Keep this as a safety
+  (lsp-clients-clangd-executable "clangd")
+  (lsp-clients-clangd-args '("--clang-tidy"))
+  (lsp-auto-guess-root t)
+  (lsp-prefer-capf t)
+  (lsp-keymap-prefix "C-z l")
+  (lsp-pylsp-plugins-pylint-enabled t))
 
 (use-package magit
   :defer 1
-  :custom (magit-refresh-status-buffer nil))
+  :custom
+  (magit-refresh-status-buffer nil)
+  (magit-show-long-lines-warning nil))
 
 (use-package smerge-mode
   :ensure nil
-  :custom (smerge-command-prefix "\C-zm"))
+  :custom (smerge-command-prefix (kbd "C-z s")))
 
 (use-package tramp
-  :defer 1
-  :custom (shell-prompt-pattern '"^[^#$%>\n]*~?[#$%>] *")
+  :custom
+  ;; Detect shell prompt on remote host
+  (shell-prompt-pattern "^[^#$%>\n]*~?[#$%>] *")
   :config
-  (setq tramp-backup-directory-alist backup-directory-alist)
-  (setq tramp-auto-save-directory
-	(expand-file-name "tramp-autosave/" user-emacs-directory)))
+  ;; Force TRAMP to use ssh (not scp/sftp)
+  (setq tramp-default-method "ssh")
+
+  ;; Password + OTP prompts
+  (setq tramp-otp-password-prompt-regexp "^.*Your 2nd factor \\(.+\\): *")
+  (setq tramp-ssh-controlmaster-options
+	(concat
+	 "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
+	 "-o ControlMaster=auto -o ControlPersist=yes"))
+  ;; Disable remote backups / auto-save to avoid extra OTP prompts
+  (setq backup-directory-alist
+        `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
+  (setq auto-save-default nil)
+
+  ;; Optional: verbose TRAMP debugging
+  ;; (setq tramp-verbose 10)
+)
+
 
 (use-package hideshow
   :hook ((prog-mode . hs-minor-mode))
@@ -420,6 +463,11 @@
   (general-define-key
    :prefix "C-z"
    "C-<tab>" '(hs-toggle-hiding :which-key "Hide/Show Block")))
+
+(use-package flycheck
+  :ensure t
+  :hook (after-init . global-flycheck-mode)
+  :custom (flycheck-keymap-prefix (kbd "C-z m")))
 
 (use-package cuda-mode
   :defer t
@@ -444,12 +492,16 @@
   (haskell-process-type 'stack-ghci) ; use stack ghci instead of global ghc
   (haskell-stylish-on-save t))
 
-(use-package python
-  :defer t)
+(use-package elpy
+  :defer t
+  :ensure t
+  :hook ((python-mode . elpy-enable)
+	 (elpy-mode-hook . flycheck-mode-hook)))
 
 (use-package pyvenv-auto
   :defer t
   :hook ((python-mode . pyvenv-auto-run)))
+
 
 (use-package vterm
   :defer t
